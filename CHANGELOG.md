@@ -6,7 +6,14 @@ Formatas pagal [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), versija
 
 ## [Nereleisuota]
 
-- (bus įrašyta prieš kitą release)
+### Pakeista
+
+- **LT→EN UI/UX – statinis tekstas ir promptai (2026-03-09):** Build skripte (EN_REPLACEMENTS): instrukcijų 2 eilutė – sutapdintos kabutės („ “ U+201E/U+201C), kad „Click Copy prompt“ atsirastų EN; laiko etiketė „~3–5 min per žingsnį“ → „~3–5 min per step“; CSS .code-block::before `content` „Spausk čia ir nukopijuok“ → „Click here and copy“. Visi 10 promptų `<pre>` turinių (META, INPUT, OUTPUT) lokalizuoti į EN per build. docs/LEGACY_GOLDEN_STANDARD.md ir LT_EN_UI_UX_REPORT.md atnaujinti.
+- **EN hero – CMO mikro-kopija (2026-03-09):** EN title ir h1 „for Marketing Leads“ → „for Marketing Leaders“ (atitikmuo LT „rinkodaros vadovams“, aiškesnė CMO/vadovų auditorija). Pakeitimas: scripts/build-locale-pages.js (title, h1), index.html (applyStaticLocaleText h1). Kitos „Leads“ vietos (Lead generator, „Leads and metrics“) nekeistos.
+
+### Prideta
+
+- **Dokumentacija (2026-03-09):** docs/LEGACY_GOLDEN_STANDARD.md atnaujintas į v1.6 – build/deploy (BASE_PATH, scripts/build-locale-pages.js), footer (.footer-email, .footer-product-link), privatumas.html (back-link ID, referrer logika), checklist ir skyrius „privatumas.html (fiksuota)“. CHANGELOG – šis įrašas.
 
 ---
 

@@ -57,8 +57,12 @@ function getLocaleFromPathname() {
 3. **Canonical** – `<link rel="canonical" href="/lt/">` arba `/en/`.
 4. **hreflang** – `hreflang="lt"`, `hreflang="en"`, `hreflang="x-default"` (default = LT).
 5. **Asset keliai** – jei reikia (pvz. GitHub Pages), `BASE_PATH` naudojamas; įprastai absoliutus kelias `/style.css`, `/generator.js` ir t. t.
-6. **EN statinio teksto pakeitimai** – jei `locale === 'en'`, vienas didelis `replace()` blokas pakeičia:
+6. **EN statinio teksto pakeitimai** – jei `locale === 'en'`, vienas didelis `EN_REPLACEMENTS` blokas (split/join) pakeičia:
    - skip link, nav, brand, h1, hero, žingsniai, CTA, operacinis centras, režimų tab’ai, depth, output blokas, sesijos, biblioteka, taisyklės, community, footer, aria-label’ai, toast.
+   - **Instrukcijų 2 eilutė:** šaltinyje naudojamos lietuviškos kabos „ “ (U+201E, U+201C) – replacement’e `from` turi naudoti tą patį, kad atitiktų.
+   - **Laiko etiketė:** matomas tekstas „~3–5 min per žingsnį“ → „~3–5 min per step“ (be to keičiamas ir aria-label).
+   - **CSS `content`:** `.code-block::before` turinys „Spausk čia ir nukopijuok“ → „Click here and copy“.
+   - **Promptų blokai:** visi 10 `<pre class="code-text" id="prompt1">` … `prompt10` turiniai (META, INPUT, OUTPUT) pakeičiami iš LT į EN per atskiras replacement poras.
 
 ### 3.2 Duplikavimo patarimai
 

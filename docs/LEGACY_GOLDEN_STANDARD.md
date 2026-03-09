@@ -2,13 +2,15 @@
 
 **Tikslas:** Dabartinis kodas yra atskaitos taškas (legacy golden standard). Keičiant **turinį** (promptus, antraštes, aprašymus) – būtina laikytis šios struktūros ir konvencijų. Struktūros, ID, CSS klasių ir JavaScript API nekeičiame be QA patvirtinimo ir dokumento atnaujinimo. Projektas: Spin-off Nr. 2 (10 promptų rinkodaros sistemai).
 
-**Versija:** 1.5  
-**Data:** 2026-03  
+**Versija:** 1.6  
+**Data:** 2026-03-09  
 **Kalba:** LT
 
-**LT/EN lokalizacija:** Keičiant tik turinio tekstus ir `lang`/meta – DOM (id, class, data-*), a11y struktūra (role, aria-* pavadinimai) lieka tie patys abiem kalbom. **Terminologija:** LT – naudoti **DI** (dirbtinis intelektas), EN – naudoti **AI** (Artificial Intelligence). Žr. [LT_EN_UI_UX_REPORT.md](../LT_EN_UI_UX_REPORT.md), [docs/GILI_ANALIZE_LT_EN_TERMINOLOGIJA.md](GILI_ANALIZE_LT_EN_TERMINOLOGIJA.md).
+**LT/EN lokalizacija:** Keičiant tik turinio tekstus ir `lang`/meta – DOM (id, class, data-*), a11y struktūra (role, aria-* pavadinimai) lieka tie patys abiem kalbom. **Terminologija:** LT – naudoti **DI** (dirbtinis intelektas), EN – naudoti **AI** (Artificial Intelligence). EN versijoje turi būti lokalizuoti ir **promptų `<pre>` turiniai** (per `scripts/build-locale-pages.js` EN_REPLACEMENTS). Žr. [LT_EN_UI_UX_REPORT.md](../LT_EN_UI_UX_REPORT.md), [docs/GILI_ANALIZE_LT_EN_TERMINOLOGIJA.md](GILI_ANALIZE_LT_EN_TERMINOLOGIJA.md).
 
-**Sinchronizuota su kodu (2026-02-19):** skip-link „Pereiti prie turinio“, hero (Turinio DI sistema / rinkodaros vadovams, Spin-off Nr. 2, Gauti nemokamai), progress bar `aria-label` pradžia ir JS atnaujinimas, info-box `aria-label` „Informacija: promptas N“, puslapio title „Turinio DI sistema – rinkodaros vadovams“.
+**Build ir deploy:** Root `index.html` – vienintelis šaltinis; `scripts/build-locale-pages.js` generuoja `lt/index.html` ir `en/index.html`. Deploy (GitHub Pages) vykdo build su `BASE_PATH=/marketingas`, kad canonical ir hreflang būtų `/marketingas/lt/`, `/marketingas/en/`. Žr. [DEPLOYMENT.md](../DEPLOYMENT.md).
+
+**Sinchronizuota su kodu (2026-03-09):** skip-link „Pereiti prie turinio“, hero (Turinio DI sistema / rinkodaros vadovams, Spin-off Nr. 2, Gauti nemokamai), progress bar `aria-label`, info-box „Informacija: promptas N“, puslapio title; footer – .footer-email, .footer-product-link; kalbos perjungiklis (.lang-switcher, langLtBtn, langEnBtn); **EN build** – instrukcijų 2 eilutė (kabučių atitikmuo „ “), laiko etiketė „~3–5 min per step“, CSS .code-block::before `content`, visi 10 promptų `<pre>` turinių LT→EN; EN hero title/h1 „for Marketing Leaders“ (atitinka LT „rinkodaros vadovams“). **privatumas.html:** „Grįžti“ nuorodos turi `id="back-link"` ir `id="back-link-footer"`; inline skriptas nustato `href` pagal `document.referrer` (lt/, en/ arba index.html), kad išsaugotų locale.
 
 ---
 
@@ -55,7 +57,7 @@ index.html
 │       │           └── <input type="checkbox" class="prompt-done" data-prompt-id="N" aria-label="Pažymėti, kad atlikai šį žingsnį">
 │       ├── <section class="next-steps">   (h2#next-steps-title, p, .next-steps-links > a)
 │       ├── <section class="community" id="community">
-│       └── <footer class="footer">
+│       └── <footer class="footer">        (.footer-product-link, .footer-email, .copyright, .tag)
 ├── <textarea class="hidden" id="hiddenTextarea" aria-hidden="true">
 └── <div class="toast" id="toast" role="status" aria-live="polite" aria-label="Kopijavimo pranešimas">
 ```
@@ -106,17 +108,28 @@ Koreguojant `.code-block` ar `.prompt` CSS, patikrinti: etiketė matoma, nesiker
 - [ ] Kiekvienas promptas lieka tos pačios struktūros: .prompt-header → .prompt-body (.code-block + .info-box) → .prompt-footer (.btn + .prompt-done).
 - [ ] .code-block turi `onclick="selectText(this)"` ir `onkeydown="handleCodeBlockKeydown(event, this)"`; .btn – `onclick="copyPrompt(this, 'promptN')"` su atitinkamu N.
 - [ ] Nauji ar pakeisti promptai naudoja tą patį HTML šabloną (article.prompt su tais pačiais klasėmis ir atributais).
+- [ ] Build: prieš release/deploy paleisti `npm run build`; deploy naudoja `BASE_PATH=/marketingas` (žr. .github/workflows/deploy.yml).
+- [ ] privatumas.html: nekeisti `id="back-link"`, `id="back-link-footer"` ir skripto logikos (referrer → lt/ | en/ | index.html).
 
 ---
 
-## 6. Susiję dokumentai
+## 6. privatumas.html (fiksuota)
+
+- **Struktūra:** vienas puslapis, nuorodos „Grįžti“ – viršuje ir apačioje.
+- **ID:** `back-link`, `back-link-footer` – naudojami inline skriptu, nustatančiu `href` pagal `document.referrer` (jei referrer kelias turi `/lt` → `lt/`, `/en` → `en/`, kitaip → `index.html`).
+- **Keisti leidžiama:** tik teksto turinys (antraštės, pastraipos); nekeisti id ar skripto logikos be QA.
+
+---
+
+## 7. Susiję dokumentai
 
 - [index.html](../index.html) – pagrindinis puslapis (implementacija)
 - [STYLEGUIDE.md](../STYLEGUIDE.md) – spalvų paletė, komponentai, tipografija
 - [KODO_BAZES_ANALIZE.md](../KODO_BAZES_ANALIZE.md) – gili kodo analizė, neatitikimai, rekomendacijos
 - [AGENTS.md](../AGENTS.md) – agentų rolės ir užduočių seka (skyrius „Užduočių seka ir golden standard“)
 - [docs/DOCUMENTATION.md](DOCUMENTATION.md) – dokumentų inventorius
+- [DEPLOYMENT.md](../DEPLOYMENT.md) – deploy, BASE_PATH, post-deploy
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-02-19
+**Paskutinis atnaujinimas:** 2026-03-09
