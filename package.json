@@ -5,8 +5,10 @@
   "description": "DI Promptų Biblioteka – statinė HTML platforma",
   "scripts": {
     "build": "node scripts/build-locale-pages.js",
-    "test": "npm run build && node tests/structure.test.js && npm run lint:html && npm run lint:js",
+    "test": "npm run build && node tests/structure.test.js && node tests/design-system-smoke.test.js && node tests/a11y-smoke.test.js && npm run lint:html && npm run lint:js",
     "test:structure": "node tests/structure.test.js",
+    "test:design-system": "node tests/design-system-smoke.test.js",
+    "test:a11y:smoke": "node tests/a11y-smoke.test.js",
     "lint:html": "npx html-validator-cli --file index.html && npx html-validator-cli --file lt/index.html && npx html-validator-cli --file lt/privatumas.html && npx html-validator-cli --file en/index.html && npx html-validator-cli --file en/privacy.html",
     "lint:js": "npx eslint . --ext .js"
   },

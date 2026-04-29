@@ -1,5 +1,8 @@
 # MVP Roadmap - DI Promptų Biblioteka
 
+> Statusas: Historical / Deprecated (neaktyvus roadmap failas).  
+> Dabartinis scope ir release seka valdoma per `CHANGELOG.md`, `DEPLOYMENT.md` ir `docs/DOCUMENTATION.md`.
+
 **Projekto data:** 2026-02-03  
 **MVP tikslas:** Parengti stabilų, saugų ir pilnai funkcionalų produktą, kurį galima naudoti production aplinkoje
 

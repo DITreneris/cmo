@@ -34,8 +34,14 @@
 | .github/PULL_REQUEST_TEMPLATE.md | PR šablonas | Orchestrator / QA | Checklist pakeitimai |
 | .github/workflows/ci.yml | CI | QA / Orchestrator | Nauji testai, lint, a11y |
 | .github/workflows/deploy.yml | GitHub Pages deploy | QA / Orchestrator | Deploy žingsniai, environment |
+| index.html | Pagrindinis UI ir „upgrade-only“ aiškinamasis sluoksnis (`#what-is-prompt`, `#prompt-anatomy`, `#framework-schema`, `#faq`) + 10 promptų branduolys | Content + UI/UX + QA | Keičiant vartotojui matomą turinį, naujus edukacinius blokus ar promptų sekcijas |
+| styles/design-tokens.json | Dizaino tokenų vienas šaltinis (spalvos, spacing, radius, focus, motion) | UI/UX + QA | Keičiant dizaino sistemos semantinius tokenus |
+| styles/tokens.css, styles/components.css, styles/utilities.css | Dizaino sistemos CSS sluoksniai (tokenai, komponentai, utility) | UI/UX | Keičiant komponentų vizualiką ar būsenas |
 | scripts/build-locale-pages.js | Generuoja lt/index.html ir en/index.html iš root index.html | QA / Orchestrator | LT/EN replace sąrašas, BASE_PATH, canonical/hreflang |
 | lt/index.html, en/index.html | Generuojami locale puslapiai (path-based) | (build output) | Po kiekvieno `npm run build`; deploy reikalauja build prieš upload |
+| tests/design-system-smoke.test.js | Dizaino sistemos smoke testas (importai, tokenai, būtinieji selektoriai) | QA | Keičiant CSS sluoksnius arba tokenų struktūrą |
+| tests/a11y-smoke.test.js | A11y smoke testas (skip-link, focus-visible, reduced-motion, aria-label) | QA | Keičiant interaktyvius elementus ar a11y taisykles |
+| docs/DESIGN_SYSTEM_BASELINE.md | Refaktoriaus baseline auditas ir sprendimai | UI/UX + QA | Pradėjus naują dizaino sistemos etapą ar auditą |
 | DEPLOYMENT.md | Deploy instrukcijos, troubleshooting | QA / Orchestrator | Platforma, URL, post-deploy |
 | docs/QA_STANDARTAS.md | QA standartas (nuoroda spinoff01) | QA | Kriterijai, komandos, spinoff01 |
 | docs/TESTAVIMAS.md | Gyvo testavimo scenarijai ir žurnalas | QA | Po deploy testavimas, rezultatai |

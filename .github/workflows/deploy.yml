@@ -46,7 +46,8 @@ jobs:
       - name: Build locale pages (lt/en) with BASE_PATH for GitHub Pages
         run: npm run build
         env:
-          BASE_PATH: '/marketingas'
+          BASE_PATH: '/cmo'
+          SITE_ORIGIN: 'https://ditreneris.github.io'
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .

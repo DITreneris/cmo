@@ -25,7 +25,6 @@ jobs:
         run: npm test
 
       - name: Accessibility check (pa11y)
-        continue-on-error: true  # Chromium sandbox may fail in GH Actions; run a11y locally
         run: |
           npx serve -s . -l 3000 &
           npx wait-on -t 60000 http://127.0.0.1:3000/

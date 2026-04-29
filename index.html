@@ -3,12 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://ditreneris.github.io/cmo/lt/">
+    <link rel="alternate" hreflang="lt" href="https://ditreneris.github.io/cmo/lt/">
+    <link rel="alternate" hreflang="en" href="https://ditreneris.github.io/cmo/en/">
+    <link rel="alternate" hreflang="x-default" href="https://ditreneris.github.io/cmo/lt/">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <meta name="description" content="Praktinė Prompt Anatomy turinio sistema komandai: 10 promptų biblioteka, aiški metodika ir kasdienis veiksmų ciklas.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Turinio DI sistema – rinkodaros vadovams">
+    <meta property="og:description" content="Prompt Anatomy pagrįsta 10 promptų sistema komandų turinio veiklai ir aiškiam kasdieniam ciklui.">
+    <meta property="og:url" content="https://ditreneris.github.io/cmo/lt/">
+    <meta property="og:site_name" content="Prompt Anatomy">
+    <meta property="og:locale" content="lt_LT">
+    <meta property="og:image" content="https://promptanatomy.app/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Turinio DI sistema – rinkodaros vadovams">
+    <meta name="twitter:description" content="Praktinė Prompt Anatomy turinio sistema komandai su 10 promptų biblioteka.">
+    <meta name="twitter:image" content="https://promptanatomy.app/og-image.png">
     <title>Turinio DI sistema – rinkodaros vadovams</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <style>html { scroll-behavior: smooth; }</style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+        {"@context":"https://schema.org","@type":"WebSite","name":"Prompt Anatomy Teams","url":"https://ditreneris.github.io/cmo/","inLanguage":["lt","en"],"publisher":{"@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.app/"}}
+    </script>
+    <script type="application/ld+json">
+        {"@context":"https://schema.org","@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.app/","sameAs":["https://ditreneris.github.io/cmo/","https://t.me/prompt_anatomy"]}
+    </script>
     <style>
         * {
             margin: 0;
@@ -128,7 +151,7 @@
             position: absolute;
             inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            opacity: 0.06;
+            opacity: 0.04;
             pointer-events: none;
             z-index: 0;
             mix-blend-mode: overlay;
@@ -157,12 +180,12 @@
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px); /* Safari palaikymas */
-            padding: 9px 18px;
+            padding: 8px 16px;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
         }
 
         .badge-spinoff {
@@ -245,7 +268,7 @@
         }
 
         .header-cta {
-            margin-top: 22px;
+            margin-top: 24px;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -267,7 +290,7 @@
             font-size: 17px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             text-decoration: none;
             box-shadow: 0 4px 14px rgba(60, 72, 90, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
             outline: none;
@@ -299,10 +322,10 @@
             font-size: 17px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             text-decoration: none;
             outline: none;
-            opacity: 0.6;
+            opacity: 0.85;
         }
 
         .cta-button-outline:hover,
@@ -389,7 +412,7 @@
             justify-content: center;
             font-size: 20px;
             color: var(--text-light);
-            transition: all 0.2s;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
 
         .modal-close:hover {
@@ -661,6 +684,144 @@
             font-size: 18px;
         }
 
+        /* ===== UPGRADE LAYER (explain + schema + FAQ) ===== */
+        .upgrade-section {
+            background: var(--white);
+            border: 3px solid var(--accent-dark);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+        }
+
+        .upgrade-section h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent-dark);
+            margin-bottom: 12px;
+        }
+
+        .upgrade-section p {
+            font-size: 17px;
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .anatomy-parts,
+        .schema-steps {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .anatomy-parts li,
+        .schema-steps li {
+            font-size: 17px;
+            color: var(--text);
+            line-height: 1.7;
+            padding-left: 24px;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .anatomy-parts li::before,
+        .schema-steps li::before {
+            content: '•';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            color: var(--accent-gold-dark);
+            font-weight: 800;
+        }
+
+        .mini-formula {
+            display: inline-block;
+            font-weight: 700;
+            color: var(--accent-dark);
+            background: var(--orange-light);
+            border: 2px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 6px 10px;
+        }
+
+        .meme-slot {
+            margin: 16px 0;
+            background: linear-gradient(180deg, var(--white) 0%, var(--bg-subtle) 100%);
+            border: 1px solid rgba(30, 64, 175, 0.15);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .quoteable-block {
+            border-left: 4px solid var(--accent-primary);
+            background: var(--orange-light);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin: 12px 0;
+        }
+        .quoteable-block strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--accent-dark);
+        }
+        .quoteable-block p {
+            margin-bottom: 6px;
+            font-size: 16px;
+        }
+        .quoteable-block a {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent-dark);
+        }
+
+        .faq-items {
+            display: grid;
+            gap: 10px;
+        }
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fff;
+            padding: 8px 12px;
+        }
+        .faq-item summary {
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--accent-dark);
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        .faq-item p {
+            margin: 8px 0 4px;
+            font-size: 16px;
+        }
+
+        .meme-slot:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 36px rgba(15, 23, 42, 0.13);
+        }
+
+        .meme-slot img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            background: var(--bg-subtle);
+        }
+
+        .meme-caption {
+            padding: 12px 14px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-light);
+            border-top: 1px solid rgba(30, 64, 175, 0.12);
+            background: rgba(255, 255, 255, 0.92);
+            font-weight: 600;
+        }
+
         .prompt-time {
             display: inline-block;
             font-size: 13px;
@@ -755,7 +916,7 @@
             margin-top: 20px;
             margin-bottom: 24px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             position: relative;
             outline: none;
             min-height: 44px;
@@ -862,7 +1023,7 @@
             font-size: 18px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             font-family: 'Inter', sans-serif;
             box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
             outline: none;
@@ -1105,7 +1266,6 @@
         .community-cta-secondary {
             display: inline-flex;
             align-items: center;
-            margin-top: 16px;
             padding: 12px 20px;
             border: 2px solid var(--accent-dark);
             border-radius: 12px;
@@ -1466,6 +1626,9 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/utilities.css">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Pereiti prie turinio</a>
@@ -1499,6 +1662,16 @@
                 <li>Testuosi ir optimizuosi pagal aiškius matavimo rodiklius</li>
                 <li>Dirbsi uždaru ciklu: Planuok → Kurk → Platink → Matuok → Spręsk</li>
             </ul>
+            <div class="quoteable-block">
+                <strong>Apibrėžimas CMO lygmeniui</strong>
+                <p>Prompt Anatomy yra praktinė AI operacinė sistema komandai: mažiau spėjimų, daugiau kontrolės ir aiškus sprendimų ciklas.</p>
+                <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Oficiali metodika: promptanatomy.app →</a>
+            </div>
+            <div class="quoteable-block">
+                <strong>Kada naudoti</strong>
+                <p>Naudok, kai reikia greičiau paleisti turinį, sumažinti komandų trintį ir išlaikyti vienodą kokybę per kanalus.</p>
+                <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Pilnas framework ir kontekstas →</a>
+            </div>
         </section>
 
         <!-- INSTRUCTIONS (M4: laiko signalas) -->
@@ -1514,6 +1687,44 @@
                 <li>Įklijuok į ChatGPT, Claude ar kitą DI (dirbtinio intelekto) įrankį</li>
                 <li>Pakeisk <code>[auditorija]</code>, <code>[galvos skausmas]</code>, <code>[unikalus pardavimo pasiūlymas]</code>, <code>[kanalas]</code> ir kitus laukus savo duomenimis – ir gauk rezultatą</li>
             </ol>
+        </section>
+
+        <section class="upgrade-section" id="what-is-prompt" aria-labelledby="what-is-prompt-title">
+            <h2 id="what-is-prompt-title">Kas yra prompt?</h2>
+            <p>Promptas yra aiški instrukcija DI įrankiui: ką daryti, kam daryti ir kokiu formatu grąžinti rezultatą.</p>
+            <p>Kuo promptas tikslesnis, tuo mažiau taisymų po pirmo atsakymo.</p>
+            <p><span class="mini-formula">Kontekstas + Tikslas + Ribos + Formatas</span></p>
+            <figure class="meme-slot" id="meme-slot-1" aria-label="Meme vieta 1">
+                <img src="data/Untitled%20design%20(35).png" alt="Meme apie neaiškų promptą ir netikslų rezultatą" loading="lazy" decoding="async">
+                <figcaption class="meme-caption">Meme vieta #1: Kai parašai vieną neaiškų sakinį ir tikiesi tobulo plano.</figcaption>
+            </figure>
+        </section>
+
+        <section class="upgrade-section" id="prompt-anatomy" aria-labelledby="prompt-anatomy-title">
+            <h2 id="prompt-anatomy-title">Kas yra Prompt Anatomy?</h2>
+            <p>Prompt Anatomy yra struktūra, kuri padeda rašyti promptus taip, kad rezultatas būtų nuoseklus ir pakartojamas.</p>
+            <ul class="anatomy-parts">
+                <li>Rolė: kas kalba ir kokio lygio ekspertika.</li>
+                <li>Kontekstas: situacija, auditorija ir apribojimai.</li>
+                <li>Tikslas: vienas aiškus rezultatas.</li>
+                <li>Ribos: tonas, ilgis, kas neleidžiama.</li>
+                <li>Formatas: kaip turi atrodyti atsakymas.</li>
+                <li>Vertinimas: pagal ką spręsti ar atsakymas geras.</li>
+            </ul>
+            <figure class="meme-slot" id="meme-slot-2" aria-label="Meme vieta 2">
+                <img src="data/Untitled%20design%20(36).png" alt="Meme apie perėjimą nuo chaoso prie aiškios promptų struktūros" loading="lazy" decoding="async">
+                <figcaption class="meme-caption">Meme vieta #2: Kai iš „parašyk kažką“ pereini į aiškią struktūrą ir rezultatas pagaliau normalus.</figcaption>
+            </figure>
+        </section>
+
+        <section class="upgrade-section" id="framework-schema" aria-labelledby="framework-schema-title">
+            <h2 id="framework-schema-title">Schema: kaip dirbti su šia biblioteka</h2>
+            <ul class="schema-steps">
+                <li>Planuok: pasirink vieną tikslą ir vieną auditoriją.</li>
+                <li>Kurk: paleisk promptą su savo duomenimis.</li>
+                <li>Tikrink: įvertink rezultatą pagal matavimo rodiklius.</li>
+                <li>Tobulink: pakoreguok promptą ir kartok ciklą.</li>
+            </ul>
         </section>
 
         <!-- PROGRESS INDICATOR (S1) -->
@@ -1540,9 +1751,8 @@
                      id="block1" 
                      role="button"
                      tabindex="0"
-                     aria-label="Pasirinkti ir kopijuoti promptą 1"
-                     onclick="selectText(this)"
-                     onkeydown="handleCodeBlockKeydown(event, this)">
+                     data-prompt-id="prompt1"
+                     aria-label="Pasirinkti ir kopijuoti promptą 1">
                     <pre class="code-text" id="prompt1">META: Tu esi rinkodaros strategas. Tikslas: 30 dienų planas pagal 4 principus (Autoritetas, Problema, Pavyzdys, Pasiūlymas).
 
 INPUT: Auditorija [ ], galvos skausmas [ ], unikalus pardavimo pasiūlymas [ ], kanalas [ ]. Kiekvienai dienai – vienas iš 4 principų; matomi matavimo rodikliai.
@@ -1560,7 +1770,6 @@ OUTPUT: Lentelė/sąrašas – 30 dienų: tema, įžanginis kabliukas, formatas,
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
                 <button class="btn" 
-                        onclick="copyPrompt(this, 'prompt1')"
                         aria-label="Kopijuoti promptą 1 į mainų atmintinę"
                         data-prompt-id="prompt1">
                     <span aria-hidden="true">📋</span>
@@ -1589,9 +1798,8 @@ OUTPUT: Lentelė/sąrašas – 30 dienų: tema, įžanginis kabliukas, formatas,
                      id="block2" 
                      role="button"
                      tabindex="0"
-                     aria-label="Pasirinkti ir kopijuoti promptą 2"
-                     onclick="selectText(this)"
-                     onkeydown="handleCodeBlockKeydown(event, this)">
+                     data-prompt-id="prompt2"
+                     aria-label="Pasirinkti ir kopijuoti promptą 2">
                     <pre class="code-text" id="prompt2">META: Tu esi turinio strategas. Tikslas: 1 idėja → 7 formatų (ta pati žinutė, skirtingi kanalai).
 
 INPUT: Idėja [ ]. Ta pati branduolinė žinutė; pritaikyta kanalui.
@@ -1609,7 +1817,6 @@ OUTPUT: 7 blokai – LinkedIn, karuselė, 30s video, el. laiškas, titulinis ekr
             <div class="prompt-footer">
                 <p class="prompt-cta">Įklijuok į ChatGPT arba Claude ir pakeisk laukus savo duomenimis.</p>
                 <button class="btn" 
-                        onclick="copyPrompt(this, 'prompt2')"
                         aria-label="Kopijuoti promptą 2 į mainų atmintinę"
                         data-prompt-id="prompt2">
                     <span aria-hidden="true">📋</span>
@@ -1638,9 +1845,8 @@ OUTPUT: 7 blokai – LinkedIn, karuselė, 30s video, el. laiškas, titulinis ekr
                      id="block3" 
                      role="button"
                      tabindex="0"
-                     aria-label="Pasirinkti ir kopijuoti promptą 3"
-                     onclick="selectText(this)"
-                     onkeydown="handleCodeBlockKeydown(event, this)">
+                     data-prompt-id="prompt3"
+                     aria-label="Pasirinkti ir kopijuoti promptą 3">
                     <pre class="code-text" id="prompt3">META: Tu esi LinkedIn/autoriteto specialistas. Tikslas: postas B2B skaitytojams su įrodymais.
 
 INPUT: Tema [ ], pavyzdys/skaičius [ ]. 150–200 žodžių; be tuščių frazių.
@@ -1658,7 +1864,6 @@ OUTPUT: 1 postas – įžanginis kabliukas, 3 punktai, 1 pavyzdys, raginimas vei
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
                 <button class="btn" 
-                        onclick="copyPrompt(this, 'prompt3')"
                         aria-label="Kopijuoti promptą 3 į mainų atmintinę"
                         data-prompt-id="prompt3">
                     <span aria-hidden="true">📋</span>
@@ -1687,9 +1892,8 @@ OUTPUT: 1 postas – įžanginis kabliukas, 3 punktai, 1 pavyzdys, raginimas vei
                      id="block4" 
                      role="button"
                      tabindex="0"
-                     aria-label="Pasirinkti ir kopijuoti promptą 4"
-                     onclick="selectText(this)"
-                     onkeydown="handleCodeBlockKeydown(event, this)">
+                     data-prompt-id="prompt4"
+                     aria-label="Pasirinkti ir kopijuoti promptą 4">
                     <pre class="code-text" id="prompt4">META: Tu esi video scenarijų autorius (Reels/TikTok/Shorts). Tikslas: 30 s scenarijus – sustabdyti žiūrovą, gauti reakciją.
 
 INPUT: Tema [ ], pavyzdys [ ]. ~30 s; įžanginis kabliukas 0–2 s – pirmos sekundės sprendžia.
@@ -1707,7 +1911,6 @@ OUTPUT: Laiko žymės – 0–2 s įžanginis kabliukas, 3 punktai (~8–10 s ki
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok, įklijuok į DI įrankį ir pakeisk [tema], [pavyzdys] savo duomenimis.</p>
                 <button class="btn" 
-                        onclick="copyPrompt(this, 'prompt4')"
                         aria-label="Kopijuoti promptą 4 į mainų atmintinę"
                         data-prompt-id="prompt4">
                     <span aria-hidden="true">📋</span>
@@ -1736,9 +1939,8 @@ OUTPUT: Laiko žymės – 0–2 s įžanginis kabliukas, 3 punktai (~8–10 s ki
                      id="block5" 
                      role="button"
                      tabindex="0"
-                     aria-label="Pasirinkti ir kopijuoti promptą 5"
-                     onclick="selectText(this)"
-                     onkeydown="handleCodeBlockKeydown(event, this)">
+                     data-prompt-id="prompt5"
+                     aria-label="Pasirinkti ir kopijuoti promptą 5">
                     <pre class="code-text" id="prompt5">META: Tu esi analitikas. Tikslas: iš rodiklių – veiksmų planas („ką daryti rytoj“).
 
 INPUT: Rodikliai – skaičiai, kanalai, periodas [ ]. Kontekstas: ką bandėte, tikslai [ ]. Paremta duomenimis.
@@ -1756,7 +1958,6 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
                 <button class="btn" 
-                        onclick="copyPrompt(this, 'prompt5')"
                         aria-label="Kopijuoti promptą 5 į mainų atmintinę"
                         data-prompt-id="prompt5">
                     <span aria-hidden="true">📋</span>
@@ -1785,9 +1986,8 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                      id="block6" 
                      role="button"
                      tabindex="0"
-                     aria-label="Pasirinkti ir kopijuoti promptą 6"
-                     onclick="selectText(this)"
-                     onkeydown="handleCodeBlockKeydown(event, this)">
+                     data-prompt-id="prompt6"
+                     aria-label="Pasirinkti ir kopijuoti promptą 6">
                     <pre class="code-text" id="prompt6">META: Tu esi konversijos/turinio specialistas. Tikslas: turinys, neutralizuojantis prieštaravimus – mažesnė trintis, didesnis pasitikėjimas.
 
 INPUT: Prieštaravimų sąrašas [ ], produktas/pasiūlymas [ ]. Kiekvienas vienetas – vienas prieštaravimas; įtikinamai.
@@ -1805,7 +2005,6 @@ OUTPUT: 10 vienetų – postai/el. laiškai/landing, prieštaravimas + argumenta
             <div class="prompt-footer">
                 <p class="prompt-cta">Įklijuok į ChatGPT arba Claude – pakeisk prieštaravimus ir kontekstą.</p>
                 <button class="btn" 
-                        onclick="copyPrompt(this, 'prompt6')"
                         aria-label="Kopijuoti promptą 6 į mainų atmintinę"
                         data-prompt-id="prompt6">
                     <span aria-hidden="true">📋</span>
@@ -1834,9 +2033,8 @@ OUTPUT: 10 vienetų – postai/el. laiškai/landing, prieštaravimas + argumenta
                      id="block7" 
                      role="button"
                      tabindex="0"
-                     aria-label="Pasirinkti ir kopijuoti promptą 7"
-                     onclick="selectText(this)"
-                     onkeydown="handleCodeBlockKeydown(event, this)">
+                     data-prompt-id="prompt7"
+                     aria-label="Pasirinkti ir kopijuoti promptą 7">
                     <pre class="code-text" id="prompt7">META: Tu esi lead/konversijų specialistas. Tikslas: postas + 4 žinutės tiems, kurie augina lead'us ir nori vesti iš sekėjo į klientą.
 
 INPUT: Lead generator [ kas duodama, ką sprendžia ] [ ], auditorija [ ]. Postas – vienas raginimas veikti; seka: pristatyti → kvalifikacija → vertė → pasiūlymas.
@@ -1854,7 +2052,6 @@ OUTPUT: (1) Postas: įžanginis kabliukas, nauda, raginimas veikti. (2) 4 žinut
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
                 <button class="btn" 
-                        onclick="copyPrompt(this, 'prompt7')"
                         aria-label="Kopijuoti promptą 7 į mainų atmintinę"
                         data-prompt-id="prompt7">
                     <span aria-hidden="true">📋</span>
@@ -1883,9 +2080,8 @@ OUTPUT: (1) Postas: įžanginis kabliukas, nauda, raginimas veikti. (2) 4 žinut
                      id="block8" 
                      role="button"
                      tabindex="0"
-                     aria-label="Pasirinkti ir kopijuoti promptą 8"
-                     onclick="selectText(this)"
-                     onkeydown="handleCodeBlockKeydown(event, this)">
+                     data-prompt-id="prompt8"
+                     aria-label="Pasirinkti ir kopijuoti promptą 8">
                     <pre class="code-text" id="prompt8">META: Tu esi turinio/pardavimų specialistas. Tikslas: iš duomenų – struktūrizuota kliento istorija (kredibilitetas, konversija).
 
 INPUT: Klientas [ ], problema [ ], sprendimas [ ], procesas [ ], rezultatai (skaičiai/citatos) [ ]. Rezultatai – konkretūs.
@@ -1903,7 +2099,6 @@ OUTPUT: 6 sekcijos – Problema, Sprendimas, Procesas, Rezultatas, Pagrindinės 
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok – įrašyk kliento duomenis ir gauk struktūrizuotą istoriją.</p>
                 <button class="btn" 
-                        onclick="copyPrompt(this, 'prompt8')"
                         aria-label="Kopijuoti promptą 8 į mainų atmintinę"
                         data-prompt-id="prompt8">
                     <span aria-hidden="true">📋</span>
@@ -1932,9 +2127,8 @@ OUTPUT: 6 sekcijos – Problema, Sprendimas, Procesas, Rezultatas, Pagrindinės 
                      id="block9"
                      role="button"
                      tabindex="0"
-                     aria-label="Pasirinkti ir kopijuoti promptą 9"
-                     onclick="selectText(this)"
-                     onkeydown="handleCodeBlockKeydown(event, this)">
+                     data-prompt-id="prompt9"
+                     aria-label="Pasirinkti ir kopijuoti promptą 9">
                     <pre class="code-text" id="prompt9">META: Tu esi SEO/turinio specialistas. Tikslas: temų struktūra (pagrindinė + 8 subtemos) autoritetui ir organiniam pasiekiamumui.
 
 INPUT: Pagrindinė tema [ ], niša/vertė [ ]. 8 subtemos, logiškai susietos; vidinės nuorodos.
@@ -1952,7 +2146,6 @@ OUTPUT: (1) 1 pagrindinė tema – pavadinimas, aprašymas, raginimas veikti. (2
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
                 <button class="btn"
-                        onclick="copyPrompt(this, 'prompt9')"
                         aria-label="Kopijuoti promptą 9 į mainų atmintinę"
                         data-prompt-id="prompt9">
                     <span aria-hidden="true">📋</span>
@@ -1981,9 +2174,8 @@ OUTPUT: (1) 1 pagrindinė tema – pavadinimas, aprašymas, raginimas veikti. (2
                      id="block10"
                      role="button"
                      tabindex="0"
-                     aria-label="Pasirinkti ir kopijuoti promptą 10"
-                     onclick="selectText(this)"
-                     onkeydown="handleCodeBlockKeydown(event, this)">
+                     data-prompt-id="prompt10"
+                     aria-label="Pasirinkti ir kopijuoti promptą 10">
                     <pre class="code-text" id="prompt10">META: Tu esi rinkodaros strategas. Tikslas: vienas „valdymo centro" planas – turinys, 1→7 formatų, testavimas, prioritetai.
 
 INPUT: Verslas [ ], auditorija [ ], galvos skausmas [ ], unikalus pardavimo pasiūlymas [ ], tikslas [ ], kanalai [ ], duomenys (rodikliai, prieštaravimai, istorijos) [ ]. Konkretūs teiginiai, matuojamas raginimas veikti.
@@ -2001,7 +2193,6 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
             <div class="prompt-footer">
                 <p class="prompt-cta">Šis promptas apima viską – nukopijuok, įklijuok ir pildyk savo verslo laukus.</p>
                 <button class="btn"
-                        onclick="copyPrompt(this, 'prompt10')"
                         aria-label="Kopijuoti promptą 10 į mainų atmintinę"
                         data-prompt-id="prompt10">
                     <span aria-hidden="true">📋</span>
@@ -2032,6 +2223,36 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
             </div>
         </section>
 
+        <section class="upgrade-section" id="faq" aria-labelledby="faq-title">
+            <h2 id="faq-title">Dažniausi klausimai prieš startą</h2>
+            <div class="faq-items">
+                <details class="faq-item">
+                    <summary>Ar tinka pradedančiajam?</summary>
+                    <p>Taip, jei pildai laukus savo situacija, ne bendrais žodžiais.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Ar būtina naudoti visus 10?</summary>
+                    <p>Ne, pradėk nuo 1–3 ir plėskis pagal poreikį.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Kuo tai geriau nei random promptas?</summary>
+                    <p>Čia turi nuoseklią seką, aiškų tikslą ir vertinimą.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Kiek laiko skirti kasdien?</summary>
+                    <p>20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“.</p>
+                </details>
+            </div>
+            <p>Jei reikia pilnos metodikos su paaiškinimais vadovams, pereik į oficialų šaltinį: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>.</p>
+            <script type="application/ld+json">
+                {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Ar tinka pradedančiajam?","acceptedAnswer":{"@type":"Answer","text":"Taip, jei pildai laukus savo situacija, ne bendrais žodžiais."}},{"@type":"Question","name":"Ar būtina naudoti visus 10?","acceptedAnswer":{"@type":"Answer","text":"Ne, pradėk nuo 1-3 ir plėskis pagal poreikį."}},{"@type":"Question","name":"Kuo tai geriau nei random promptas?","acceptedAnswer":{"@type":"Answer","text":"Čia turi nuoseklią seką, aiškų tikslą ir vertinimą."}},{"@type":"Question","name":"Kiek laiko skirti kasdien?","acceptedAnswer":{"@type":"Answer","text":"20-30 min pakanka, jei dirbi ciklu Kurk -> Tikrink -> Tobulink."}}]}
+            </script>
+            <figure class="meme-slot" id="meme-slot-3" aria-label="Meme vieta 3">
+                <img src="data/Untitled%20design%20(22).png" alt="Meme apie tai, kad problema buvo ne AI, o neaiški instrukcija" loading="lazy" decoding="async">
+                <figcaption class="meme-caption">Meme vieta #3: Kai supranti, kad problema buvo ne DI, o neaiški instrukcija.</figcaption>
+            </figure>
+        </section>
+
         <!-- FOOTER -->
         <!-- BENDRUOMENĖ -->
         <section class="community" id="community" aria-labelledby="community-title">
@@ -2045,6 +2266,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
             <h3>Sėkmės rinkodaroje <span aria-hidden="true">🚀</span></h3>
             <p>Nepamiršk pakeisti <strong>[auditorija]</strong>, <strong>[galvos skausmas]</strong>, <strong>[unikalus pardavimo pasiūlymas]</strong>, <strong>[kanalas]</strong> ir kitus laukus savo duomenimis</p>
             <p class="footer-product-link">Tai Spin-off Nr. 2 iš „Promptų anatomijos“. Pilnas interaktyvus mokymas ir kiti kursai: <a href="https://www.promptanatomy.app/" target="_blank" rel="noopener noreferrer">Promptų anatomija →</a></p>
+            <p class="footer-product-link">Paskutinis atnaujinimas: 2026-04-29. Oficialus metodikos šaltinis ir brand centras: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>.</p>
             <p class="footer-email"><span id="footer-email-label">El. paštas:</span> <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a></p>
             <div class="tags" role="list">
                 <span class="tag" role="listitem"><span aria-hidden="true">📣</span> Rinkodara</span>
@@ -2155,6 +2377,44 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     instrOl[2].textContent = 'Paste into ChatGPT, Claude or another AI tool';
                     instrOl[3].textContent = 'Replace [audience], [pain point], [unique selling proposition], [channel] and other placeholders with your data – and get the result';
                 }
+
+                setText('#what-is-prompt-title', 'What is a prompt?');
+                var promptExpl = qa('#what-is-prompt p');
+                if (promptExpl.length >= 2) {
+                    promptExpl[0].textContent = 'A prompt is a clear instruction to an AI tool: what to do, for whom, and in which format.';
+                    promptExpl[1].textContent = 'The clearer the prompt, the fewer fixes you need after the first answer.';
+                }
+                setText('#what-is-prompt .mini-formula', 'Context + Goal + Constraints + Format');
+                setText('#meme-slot-1 .meme-caption', 'Meme slot #1: When you write one vague sentence and expect a perfect plan.');
+                setLabel('#meme-slot-1', 'Meme slot 1');
+
+                setText('#prompt-anatomy-title', 'What is Prompt Anatomy?');
+                var anatomyP = qa('#prompt-anatomy p');
+                if (anatomyP.length >= 1) {
+                    anatomyP[0].textContent = 'Prompt Anatomy is a structure that helps you write prompts with consistent and repeatable results.';
+                }
+                var anatomyLi = qa('#prompt-anatomy .anatomy-parts li');
+                var anatomyTexts = [
+                    'Role: who is speaking and at what expertise level.',
+                    'Context: situation, audience, and limits.',
+                    'Goal: one clear result.',
+                    'Constraints: tone, length, what is not allowed.',
+                    'Format: how the response must look.',
+                    'Evaluation: how to judge response quality.'
+                ];
+                anatomyLi.forEach(function(item, i) { if (anatomyTexts[i]) item.textContent = anatomyTexts[i]; });
+                setText('#meme-slot-2 .meme-caption', 'Meme slot #2: When you move from "write something" to a clear structure and the output is finally solid.');
+                setLabel('#meme-slot-2', 'Meme slot 2');
+
+                setText('#framework-schema-title', 'Framework: how to work with this library');
+                var schemaLi = qa('#framework-schema .schema-steps li');
+                var schemaTexts = [
+                    'Plan: choose one goal and one audience.',
+                    'Create: run the prompt with your real data.',
+                    'Check: evaluate output by your metrics.',
+                    'Improve: refine the prompt and repeat the cycle.'
+                ];
+                schemaLi.forEach(function(item, i) { if (schemaTexts[i]) item.textContent = schemaTexts[i]; });
                 var progressText = el('progressText');
                 if (progressText) progressText.textContent = 'You used 0 of 10 prompts';
                 var progressBar = q('.progress-bar[role="progressbar"]');
@@ -2208,6 +2468,26 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 var nextTitles = ['1. 30-day content system', '2. One idea → 7 formats', '3. LinkedIn authority building', '4. 30 sec video script', '5. Daily analysis (Action→Decision)', '6. Objection handling', '7. Lead generator post + DM sequence', '8. Customer story structure', '9. Topic cluster', '10. Main prompt (control centre)'];
                 nextLinks.forEach(function(a, i) { if (nextTitles[i]) a.textContent = nextTitles[i]; });
 
+                setText('#faq-title', 'Frequently asked questions before you start');
+                var faqSummaries = qa('#faq .faq-item summary');
+                var faqAnswers = qa('#faq .faq-item p');
+                var faqSummaryTexts = [
+                    'Is this for beginners?',
+                    'Do I need all 10 prompts?',
+                    'Why is this better than random prompts?',
+                    'How much time daily?'
+                ];
+                var faqAnswerTexts = [
+                    'Yes, if you fill placeholders with your real context.',
+                    'No, start with 1–3 and expand when needed.',
+                    'You get a clear sequence, goal, and evaluation.',
+                    '20–30 minutes is enough if you run Create → Check → Improve.'
+                ];
+                faqSummaries.forEach(function(item, i) { if (faqSummaryTexts[i]) item.textContent = faqSummaryTexts[i]; });
+                faqAnswers.forEach(function(item, i) { if (faqAnswerTexts[i]) item.textContent = faqAnswerTexts[i]; });
+                setText('#meme-slot-3 .meme-caption', 'Meme slot #3: When you realize AI was not the issue, the vague instruction was.');
+                setLabel('#meme-slot-3', 'Meme slot 3');
+
                 var commTitle = el('community-title');
                 if (commTitle) commTitle.innerHTML = 'Want more?<br>Join the Telegram group.';
                 var commP = q('.community p');
@@ -2222,6 +2502,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 var footP = qa('.footer p');
                 if (footP.length >= 1) footP[0].textContent = 'Remember to replace [audience], [pain point], [unique selling proposition], [channel] and other placeholders with your data';
                 if (footP.length >= 2) footP[1].innerHTML = 'This is Spin-off No. 2 from Prompt Anatomy. Full interactive training and other courses: <a href="https://www.promptanatomy.app/" target="_blank" rel="noopener noreferrer">Prompt Anatomy →</a>';
+                if (footP.length >= 3) footP[2].innerHTML = 'Last updated: 2026-04-29. Official methodology source and brand hub: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>.';
                 var tags = qa('.footer .tag');
                 var tagTexts = ['Marketing', '10 prompts', 'Action focus', 'Leads and metrics'];
                 tags.forEach(function(t, i) {
@@ -2235,7 +2516,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 var copyright = q('.copyright p');
                 if (copyright) {
                     var path = (window.location.pathname || '').toLowerCase();
-                    var privacyHref = (/\/lt(?:\/|$)/.test(path) || /\/en(?:\/|$)/.test(path)) ? '../privatumas.html' : 'privatumas.html';
+                    var privacyHref = locale === 'en' ? '../en/privacy.html' : ((/\/lt(?:\/|$)/.test(path) || /\/en(?:\/|$)/.test(path)) ? '../privatumas.html' : 'privatumas.html');
                     copyright.innerHTML = '&copy; 2026 Tomas Staniulis. Training material. All rights reserved. <a href="' + privacyHref + '">Privacy</a>';
                 }
                 var toast = el('toast');
@@ -2465,10 +2746,29 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 }, CONFIG.TOAST_DURATION);
             }
 
-            // ===== GLOBAL FUNKCIJOS (prieinamos HTML) =====
-            window.selectText = debounce(selectText, CONFIG.DEBOUNCE_DELAY);
-            window.copyPrompt = debounce(copyPrompt, CONFIG.DEBOUNCE_DELAY);
-            window.handleCodeBlockKeydown = handleCodeBlockKeydown;
+            const debouncedSelectText = debounce(selectText, CONFIG.DEBOUNCE_DELAY);
+            const debouncedCopyPrompt = debounce(copyPrompt, CONFIG.DEBOUNCE_DELAY);
+
+            function bindPromptInteractions() {
+                document.querySelectorAll('.code-block').forEach(function(block) {
+                    if (!block.hasAttribute('tabindex')) {
+                        block.setAttribute('tabindex', '0');
+                    }
+                    block.addEventListener('click', function() {
+                        debouncedSelectText(block);
+                    });
+                    block.addEventListener('keydown', function(event) {
+                        handleCodeBlockKeydown(event, block);
+                    });
+                });
+
+                document.querySelectorAll('.btn[data-prompt-id]').forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        const promptId = button.getAttribute('data-prompt-id');
+                        debouncedCopyPrompt(button, promptId);
+                    });
+                });
+            }
 
             // ===== KLAVIATŪROS SHORTCUTS =====
             document.addEventListener('keydown', function(event) {
@@ -2536,13 +2836,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
 
             // ===== INICIALIZACIJA =====
             document.addEventListener('DOMContentLoaded', function() {
-                // Pridėti klaviatūros navigaciją visiems code-block elementams
-                const codeBlocks = document.querySelectorAll('.code-block');
-                codeBlocks.forEach(block => {
-                    if (!block.hasAttribute('tabindex')) {
-                        block.setAttribute('tabindex', '0');
-                    }
-                });
+                bindPromptInteractions();
 
                 // M2: atkurti ir susieti "Pažymėjau kaip atlikau" checkbox būseną
                 loadPromptDoneState();
@@ -2576,7 +2870,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                         if (/\/en(?:\/|$)/.test(path)) {
                             window.location.href = window.location.pathname.replace(/\/en(?:\/|$)/, '/lt/') + hash;
                         } else {
-                            window.location.href = window.location.pathname + '?lang=lt' + hash;
+                            window.location.href = '/lt/' + hash;
                         }
                     });
                     langEnBtn.addEventListener('click', function() {
@@ -2587,7 +2881,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                         if (/\/lt(?:\/|$)/.test(path)) {
                             window.location.href = window.location.pathname.replace(/\/lt(?:\/|$)/, '/en/') + hash;
                         } else {
-                            window.location.href = window.location.pathname + '?lang=en' + hash;
+                            window.location.href = '/en/' + hash;
                         }
                     });
                 }

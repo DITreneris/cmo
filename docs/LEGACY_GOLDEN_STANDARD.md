@@ -8,7 +8,7 @@
 
 **LT/EN lokalizacija:** Keičiant tik turinio tekstus ir `lang`/meta – DOM (id, class, data-*), a11y struktūra (role, aria-* pavadinimai) lieka tie patys abiem kalbom. **Terminologija:** LT – naudoti **DI** (dirbtinis intelektas), EN – naudoti **AI** (Artificial Intelligence). EN versijoje turi būti lokalizuoti ir **promptų `<pre>` turiniai** (per `scripts/build-locale-pages.js` EN_REPLACEMENTS). Žr. [LT_EN_UI_UX_REPORT.md](../LT_EN_UI_UX_REPORT.md), [docs/GILI_ANALIZE_LT_EN_TERMINOLOGIJA.md](GILI_ANALIZE_LT_EN_TERMINOLOGIJA.md).
 
-**Build ir deploy:** Root `index.html` – vienintelis šaltinis; `scripts/build-locale-pages.js` generuoja `lt/index.html` ir `en/index.html`. Deploy (GitHub Pages) vykdo build su `BASE_PATH=/marketingas`, kad canonical ir hreflang būtų `/marketingas/lt/`, `/marketingas/en/`. Žr. [DEPLOYMENT.md](../DEPLOYMENT.md).
+**Build ir deploy:** Root `index.html` – vienintelis šaltinis; `scripts/build-locale-pages.js` generuoja `lt/index.html` ir `en/index.html`. Deploy (GitHub Pages) vykdo build su `BASE_PATH=/cmo`, kad canonical ir hreflang būtų `/cmo/lt/`, `/cmo/en/`. Žr. [DEPLOYMENT.md](../DEPLOYMENT.md).
 
 **Sinchronizuota su kodu (2026-03-09):** skip-link „Pereiti prie turinio“, hero (Turinio DI sistema / rinkodaros vadovams, Spin-off Nr. 2, Gauti nemokamai), progress bar `aria-label`, info-box „Informacija: promptas N“, puslapio title; footer – .footer-email, .footer-product-link; kalbos perjungiklis (.lang-switcher, langLtBtn, langEnBtn); **EN build** – instrukcijų 2 eilutė (kabučių atitikmuo „ “), laiko etiketė „~3–5 min per step“, CSS .code-block::before `content`, visi 10 promptų `<pre>` turinių LT→EN; EN hero title/h1 „for Marketing Leaders“ (atitinka LT „rinkodaros vadovams“). **privatumas.html:** „Grįžti“ nuorodos turi `id="back-link"` ir `id="back-link-footer"`; inline skriptas nustato `href` pagal `document.referrer` (lt/, en/ arba index.html), kad išsaugotų locale.
 
@@ -108,7 +108,7 @@ Koreguojant `.code-block` ar `.prompt` CSS, patikrinti: etiketė matoma, nesiker
 - [ ] Kiekvienas promptas lieka tos pačios struktūros: .prompt-header → .prompt-body (.code-block + .info-box) → .prompt-footer (.btn + .prompt-done).
 - [ ] .code-block turi `onclick="selectText(this)"` ir `onkeydown="handleCodeBlockKeydown(event, this)"`; .btn – `onclick="copyPrompt(this, 'promptN')"` su atitinkamu N.
 - [ ] Nauji ar pakeisti promptai naudoja tą patį HTML šabloną (article.prompt su tais pačiais klasėmis ir atributais).
-- [ ] Build: prieš release/deploy paleisti `npm run build`; deploy naudoja `BASE_PATH=/marketingas` (žr. .github/workflows/deploy.yml).
+- [ ] Build: prieš release/deploy paleisti `npm run build`; deploy naudoja `BASE_PATH=/cmo` (žr. .github/workflows/deploy.yml).
 - [ ] privatumas.html: nekeisti `id="back-link"`, `id="back-link-footer"` ir skripto logikos (referrer → lt/ | en/ | index.html).
 
 ---

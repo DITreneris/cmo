@@ -1,0 +1,57 @@
+{
+  "color": {
+    "surface": {
+      "page": "#F7F8FA",
+      "card": "#FFFFFF",
+      "subtle": "#F7FAFC"
+    },
+    "text": {
+      "primary": "#1A202C",
+      "secondary": "#4A5568",
+      "inverse": "#FFFFFF"
+    },
+    "brand": {
+      "primary": "#c75515",
+      "primaryHover": "#b54f14",
+      "dark": "#3C485A",
+      "darkHover": "#2D3848",
+      "tertiary": "#0D9488",
+      "tertiaryHover": "#0f766e",
+      "tertiaryLight": "#CCFBF1"
+    },
+    "semantic": {
+      "success": "#38A169",
+      "successHover": "#2F855A",
+      "error": "#E53E3E",
+      "border": "#CBD5E0"
+    }
+  },
+  "spacing": {
+    "2": "8px",
+    "3": "12px",
+    "4": "16px",
+    "5": "20px",
+    "6": "24px",
+    "7": "28px",
+    "8": "32px"
+  },
+  "radius": {
+    "sm": "8px",
+    "md": "12px",
+    "lg": "16px",
+    "xl": "20px",
+    "pill": "9999px"
+  },
+  "focus": {
+    "ringWidth": "3px",
+    "ringOffset": "2px"
+  },
+  "motion": {
+    "fast": "0.2s",
+    "base": "0.3s"
+  },
+  "shadow": {
+    "soft": "0 4px 20px rgba(0, 0, 0, 0.08)",
+    "raised": "0 10px 30px rgba(15, 23, 42, 0.08)"
+  }
+}

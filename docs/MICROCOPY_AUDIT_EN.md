@@ -1,5 +1,8 @@
 # Microcopy audit – English UI/UX
 
+> Statusas: Historical snapshot + partial backlog.  
+> Prieš taikant rekomendacijas būtina patikrinti aktualią `en/index.html` ir `en/privacy.html` būseną.
+
 **Scope:** English version (`en/index.html`, `en/privacy.html`, root `index.html`, dynamic JS strings)  
 **Date:** 2026-03-06  
 **Focus:** Clarity, consistency, tone, actionability, accessibility (aria-labels), errors, CTAs.
@@ -294,3 +297,54 @@ content: 'Select and copy';
 **7.5 Progress bar `aria-label`** – `en/index.html`: optional. Update the progress bar element so `aria-label` is dynamic, e.g. “Progress: X of 8 prompts used” (would require JS to set it when count changes).
 
 **7.6 Privacy – back link** – Already aligned: both top and bottom use “← Back to library” after high-priority pass.
+
+---
+
+## 8. US localization playbook update (2026-04-29)
+
+### 8.1 Zone model applied (content-only)
+
+- **Conversion-critical (L2-L3):** hero headline/subline, primary CTA, objectives headline, community headline, prompt body framing.
+- **Trust-critical (L1):** copy error states, copy fallback instructions, aria error labels.
+- **Utility (L1-L2):** instructions and tooltip copy (selection/copy guidance).
+
+### 8.2 EN-US mini style guide (implemented)
+
+1. Use plain US business English, short action-first sentences.
+2. Prefer US terms and spelling (`focused`, `optimize`, `behavior`).
+3. Use colloquial flavor only in conversion sections; avoid slang in error/help text.
+4. Use concrete operator language: `KPI`, `CTA`, `pipeline`, `test`, `pause`.
+5. Include city examples only when they improve scenario clarity (not decoration).
+6. Include `$` framing when discussing budget or impact.
+7. Keep CTA verbs consistent (`Get started`, `Join`, `Copy`).
+8. Error copy must include a recovery action.
+9. Avoid defensive wording (`actually`) in section titles.
+10. Keep trust copy calm and neutral; no hype in fallback/error states.
+
+### 8.3 Before/after examples (selected)
+
+- **Hero CTA**
+  - Before: `Get free`
+  - After: `Get started free`
+
+- **Objectives title**
+  - Before: `What you actually get`
+  - After: `What you get`
+
+- **Tooltip**
+  - Before: `Click here and copy`
+  - After: `Click to select and copy`
+
+- **Error handling**
+  - Before: `Error: missing parameters`
+  - After: `Something went wrong. Try copying again.`
+
+- **Prompt localization style**
+  - Before: generic prompt phrasing without local market context
+  - After: US market framing with city examples (`Austin, Miami, Chicago`) and `$`-based budget/impact cues where relevant
+
+### 8.4 Files updated in this pass
+
+- `data/en-prompt-bodies.json`
+- `scripts/build-locale-pages.js`
+- Generated outputs: `en/index.html`, `js/en-prompt-bodies-inline.js`

@@ -1,0 +1,37 @@
+/* Cross-component interaction and accessibility utilities. */
+
+.skip-link:focus,
+.lang-btn:focus-visible,
+.header-badges a.badge:focus-visible,
+.cta-button:focus-visible,
+.cta-button-outline:focus-visible,
+.modal-close:focus-visible,
+.form-submit:focus-visible,
+.code-block:focus-visible,
+.btn:focus-visible,
+.next-steps-links a:focus-visible,
+.community-cta-primary:focus-visible,
+.community-cta-secondary:focus-visible,
+.copyright a:focus-visible {
+  outline-width: var(--focus-ring-width);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.focus-ring-dark:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-brand-dark);
+}
+
+.focus-ring-brand:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-brand-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .cta-button,
+  .cta-button-outline,
+  .community-cta-primary,
+  .community-cta-secondary,
+  .prompt {
+    transition-duration: 0.01ms !important;
+  }
+}

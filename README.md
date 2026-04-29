@@ -9,6 +9,8 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 ### Funkcijos
 
 - **10 promptų** (Pradžia, Įgūdžiai, Plėtra, Viskas kartu) – kopijuoti į ChatGPT, Claude ar kitą DI įrankį
+- **Upgrade sluoksnis prieš promptus** – aiškinimas „Kas yra prompt?“, „Kas yra Prompt Anatomy?“ ir darbo schema
+- **FAQ + meme slotai** – numatytos vietos greitam aiškumui ir lengvam dėmesio atstatymui
 - **Interaktyvus dizainas** – oranžinė paletė, aiškūs mygtukai, progresas (0/10)
 - **Kopijavimas** – pasirink promptą, spausk „Kopijuoti promptą“, įklijuok ir pakeisk laukus
 - **Responsive** – veikia desktop ir mobiliai (Mobile UI First)
@@ -29,7 +31,7 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 
 ## Kaip naudoti
 
-1. Atidarykite [index.html](index.html) naršyklėje arba gyvą svetainę: [ditreneris.github.io/marketingas](https://ditreneris.github.io/marketingas/)
+1. Atidarykite [index.html](index.html) naršyklėje arba gyvą svetainę: [ditreneris.github.io/cmo](https://ditreneris.github.io/cmo/)
 2. Pasirinkite promptą ir spauskite ant jo – tekstas pažymėsis
 3. Spauskite **„Kopijuoti promptą“** arba `Ctrl+C` / `Cmd+C`
 4. Įklijuokite į ChatGPT, Claude ar kitą DI (dirbtinio intelekto) įrankį
@@ -46,12 +48,12 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 
 ```
 .
-├── index.html              # Pagrindinis puslapis (hero, 10 promptų, instrukcijos)
+├── index.html              # Pagrindinis puslapis (hero, upgrade sluoksnis, 10 promptų, instrukcijos)
 ├── privatumas.html         # Privatumo politika
 ├── README.md               # Ši dokumentacija
 ├── CHANGELOG.md            # Versijų istorija (Keep a Changelog)
 ├── STYLEGUIDE.md           # Spalvos, komponentai, tipografija
-├── DEPLOYMENT.md           # Deploy į GitHub Pages (marketingas)
+├── DEPLOYMENT.md           # Deploy į GitHub Pages (cmo)
 ├── package.json            # npm test, lint:html, lint:js
 ├── .pa11yrc.json           # A11y (pa11y) – Chrome launch args CI
 ├── docs/
@@ -75,13 +77,13 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 ## Deployment ir gyvas testavimas
 
 - **Deploy:** GitHub Pages per [.github/workflows/deploy.yml](.github/workflows/deploy.yml). Instrukcijos: [DEPLOYMENT.md](DEPLOYMENT.md).
-- **Production URL:** https://ditreneris.github.io/marketingas/ (deploy tik į repo **marketingas**, žr. [DEPLOYMENT.md](DEPLOYMENT.md))
+- **Production URL:** https://ditreneris.github.io/cmo/ (deploy tik į repo **cmo**, žr. [DEPLOYMENT.md](DEPLOYMENT.md))
 - **QA standartas:** [DITreneris/spinoff01](https://github.com/DITreneris/spinoff01). Projektas laikosi [docs/QA_STANDARTAS.md](docs/QA_STANDARTAS.md); po deploy – gyvas testavimas pagal [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md).
 
 ## Reikalavimai
 
-- **Naudojimui:** Nėra būtinų priklausomybių – atidarykite index.html arba [ditreneris.github.io/marketingas](https://ditreneris.github.io/marketingas/)
-- **Development/CI:** `npm install`, `npm test` (struktūra + lint:html + lint:js). A11y: `npx serve -s . -l 3000` ir `npx pa11y http://localhost:3000/ --standard WCAG2AA` (žr. [DEPLOYMENT.md](DEPLOYMENT.md))
+- **Naudojimui:** Nėra būtinų priklausomybių – atidarykite index.html arba [ditreneris.github.io/cmo](https://ditreneris.github.io/cmo/)
+- **Development/CI:** `npm install`, `npm test` (build + `tests/structure` + `tests/design-system-smoke` + `tests/a11y-smoke` + `lint:html` + `lint:js`). A11y lokaliai: `npx serve -s . -l 3000` ir `npx pa11y http://localhost:3000/lt/ --standard WCAG2AA`.
 
 ## Kontaktų rinkimas (vėlesniems etapams)
 

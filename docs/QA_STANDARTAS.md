@@ -26,7 +26,7 @@
 
 ### Prieš kiekvieną merge / PR
 
-- [ ] `npm test` praeina (struktūra + `lint:html` + `lint:js`).
+- [ ] `npm test` praeina (build + struktūra + design-system smoke + a11y smoke + `lint:html` + `lint:js`).
 - [ ] CI (`.github/workflows/ci.yml`) praeina – lint, testai, pa11y (WCAG2AA).
 - [ ] Pakeitimams atitinka dokumentacijos atnaujinimai ([docs/DOCUMENTATION.md](DOCUMENTATION.md)).
 
@@ -47,8 +47,8 @@
 
 | Komanda | Paskirtis |
 |---------|-----------|
-| `npm test` | Struktūros testai + HTML/JS lint |
-| `npm run lint:html` | HTML validacija (index.html) |
+| `npm test` | Build (`lt/en`) + struktūra + design-system smoke + a11y smoke + HTML/JS lint |
+| `npm run lint:html` | HTML validacija (`index.html`, `lt/index.html`, `lt/privatumas.html`, `en/index.html`, `en/privacy.html`) |
 | `npm run lint:js` | ESLint |
 | A11y lokaliai | `npx serve -s . -l 3000` + `npx pa11y http://localhost:3000/ --standard WCAG2AA` |
 

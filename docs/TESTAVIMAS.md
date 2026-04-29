@@ -11,7 +11,7 @@ Po kiekvieno deploy atlikti gyvą testavimą ir rezultatus įrašyti čia (arba 
 
 | Laukas | Reikšmė |
 |--------|--------|
-| Production URL | https://ditreneris.github.io/marketingas/ |
+| Production URL | https://ditreneris.github.io/cmo/ |
 | Naršyklė(ės) | Chrome, Firefox, Safari, Edge |
 | Mobilus | iOS Safari / Chrome Mobile (pasirinktinai) |
 
@@ -24,7 +24,7 @@ Po kiekvieno deploy atlikti gyvą testavimą ir rezultatus įrašyti čia (arba 
 - [ ] **Kopijavimas:** Visi 10 promptų – pasirinkti → „Kopijuoti promptą“ → įklijuoti į DI (pvz. ChatGPT) – tekstas teisingas.
 - [ ] **Progresas:** „Pažymėjau kaip atlikau“ – varnelė įrašoma; perkrovus puslapį – progresas išsaugotas (localStorage).
 - [ ] **Skip link:** Tab iki „Praleisti į turinį“ – Enter – fokusas pereina į pagrindinį turinį.
-- [ ] **Privatumas:** Nuoroda į privatumas.html veikia; privatumas.html atsidaro ir rodo turinį.
+- [ ] **Privatumas:** Veikia `lt/privatumas.html` ir `en/privacy.html`; rodomos teisingos canonical/hreflang žymos.
 
 ### Prieinamumas (a11y)
 
@@ -73,7 +73,7 @@ Po kiekvieno deploy atlikti gyvą testavimą ir rezultatus įrašyti čia (arba 
 ## 2026-02-18 – pirmas deploy
 
 - **Testeris:** QA
-- **URL:** https://DITreneris.github.io/03_uzduotys/
+- **URL:** https://ditreneris.github.io/cmo/
 - **Naršyklė:** Chrome (desktop)
 - **Rezultatas:** ✅ Kopijavimas, progresas, skip link, privatumas – OK. Console be klaidų.
 - **Pastabos:** A11y tikrinta per CI (pa11y). Mobilus – planuojama kitame cikle.

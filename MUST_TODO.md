@@ -1,5 +1,8 @@
 # MUST TODO - Kritinės MVP Užduotys
 
+> Statusas: Historical / Deprecated (neaktyvus planavimo dokumentas).  
+> Aktualus vykdymas ir prioritetai valdomi per `CHANGELOG.md`, `docs/DOCUMENTATION.md` ir aktyvius PR planus.
+
 **Data:** 2026-02-03  
 **Tikslas:** Tik būtinos užduotys, kad produktas būtų production-ready
 

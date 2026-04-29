@@ -153,4 +153,28 @@
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-02-19
+## 7. Design system architektūra (v2)
+
+- **Vienas tokenų šaltinis:** [styles/design-tokens.json](styles/design-tokens.json)
+- **CSS sluoksniai:**
+  - [styles/tokens.css](styles/tokens.css) – custom properties (semantiniai + scale tokenai)
+  - [styles/components.css](styles/components.css) – komponentų bazė (`.btn`, `.prompt`, `.progress-wrap`, CTA)
+  - [styles/utilities.css](styles/utilities.css) – focus ring utility, reduced motion ir cross-component taisyklės
+- **Build lokalėms:** [scripts/build-locale-pages.js](scripts/build-locale-pages.js) perrašo `styles/` kelius į `../styles/` generuojant `lt/index.html` ir `en/index.html`.
+
+## 8. Komponentų būsenų matrica (minimumas)
+
+- **Interactive elementai (`.btn`, `.cta-button`, `.community-cta-*`):** `default`, `hover`, `focus-visible`, `success` (kur taikoma)
+- **Code block (`.code-block`):** `default`, `hover`, `focus-visible`, `selected`
+- **Progress (`.progress-wrap`, `.progress-bar-fill`):** `default`, dinamika per JS (`width`, `aria-valuenow`)
+- **A11y minimumas:** skip-link, focus-visible, reduced-motion, aria-label ant interaktyvių valdiklių
+
+## 9. Kokybės vartai
+
+- `npm run test:design-system` – tikrina CSS sluoksnių importus, tokenų grupes ir esminius selektorius.
+- `npm run test:a11y:smoke` – tikrina skip-link/focus-visible/reduced-motion/aria-label bazinius kriterijus LT/EN/root puslapiuose.
+- Pilnas vartas prieš merge: `npm test`.
+
+---
+
+**Paskutinis atnaujinimas:** 2026-04-29

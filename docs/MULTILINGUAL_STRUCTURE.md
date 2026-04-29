@@ -21,12 +21,14 @@
 
 ### Root `/`
 
-- Vienintelis failas: `index.html` (redirect puslapis).
-- Logika: nustatyti kalbą; tada `window.location.href = base + '/lt/'` arba `base + '/en/'`.
-- Kalbos nustatymas (prioritetas):
-  1. `localStorage.getItem('lang')` – jei vartotojas jau rinkosi kalbą.
-  2. `navigator.language` – jei pradedama `lt` → `/lt/`, kitaip → `/en/`.
-- **Base path:** Jei GitHub Pages project site (pvz. repo `biblioteka`), base = `/biblioteka`. Root user site – base = `''`.
+- `index.html` yra LT bazinis šaltinis (ne redirect failas).
+- `scripts/build-locale-pages.js` iš `index.html` sugeneruoja:
+  - `lt/index.html`
+  - `en/index.html`
+- Build metu canonical/hreflang URL sudaromi iš:
+  - `SITE_ORIGIN` (default: `https://ditreneris.github.io`)
+  - `BASE_PATH` (default: `/cmo`)
+- Deploy profile (GitHub Pages): `SITE_ORIGIN=https://ditreneris.github.io`, `BASE_PATH=/cmo`.
 
 ### Kalbos jungiklis
 
@@ -49,7 +51,7 @@ EN → LT:
   /en/privacy.html → /lt/privatumas.html
 ```
 
-Naudoti santykinius kelius iš root (pvz. `../en/`, `../lt/`) arba su base path priklausomai nuo to, kaip deploy’inama.
+Naudoti santykinius kelius iš root (pvz. `../en/`, `../lt/`) arba su base path priklausomai nuo deploy profilio.
 
 ---
 

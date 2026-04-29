@@ -2,43 +2,49 @@
 
 **QA standartas:** [DITreneris/spinoff01](https://github.com/DITreneris/spinoff01)
 
-**Production URL (šis projektas):** https://ditreneris.github.io/marketingas/
+**Production URL (šis projektas):** https://ditreneris.github.io/cmo/
+
+**GitHub repo:** [DITreneris/cmo](https://github.com/DITreneris/cmo)
 
 ---
 
 ## Įspėjimas: į kurią repo keliama
 
-- Šis projektas deploy'inamas **tik** į repo **marketingas** → URL `https://ditreneris.github.io/marketingas/`.
-- Lokaliai yra keli remotes: `marketing` (biblioteka), `spinoff01`, **`marketingas`**.
-- **Nepushinti į kitas repozitorijas** per klaidą. Naudoti tik: `git push marketingas main`.
+- Šis projektas deploy'inamas į repo **cmo** → URL `https://ditreneris.github.io/cmo/`.
+- Lokaliai pridėkite remote (žemiau). **Push į teisingą remote:** `git push cmo main` (arba jūsų remote vardas).
+- Jei turite kelis remotes (`marketing`, `marketingas`, `spinoff01`), nepushinkite į seną **marketingas**, nebent sąmoningai palaikote du veidrodžius.
 
 ---
 
 ## 1. GitHub Pages (rekomenduojama)
 
-### Pirmą kartą – deploy į marketingas
+### Šaltas deploy (tuščia repo, pirmas push)
 
-1. **GitHub:** sukurti repozitoriją **marketingas** (jei dar nėra) organizacijoje/vartotoje DITreneris. Repo pavadinimas turi būti būtent **marketingas**, kad URL būtų `https://ditreneris.github.io/marketingas/`.
-2. **Lokaliai:** įsitikinti, kad remote `marketingas` nurodo į teisingą repo:
+1. **GitHub:** repozitorija [DITreneris/cmo](https://github.com/DITreneris/cmo) turi būti sukurta (dabar gali būti tuščia).
+2. **Lokaliai** šiame kataloge:
    ```bash
-   git remote -v
-   # marketingas  https://github.com/DITreneris/marketingas.git (fetch)
-   # marketingas  https://github.com/DITreneris/marketingas.git (push)
+   npm install
+   npm test
+   git remote add cmo https://github.com/DITreneris/cmo.git
+   # Jei remote jau yra – naudokite: git remote set-url cmo https://github.com/DITreneris/cmo.git
+   git push -u cmo main
    ```
-3. **Push tik į marketingas:** `git push marketingas main` (ne `git push marketing main` ir ne `git push` be remote vardo).
-4. **GitHub (repo marketingas):** Settings → Pages → **Build and deployment** → Source: **GitHub Actions**.
-5. Po pirmo push workflow [.github/workflows/deploy.yml](.github/workflows/deploy.yml) paleidžiamas automatiškai: testai → deploy.
+   Jei GitHub dar rodo „empty“, pirmas push užpildo `main` su visu turiniu.
+3. **GitHub (repo cmo):** **Settings** → **Pages** → **Build and deployment** → **Source:** **GitHub Actions** (ne „Deploy from a branch“, nebent sąmoningai atsisakote workflow).
+4. Po pirmo push workflow [.github/workflows/deploy.yml](.github/workflows/deploy.yml) paleidžiamas: `npm test` → artefakto įkėlimas → publikacija į Pages.
 
 ### Vėlesni deploy
 
-- Kiekvienas `git push marketingas main` paleidžia testus ir deploy į https://ditreneris.github.io/marketingas/.
+- Kiekvienas `git push cmo main` paleidžia testus ir deploy į https://ditreneris.github.io/cmo/.
 
 ### URL
 
-- Šis projektas: `https://ditreneris.github.io/marketingas/`
-- Bendrai: `https://<org-or-username>.github.io/<repo-name>/`
+- Šis projektas: `https://ditreneris.github.io/cmo/`
+- Bendrai (projekto site): `https://<org-or-username>.github.io/<repo-name>/`
 
-### Rankinis deploy (repo marketingas)
+Build žingsnyje naudojamas **`BASE_PATH=/cmo`**, kad nuorodos, canonical ir hreflang atitiktų `/cmo/lt/`, `/cmo/en/`.
+
+### Rankinis deploy (repo cmo)
 
 - **Actions** → workflow **Deploy to GitHub Pages** → **Run workflow** (branch: `main`).
 
@@ -79,7 +85,7 @@ npx pa11y http://localhost:3000/en/privacy.html --standard WCAG2AA --ignore "war
 | Workflow nepaleidžiamas | Patikrinti, ar failas `.github/workflows/deploy.yml` yra `main` šakoje. |
 | **Deploy workflow failed** | Actions → atidaryti nepavykusį run → žiūrėti **test** job: jei nepraėjo `npm test`, lokaliai paleisti `npm test` ir taisyti; jei nepraėjo **deploy** job – tikrinti environment/permissions. |
 | **CI workflow failed** | Dažniausiai `pa11y` (a11y klaidos) arba `npm test`. Lokaliai: `npm test`, tada `npx serve -s . -l 3000` ir `npx pa11y http://localhost:3000/ --standard WCAG2AA`. |
-| **pa11y: No usable sandbox** (CI) | CI žingsnyje „Accessibility check (pa11y)“ įjungtas `continue-on-error: true` – workflow vis tiek žalias. Pilną a11y tikrinimą vykdykite lokaliai: `npx serve -s . -l 3000` ir `npx pa11y http://localhost:3000/ --standard WCAG2AA`. |
+| **pa11y: No usable sandbox** (CI) | `pa11y` yra privalomas CI žingsnis. Jei CI aplinkoje krenta dėl Chromium/sandbox, sutvarkyti launch args arba paleisti papildomą diagnostiką lokaliai (`npx serve -s . -l 3000` + `npx pa11y ...`) ir tik tada kartoti workflow. |
 | Svetainė tuščia / neteisingas kelias | Projektas – statinis iš root; `path: .` – teisingas. Jei naudojate subfolderį, pakeisti `path`. |
 
 ---

@@ -1,0 +1,57 @@
+/* Design system component layer. Shared by LT/EN pages. */
+
+body {
+  background: var(--color-surface-page);
+  color: var(--color-text-primary);
+}
+
+.prompt,
+.objectives,
+.instructions,
+.next-steps,
+.community,
+.footer {
+  border-radius: var(--radius-lg);
+}
+
+.btn,
+.cta-button,
+.cta-button-outline,
+.community-cta-primary,
+.community-cta-secondary {
+  border-radius: var(--radius-md);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover,
+.cta-button:hover,
+.cta-button-outline:hover,
+.community-cta-primary:hover,
+.community-cta-secondary:hover {
+  transform: translateY(-1px);
+}
+
+.btn.success {
+  background: var(--color-semantic-success);
+}
+
+.prompt {
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.prompt:hover {
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.13);
+}
+
+.progress-wrap {
+  border: 2px solid var(--color-brand-primary);
+}
+
+.progress-bar {
+  background: var(--color-border-default);
+}
+
+.progress-bar-fill {
+  background: var(--color-brand-primary);
+}

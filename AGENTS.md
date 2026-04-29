@@ -92,8 +92,8 @@ ORCHESTRATOR AGENT (koordinacija)
 | Komanda | Paskirtis |
 |---------|-----------|
 | `npm install` | Įdiegti priklausomybes |
-| `npm test` | Struktūros testai + lint (HTML, JS) |
-| `npm run lint:html` | HTML validacija (index.html) |
+| `npm test` | Build (`lt/en`) + struktūra + design-system smoke + a11y smoke + lint (HTML, JS) |
+| `npm run lint:html` | HTML validacija (`index.html`, `lt/index.html`, `lt/privatumas.html`, `en/index.html`, `en/privacy.html`) |
 | `npm run lint:js` | ESLint visiems .js failams |
 | CI (GitHub Actions) | Lint, test, pa11y a11y – automatiškai push/PR |
 
