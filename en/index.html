@@ -2340,6 +2340,19 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
             }
             resolveLocale();
 
+            // If user is on the project root (e.g. /cmo/), redirect to fully built locale pages (/cmo/lt/ or /cmo/en/).
+            // This prevents mixed-language rendering on the LT source page.
+            (function redirectRootToLocale() {
+                var path = (window.location.pathname || '').replace(/\/index\.html?$/i, '');
+                var base = getBasePathPrefix();
+                if (!base) return;
+                var pl = path.toLowerCase().replace(/\/?$/, '/');
+                var bl = base.toLowerCase().replace(/\/?$/, '/');
+                if (pl !== bl) return;
+                var target = base + '/' + (locale === 'en' ? 'en' : 'lt') + '/' + (window.location.hash || '');
+                try { window.location.replace(target); } catch (_) { window.location.href = target; }
+            })();
+
             function uiText(lt, en) {
                 return locale === 'lt' ? lt : en;
             }
