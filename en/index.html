@@ -2309,6 +2309,19 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                 if (/\/en(?:\/|$)/.test(path)) return 'en';
                 return '';
             }
+            /** GitHub Pages project site lives under /repo-name/ — navigation must use that prefix, not bare /en/. */
+            function getBasePathPrefix() {
+                var p = (window.location.pathname || '').replace(/\/index\.html?$/i, '');
+                if (!p.endsWith('/')) p += '/';
+                var pl = p.toLowerCase();
+                var iLt = pl.indexOf('/lt/');
+                if (iLt !== -1) return p.slice(0, iLt) || '';
+                var iEn = pl.indexOf('/en/');
+                if (iEn !== -1) return p.slice(0, iEn) || '';
+                var segs = p.split('/').filter(function(x) { return x.length > 0; });
+                if (segs.length === 1) return '/' + segs[0];
+                return '';
+            }
             function getLocaleFromQuery() {
                 var q = window.location.search && new URLSearchParams(window.location.search);
                 if (q && (q.get('lang') === 'lt' || q.get('lang') === 'en')) return q.get('lang');
@@ -2867,10 +2880,11 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                         try { localStorage.setItem(LANG_KEY, 'lt'); } catch (e) { /* ignore */ }
                         var hash = window.location.hash || '';
                         var path = (window.location.pathname || '').toLowerCase();
+                        var base = getBasePathPrefix();
                         if (/\/en(?:\/|$)/.test(path)) {
                             window.location.href = window.location.pathname.replace(/\/en(?:\/|$)/, '/lt/') + hash;
                         } else {
-                            window.location.href = '/lt/' + hash;
+                            window.location.href = base + '/lt/' + hash;
                         }
                     });
                     langEnBtn.addEventListener('click', function() {
@@ -2878,10 +2892,11 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                         try { localStorage.setItem(LANG_KEY, 'en'); } catch (e) { /* ignore */ }
                         var hash = window.location.hash || '';
                         var path = (window.location.pathname || '').toLowerCase();
+                        var base = getBasePathPrefix();
                         if (/\/lt(?:\/|$)/.test(path)) {
                             window.location.href = window.location.pathname.replace(/\/lt(?:\/|$)/, '/en/') + hash;
                         } else {
-                            window.location.href = '/en/' + hash;
+                            window.location.href = base + '/en/' + hash;
                         }
                     });
                 }

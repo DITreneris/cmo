@@ -22,6 +22,7 @@ Formatas pagal [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), versija
 
 ### Pakeista
 
+- **Kalbos perjungiklis GitHub Pages subkelyje (2026-04-29):** `index.html` – `getBasePathPrefix()` ir EN/LT navigacija naudoja repo prefiksą (pvz. `/cmo/en/`), ne absoliutų `/en/`, kuris rodė 404 ant `*.github.io/<repo>/`.
 - **GitHub Pages repo ir kelias – `cmo` (2026-04-29):** Production target: [DITreneris/cmo](https://github.com/DITreneris/cmo), `SITE_ORIGIN`/`BASE_PATH` = `https://ditreneris.github.io` + `/cmo`; deploy workflow (`.github/workflows/deploy.yml`), canonical/hreflang visuose puslapiuose, `robots.txt`, `sitemap.xml`, `DEPLOYMENT.md` (įskaitant šalto deploy į tuščią repo žingsnius).
 - **Dokumentacijos konsolidacija pagal realų pipeline (2026-04-29):** Atnaujinti `AGENTS.md`, `README.md`, `docs/QA_STANDARTAS.md`, `docs/MULTILINGUAL_STRUCTURE.md`, `docs/TESTAVIMAS.md`, `DEPLOYMENT.md` pagal faktinį `npm test` ir locale architektūrą; `MUST_TODO.md`, `MVP_ROADMAP.md`, `docs/MICROCOPY_AUDIT_EN.md` pažymėti kaip historical/deprecated.
 - **Privacy LT/EN UX parity (2026-04-29):** LT privatumo puslapiuose (`lt/privatumas.html`, root `privatumas.html`) pridėtas kalbos perjungiklis į EN, kad navigacija tarp locale būtų nuosekli.
