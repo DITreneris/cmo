@@ -4,7 +4,7 @@
   "private": true,
   "description": "DI Promptų Biblioteka – statinė HTML platforma",
   "scripts": {
-    "build": "node scripts/build-locale-pages.js",
+    "build": "node scripts/build-locale-pages.js && node scripts/vercel-export-public.js",
     "test": "npm run build && node tests/structure.test.js && node tests/design-system-smoke.test.js && node tests/a11y-smoke.test.js && npm run lint:html && npm run lint:js",
     "test:structure": "node tests/structure.test.js",
     "test:design-system": "node tests/design-system-smoke.test.js",
