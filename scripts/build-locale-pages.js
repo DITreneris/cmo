@@ -914,6 +914,11 @@ function insertSeo(html, locale) {
     locale === 'lt'
       ? 'Prompt Anatomy CMO rinkinys: 10 promptų, kurie padeda susidėlioti 30 d. planą, 1→7 formatus ir KPI ciklą. Kopijuok, įklijuok, paleisk. Be registracijos.'
       : 'Prompt Anatomy CMO Kit: 10 prompts to build a 30‑day plan, repurpose 1→7 formats, and run a KPI loop. Copy, paste, run. No sign‑up.';
+  const ogImageUrl = makeAbsoluteUrl('/og.png');
+  const ogImageAlt =
+    locale === 'lt'
+      ? 'Prompt Anatomy CMO rinkinys: 10 promptų (~45 min) – peržiūros paveikslas'
+      : 'Prompt Anatomy CMO Kit: 10 copy-paste prompts (45 min) – preview image';
   const insert = [
     `<link rel="canonical" href="${canonical}">`,
     `<link rel="alternate" hreflang="lt" href="${ltUrl}">`,
@@ -927,11 +932,15 @@ function insertSeo(html, locale) {
     `<meta property="og:url" content="${canonical}">`,
     `<meta property="og:site_name" content="Prompt Anatomy">`,
     `<meta property="og:locale" content="${ogLocale}">`,
-    '<meta property="og:image" content="https://promptanatomy.app/og-image.png">',
+    `<meta property="og:image" content="${ogImageUrl}">`,
+    '<meta property="og:image:width" content="1200">',
+    '<meta property="og:image:height" content="630">',
+    `<meta property="og:image:alt" content="${ogImageAlt}">`,
     '<meta name="twitter:card" content="summary_large_image">',
     `<meta name="twitter:title" content="${title}">`,
     `<meta name="twitter:description" content="${description}">`,
-    '<meta name="twitter:image" content="https://promptanatomy.app/og-image.png">'
+    `<meta name="twitter:image" content="${ogImageUrl}">`,
+    `<meta name="twitter:image:alt" content="${ogImageAlt}">`
   ].join('\n    ');
   return cleanHtml.replace(
     /<meta name="viewport" content="[^"]*">/,
