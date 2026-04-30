@@ -30,6 +30,11 @@ function ensureDir(dirPath) {
 
 const DATA_DIR = path.join(ROOT, 'data');
 const EN_PROMPT_BODIES_PATH = path.join(DATA_DIR, 'en-prompt-bodies.json');
+const EN_PROMPT_EXPECTED_PATH = path.join(DATA_DIR, 'en-prompt-expected.json');
+const EN_SCENARIOS_PATH = path.join(DATA_DIR, 'en-scenarios.json');
+const LT_PROMPT_EXPECTED_PATH = path.join(DATA_DIR, 'lt-prompt-expected.json');
+const LT_SCENARIOS_PATH = path.join(DATA_DIR, 'lt-scenarios.json');
+const PACKAGE_JSON_PATH = path.join(ROOT, 'package.json');
 const JS_DIR = path.join(ROOT, 'js');
 const EN_PROMPT_INLINE_JS_PATH = path.join(JS_DIR, 'en-prompt-bodies-inline.js');
 
@@ -40,6 +45,110 @@ function loadEnPromptBodies() {
     throw new Error('data/en-prompt-bodies.json must be a JSON array of exactly 10 strings');
   }
   return arr;
+}
+
+function loadEnPromptExpected() {
+  const raw = fs.readFileSync(EN_PROMPT_EXPECTED_PATH, 'utf8');
+  const arr = JSON.parse(raw);
+  if (!Array.isArray(arr) || arr.length !== 10) {
+    throw new Error('data/en-prompt-expected.json must be a JSON array of exactly 10 entries');
+  }
+  arr.forEach((bullets, i) => {
+    if (!Array.isArray(bullets) || bullets.length < 2) {
+      throw new Error(
+        'data/en-prompt-expected.json[' + i + '] must be an array of at least 2 strings'
+      );
+    }
+    bullets.forEach((b, j) => {
+      if (typeof b !== 'string' || !b.trim()) {
+        throw new Error(
+          'data/en-prompt-expected.json[' + i + '][' + j + '] must be a non-empty string'
+        );
+      }
+    });
+  });
+  return arr;
+}
+
+function loadEnScenarios() {
+  const raw = fs.readFileSync(EN_SCENARIOS_PATH, 'utf8');
+  const arr = JSON.parse(raw);
+  if (!Array.isArray(arr) || arr.length !== 3) {
+    throw new Error('data/en-scenarios.json must be a JSON array of exactly 3 scenarios');
+  }
+  arr.forEach((s, i) => {
+    const need = ['id', 'label', 'brief', 'nextAction', 'bottomLine', 'risks', 'questions'];
+    for (const k of need) {
+      if (s[k] === undefined || s[k] === null) {
+        throw new Error('data/en-scenarios.json[' + i + '] missing key: ' + k);
+      }
+    }
+    if (!Array.isArray(s.risks) || !Array.isArray(s.questions)) {
+      throw new Error('data/en-scenarios.json[' + i + ']: risks and questions must be arrays');
+    }
+  });
+  return arr;
+}
+
+function loadLtPromptExpected() {
+  const raw = fs.readFileSync(LT_PROMPT_EXPECTED_PATH, 'utf8');
+  const arr = JSON.parse(raw);
+  if (!Array.isArray(arr) || arr.length !== 10) {
+    throw new Error('data/lt-prompt-expected.json must be a JSON array of exactly 10 entries');
+  }
+  arr.forEach((bullets, i) => {
+    if (!Array.isArray(bullets) || bullets.length < 2) {
+      throw new Error(
+        'data/lt-prompt-expected.json[' + i + '] must be an array of at least 2 strings'
+      );
+    }
+    bullets.forEach((b, j) => {
+      if (typeof b !== 'string' || !b.trim()) {
+        throw new Error(
+          'data/lt-prompt-expected.json[' + i + '][' + j + '] must be a non-empty string'
+        );
+      }
+    });
+  });
+  return arr;
+}
+
+function loadLtScenarios() {
+  const raw = fs.readFileSync(LT_SCENARIOS_PATH, 'utf8');
+  const arr = JSON.parse(raw);
+  if (!Array.isArray(arr) || arr.length !== 3) {
+    throw new Error('data/lt-scenarios.json must be a JSON array of exactly 3 scenarios');
+  }
+  arr.forEach((s, i) => {
+    const need = ['id', 'label', 'brief', 'nextAction', 'bottomLine', 'risks', 'questions'];
+    for (const k of need) {
+      if (s[k] === undefined || s[k] === null) {
+        throw new Error('data/lt-scenarios.json[' + i + '] missing key: ' + k);
+      }
+    }
+    if (!Array.isArray(s.risks) || !Array.isArray(s.questions)) {
+      throw new Error('data/lt-scenarios.json[' + i + ']: risks and questions must be arrays');
+    }
+  });
+  return arr;
+}
+
+function readPackageVersion() {
+  const raw = fs.readFileSync(PACKAGE_JSON_PATH, 'utf8');
+  const pkg = JSON.parse(raw);
+  if (!pkg || typeof pkg.version !== 'string' || !pkg.version.trim()) {
+    throw new Error('package.json must contain a non-empty version string');
+  }
+  return pkg.version.trim();
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 /** LT <pre> inner text from root index.html, prompt1..prompt10 (order). */
@@ -66,6 +175,11 @@ function writeEnPromptInlineJs(enBodies) {
 }
 
 const EN_PROMPT_BODIES = loadEnPromptBodies();
+const EN_PROMPT_EXPECTED = loadEnPromptExpected();
+const EN_SCENARIOS = loadEnScenarios();
+const LT_PROMPT_EXPECTED = loadLtPromptExpected();
+const LT_SCENARIOS = loadLtScenarios();
+const PKG_VERSION = readPackageVersion();
 
 function injectEnPreBodies(html) {
   let out = html;
@@ -78,6 +192,721 @@ function injectEnPreBodies(html) {
     out = out.replace(re, `$1${body}$3`);
   }
   return out;
+}
+
+const EN_CONTEXT_BLOCK_HTML =
+  '<section class="cmo-context" id="cmo-context" aria-labelledby="cmo-context-title">\n' +
+  '            <h2 id="cmo-context-title" class="cmo-context-title">Marketing context (one block, every copy)</h2>\n' +
+  '            <p class="cmo-context-intro">Fill once. These five values plus the rules below are auto-prepended every time you click <strong>Copy prompt</strong>. Stored only in this browser session.</p>\n' +
+  '            <div class="cmo-context-form" id="cmoContextForm">\n' +
+  '                <fieldset class="cmo-context-fields">\n' +
+  '                    <legend class="cmo-context-legend">Marketing context fields</legend>\n' +
+  '                    <div class="cmo-context-row">\n' +
+  '                        <label for="cmoCtxAudience">Audience</label>\n' +
+  '                        <input type="text" id="cmoCtxAudience" name="audience" maxlength="160" placeholder="e.g. US B2B marketing leaders, 50-500 FTE">\n' +
+  '                    </div>\n' +
+  '                    <div class="cmo-context-row">\n' +
+  '                        <label for="cmoCtxOffer">Offer / USP</label>\n' +
+  '                        <input type="text" id="cmoCtxOffer" name="offer" maxlength="160" placeholder="e.g. AI content system that ships 100 assets in 30 days">\n' +
+  '                    </div>\n' +
+  '                    <div class="cmo-context-row">\n' +
+  '                        <label for="cmoCtxChannels">Channels</label>\n' +
+  '                        <input type="text" id="cmoCtxChannels" name="channels" maxlength="160" placeholder="e.g. LinkedIn, email, SEO">\n' +
+  '                    </div>\n' +
+  '                    <div class="cmo-context-row">\n' +
+  '                        <label for="cmoCtxGoal">Goal (this month)</label>\n' +
+  '                        <input type="text" id="cmoCtxGoal" name="goal" maxlength="160" placeholder="e.g. 30 qualified demos">\n' +
+  '                    </div>\n' +
+  '                    <div class="cmo-context-row">\n' +
+  '                        <label for="cmoCtxConstraint">Main constraint</label>\n' +
+  '                        <input type="text" id="cmoCtxConstraint" name="constraint" maxlength="160" placeholder="e.g. 5 hours/week, no design support">\n' +
+  '                    </div>\n' +
+  '                </fieldset>\n' +
+  '                <div class="cmo-context-actions">\n' +
+  '                    <button type="button" class="btn cmo-context-clear" id="cmoCtxClear">Clear context</button>\n' +
+  '                    <span class="cmo-context-status" id="cmoCtxStatus" aria-live="polite"></span>\n' +
+  '                </div>\n' +
+  '            </div>\n' +
+  '            <div class="cmo-context-rules" id="cmoContextRules" role="note" aria-label="Non-negotiable rules injected on copy">\n' +
+  '                <p class="cmo-context-rules-title"><strong>Rules injected on copy (non-negotiable)</strong></p>\n' +
+  '                <ul>\n' +
+  '                    <li>No generic advice. If context is missing, ask up to 3 targeted questions first.</li>\n' +
+  '                    <li>Do not invent numbers, claims, or testimonials. Flag what must be verified.</li>\n' +
+  '                    <li>Output must be usable: sections, owner where relevant, next action with deadline.</li>\n' +
+  '                </ul>\n' +
+  '            </div>\n' +
+  '        </section>\n\n' +
+  '        <!-- PROMPT 1 -->';
+
+function injectEnContextBlock(html) {
+  const anchor = '<!-- PROMPT 1 -->';
+  if (html.indexOf(anchor) === -1) {
+    throw new Error('injectEnContextBlock: anchor "<!-- PROMPT 1 -->" not found');
+  }
+  return html.replace(anchor, EN_CONTEXT_BLOCK_HTML);
+}
+
+function injectEnExpectedBullets(html) {
+  let out = html;
+  for (let i = 1; i <= 10; i++) {
+    const bullets = EN_PROMPT_EXPECTED[i - 1]
+      .map((b) => '                        <li>' + escapeHtml(b) + '</li>')
+      .join('\n');
+    const block =
+      '\n                <ul class="prompt-expected" id="expected' + i + '" aria-label="Expected output for prompt ' + i + '">\n' +
+      '                    <li class="prompt-expected-title">Expected output</li>\n' +
+      bullets +
+      '\n                </ul>';
+    const re = new RegExp(
+      '(<pre class="code-text" id="prompt' + i + '">[\\s\\S]*?</div>)(\\s*</div>\\s*<div class="prompt-footer">)',
+      ''
+    );
+    if (!re.test(out)) {
+      throw new Error('injectEnExpectedBullets: anchor not found for prompt ' + i);
+    }
+    out = out.replace(re, '$1' + block + '$2');
+  }
+  return out;
+}
+
+const EN_CONTEXT_SCRIPT =
+  '<script>\n' +
+  '        (function () {\n' +
+  "            'use strict';\n" +
+  "            if (!document.getElementById || !document.getElementById('cmo-context')) return;\n" +
+  '\n' +
+  "            var STORAGE_KEY = 'cmo.context.v1';\n" +
+  '            var FIELDS = [\n' +
+  "                { id: 'cmoCtxAudience', label: 'Audience' },\n" +
+  "                { id: 'cmoCtxOffer', label: 'Offer / USP' },\n" +
+  "                { id: 'cmoCtxChannels', label: 'Channels' },\n" +
+  "                { id: 'cmoCtxGoal', label: 'Goal (this month)' },\n" +
+  "                { id: 'cmoCtxConstraint', label: 'Main constraint' }\n" +
+  '            ];\n' +
+  "            var RULES_HEADER = 'RULES (non-negotiable)';\n" +
+  '            var RULES = [\n' +
+  "                '- No generic advice. If context is missing, ask up to 3 targeted questions first.',\n" +
+  "                '- Do not invent numbers, claims, or testimonials. Flag what must be verified.',\n" +
+  "                '- Output must be usable: sections, owner where relevant, next action with deadline.'\n" +
+  '            ];\n' +
+  '\n' +
+  '            function readContext() {\n' +
+  '                var out = {};\n' +
+  '                var anyValue = false;\n' +
+  '                FIELDS.forEach(function (f) {\n' +
+  '                    var el = document.getElementById(f.id);\n' +
+  "                    var v = el ? (el.value || '').trim() : '';\n" +
+  '                    out[f.id] = v;\n' +
+  '                    if (v) anyValue = true;\n' +
+  '                });\n' +
+  '                out.__hasAny = anyValue;\n' +
+  '                return out;\n' +
+  '            }\n' +
+  '\n' +
+  '            function persistContext() {\n' +
+  '                try {\n' +
+  '                    var values = {};\n' +
+  '                    FIELDS.forEach(function (f) {\n' +
+  '                        var el = document.getElementById(f.id);\n' +
+  "                        values[f.id] = el ? el.value : '';\n" +
+  '                    });\n' +
+  '                    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(values));\n' +
+  '                } catch (e) { /* ignore */ }\n' +
+  '            }\n' +
+  '\n' +
+  '            function restoreContext() {\n' +
+  '                try {\n' +
+  '                    var raw = sessionStorage.getItem(STORAGE_KEY);\n' +
+  '                    if (!raw) return;\n' +
+  '                    var values = JSON.parse(raw);\n' +
+  "                    if (!values || typeof values !== 'object') return;\n" +
+  '                    FIELDS.forEach(function (f) {\n' +
+  '                        var el = document.getElementById(f.id);\n' +
+  "                        if (el && typeof values[f.id] === 'string') el.value = values[f.id];\n" +
+  '                    });\n' +
+  '                } catch (e) { /* ignore */ }\n' +
+  '            }\n' +
+  '\n' +
+  '            function clearContext() {\n' +
+  '                FIELDS.forEach(function (f) {\n' +
+  '                    var el = document.getElementById(f.id);\n' +
+  "                    if (el) el.value = '';\n" +
+  '                });\n' +
+  '                try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }\n' +
+  "                var status = document.getElementById('cmoCtxStatus');\n" +
+  "                if (status) status.textContent = 'Context cleared.';\n" +
+  '            }\n' +
+  '\n' +
+  '            window.__CMO_COMPILE = function (promptId, originalText) {\n' +
+  '                if (!originalText) return originalText;\n' +
+  "                if (promptId === 'promptDemo') return originalText;\n" +
+  '                var ctx = readContext();\n' +
+  '                var lines = [];\n' +
+  '                if (ctx.__hasAny) {\n' +
+  "                    lines.push('CONTEXT');\n" +
+  '                    FIELDS.forEach(function (f) {\n' +
+  '                        var v = ctx[f.id];\n' +
+  "                        lines.push('- ' + f.label + ': ' + (v ? v : '[not set]'));\n" +
+  '                    });\n' +
+  "                    lines.push('');\n" +
+  '                }\n' +
+  '                lines.push(RULES_HEADER);\n' +
+  '                RULES.forEach(function (r) { lines.push(r); });\n' +
+  "                lines.push('');\n" +
+  "                lines.push('---');\n" +
+  "                lines.push('');\n" +
+  "                return lines.join('\\n') + originalText;\n" +
+  '            };\n' +
+  '\n' +
+  "            document.addEventListener('DOMContentLoaded', function () {\n" +
+  '                restoreContext();\n' +
+  '                FIELDS.forEach(function (f) {\n' +
+  '                    var el = document.getElementById(f.id);\n' +
+  "                    if (el) el.addEventListener('input', persistContext);\n" +
+  '                });\n' +
+  "                var clearBtn = document.getElementById('cmoCtxClear');\n" +
+  "                if (clearBtn) clearBtn.addEventListener('click', clearContext);\n" +
+  '            });\n' +
+  '        })();\n' +
+  '    </script>';
+
+function injectEnContextScript(html) {
+  const anchor = '</body>';
+  const idx = html.lastIndexOf(anchor);
+  if (idx === -1) {
+    throw new Error('injectEnContextScript: </body> not found');
+  }
+  return html.slice(0, idx) + '    ' + EN_CONTEXT_SCRIPT + '\n' + html.slice(idx);
+}
+
+function patchEnCopyPromptHook(html) {
+  const from = 'const promptText = promptElement.textContent?.trim();';
+  const to =
+    'const promptText = (window.__CMO_COMPILE ' +
+    '? window.__CMO_COMPILE(promptId, promptElement.textContent?.trim()) ' +
+    ': promptElement.textContent?.trim());';
+  if (html.indexOf(from) === -1) {
+    throw new Error('patchEnCopyPromptHook: copyPrompt anchor not found');
+  }
+  return html.split(from).join(to);
+}
+
+const TRUST_BLOCK_ANCHOR = '        <!-- KAS TOLIAU? (S2) -->';
+
+const EN_SAFETY_REVIEWER_TEXT =
+  'Act as a marketing risk reviewer. Review this AI-generated content before I publish it: [TEXT].\n' +
+  'Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:\n' +
+  '1) factual claims to verify (numbers, customer quotes, comparisons),\n' +
+  '2) brand/tone risks,\n' +
+  '3) legal or trust risks (claims, disclaimers, IP, testimonials),\n' +
+  '4) missing context a reader would need before acting,\n' +
+  '5) a safer revised version if needed.';
+
+const LT_SAFETY_REVIEWER_TEXT =
+  'Veik kaip rinkodaros rizikų recenzentas. Peržiūrėk šį DI sugeneruotą turinį prieš publikuodamas: [TEKSTAS].\n' +
+  'Auditorija: [AUDITORIJA]. Kanalas: [KANALAS]. Grąžink:\n' +
+  '1) faktinius teiginius, kuriuos reikia patvirtinti (skaičiai, klientų citatos, palyginimai),\n' +
+  '2) prekės ženklo / tono rizikas,\n' +
+  '3) teisines ar pasitikėjimo rizikas (teiginiai, atsisakymai, intelektinė nuosavybė, atsiliepimai),\n' +
+  '4) trūkstamą kontekstą, kurio skaitytojui reikia prieš veikdamas,\n' +
+  '5) saugesnę pataisytą versiją, jei reikia.';
+
+function scenarioPanelLines(s, labels) {
+  const lines = [s.brief, '', labels.next + ': ' + s.nextAction, labels.bottom + ': ' + s.bottomLine, '', labels.risks + ':'];
+  s.risks.forEach(function (r) {
+    lines.push('- ' + r);
+  });
+  lines.push('', labels.questions + ':');
+  s.questions.forEach(function (q) {
+    lines.push('- ' + q);
+  });
+  return lines.join('\n');
+}
+
+function buildScenarioStripSection(locale) {
+  const scenarios = locale === 'en' ? EN_SCENARIOS : LT_SCENARIOS;
+  const labels =
+    locale === 'en'
+      ? {
+          title: 'Choose a scenario',
+          intro: 'Pick a practice flow. Copy includes your saved marketing context and rules when set.',
+          tabLabel: 'Scenario tabs',
+          copyBrief: 'Copy scenario brief',
+          copyBtn: 'Copy brief',
+          next: 'Next action',
+          bottom: 'Bottom line',
+          risks: 'Risks',
+          questions: 'Questions'
+        }
+      : {
+          title: 'Pasirink scenarijų',
+          intro: 'Pasirink praktikos eigą. Kopijuojant įtraukiamas išsaugotas rinkodaros kontekstas ir taisyklės, jei užpildyta.',
+          tabLabel: 'Scenarijų kortelės',
+          copyBrief: 'Kopijuoti scenarijaus santrauką',
+          copyBtn: 'Kopijuoti santrauką',
+          next: 'Kitas veiksmas',
+          bottom: 'Esminė mintis',
+          risks: 'Rizikos',
+          questions: 'Klausimai'
+        };
+  const firstText = scenarioPanelLines(scenarios[0], {
+    next: labels.next,
+    bottom: labels.bottom,
+    risks: labels.risks,
+    questions: labels.questions
+  });
+  const tabs = scenarios
+    .map(function (s, i) {
+      const selected = i === 0 ? 'true' : 'false';
+      const tabId = 'cmo-scenario-tab-' + i;
+      const pressed = i === 0 ? 'true' : 'false';
+      return (
+        '                    <button type="button" class="cmo-scenario-tab" role="tab" id="' +
+        tabId +
+        '" aria-selected="' +
+        selected +
+        '" aria-controls="cmo-scenario-panel" tabindex="' +
+        (i === 0 ? '0' : '-1') +
+        '" data-scenario-index="' +
+        i +
+        '" aria-pressed="' +
+        pressed +
+        '">' +
+        escapeHtml(s.label) +
+        '</button>'
+      );
+    })
+    .join('\n');
+  return (
+    '        <section class="cmo-scenarios" id="cmo-scenarios" aria-labelledby="cmo-scenarios-title">\n' +
+    '            <h2 id="cmo-scenarios-title" class="cmo-scenarios-title">' +
+    escapeHtml(labels.title) +
+    '</h2>\n' +
+    '            <p class="cmo-scenarios-intro">' +
+    escapeHtml(labels.intro) +
+    '</p>\n' +
+    '            <div class="cmo-scenarios-tablist" role="tablist" aria-label="' +
+    escapeHtml(labels.tabLabel) +
+    '">\n' +
+    tabs +
+    '\n' +
+    '            </div>\n' +
+    '            <div id="cmo-scenario-panel" class="cmo-scenario-panel" role="tabpanel" tabindex="0" aria-labelledby="cmo-scenario-tab-0">\n' +
+    '                <div class="code-block cmo-scenario-code" role="region" aria-label="' +
+    escapeHtml(labels.copyBrief) +
+    '">\n' +
+    '                    <pre class="code-text" id="cmo-scenario-brief">' +
+    escapeHtml(firstText) +
+    '</pre>\n' +
+    '                </div>\n' +
+    '                <button type="button" class="btn" data-prompt-id="cmo-scenario-brief" aria-label="' +
+    escapeHtml(labels.copyBrief) +
+    '">\n' +
+    '                    <span aria-hidden="true">📋</span>\n' +
+    '                    <span>' +
+    escapeHtml(labels.copyBtn) +
+    '</span>\n' +
+    '                </button>\n' +
+    '            </div>\n' +
+    '        </section>\n\n'
+  );
+}
+
+function buildSafetySection(locale) {
+  const reviewerText = locale === 'en' ? EN_SAFETY_REVIEWER_TEXT : LT_SAFETY_REVIEWER_TEXT;
+  const copyLabel =
+    locale === 'en' ? 'Copy reviewer prompt' : 'Kopijuoti recenzento promptą';
+  const title = locale === 'en' ? 'Pre-publish safety' : 'Tikrinti prieš publikuojant';
+  const intro =
+    locale === 'en'
+      ? 'Run this reviewer prompt before you publish AI-assisted marketing. Copy includes your session context and rules when set.'
+      : 'Paleisk šį recenzento promptą prieš publikuodamas DI pagalbtą rinkodarą. Kopijuojant įtraukiamas sesijos kontekstas ir taisyklės, jei nustatyta.';
+  const checksTitle = locale === 'en' ? 'Quick checks' : 'Greita kontrolė';
+  const checks =
+    locale === 'en'
+      ? ['Facts verified', 'Brand/tone', 'Legal/trust', 'CTA + owner']
+      : ['Faktai patvirtinti', 'Prekės ženklas / tonas', 'Teisė / pasitikėjimas', 'CTA + savininkas'];
+  const checksLis = checks.map(function (c) {
+    return '                    <li>' + escapeHtml(c) + '</li>';
+  }).join('\n');
+  return (
+    '        <section class="cmo-safety" id="cmo-safety" aria-labelledby="cmo-safety-title">\n' +
+    '            <h2 id="cmo-safety-title" class="cmo-safety-title">' +
+    escapeHtml(title) +
+    '</h2>\n' +
+    '            <p class="cmo-safety-intro">' +
+    escapeHtml(intro) +
+    '</p>\n' +
+    '            <div class="cmo-safety-copy">\n' +
+    '                <div class="code-block cmo-safety-pre-wrap" role="region" aria-label="' +
+    escapeHtml(copyLabel) +
+    '">\n' +
+    '                    <pre class="code-text" id="cmo-safety-reviewer-prompt">' +
+    escapeHtml(reviewerText) +
+    '</pre>\n' +
+    '                </div>\n' +
+    '                <button type="button" class="btn" data-prompt-id="cmo-safety-reviewer-prompt" aria-label="' +
+    escapeHtml(copyLabel) +
+    '">\n' +
+    '                    <span aria-hidden="true">📋</span>\n' +
+    '                    <span>' +
+    escapeHtml(copyLabel) +
+    '</span>\n' +
+    '                </button>\n' +
+    '            </div>\n' +
+    '            <div class="cmo-safety-checks">\n' +
+    '                <p class="cmo-safety-checks-title">' +
+    escapeHtml(checksTitle) +
+    '</p>\n' +
+    '                <ul role="list">\n' +
+    checksLis +
+    '\n' +
+    '                </ul>\n' +
+    '            </div>\n' +
+    '        </section>\n\n'
+  );
+}
+
+function injectTrustBlocksBeforeNextSteps(html, locale) {
+  if (html.indexOf(TRUST_BLOCK_ANCHOR) === -1) {
+    throw new Error('injectTrustBlocksBeforeNextSteps: anchor not found');
+  }
+  const block = buildScenarioStripSection(locale) + buildSafetySection(locale) + TRUST_BLOCK_ANCHOR;
+  return html.replace(TRUST_BLOCK_ANCHOR, block);
+}
+
+const LT_CONTEXT_BLOCK_HTML =
+  '<section class="cmo-context" id="cmo-context" aria-labelledby="cmo-context-title">\n' +
+  '            <h2 id="cmo-context-title" class="cmo-context-title">Rinkodaros kontekstas (vienas blokas, kiekvienam kopijavimui)</h2>\n' +
+  '            <p class="cmo-context-intro">Užpildyk vieną kartą. Šios penkios reikšmės ir taisyklės žemiau automatiškai pridedamos kiekvieną kartą paspaudus <strong>Kopijuoti promptą</strong>. Saugojama tik šios naršyklės sesijoje.</p>\n' +
+  '            <div class="cmo-context-form" id="cmoContextForm">\n' +
+  '                <fieldset class="cmo-context-fields">\n' +
+  '                    <legend class="cmo-context-legend">Rinkodaros konteksto laukai</legend>\n' +
+  '                    <div class="cmo-context-row">\n' +
+  '                        <label for="cmoCtxAudience">Auditorija</label>\n' +
+  '                        <input type="text" id="cmoCtxAudience" name="audience" maxlength="160" placeholder="pvz. B2B rinkodaros vadovai Europoje, 50–500 FTE">\n' +
+  '                    </div>\n' +
+  '                    <div class="cmo-context-row">\n' +
+  '                        <label for="cmoCtxOffer">Pasiūlymas / UPP</label>\n' +
+  '                        <input type="text" id="cmoCtxOffer" name="offer" maxlength="160" placeholder="pvz. AI turinio sistema: 100 vienetų per 30 d.">\n' +
+  '                    </div>\n' +
+  '                    <div class="cmo-context-row">\n' +
+  '                        <label for="cmoCtxChannels">Kanalai</label>\n' +
+  '                        <input type="text" id="cmoCtxChannels" name="channels" maxlength="160" placeholder="pvz. LinkedIn, el. paštas, SEO">\n' +
+  '                    </div>\n' +
+  '                    <div class="cmo-context-row">\n' +
+  '                        <label for="cmoCtxGoal">Tikslas (šis mėnuo)</label>\n' +
+  '                        <input type="text" id="cmoCtxGoal" name="goal" maxlength="160" placeholder="pvz. 30 kvalifikuotų demo">\n' +
+  '                    </div>\n' +
+  '                    <div class="cmo-context-row">\n' +
+  '                        <label for="cmoCtxConstraint">Pagrindinis apribojimas</label>\n' +
+  '                        <input type="text" id="cmoCtxConstraint" name="constraint" maxlength="160" placeholder="pvz. 5 val./sav., nėra dizaino pagalbos">\n' +
+  '                    </div>\n' +
+  '                </fieldset>\n' +
+  '                <div class="cmo-context-actions">\n' +
+  '                    <button type="button" class="btn cmo-context-clear" id="cmoCtxClear">Išvalyti kontekstą</button>\n' +
+  '                    <span class="cmo-context-status" id="cmoCtxStatus" aria-live="polite"></span>\n' +
+  '                </div>\n' +
+  '            </div>\n' +
+  '            <div class="cmo-context-rules" id="cmoContextRules" role="note" aria-label="Privalomos taisyklės įterpiamos kopijuojant">\n' +
+  '                <p class="cmo-context-rules-title"><strong>TAISYKLĖS (privalomos)</strong></p>\n' +
+  '                <ul>\n' +
+  '                    <li>Be bendro patarimo. Jei trūksta konteksto, pirmiausia užduok iki 3 tikslinių klausimų.</li>\n' +
+  '                    <li>Nesugalvok skaičių, teiginių ar atsiliepimų. Pažymėk, ką reikia patvirtinti.</li>\n' +
+  '                    <li>Išvestis turi būti naudojama: skyriai, savininkas kur tinkama, kitas veiksmas su terminu.</li>\n' +
+  '                </ul>\n' +
+  '            </div>\n' +
+  '        </section>\n\n' +
+  '        <!-- PROMPT 1 -->';
+
+function injectLtContextBlock(html) {
+  const anchor = '<!-- PROMPT 1 -->';
+  if (html.indexOf(anchor) === -1) {
+    throw new Error('injectLtContextBlock: anchor "<!-- PROMPT 1 -->" not found');
+  }
+  return html.replace(anchor, LT_CONTEXT_BLOCK_HTML);
+}
+
+function injectLtExpectedBullets(html) {
+  let out = html;
+  for (let i = 1; i <= 10; i++) {
+    const bullets = LT_PROMPT_EXPECTED[i - 1]
+      .map((b) => '                        <li>' + escapeHtml(b) + '</li>')
+      .join('\n');
+    const block =
+      '\n                <ul class="prompt-expected" id="expected' +
+      i +
+      '" aria-label="Tikėtinas atsakymas promptui ' +
+      i +
+      '">\n' +
+      '                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>\n' +
+      bullets +
+      '\n                </ul>';
+    const re = new RegExp(
+      '(<pre class="code-text" id="prompt' + i + '">[\\s\\S]*?</div>)(\\s*</div>\\s*<div class="prompt-footer">)',
+      ''
+    );
+    if (!re.test(out)) {
+      throw new Error('injectLtExpectedBullets: anchor not found for prompt ' + i);
+    }
+    out = out.replace(re, '$1' + block + '$2');
+  }
+  return out;
+}
+
+function injectProviderRows(html, locale) {
+  const aria =
+    locale === 'en'
+      ? 'Open third-party AI provider sites in a new tab'
+      : 'Atidaryti trečiųjų šalių DI puslapius naujame skirtuke';
+  const aChat = locale === 'en' ? 'Open ChatGPT' : 'Atidaryti ChatGPT';
+  const aClaude = locale === 'en' ? 'Open Claude' : 'Atidaryti Claude';
+  const aGem = locale === 'en' ? 'Open Gemini' : 'Atidaryti Gemini';
+  const row =
+    '<div class="cmo-provider-row no-print" role="group" aria-label="' +
+    escapeHtml(aria) +
+    '">' +
+    '<a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">' +
+    escapeHtml(aChat) +
+    '</a>' +
+    '<span class="cmo-provider-sep" aria-hidden="true">·</span>' +
+    '<a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">' +
+    escapeHtml(aClaude) +
+    '</a>' +
+    '<span class="cmo-provider-sep" aria-hidden="true">·</span>' +
+    '<a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">' +
+    escapeHtml(aGem) +
+    '</a>' +
+    '</div>';
+  const needle = '</span>\n                </button>\n                <label class="prompt-done-wrap">';
+  const parts = html.split(needle);
+  if (parts.length !== 11) {
+    throw new Error(
+      'injectProviderRows: expected 10 prompt footers, got ' + (parts.length - 1)
+    );
+  }
+  return parts.join('</span>\n                </button>\n                ' + row + '\n                <label class="prompt-done-wrap">');
+}
+
+function injectFooterSuite(html, locale) {
+  const leaderUrl = 'https://ditreneris.github.io/leader/en/';
+  const cross =
+    locale === 'en'
+      ? 'Need the CEO/COO kit? <a href="' +
+        leaderUrl +
+        '" target="_blank" rel="noopener noreferrer">Open Prompt Anatomy Leader</a>'
+      : 'Reikia CEO/COO rinkinio? <a href="' +
+        leaderUrl +
+        '" target="_blank" rel="noopener noreferrer">Atidaryti Prompt Anatomy Leader</a>';
+  const badge =
+    locale === 'en'
+      ? 'Prompt Anatomy CMO Kit v' + PKG_VERSION
+      : 'Prompt Anatomy CMO rinkinys v' + PKG_VERSION;
+  const insert =
+    '            <div class="cmo-footer-meta print-muted">\n' +
+    '                <p class="cmo-footer-crosslink">' +
+    cross +
+    '</p>\n' +
+    '                <p class="cmo-kit-version" data-version="' +
+    escapeHtml(PKG_VERSION) +
+    '">' +
+    escapeHtml(badge) +
+    '</p>\n' +
+    '            </div>\n';
+  if (html.indexOf('<footer class="footer">') === -1) {
+    throw new Error('injectFooterSuite: footer not found');
+  }
+  return html.replace('<footer class="footer">', '<footer class="footer">\n' + insert);
+}
+
+function buildScenariosTabScript(locale) {
+  const scenarios = locale === 'en' ? EN_SCENARIOS : LT_SCENARIOS;
+  const labels =
+    locale === 'en'
+      ? { next: 'Next action', bottom: 'Bottom line', risks: 'Risks', questions: 'Questions' }
+      : { next: 'Kitas veiksmas', bottom: 'Esminė mintis', risks: 'Rizikos', questions: 'Klausimai' };
+  const jsonScenarios = JSON.stringify(scenarios);
+  const jsonLabels = JSON.stringify(labels);
+  return (
+    '<script>\n' +
+    '        (function () {\n' +
+    "            'use strict';\n" +
+    '            var SCENARIOS = ' +
+    jsonScenarios +
+    ';\n' +
+    '            var L = ' +
+    jsonLabels +
+    ';\n' +
+    "            function panelText(s) {\n" +
+    '                var lines = [s.brief, "", L.next + ": " + s.nextAction, L.bottom + ": " + s.bottomLine, "", L.risks + ":"];\n' +
+    '                s.risks.forEach(function (r) { lines.push("- " + r); });\n' +
+    '                lines.push("", L.questions + ":");\n' +
+    '                s.questions.forEach(function (q) { lines.push("- " + q); });\n' +
+    "                return lines.join('\\n');\n" +
+    '            }\n' +
+    "            document.addEventListener('DOMContentLoaded', function () {\n" +
+    "                var tabs = document.querySelectorAll('.cmo-scenario-tab');\n" +
+    "                var pre = document.getElementById('cmo-scenario-brief');\n" +
+    "                var panel = document.getElementById('cmo-scenario-panel');\n" +
+    '                if (!tabs.length || !pre) return;\n' +
+    '                function activate(index) {\n' +
+    '                    var s = SCENARIOS[index];\n' +
+    '                    if (!s) return;\n' +
+    '                    pre.textContent = panelText(s);\n' +
+    '                    tabs.forEach(function (btn, i) {\n' +
+    '                        var on = i === index;\n' +
+    "                        btn.setAttribute('aria-selected', on ? 'true' : 'false');\n" +
+    "                        btn.setAttribute('aria-pressed', on ? 'true' : 'false');\n" +
+    "                        btn.setAttribute('tabindex', on ? '0' : '-1');\n" +
+    '                        if (panel && on) panel.setAttribute("aria-labelledby", btn.id);\n' +
+    '                    });\n' +
+    '                }\n' +
+    '                tabs.forEach(function (btn, i) {\n' +
+    "                    btn.addEventListener('click', function () {\n" +
+    '                        activate(i);\n' +
+    '                    });\n' +
+    "                    btn.addEventListener('keydown', function (e) {\n" +
+    '                        var max = tabs.length - 1;\n' +
+    "                        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {\n" +
+    '                            e.preventDefault();\n' +
+    '                            var n = i < max ? i + 1 : 0;\n' +
+    '                            tabs[n].focus();\n' +
+    '                            activate(n);\n' +
+    "                        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {\n" +
+    '                            e.preventDefault();\n' +
+    '                            var p = i > 0 ? i - 1 : max;\n' +
+    '                            tabs[p].focus();\n' +
+    '                            activate(p);\n' +
+    '                        }\n' +
+    '                    });\n' +
+    '                });\n' +
+    '            });\n' +
+    '        })();\n' +
+    '    </script>'
+  );
+}
+
+const LT_CONTEXT_SCRIPT =
+  '<script>\n' +
+  '        (function () {\n' +
+  "            'use strict';\n" +
+  "            if (!document.getElementById || !document.getElementById('cmo-context')) return;\n" +
+  '\n' +
+  "            var STORAGE_KEY = 'cmo.context.v1';\n" +
+  '            var FIELDS = [\n' +
+  "                { id: 'cmoCtxAudience', label: 'Auditorija' },\n" +
+  "                { id: 'cmoCtxOffer', label: 'Pasiūlymas / UPP' },\n" +
+  "                { id: 'cmoCtxChannels', label: 'Kanalai' },\n" +
+  "                { id: 'cmoCtxGoal', label: 'Tikslas (šis mėnuo)' },\n" +
+  "                { id: 'cmoCtxConstraint', label: 'Pagrindinis apribojimas' }\n" +
+  '            ];\n' +
+  "            var RULES_HEADER = 'TAISYKLĖS (privalomos)';\n" +
+  '            var RULES = [\n' +
+  "                '- Be bendro patarimo. Jei trūksta konteksto, pirmiausia užduok iki 3 tikslinių klausimų.',\n" +
+  "                '- Nesugalvok skaičių, teiginių ar atsiliepimų. Pažymėk, ką reikia patvirtinti.',\n" +
+  "                '- Išvestis turi būti naudojama: skyriai, savininkas kur tinkama, kitas veiksmas su terminu.'\n" +
+  '            ];\n' +
+  '\n' +
+  '            function readContext() {\n' +
+  '                var out = {};\n' +
+  '                var anyValue = false;\n' +
+  '                FIELDS.forEach(function (f) {\n' +
+  '                    var el = document.getElementById(f.id);\n' +
+  "                    var v = el ? (el.value || '').trim() : '';\n" +
+  '                    out[f.id] = v;\n' +
+  '                    if (v) anyValue = true;\n' +
+  '                });\n' +
+  '                out.__hasAny = anyValue;\n' +
+  '                return out;\n' +
+  '            }\n' +
+  '\n' +
+  '            function persistContext() {\n' +
+  '                try {\n' +
+  '                    var values = {};\n' +
+  '                    FIELDS.forEach(function (f) {\n' +
+  '                        var el = document.getElementById(f.id);\n' +
+  "                        values[f.id] = el ? el.value : '';\n" +
+  '                    });\n' +
+  '                    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(values));\n' +
+  '                } catch (e) { /* ignore */ }\n' +
+  '            }\n' +
+  '\n' +
+  '            function restoreContext() {\n' +
+  '                try {\n' +
+  '                    var raw = sessionStorage.getItem(STORAGE_KEY);\n' +
+  '                    if (!raw) return;\n' +
+  '                    var values = JSON.parse(raw);\n' +
+  "                    if (!values || typeof values !== 'object') return;\n" +
+  '                    FIELDS.forEach(function (f) {\n' +
+  '                        var el = document.getElementById(f.id);\n' +
+  "                        if (el && typeof values[f.id] === 'string') el.value = values[f.id];\n" +
+  '                    });\n' +
+  '                } catch (e) { /* ignore */ }\n' +
+  '            }\n' +
+  '\n' +
+  '            function clearContext() {\n' +
+  '                FIELDS.forEach(function (f) {\n' +
+  '                    var el = document.getElementById(f.id);\n' +
+  "                    if (el) el.value = '';\n" +
+  '                });\n' +
+  '                try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }\n' +
+  "                var status = document.getElementById('cmoCtxStatus');\n" +
+  "                if (status) status.textContent = 'Kontekstas išvalytas.';\n" +
+  '            }\n' +
+  '\n' +
+  '            window.__CMO_COMPILE = function (promptId, originalText) {\n' +
+  '                if (!originalText) return originalText;\n' +
+  "                if (promptId === 'promptDemo') return originalText;\n" +
+  '                var ctx = readContext();\n' +
+  '                var lines = [];\n' +
+  '                if (ctx.__hasAny) {\n' +
+  "                    lines.push('KONTEKSTAS');\n" +
+  '                    FIELDS.forEach(function (f) {\n' +
+  '                        var v = ctx[f.id];\n' +
+  "                        lines.push('- ' + f.label + ': ' + (v ? v : '[nenurodyta]'));\n" +
+  '                    });\n' +
+  "                    lines.push('');\n" +
+  '                }\n' +
+  '                lines.push(RULES_HEADER);\n' +
+  '                RULES.forEach(function (r) { lines.push(r); });\n' +
+  "                lines.push('');\n" +
+  "                lines.push('---');\n" +
+  "                lines.push('');\n" +
+  "                return lines.join('\\n') + originalText;\n" +
+  '            };\n' +
+  '\n' +
+  "            document.addEventListener('DOMContentLoaded', function () {\n" +
+  '                restoreContext();\n' +
+  '                FIELDS.forEach(function (f) {\n' +
+  '                    var el = document.getElementById(f.id);\n' +
+  "                    if (el) el.addEventListener('input', persistContext);\n" +
+  '                });\n' +
+  "                var clearBtn = document.getElementById('cmoCtxClear');\n" +
+  "                if (clearBtn) clearBtn.addEventListener('click', clearContext);\n" +
+  '            });\n' +
+  '        })();\n' +
+  '    </script>';
+
+function injectLtContextScript(html) {
+  const anchor = '</body>';
+  const idx = html.lastIndexOf(anchor);
+  if (idx === -1) {
+    throw new Error('injectLtContextScript: </body> not found');
+  }
+  return html.slice(0, idx) + '    ' + LT_CONTEXT_SCRIPT + '\n' + html.slice(idx);
+}
+
+function patchLtCopyPromptHook(html) {
+  return patchEnCopyPromptHook(html);
+}
+
+function injectScenariosTabScript(html, locale) {
+  const anchor = '</body>';
+  const idx = html.lastIndexOf(anchor);
+  if (idx === -1) {
+    throw new Error('injectScenariosTabScript: </body> not found');
+  }
+  return html.slice(0, idx) + '    ' + buildScenariosTabScript(locale) + '\n' + html.slice(idx);
 }
 
 function makeAbsoluteUrl(relativePath) {
@@ -430,15 +1259,86 @@ function applyEnReplacements(html) {
   return out;
 }
 
+function assertEnLocaleAdditions(html) {
+  if (html.indexOf('id="cmo-context"') === -1) {
+    throw new Error('EN locale: missing #cmo-context section');
+  }
+  for (let i = 1; i <= 10; i++) {
+    if (html.indexOf('id="expected' + i + '"') === -1) {
+      throw new Error('EN locale: missing prompt-expected slot for prompt ' + i);
+    }
+  }
+  if (html.indexOf('RULES (non-negotiable)') === -1) {
+    throw new Error('EN locale: missing RULES (non-negotiable) literal in injected script');
+  }
+  if (html.indexOf('window.__CMO_COMPILE') === -1) {
+    throw new Error('EN locale: copyPrompt was not patched to call window.__CMO_COMPILE');
+  }
+  if (html.indexOf('id="cmo-scenarios"') === -1) {
+    throw new Error('EN locale: missing #cmo-scenarios section');
+  }
+  if (html.indexOf('id="cmo-safety"') === -1) {
+    throw new Error('EN locale: missing #cmo-safety section');
+  }
+  if (html.indexOf('cmo-safety-reviewer-prompt') === -1) {
+    throw new Error('EN locale: missing safety reviewer prompt block');
+  }
+}
+
+function assertLtLocaleAdditions(html) {
+  if (html.indexOf('id="cmo-context"') === -1) {
+    throw new Error('LT locale: missing #cmo-context section');
+  }
+  for (let i = 1; i <= 10; i++) {
+    if (html.indexOf('id="expected' + i + '"') === -1) {
+      throw new Error('LT locale: missing prompt-expected slot for prompt ' + i);
+    }
+  }
+  if (html.indexOf('TAISYKLĖS (privalomos)') === -1) {
+    throw new Error('LT locale: missing TAISYKLĖS (privalomos) in injected script');
+  }
+  if (html.indexOf('window.__CMO_COMPILE') === -1) {
+    throw new Error('LT locale: copyPrompt was not patched to call window.__CMO_COMPILE');
+  }
+  if (html.indexOf('id="cmo-scenarios"') === -1) {
+    throw new Error('LT locale: missing #cmo-scenarios section');
+  }
+  if (html.indexOf('id="cmo-safety"') === -1) {
+    throw new Error('LT locale: missing #cmo-safety section');
+  }
+}
+
 function buildLocale(locale) {
   let html = readIndex();
   html = html.replace(/<html lang="lt">/, '<html lang="' + locale + '">');
   if (locale === 'en') {
     html = applyEnReplacements(html);
     html = injectEnPreBodies(html);
+    html = injectEnContextBlock(html);
+    html = injectEnExpectedBullets(html);
+    html = injectProviderRows(html, 'en');
+    html = injectTrustBlocksBeforeNextSteps(html, 'en');
+    html = patchEnCopyPromptHook(html);
+    html = injectEnContextScript(html);
+    html = injectScenariosTabScript(html, 'en');
+  } else if (locale === 'lt') {
+    html = injectLtContextBlock(html);
+    html = injectLtExpectedBullets(html);
+    html = injectProviderRows(html, 'lt');
+    html = injectTrustBlocksBeforeNextSteps(html, 'lt');
+    html = patchLtCopyPromptHook(html);
+    html = injectLtContextScript(html);
+    html = injectScenariosTabScript(html, 'lt');
   }
   html = insertSeo(html, locale);
   html = fixAssetPaths(html);
+  html = injectFooterSuite(html, locale);
+  if (locale === 'en') {
+    assertEnLocaleAdditions(html);
+  }
+  if (locale === 'lt') {
+    assertLtLocaleAdditions(html);
+  }
   return html;
 }
 

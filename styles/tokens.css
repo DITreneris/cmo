@@ -1,25 +1,64 @@
+/* Design tokens – aligned with Prompt Anatomy (promptanatomy frontend @theme). */
+
 :root {
-  --color-surface-page: #F7F8FA;
-  --color-surface-card: #FFFFFF;
-  --color-surface-subtle: #F7FAFC;
+  /* Surfaces */
+  --color-surface-page: #f8fafc;
+  --color-surface-card: #ffffff;
+  --color-surface-subtle: #f1f5f9;
 
-  --color-text-primary: #1A202C;
-  --color-text-secondary: #4A5568;
-  --color-text-inverse: #FFFFFF;
+  /* Text */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-inverse: #ffffff;
 
-  --color-brand-primary: #c75515;
-  --color-brand-primary-hover: #b54f14;
-  --color-brand-dark: #3C485A;
-  --color-brand-dark-hover: #2D3848;
-  --color-brand-tertiary: #0D9488;
-  --color-brand-tertiary-hover: #0f766e;
-  --color-brand-tertiary-light: #CCFBF1;
+  /* Brand (gold + ink – mother site) */
+  --color-brand-primary: #cfa73a;
+  --color-brand-primary-hover: #e8b93c;
+  --color-brand-primary-pressed: #b8922f;
+  --color-brand-dark: #0b1320;
+  --color-brand-dark-hover: #152032;
+  --color-brand-tertiary: #2e9e7e;
+  --color-brand-tertiary-hover: #267d66;
+  --color-brand-tertiary-light: #ccfbf1;
 
-  --color-semantic-success: #38A169;
-  --color-semantic-success-hover: #2F855A;
-  --color-semantic-error: #E53E3E;
-  --color-border-default: #CBD5E0;
+  --color-semantic-success: #38a169;
+  --color-semantic-success-hover: #2f855a;
+  --color-semantic-error: #e53e3e;
+  --color-border-default: #e2e8f0;
 
+  /* Shadows (neutral depth rgba(11,19,32,…) + CTA glow) */
+  --shadow-elevation-1: 0 2px 8px -2px rgba(11, 19, 32, 0.08), 0 4px 16px -4px rgba(11, 19, 32, 0.06);
+  --shadow-elevation-2: 0 8px 24px -4px rgba(11, 19, 32, 0.08), 0 16px 48px -8px rgba(11, 19, 32, 0.06);
+  --shadow-elevation-hero: var(--shadow-elevation-2);
+  --shadow-cta: 0 6px 14px rgba(255, 179, 0, 0.32);
+  --shadow-cta-hover: 0 8px 22px rgba(255, 179, 0, 0.28), 0 2px 8px rgba(11, 19, 32, 0.08);
+  --shadow-modal: 0 20px 60px rgba(11, 19, 32, 0.2);
+  --shadow-soft: 0 4px 20px rgba(11, 19, 32, 0.07);
+  --shadow-raised: 0 10px 30px rgba(11, 19, 32, 0.08);
+
+  /* Typography scale */
+  --font-size-caption: 12px;
+  --font-size-small: 14px;
+  --font-size-body: 16px;
+  --font-size-body-lg: 18px;
+  --font-size-lead: 18px;
+  --font-size-h3: 20px;
+  --font-size-display: 40px;
+  --font-size-display-lg: 48px;
+  --line-height-body: 1.6;
+  --line-height-tight: 1.15;
+
+  /* Hero (light card – mother hero-bg spirit) */
+  --hero-bg: radial-gradient(circle at 50% 18%, rgba(255, 196, 0, 0.14), transparent 58%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+  --hero-ink: #0b1320;
+  --hero-muted: #475569;
+  --hero-gradient-start: #f8fafc;
+  --hero-gradient-mid: #f1f5f9;
+  --hero-gradient-end: #eef2f7;
+
+  /* Spacing */
+  --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
@@ -27,6 +66,8 @@
   --space-6: 24px;
   --space-7: 28px;
   --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -36,4 +77,40 @@
 
   --focus-ring-width: 3px;
   --focus-ring-offset: 2px;
+
+  /* Legacy names (index.html inline – single source, no duplicate :root in HTML) */
+  --bg: var(--color-surface-page);
+  --white: #ffffff;
+  --text: var(--color-text-primary);
+  --text-light: var(--color-text-secondary);
+  --border: var(--color-border-default);
+
+  --accent-primary: var(--color-brand-primary);
+  --accent-primary-hover: var(--color-brand-primary-hover);
+  --accent-gold: var(--color-brand-primary);
+  --accent-gold-dark: var(--color-brand-primary-pressed);
+
+  --accent-dark: var(--color-brand-dark);
+  --accent-dark-hover: var(--color-brand-dark-hover);
+
+  --cta-bg: linear-gradient(135deg, #e8b93c 0%, #cfa73a 52%, #b8922f 100%);
+  --cta-text: #0b1320;
+  --cta-hover: linear-gradient(135deg, #f0c94a 0%, #d4ad3d 52%, #c29a30 100%);
+
+  --tertiary: var(--color-brand-tertiary);
+  --tertiary-dark: #0f5132;
+  --tertiary-hover: var(--color-brand-tertiary-hover);
+  --tertiary-light: var(--color-brand-tertiary-light);
+
+  --blue: #475569;
+  --blue-light: #e8ecf0;
+  --orange: var(--color-brand-primary);
+  --orange-light: #fffbeb;
+  --green: var(--color-semantic-success);
+  --green-dark: var(--color-semantic-success-hover);
+  --error: var(--color-semantic-error);
+  --bg-subtle: var(--color-surface-subtle);
+
+  --community-cta-green: #0e7a33;
+  --community-cta-green-hover: #0b6b2d;
 }

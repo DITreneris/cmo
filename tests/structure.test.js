@@ -18,8 +18,19 @@ const ROBOTS_PATH = path.join(__dirname, '..', 'robots.txt');
 const SITEMAP_PATH = path.join(__dirname, '..', 'sitemap.xml');
 const EN_PROMPT_BODIES_JSON = path.join(__dirname, '..', 'data', 'en-prompt-bodies.json');
 const EN_PROMPT_INLINE_JS = path.join(__dirname, '..', 'js', 'en-prompt-bodies-inline.js');
+const PACKAGE_JSON_PATH = path.join(__dirname, '..', 'package.json');
 const PROD_ORIGIN = 'https://ditreneris.github.io';
 const PROD_BASE = '/cmo';
+
+function readPackageVersion() {
+  const raw = readFile(PACKAGE_JSON_PATH);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw).version;
+  } catch (_) {
+    return null;
+  }
+}
 
 function readFile(filePath) {
   try {
@@ -264,6 +275,103 @@ function run() {
       'en/index.html: FAQ ir meme slotai EN kalba'
     )) passed++;
     else failed++;
+
+    // --- v1: sister-site adoption (context block + rules + expected output) ---
+    const cmoContextCount = (enHtml.match(/id="cmo-context"/g) || []).length;
+    if (assert(cmoContextCount === 1, `en/index.html: tiksliai 1 #cmo-context sekcija (rasta: ${cmoContextCount})`)) passed++;
+    else failed++;
+    if (assert(
+      enHtml.includes('Marketing context (one block, every copy)') &&
+      enHtml.includes('id="cmoCtxAudience"') &&
+      enHtml.includes('id="cmoCtxOffer"') &&
+      enHtml.includes('id="cmoCtxChannels"') &&
+      enHtml.includes('id="cmoCtxGoal"') &&
+      enHtml.includes('id="cmoCtxConstraint"'),
+      'en/index.html: konteksto blokas turi 5 privalomus laukus'
+    )) passed++;
+    else failed++;
+    const expectedCount = (enHtml.match(/class="prompt-expected"/g) || []).length;
+    if (assert(expectedCount === 10, `en/index.html: tiksliai 10 .prompt-expected blokų (rasta: ${expectedCount})`)) passed++;
+    else failed++;
+    let allExpectedHaveBullets = true;
+    for (let i = 1; i <= 10; i++) {
+      const re = new RegExp(`id="expected${i}"[\\s\\S]*?</ul>`);
+      const m = enHtml.match(re);
+      const liCount = m ? (m[0].match(/<li/g) || []).length : 0;
+      if (liCount < 3) {
+        allExpectedHaveBullets = false;
+        break;
+      }
+    }
+    if (assert(allExpectedHaveBullets, 'en/index.html: kiekvienas .prompt-expected turi >=2 bullet (be antraštės)')) passed++;
+    else failed++;
+    if (assert(enHtml.includes('RULES (non-negotiable)'), 'en/index.html: injected script turi "RULES (non-negotiable)" stringą')) passed++;
+    else failed++;
+    if (assert(enHtml.includes('window.__CMO_COMPILE'), 'en/index.html: copyPrompt patched, kviečia window.__CMO_COMPILE')) passed++;
+    else failed++;
+
+    // --- v2.0 EN: safety + scenarios ---
+    if (assert(enHtml.includes('id="cmo-safety"'), 'en/index.html: yra #cmo-safety')) passed++;
+    else failed++;
+    if (assert(enHtml.includes('id="cmo-scenarios"'), 'en/index.html: yra #cmo-scenarios')) passed++;
+    else failed++;
+    if (assert(enHtml.includes('Pre-publish safety'), 'en/index.html: safety antraštė EN')) passed++;
+    else failed++;
+    if (assert(
+      enHtml.includes('Act as a marketing risk reviewer'),
+      'en/index.html: safety reviewer prompt tekstas'
+    )) passed++;
+    else failed++;
+
+    const pkgVer = readPackageVersion();
+    if (pkgVer && assert(
+      enHtml.includes('data-version="' + pkgVer + '"') && enHtml.includes('Prompt Anatomy CMO Kit v' + pkgVer),
+      'en/index.html: footer versijos žyma sutampa su package.json'
+    )) passed++;
+    else failed++;
+    if (assert(
+      enHtml.includes('href="https://ditreneris.github.io/leader/en/"'),
+      'en/index.html: kryžminė nuoroda į Leader rinkinį'
+    )) passed++;
+    else failed++;
+    const enGemini = (enHtml.match(/gemini\.google\.com/g) || []).length;
+    if (assert(enGemini >= 10, `en/index.html: Gemini provider nuorodų >= 10 (rasta: ${enGemini})`)) passed++;
+    else failed++;
+
+    // --- v2.1 LT: parity su EN kontekstu, tikėtinu atsakymu, safety, scenarios ---
+    if (ltHtml) {
+      if (assert(ltHtml.includes('id="cmo-context"'), 'lt/index.html: yra #cmo-context')) passed++;
+      else failed++;
+      if (assert(ltHtml.includes('class="prompt-expected"'), 'lt/index.html: yra .prompt-expected blokai')) passed++;
+      else failed++;
+      if (assert(ltHtml.includes('Tikėtinas atsakymas'), 'lt/index.html: tikėtino atsakymo antraštė')) passed++;
+      else failed++;
+      if (assert(ltHtml.includes('KONTEKSTAS'), 'lt/index.html: compile script naudoja KONTEKSTAS')) passed++;
+      else failed++;
+      if (assert(ltHtml.includes('TAISYKLĖS (privalomos)'), 'lt/index.html: TAISYKLĖS (privalomos)')) passed++;
+      else failed++;
+      if (assert(ltHtml.includes('window.__CMO_COMPILE'), 'lt/index.html: copyPrompt su window.__CMO_COMPILE')) passed++;
+      else failed++;
+      if (assert(ltHtml.includes('id="cmo-safety"'), 'lt/index.html: yra #cmo-safety')) passed++;
+      else failed++;
+      if (assert(ltHtml.includes('id="cmo-scenarios"'), 'lt/index.html: yra #cmo-scenarios')) passed++;
+      else failed++;
+      if (assert(ltHtml.includes('Pasirink scenarijų'), 'lt/index.html: scenarijų antraštė LT')) passed++;
+      else failed++;
+      if (pkgVer && assert(
+        ltHtml.includes('data-version="' + pkgVer + '"') && ltHtml.includes('Prompt Anatomy CMO rinkinys v' + pkgVer),
+        'lt/index.html: footer versijos žyma sutampa su package.json'
+      )) passed++;
+      else failed++;
+      if (assert(
+        ltHtml.includes('href="https://ditreneris.github.io/leader/en/"'),
+        'lt/index.html: kryžminė nuoroda į Leader rinkinį'
+      )) passed++;
+      else failed++;
+      const ltGemini = (ltHtml.match(/gemini\.google\.com/g) || []).length;
+      if (assert(ltGemini >= 10, `lt/index.html: Gemini provider nuorodų >= 10 (rasta: ${ltGemini})`)) passed++;
+      else failed++;
+    }
   }
 
   // --- robots.txt + sitemap.xml consistency with canonical host/path ---

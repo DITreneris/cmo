@@ -39,53 +39,6 @@
             box-sizing: border-box;
         }
 
-        :root {
-            /* Spin-off Nr. 2 – oranžinė CTA paletė (aukštesnis CTA) */
-            --bg: #F7F8FA;
-            --white: #FFFFFF;
-            --text: #1A202C;
-            --text-light: #4A5568;
-            --border: #CBD5E0;
-
-            /* Pagrindinis akcentas – oranžinė, ~12% mažesnis saturation (mažiau agresyvu); WCAG2AA 4.5:1 */
-            --accent-primary: #c75515;
-            --accent-primary-hover: #b54f14;
-            --accent-gold: #c75515;
-            --accent-gold-dark: #b54f14;
-
-            /* Antrinis akcentas (tamsiai pilka) – hero, outline mygtukai */
-            --accent-dark: #3C485A;
-            --accent-dark-hover: #2D3848;
-
-            /* Hero: tamsesnis viršuje, šviesesnis apačioje; sumažintas saturation */
-            --hero-gradient-start: #a85c32;
-            --hero-gradient-mid: #c46d3d;
-            --hero-gradient-end: #dc8f5e;
-            --cta-bg: #c75515;
-            --cta-text: #FFFFFF;
-            --cta-hover: var(--accent-primary-hover);
-
-            /* Tertiarinė (bibliotekos identitetas) – teal */
-            --tertiary: #0D9488;
-            --tertiary-dark: #0a5c54;
-            --tertiary-hover: #0f766e;
-            --tertiary-light: #CCFBF1;
-
-            /* Semantiniai – suderinti su oranžine palete */
-            --blue: #3C485A;
-            --blue-light: #E8ECF0;
-            --orange: #c75515;
-            --orange-light: #FFF7ED;
-            --green: #38A169;
-            --green-dark: #2F855A;
-            --error: #E53E3E;
-            --bg-subtle: #F7FAFC;
-
-            /* Community CTA – palikta green (hierarchija) arba suderinta */
-            --community-cta-green: #0E7A33;
-            --community-cta-green-hover: #0B6B2D;
-        }
-
         /* Skip link – prieinamumas (matomas tik su focus) */
         .skip-link {
             position: absolute;
@@ -112,8 +65,8 @@
             font-family: 'Inter', -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
-            font-size: 18px;
+            line-height: var(--line-height-body);
+            font-size: var(--font-size-body);
         }
 
         .container {
@@ -122,39 +75,32 @@
             padding: 60px 28px;
         }
 
-        /* ===== HEADER ===== */
+        /* ===== HEADER (light hero – Prompt Anatomy) ===== */
         .header {
             position: relative;
-            /* Vertikalus gradientas: tamsesnis viršuje, šviesesnis apačioje – mažiau „reklaminė“, daugiau „produktas“ */
-            background: linear-gradient(180deg, var(--hero-gradient-start) 0%, var(--hero-gradient-mid) 50%, var(--hero-gradient-end) 100%);
-            color: white;
+            background: var(--hero-bg);
+            color: var(--hero-ink);
             padding: 46px 48px;
             border-radius: 20px;
             margin-bottom: 40px;
-            box-shadow: 0 20px 40px rgba(60, 72, 90, 0.22);
+            box-shadow: var(--shadow-elevation-hero);
             overflow: hidden;
+            border: 1px solid var(--border);
         }
 
-        /* Subtilus tamsesnis overlay – tekstas aiškesnis */
         .header::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.08);
-            pointer-events: none;
-            z-index: 0;
+            display: none;
         }
 
-        /* Švelni noise tekstūra (~6%) – „minkštesnis“ fonas */
         .header::after {
             content: '';
             position: absolute;
             inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            opacity: 0.04;
+            opacity: 0.03;
             pointer-events: none;
             z-index: 0;
-            mix-blend-mode: overlay;
+            mix-blend-mode: multiply;
         }
 
         .header .header-badges,
@@ -177,7 +123,7 @@
 
         .badge {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(11, 19, 32, 0.06);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px); /* Safari palaikymas */
             padding: 8px 16px;
@@ -186,10 +132,12 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
+            color: var(--hero-ink);
+            border: 1px solid rgba(11, 19, 32, 0.08);
         }
 
         .badge-spinoff {
-            border: 1px solid rgba(217, 164, 65, 0.5);
+            border: 1px solid rgba(207, 167, 58, 0.45);
         }
 
         .lang-switcher {
@@ -198,9 +146,9 @@
             align-items: center;
         }
         .lang-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: inherit;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(11, 19, 32, 0.04);
+            color: var(--hero-ink);
+            border: 1px solid rgba(11, 19, 32, 0.12);
             padding: 6px 12px;
             min-width: 44px;
             min-height: 44px;
@@ -212,14 +160,14 @@
         }
         .lang-btn:hover,
         .lang-btn:focus-visible {
-            background: rgba(255, 255, 255, 0.35);
-            border-color: rgba(255, 255, 255, 0.9);
-            outline: 2px solid white;
+            background: rgba(11, 19, 32, 0.08);
+            border-color: rgba(11, 19, 32, 0.22);
+            outline: 2px solid var(--accent-primary);
             outline-offset: 2px;
         }
         .lang-btn.is-active {
-            background: rgba(255, 255, 255, 0.4);
-            border-color: white;
+            background: rgba(207, 167, 58, 0.2);
+            border-color: var(--accent-primary);
         }
 
         /* Prompt Anatomy – mažesnis kontrastas ir padding, kad nekonkuruotų su hero */
@@ -230,39 +178,150 @@
             align-items: center;
             min-height: 44px;
             min-width: 44px;
-            color: inherit;
+            color: var(--hero-ink);
             text-decoration: none;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.17);
+            background: rgba(11, 19, 32, 0.05);
             padding: 6px 14px;
             font-size: 13px;
         }
         .header-badges a.badge:hover,
         .header-badges a.badge:focus-visible {
-            background: rgba(255, 255, 255, 0.28);
-            outline: 2px solid white;
+            background: rgba(11, 19, 32, 0.09);
+            outline: 2px solid var(--accent-primary);
             outline-offset: 2px;
         }
 
         .header h1 {
-            font-size: 52px;
+            font-size: var(--font-size-display);
             font-weight: 800;
-            line-height: 1.1;
+            line-height: var(--line-height-tight);
             margin-bottom: 16px;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
+            color: var(--hero-ink);
+        }
+
+        @media (min-width: 768px) {
+            .header h1 {
+                font-size: var(--font-size-display-lg);
+            }
         }
 
         .header p {
-            font-size: 20px;
+            font-size: var(--font-size-body-lg);
             line-height: 1.5;
-            opacity: 0.95;
+            opacity: 1;
             font-weight: 500;
+            color: var(--hero-muted);
         }
 
 
+        /* Hero trust strip (above the fold) */
+        .header-trust {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .trust-pills {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .trust-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 9999px;
+            border: 1px solid rgba(11, 19, 32, 0.1);
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            color: var(--hero-ink);
+            min-height: 36px;
+        }
+
+        .header-trust a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 36px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            opacity: 1;
+            transition: opacity 0.2s ease, color 0.2s ease;
+        }
+
+        .header-trust a:hover {
+            color: var(--accent-gold-dark);
+        }
+
+        .header-trust a:focus-visible {
+            outline: 3px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        /* Hero instant demo (mini prompt) */
+        .header-demo {
+            margin-top: 14px;
+            border: 1px solid rgba(11, 19, 32, 0.08);
+            background: rgba(255, 255, 255, 0.72);
+            border-radius: 14px;
+            padding: 12px 14px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .header-demo-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            color: var(--hero-ink);
+        }
+
+        .header-demo pre {
+            margin: 0;
+            padding: 12px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(11, 19, 32, 0.1);
+            background: rgba(11, 19, 32, 0.04);
+            color: var(--hero-ink);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 120px;
+            overflow: auto;
+            white-space: pre-wrap;
+        }
+
+        .header-demo .btn {
+            padding: 10px 14px;
+            font-size: 14px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-cta);
+        }
+
         .header-note {
             font-size: 13px;
-            opacity: 0.85;
+            color: var(--hero-muted);
             margin-top: 16px;
             font-weight: 500;
         }
@@ -292,18 +351,18 @@
             cursor: pointer;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             text-decoration: none;
-            box-shadow: 0 4px 14px rgba(60, 72, 90, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            box-shadow: var(--shadow-cta);
             outline: none;
         }
 
         .cta-button:hover {
             background: var(--cta-hover);
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(60, 72, 90, 0.35), 0 0 12px rgba(255, 255, 255, 0.08);
+            box-shadow: var(--shadow-cta-hover);
         }
 
         .cta-button:focus-visible {
-            outline: 3px solid var(--white);
+            outline: 3px solid var(--accent-dark);
             outline-offset: 2px;
         }
 
@@ -313,45 +372,44 @@
             justify-content: center;
             gap: 10px;
             background: transparent;
-            color: var(--white);
+            color: var(--hero-ink);
             padding: 20px 32px;
             min-height: 44px;
             min-width: 44px;
             border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(11, 19, 32, 0.18);
             font-size: 17px;
             font-weight: 700;
             cursor: pointer;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             text-decoration: none;
             outline: none;
-            opacity: 0.85;
+            opacity: 1;
         }
 
         .cta-button-outline:hover,
         .cta-button-outline:focus-visible {
-            opacity: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--white);
-            color: var(--white);
+            background: rgba(11, 19, 32, 0.04);
+            border-color: var(--accent-dark);
+            color: var(--hero-ink);
         }
 
         .cta-button-outline:focus-visible {
-            outline: 3px solid var(--white);
+            outline: 3px solid var(--accent-primary);
             outline-offset: 2px;
         }
 
         .cta-secondary {
             font-size: 15px;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--accent-dark);
             text-decoration: underline;
             text-underline-offset: 3px;
             transition: color 0.2s ease;
         }
 
         .cta-secondary:hover {
-            color: var(--white);
+            color: var(--hero-ink);
         }
 
         /* ===== MODAL / KONTAKTŲ FORMA (rezervuota būsimai – žr. INTEGRACIJA.md) ===== */
@@ -385,7 +443,7 @@
             width: 100%;
             max-height: calc(100vh - 40px);
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-modal);
             transform: scale(0.9);
             transition: transform 0.3s ease;
             position: relative;
@@ -862,6 +920,43 @@
             margin-bottom: 20px;
         }
 
+        .prompt-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: -6px 0 14px;
+        }
+
+        .prompt-tag {
+            display: inline-flex;
+            align-items: center;
+            min-height: 28px;
+            padding: 6px 10px;
+            border-radius: 9999px;
+            border: 1px solid rgba(60, 72, 90, 0.18);
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--text-light);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .prompt-recommended {
+            padding: 6px 12px;
+            background: rgba(199, 85, 21, 0.12);
+            color: var(--accent-dark);
+            border: 1px solid rgba(199, 85, 21, 0.35);
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+        }
+
         .number {
             width: 48px;
             height: 48px;
@@ -906,6 +1001,18 @@
         /* ===== PROMPT BODY ===== */
         .prompt-body {
             padding: 40px;
+        }
+
+        .edit-hint {
+            margin: 0 0 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(60, 72, 90, 0.18);
+            background: rgba(255, 247, 237, 0.65);
+            color: var(--accent-dark);
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.4;
         }
 
         .code-block {
@@ -1014,7 +1121,7 @@
             align-items: center;
             gap: 12px;
             background: var(--cta-bg);
-            color: white;
+            color: var(--cta-text);
             padding: 22px 36px;
             min-height: 44px;
             min-width: 44px;
@@ -1025,19 +1132,19 @@
             cursor: pointer;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             font-family: 'Inter', sans-serif;
-            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+            box-shadow: var(--shadow-cta);
             outline: none;
         }
 
         .btn:focus-visible {
-            outline: 3px solid var(--accent-gold);
+            outline: 3px solid var(--accent-dark);
             outline-offset: 2px;
         }
 
         .btn:hover {
             background: var(--cta-hover);
             transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(234, 88, 12, 0.28);
+            box-shadow: var(--shadow-cta-hover);
         }
 
         .btn:active {
@@ -1089,6 +1196,16 @@
             padding: 14px 20px;
             margin-bottom: 24px;
             min-height: 44px;
+            position: sticky;
+            top: 14px;
+            z-index: 900;
+        }
+
+        .progress-wrap.is-sticky {
+            background: rgba(255, 247, 237, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
         }
 
         .progress-wrap p {
@@ -1647,6 +1764,29 @@
             </div>
             <h1>Content AI System<br>for Marketing Leaders</h1>
             <p>Build a US-ready content engine in 45 minutes.</p>
+            <div class="header-trust">
+                <ul class="trust-pills">
+                    <li class="trust-pill" id="heroTrustPill1"><span aria-hidden="true">🔒</span> Be duomenų rinkimo</li>
+                    <li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">🧩</span> 10 promptų seka</li>
+                    <li class="trust-pill" id="heroTrustPill3"><span aria-hidden="true">⏱</span> ~45 min rezultatas</li>
+                </ul>
+                <a id="heroTrustLink" href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer" aria-label="Oficiali metodika: Prompt Anatomy (atidaroma naujame lange)">Oficiali metodika →</a>
+            </div>
+            <div class="header-demo">
+                <div class="header-demo-title">
+                    <span id="heroDemoTitle">Pavyzdys (nukopijuok ir pabandyk)</span>
+                    <button class="btn"
+                            id="heroDemoCopyBtn"
+                            aria-label="Kopijuoti pavyzdinį promptą į mainų atmintinę"
+                            data-prompt-id="promptDemo">
+                        <span aria-hidden="true">📋</span>
+                        <span id="heroDemoCopyBtnText">Kopijuoti pavyzdį</span>
+                    </button>
+                </div>
+                <pre id="promptDemo">META: Tu esi rinkodaros strategas.
+INPUT: Auditorija [ ], tikslas [ ].
+OUTPUT: 5 idėjos su kabliuku + CTA + KPI.</pre>
+            </div>
             <div class="header-cta">
                 <a href="#block1" class="cta-button" aria-label="Get started free – go to prompts">Get started free</a>
                 <a href="#community" class="cta-button-outline" aria-label="Join the community – go to Telegram and links">Join the community</a>
@@ -1735,6 +1875,48 @@
             </div>
         </div>
 
+        <section class="cmo-context" id="cmo-context" aria-labelledby="cmo-context-title">
+            <h2 id="cmo-context-title" class="cmo-context-title">Marketing context (one block, every copy)</h2>
+            <p class="cmo-context-intro">Fill once. These five values plus the rules below are auto-prepended every time you click <strong>Copy prompt</strong>. Stored only in this browser session.</p>
+            <div class="cmo-context-form" id="cmoContextForm">
+                <fieldset class="cmo-context-fields">
+                    <legend class="cmo-context-legend">Marketing context fields</legend>
+                    <div class="cmo-context-row">
+                        <label for="cmoCtxAudience">Audience</label>
+                        <input type="text" id="cmoCtxAudience" name="audience" maxlength="160" placeholder="e.g. US B2B marketing leaders, 50-500 FTE">
+                    </div>
+                    <div class="cmo-context-row">
+                        <label for="cmoCtxOffer">Offer / USP</label>
+                        <input type="text" id="cmoCtxOffer" name="offer" maxlength="160" placeholder="e.g. AI content system that ships 100 assets in 30 days">
+                    </div>
+                    <div class="cmo-context-row">
+                        <label for="cmoCtxChannels">Channels</label>
+                        <input type="text" id="cmoCtxChannels" name="channels" maxlength="160" placeholder="e.g. LinkedIn, email, SEO">
+                    </div>
+                    <div class="cmo-context-row">
+                        <label for="cmoCtxGoal">Goal (this month)</label>
+                        <input type="text" id="cmoCtxGoal" name="goal" maxlength="160" placeholder="e.g. 30 qualified demos">
+                    </div>
+                    <div class="cmo-context-row">
+                        <label for="cmoCtxConstraint">Main constraint</label>
+                        <input type="text" id="cmoCtxConstraint" name="constraint" maxlength="160" placeholder="e.g. 5 hours/week, no design support">
+                    </div>
+                </fieldset>
+                <div class="cmo-context-actions">
+                    <button type="button" class="btn cmo-context-clear" id="cmoCtxClear">Clear context</button>
+                    <span class="cmo-context-status" id="cmoCtxStatus" aria-live="polite"></span>
+                </div>
+            </div>
+            <div class="cmo-context-rules" id="cmoContextRules" role="note" aria-label="Non-negotiable rules injected on copy">
+                <p class="cmo-context-rules-title"><strong>Rules injected on copy (non-negotiable)</strong></p>
+                <ul>
+                    <li>No generic advice. If context is missing, ask up to 3 targeted questions first.</li>
+                    <li>Do not invent numbers, claims, or testimonials. Flag what must be verified.</li>
+                    <li>Output must be usable: sections, owner where relevant, next action with deadline.</li>
+                </ul>
+            </div>
+        </section>
+
         <!-- PROMPT 1 -->
         <article class="prompt">
             <div class="prompt-header">
@@ -1742,6 +1924,7 @@
                     <div class="number">1</div>
                     <div class="category">Start</div>
                     <span class="prompt-time">~5–10 min</span>
+                    <span class="prompt-recommended" id="prompt1Recommended">Pradėk nuo čia</span>
                 </div>
                 <h2 class="prompt-title">30-day content system</h2>
                 <p class="prompt-desc">Create a 30-day content plan by 4 content principles</p>
@@ -1766,6 +1949,12 @@ OUTPUT: A 30-day table with topic, hook, format, CTA, KPI, and expected outcome.
                         <p>4 principles = balance: authority, problem, proof, offer.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected1" aria-label="Expected output for prompt 1">
+                    <li class="prompt-expected-title">Expected output</li>
+                        <li>30-day table: topic, hook, format, CTA, KPI</li>
+                        <li>Weekly themes mapped to 4 pillars (Authority, Problem, Proof, Offer)</li>
+                        <li>One next action for week 1 with owner and deadline</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy and paste into ChatGPT or Claude – that's the goal of this step.</p>
@@ -1775,6 +1964,7 @@ OUTPUT: A 30-day table with topic, hook, format, CTA, KPI, and expected outcome.
                     <span aria-hidden="true">📋</span>
                     <span>Copy prompt</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Open third-party AI provider sites in a new tab"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Open ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Open Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Open Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="1" aria-label="Mark as done">
                     <span>Mark as done</span>
@@ -1813,6 +2003,12 @@ OUTPUT: 7 assets: LinkedIn post, carousel, 30-sec short video, email, landing he
                         <p>1 idea = 7 units. Time saved, consistency kept.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected2" aria-label="Expected output for prompt 2">
+                    <li class="prompt-expected-title">Expected output</li>
+                        <li>7 native US-context assets: LinkedIn post, carousel, 30-sec script, email, landing hero, ad, 3 hooks</li>
+                        <li>Same core message across channels with channel-fit tweaks</li>
+                        <li>3 ready-to-test hooks with one chosen recommendation</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Paste into ChatGPT or Claude and replace placeholders with your data.</p>
@@ -1822,6 +2018,7 @@ OUTPUT: 7 assets: LinkedIn post, carousel, 30-sec short video, email, landing he
                     <span aria-hidden="true">📋</span>
                     <span>Copy prompt</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Open third-party AI provider sites in a new tab"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Open ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Open Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Open Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="2" aria-label="Mark as done">
                     <span>Mark as done</span>
@@ -1860,6 +2057,12 @@ OUTPUT: 1 post with hook, 3 clear points, 1 concrete example, and CTA. Write lik
                         <p>Proof + concrete points = trust and engagement.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected3" aria-label="Expected output for prompt 3">
+                    <li class="prompt-expected-title">Expected output</li>
+                        <li>1 LinkedIn post (150-200 words) with hook, 3 points, example, CTA</li>
+                        <li>Concrete proof point cited (number or customer outcome)</li>
+                        <li>Verification flag for any unsupported claim</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy and paste into ChatGPT or Claude – that's the goal of this step.</p>
@@ -1869,6 +2072,7 @@ OUTPUT: 1 post with hook, 3 clear points, 1 concrete example, and CTA. Write lik
                     <span aria-hidden="true">📋</span>
                     <span>Copy prompt</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Open third-party AI provider sites in a new tab"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Open ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Open Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Open Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="3" aria-label="Mark as done">
                     <span>Mark as done</span>
@@ -1907,6 +2111,12 @@ OUTPUT: Timestamped script: 0-2s hook, 3 key beats, proof/example, CTA. Keep it 
                         <p>2 seconds = stay or scroll. The hook is key.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected4" aria-label="Expected output for prompt 4">
+                    <li class="prompt-expected-title">Expected output</li>
+                        <li>30-second timestamped script: 0-2s hook, 3 beats, proof, CTA</li>
+                        <li>Visual or B-roll cue per beat</li>
+                        <li>One alternate hook for A/B testing</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy, paste into AI tool and replace [topic], [example] with your data.</p>
@@ -1916,6 +2126,7 @@ OUTPUT: Timestamped script: 0-2s hook, 3 key beats, proof/example, CTA. Keep it 
                     <span aria-hidden="true">📋</span>
                     <span>Copy prompt</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Open third-party AI provider sites in a new tab"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Open ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Open Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Open Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="4" aria-label="Mark as done">
                     <span>Mark as done</span>
@@ -1954,6 +2165,13 @@ OUTPUT: 4 blocks: (1) What's underperforming, (2) Why (hypothesis), (3) What to 
                         <p>Metrics without action = standing still. Data → decisions.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected5" aria-label="Expected output for prompt 5">
+                    <li class="prompt-expected-title">Expected output</li>
+                        <li>What is underperforming with $ or % impact</li>
+                        <li>Hypothesis for why, separated from facts</li>
+                        <li>Next test (this week) and what to pause now</li>
+                        <li>Owner and decision deadline</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy and paste into ChatGPT or Claude – that's the goal of this step.</p>
@@ -1963,6 +2181,7 @@ OUTPUT: 4 blocks: (1) What's underperforming, (2) Why (hypothesis), (3) What to 
                     <span aria-hidden="true">📋</span>
                     <span>Copy prompt</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Open third-party AI provider sites in a new tab"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Open ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Open Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Open Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="5" aria-label="Mark as done">
                     <span>Mark as done</span>
@@ -2001,6 +2220,12 @@ OUTPUT: 10 pieces (posts, emails, landing snippets): objection, reframing angle,
                         <p>Real questions + answers = less friction, more trust.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected6" aria-label="Expected output for prompt 6">
+                    <li class="prompt-expected-title">Expected output</li>
+                        <li>10 content units, one per top objection</li>
+                        <li>Per unit: objection, reframing angle, proof, CTA</li>
+                        <li>Channel suggestion per unit (post, email, landing snippet)</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Paste into ChatGPT or Claude – replace objections and context.</p>
@@ -2010,6 +2235,7 @@ OUTPUT: 10 pieces (posts, emails, landing snippets): objection, reframing angle,
                     <span aria-hidden="true">📋</span>
                     <span>Copy prompt</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Open third-party AI provider sites in a new tab"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Open ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Open Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Open Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="6" aria-label="Mark as done">
                     <span>Mark as done</span>
@@ -2048,6 +2274,12 @@ OUTPUT: (1) Post: hook, value, CTA. (2) Four DM messages with clear next step. K
                         <p>Sequence: follower → customer. Structure increases conversion.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected7" aria-label="Expected output for prompt 7">
+                    <li class="prompt-expected-title">Expected output</li>
+                        <li>1 lead-magnet post: hook, value, CTA</li>
+                        <li>4-step DM sequence: opener, qualify, value, offer</li>
+                        <li>Clear next step in every message</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy and paste into ChatGPT or Claude – that's the goal of this step.</p>
@@ -2057,6 +2289,7 @@ OUTPUT: (1) Post: hook, value, CTA. (2) Four DM messages with clear next step. K
                     <span aria-hidden="true">📋</span>
                     <span>Copy prompt</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Open third-party AI provider sites in a new tab"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Open ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Open Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Open Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="7" aria-label="Mark as done">
                     <span>Mark as done</span>
@@ -2095,6 +2328,12 @@ OUTPUT: 6 sections: Problem, Solution, Process, Results, Key takeaway, CTA. Prio
                         <p>Numbers + process = credibility and conversion.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected8" aria-label="Expected output for prompt 8">
+                    <li class="prompt-expected-title">Expected output</li>
+                        <li>6 sections: Problem, Solution, Process, Results, Key takeaway, CTA</li>
+                        <li>Concrete outcomes with $ impact when available</li>
+                        <li>Customer quote slot (verify before publishing)</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy and paste – enter customer data and get a structured story.</p>
@@ -2104,6 +2343,7 @@ OUTPUT: 6 sections: Problem, Solution, Process, Results, Key takeaway, CTA. Prio
                     <span aria-hidden="true">📋</span>
                     <span>Copy prompt</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Open third-party AI provider sites in a new tab"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Open ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Open Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Open Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="8" aria-label="Mark as done">
                     <span>Mark as done</span>
@@ -2142,6 +2382,12 @@ OUTPUT: (1) Pillar page outline with CTA, (2) 8 subtopic titles with intent tags
                         <p>Main topic + subtopics = reach and expert position.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected9" aria-label="Expected output for prompt 9">
+                    <li class="prompt-expected-title">Expected output</li>
+                        <li>1 pillar page outline with CTA</li>
+                        <li>8 subtopic titles tagged by search intent</li>
+                        <li>Internal link map between pillar and subtopics</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy and paste into ChatGPT or Claude – that's the goal of this step.</p>
@@ -2151,6 +2397,7 @@ OUTPUT: (1) Pillar page outline with CTA, (2) 8 subtopic titles with intent tags
                     <span aria-hidden="true">📋</span>
                     <span>Copy prompt</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Open third-party AI provider sites in a new tab"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Open ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Open Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Open Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="9" aria-label="Mark as done">
                     <span>Mark as done</span>
@@ -2189,6 +2436,13 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                         <p>Everything in one place: 30-day plan, 1→7, testing, priorities.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected10" aria-label="Expected output for prompt 10">
+                    <li class="prompt-expected-title">Expected output</li>
+                        <li>30-day plan + 5 content assets for this week</li>
+                        <li>1 idea expanded into 7 formats</li>
+                        <li>3 test hypotheses with success criteria</li>
+                        <li>3 prioritised actions for tomorrow with owners</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">This prompt covers everything – copy, paste and fill your business fields.</p>
@@ -2198,12 +2452,72 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                     <span aria-hidden="true">📋</span>
                     <span>Copy prompt</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Open third-party AI provider sites in a new tab"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Open ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Open Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Open Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="10" aria-label="Mark as done">
                     <span>Mark as done</span>
                 </label>
             </div>
         </article>
+
+        <section class="cmo-scenarios" id="cmo-scenarios" aria-labelledby="cmo-scenarios-title">
+            <h2 id="cmo-scenarios-title" class="cmo-scenarios-title">Choose a scenario</h2>
+            <p class="cmo-scenarios-intro">Pick a practice flow. Copy includes your saved marketing context and rules when set.</p>
+            <div class="cmo-scenarios-tablist" role="tablist" aria-label="Scenario tabs">
+                    <button type="button" class="cmo-scenario-tab" role="tab" id="cmo-scenario-tab-0" aria-selected="true" aria-controls="cmo-scenario-panel" tabindex="0" data-scenario-index="0" aria-pressed="true">Weekly review</button>
+                    <button type="button" class="cmo-scenario-tab" role="tab" id="cmo-scenario-tab-1" aria-selected="false" aria-controls="cmo-scenario-panel" tabindex="-1" data-scenario-index="1" aria-pressed="false">Campaign launch brief</button>
+                    <button type="button" class="cmo-scenario-tab" role="tab" id="cmo-scenario-tab-2" aria-selected="false" aria-controls="cmo-scenario-panel" tabindex="-1" data-scenario-index="2" aria-pressed="false">Stakeholder update</button>
+            </div>
+            <div id="cmo-scenario-panel" class="cmo-scenario-panel" role="tabpanel" tabindex="0" aria-labelledby="cmo-scenario-tab-0">
+                <div class="code-block cmo-scenario-code" role="region" aria-label="Copy scenario brief">
+                    <pre class="code-text" id="cmo-scenario-brief">You are my marketing analyst. Last week’s metrics: [PASTE NUMBERS OR SCREENSHOT SUMMARY]. Audience: [AUDIENCE]. Channels: [CHANNELS]. Give me: (1) the single biggest insight from the data, (2) three prioritized actions for next week with owner + deadline, (3) one metric to watch and why.
+
+Next action: Schedule a 20-minute metrics review with the owner named for action #1.
+Bottom line: Three actions beat ten vague ideas—ship the smallest test that reduces uncertainty.
+
+Risks:
+- Cherry-picking one spike without checking sample size
+- Optimizing vanity metrics (likes) instead of pipeline or revenue signals
+
+Questions:
+- Which number changed week-over-week and by how much?
+- What did we intentionally not do last week that could explain the result?</pre>
+                </div>
+                <button type="button" class="btn" data-prompt-id="cmo-scenario-brief" aria-label="Copy scenario brief">
+                    <span aria-hidden="true">📋</span>
+                    <span>Copy brief</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="cmo-safety" id="cmo-safety" aria-labelledby="cmo-safety-title">
+            <h2 id="cmo-safety-title" class="cmo-safety-title">Pre-publish safety</h2>
+            <p class="cmo-safety-intro">Run this reviewer prompt before you publish AI-assisted marketing. Copy includes your session context and rules when set.</p>
+            <div class="cmo-safety-copy">
+                <div class="code-block cmo-safety-pre-wrap" role="region" aria-label="Copy reviewer prompt">
+                    <pre class="code-text" id="cmo-safety-reviewer-prompt">Act as a marketing risk reviewer. Review this AI-generated content before I publish it: [TEXT].
+Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
+1) factual claims to verify (numbers, customer quotes, comparisons),
+2) brand/tone risks,
+3) legal or trust risks (claims, disclaimers, IP, testimonials),
+4) missing context a reader would need before acting,
+5) a safer revised version if needed.</pre>
+                </div>
+                <button type="button" class="btn" data-prompt-id="cmo-safety-reviewer-prompt" aria-label="Copy reviewer prompt">
+                    <span aria-hidden="true">📋</span>
+                    <span>Copy reviewer prompt</span>
+                </button>
+            </div>
+            <div class="cmo-safety-checks">
+                <p class="cmo-safety-checks-title">Quick checks</p>
+                <ul role="list">
+                    <li>Facts verified</li>
+                    <li>Brand/tone</li>
+                    <li>Legal/trust</li>
+                    <li>CTA + owner</li>
+                </ul>
+            </div>
+        </section>
 
         <!-- KAS TOLIAU? (S2) -->
         <section class="next-steps" aria-labelledby="next-steps-title">
@@ -2263,6 +2577,11 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
         </section>
 
         <footer class="footer">
+            <div class="cmo-footer-meta print-muted">
+                <p class="cmo-footer-crosslink">Need the CEO/COO kit? <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Open Prompt Anatomy Leader</a></p>
+                <p class="cmo-kit-version" data-version="1.3.0">Prompt Anatomy CMO Kit v1.3.0</p>
+            </div>
+
             <h3>Go win your market <span aria-hidden="true">🚀</span></h3>
             <p>Remember to replace <strong>[audience]</strong>, <strong>[pain point]</strong>, <strong>[unique selling proposition]</strong>, <strong>[channel]</strong> and other placeholders with your data</p>
             <p class="footer-product-link">This is Spin-off No. 2 from Prompt Anatomy. Full interactive training and other courses: <a href="https://www.promptanatomy.app/" target="_blank" rel="noopener noreferrer">Prompt Anatomy →</a></p>
@@ -2379,6 +2698,15 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                 if (cta1) { cta1.textContent = 'Get free'; setLabel(cta1, 'Get free – go to prompts'); }
                 var cta2 = q('.header-cta .cta-button-outline');
                 if (cta2) { cta2.textContent = 'Join the community'; setLabel(cta2, 'Join community – go to Telegram and links'); }
+                setText('#heroTrustPill1', '🔒 No data collection');
+                setText('#heroTrustPill2', '🧩 10-step prompt sequence');
+                setText('#heroTrustPill3', '⏱ ~45 min outcome');
+                var trustLink = el('heroTrustLink');
+                if (trustLink) { trustLink.textContent = 'Official method →'; setLabel(trustLink, 'Official method: Prompt Anatomy (opens in new tab)'); }
+                setText('#heroDemoTitle', 'Example (copy and try it)');
+                setText('#heroDemoCopyBtnText', 'Copy example');
+                setLabel('#heroDemoCopyBtn', 'Copy example prompt to clipboard');
+                setText('#promptDemo', 'META: You are a marketing strategist.\nINPUT: Audience [ ], goal [ ].\nOUTPUT: 5 ideas with hook + CTA + KPI.');
 
                 var objTitle = el('objectives-title');
                 if (objTitle) objTitle.innerHTML = '<span aria-hidden="true">🎯</span> What you actually get';
@@ -2485,6 +2813,7 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                     var preEl = art.querySelector('.code-block pre');
                     if (preEl && enPromptPre[i]) preEl.textContent = enPromptPre[i];
                 });
+                setText('#prompt1Recommended', 'Start here');
 
                 var nextTitle = el('next-steps-title');
                 if (nextTitle) nextTitle.textContent = 'What next?';
@@ -2645,7 +2974,7 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                     return;
                 }
 
-                const promptText = promptElement.textContent?.trim();
+                const promptText = (window.__CMO_COMPILE ? window.__CMO_COMPILE(promptId, promptElement.textContent?.trim()) : promptElement.textContent?.trim());
                 if (!promptText) {
                     showError(button, uiText('Promptas tuščias', 'Prompt has no text yet. Try another card.'));
                     return;
@@ -2723,7 +3052,29 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                 button.innerHTML = '<span aria-hidden="true">✓</span><span>' + uiText('Nukopijuota!', 'Copied') + '</span>';
                 button.classList.add('success');
                 button.setAttribute('aria-label', uiText('Promptas sėkmingai nukopijuotas', 'Prompt copied successfully'));
-                showToast();
+                (function() {
+                    var pid = button.getAttribute('data-prompt-id') || '';
+                    var n = pid.replace('prompt', '');
+                    var isNumbered = /^\d+$/.test(n);
+                    var message = '';
+                    if (pid === 'promptDemo') {
+                        message = uiText(
+                            'Pavyzdys nukopijuotas. Įklijuok į ChatGPT ir pakeisk [ ] laukus.',
+                            'Example copied. Paste into ChatGPT and replace [ ] placeholders.'
+                        );
+                    } else if (isNumbered) {
+                        message = uiText(
+                            'Promptas #' + n + ' nukopijuotas. Įklijuok į ChatGPT → pakeisk [ ] laukus.',
+                            'Prompt #' + n + ' copied. Paste into ChatGPT → replace [ ] placeholders.'
+                        );
+                    } else {
+                        message = uiText(
+                            'Nukopijuota. Įklijuok į ChatGPT ir pakeisk [ ] laukus.',
+                            'Copied. Paste into ChatGPT and replace [ ] placeholders.'
+                        );
+                    }
+                    showToast(message);
+                })();
                 
                 setTimeout(() => {
                     button.innerHTML = original;
@@ -2760,9 +3111,13 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
             /**
              * Rodyti toast pranešimą
              */
-            function showToast() {
+            function showToast(message) {
                 const toast = document.getElementById('toast');
                 if (!toast) return;
+                if (message) {
+                    var span = toast.querySelector('span');
+                    if (span) span.textContent = message;
+                }
 
                 toast.classList.add('show');
                 toast.setAttribute('aria-live', 'polite');
@@ -2860,6 +3215,100 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                 }
             }
 
+            function renderEditHints() {
+                var hintsLt = [
+                    'Pakeisk: [auditorija], [galvos skausmas], [USP], [kanalas].',
+                    'Pakeisk: [idėja] (viena branduolinė žinutė).',
+                    'Pakeisk: [tema], [pavyzdys/skaičius].',
+                    'Pakeisk: [tema], [pavyzdys].',
+                    'Pakeisk: [rodikliai], [kontekstas], [hipotezė].',
+                    'Pakeisk: [prieštaravimai], [kontekstas].',
+                    'Pakeisk: [tema], [auditorija], [pasiūlymas].',
+                    'Pakeisk: [klientas], [procesas], [rezultatai].',
+                    'Pakeisk: [pagrindinė tema], [auditorija].',
+                    'Pakeisk: [verslas], [auditorija], [tikslai], [kanalai].'
+                ];
+                var hintsEn = [
+                    'Replace: [audience], [pain point], [USP], [channel].',
+                    'Replace: [idea] (one core message).',
+                    'Replace: [topic], [proof/number].',
+                    'Replace: [topic], [example].',
+                    'Replace: [metrics], [context], [hypothesis].',
+                    'Replace: [objections], [context].',
+                    'Replace: [topic], [audience], [offer].',
+                    'Replace: [customer], [process], [results].',
+                    'Replace: [main topic], [audience].',
+                    'Replace: [business], [audience], [goals], [channels].'
+                ];
+                var hints = locale === 'en' ? hintsEn : hintsLt;
+                document.querySelectorAll('article.prompt').forEach(function(art, i) {
+                    var body = art.querySelector('.prompt-body');
+                    if (!body) return;
+                    var codeBlock = body.querySelector('.code-block');
+                    if (!codeBlock) return;
+
+                    var hint = body.querySelector('.edit-hint');
+                    if (!hint) {
+                        hint = document.createElement('p');
+                        hint.className = 'edit-hint';
+                        body.insertBefore(hint, codeBlock);
+                    }
+                    hint.textContent = hints[i] || uiText('Pakeisk [ ] laukus savo duomenimis.', 'Replace [ ] placeholders with your data.');
+                });
+            }
+
+            function renderPromptTags() {
+                var tagsLt = [
+                    ['Planas', 'Sistema'],
+                    ['Repurpose', 'Formatai'],
+                    ['LinkedIn', 'Autoritetas'],
+                    ['Video', 'Kabliukas'],
+                    ['Rodikliai', 'Sprendimai'],
+                    ['Prieštaravimai', 'Konversija'],
+                    ['Lead gen', 'DM seka'],
+                    ['Istorija', 'Įrodymai'],
+                    ['SEO', 'Temų klasteris'],
+                    ['Valdymas', 'Prioritetai']
+                ];
+                var tagsEn = [
+                    ['Plan', 'System'],
+                    ['Repurpose', 'Formats'],
+                    ['LinkedIn', 'Authority'],
+                    ['Video', 'Hook'],
+                    ['Metrics', 'Decisions'],
+                    ['Objections', 'Conversion'],
+                    ['Lead gen', 'DM sequence'],
+                    ['Story', 'Proof'],
+                    ['SEO', 'Topic cluster'],
+                    ['Control', 'Priorities']
+                ];
+                var tags = locale === 'en' ? tagsEn : tagsLt;
+
+                document.querySelectorAll('article.prompt').forEach(function(art, i) {
+                    var header = art.querySelector('.prompt-header');
+                    if (!header) return;
+                    var meta = header.querySelector('.prompt-meta');
+                    if (!meta) return;
+
+                    var tagWrap = header.querySelector('.prompt-tags');
+                    if (!tagWrap) {
+                        tagWrap = document.createElement('div');
+                        tagWrap.className = 'prompt-tags';
+                        header.insertBefore(tagWrap, meta.nextSibling);
+                    }
+
+                    var list = tags[i] || [];
+                    tagWrap.innerHTML = '';
+                    list.slice(0, 2).forEach(function(t) {
+                        if (!t) return;
+                        var s = document.createElement('span');
+                        s.className = 'prompt-tag';
+                        s.textContent = t;
+                        tagWrap.appendChild(s);
+                    });
+                });
+            }
+
             // ===== INICIALIZACIJA =====
             document.addEventListener('DOMContentLoaded', function() {
                 bindPromptInteractions();
@@ -2877,8 +3326,34 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                 // S1: progreso indikatorius
                 updateProgressIndicator();
 
+                // Sticky progress polish: add shadow only when stuck
+                (function initStickyProgressState() {
+                    var prog = document.getElementById('progressIndicator');
+                    if (!prog) return;
+                    var topPx = 14;
+                    var ticking = false;
+
+                    function onScrollOrResize() {
+                        if (ticking) return;
+                        ticking = true;
+                        window.requestAnimationFrame(function() {
+                            ticking = false;
+                            try {
+                                var rect = prog.getBoundingClientRect();
+                                prog.classList.toggle('is-sticky', rect.top <= topPx + 0.5);
+                            } catch (_) { /* ignore */ }
+                        });
+                    }
+
+                    onScrollOrResize();
+                    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+                    window.addEventListener('resize', onScrollOrResize);
+                })();
+
                 // LT/EN: atnaujinti statinį tekstą pagal locale
                 applyStaticLocaleText();
+                renderEditHints();
+                renderPromptTags();
 
                 // Kalbos perjungiklis: active būsena ir paspaudimai
                 var langLtBtn = document.getElementById('langLtBtn');
@@ -2914,6 +3389,156 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                     });
                 }
 
+            });
+        })();
+    </script>
+    <script>
+        (function () {
+            'use strict';
+            if (!document.getElementById || !document.getElementById('cmo-context')) return;
+
+            var STORAGE_KEY = 'cmo.context.v1';
+            var FIELDS = [
+                { id: 'cmoCtxAudience', label: 'Audience' },
+                { id: 'cmoCtxOffer', label: 'Offer / USP' },
+                { id: 'cmoCtxChannels', label: 'Channels' },
+                { id: 'cmoCtxGoal', label: 'Goal (this month)' },
+                { id: 'cmoCtxConstraint', label: 'Main constraint' }
+            ];
+            var RULES_HEADER = 'RULES (non-negotiable)';
+            var RULES = [
+                '- No generic advice. If context is missing, ask up to 3 targeted questions first.',
+                '- Do not invent numbers, claims, or testimonials. Flag what must be verified.',
+                '- Output must be usable: sections, owner where relevant, next action with deadline.'
+            ];
+
+            function readContext() {
+                var out = {};
+                var anyValue = false;
+                FIELDS.forEach(function (f) {
+                    var el = document.getElementById(f.id);
+                    var v = el ? (el.value || '').trim() : '';
+                    out[f.id] = v;
+                    if (v) anyValue = true;
+                });
+                out.__hasAny = anyValue;
+                return out;
+            }
+
+            function persistContext() {
+                try {
+                    var values = {};
+                    FIELDS.forEach(function (f) {
+                        var el = document.getElementById(f.id);
+                        values[f.id] = el ? el.value : '';
+                    });
+                    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+                } catch (e) { /* ignore */ }
+            }
+
+            function restoreContext() {
+                try {
+                    var raw = sessionStorage.getItem(STORAGE_KEY);
+                    if (!raw) return;
+                    var values = JSON.parse(raw);
+                    if (!values || typeof values !== 'object') return;
+                    FIELDS.forEach(function (f) {
+                        var el = document.getElementById(f.id);
+                        if (el && typeof values[f.id] === 'string') el.value = values[f.id];
+                    });
+                } catch (e) { /* ignore */ }
+            }
+
+            function clearContext() {
+                FIELDS.forEach(function (f) {
+                    var el = document.getElementById(f.id);
+                    if (el) el.value = '';
+                });
+                try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }
+                var status = document.getElementById('cmoCtxStatus');
+                if (status) status.textContent = 'Context cleared.';
+            }
+
+            window.__CMO_COMPILE = function (promptId, originalText) {
+                if (!originalText) return originalText;
+                if (promptId === 'promptDemo') return originalText;
+                var ctx = readContext();
+                var lines = [];
+                if (ctx.__hasAny) {
+                    lines.push('CONTEXT');
+                    FIELDS.forEach(function (f) {
+                        var v = ctx[f.id];
+                        lines.push('- ' + f.label + ': ' + (v ? v : '[not set]'));
+                    });
+                    lines.push('');
+                }
+                lines.push(RULES_HEADER);
+                RULES.forEach(function (r) { lines.push(r); });
+                lines.push('');
+                lines.push('---');
+                lines.push('');
+                return lines.join('\n') + originalText;
+            };
+
+            document.addEventListener('DOMContentLoaded', function () {
+                restoreContext();
+                FIELDS.forEach(function (f) {
+                    var el = document.getElementById(f.id);
+                    if (el) el.addEventListener('input', persistContext);
+                });
+                var clearBtn = document.getElementById('cmoCtxClear');
+                if (clearBtn) clearBtn.addEventListener('click', clearContext);
+            });
+        })();
+    </script>
+    <script>
+        (function () {
+            'use strict';
+            var SCENARIOS = [{"id":"weekly-review","label":"Weekly review","brief":"You are my marketing analyst. Last week’s metrics: [PASTE NUMBERS OR SCREENSHOT SUMMARY]. Audience: [AUDIENCE]. Channels: [CHANNELS]. Give me: (1) the single biggest insight from the data, (2) three prioritized actions for next week with owner + deadline, (3) one metric to watch and why.","nextAction":"Schedule a 20-minute metrics review with the owner named for action #1.","bottomLine":"Three actions beat ten vague ideas—ship the smallest test that reduces uncertainty.","risks":["Cherry-picking one spike without checking sample size","Optimizing vanity metrics (likes) instead of pipeline or revenue signals"],"questions":["Which number changed week-over-week and by how much?","What did we intentionally not do last week that could explain the result?"]},{"id":"campaign-launch","label":"Campaign launch brief","brief":"You are my campaign lead. Objective: [ONE SENTENCE GOAL]. Audience: [AUDIENCE]. Offer: [OFFER]. Channels: [CHANNELS]. Budget/time box: [CONSTRAINT]. Produce: (1) core message in one line, (2) three hook variants aligned to the objective, (3) channel-specific tweaks (max 2 bullets per channel), (4) KPIs with targets and measurement window.","nextAction":"Pick one hook + one channel for a 7-day pilot before scaling spend.","bottomLine":"One objective, one primary KPI—everything else is diagnostic.","risks":["Hooks that promise outcomes we cannot substantiate","Too many KPIs so nobody owns the primary metric"],"questions":["What would make us stop or pivot this campaign?","What proof do we need before we scale creative or budget?"]},{"id":"stakeholder-update","label":"Stakeholder update","brief":"You are my communications partner. I need a stakeholder update for [AUDIENCE / ROLE]. Decision needed: [YES/NO OR CHOICE]. Context: [2–4 bullets]. Risks: [BULLETS]. Produce: (1) bottom line in 2 sentences, (2) recommendation with trade-offs, (3) explicit ask (decision, budget, or timeline), (4) next meeting or follow-up if no reply.","nextAction":"Send the draft and put the decision deadline in the subject line.","bottomLine":"If the decision isn’t obvious in 30 seconds, rewrite the top.","risks":["Burying the ask below background","Soft language that avoids ownership or dates"],"questions":["What happens if we do nothing for two weeks?","Who can approve this on their own authority?"]}];
+            var L = {"next":"Next action","bottom":"Bottom line","risks":"Risks","questions":"Questions"};
+            function panelText(s) {
+                var lines = [s.brief, "", L.next + ": " + s.nextAction, L.bottom + ": " + s.bottomLine, "", L.risks + ":"];
+                s.risks.forEach(function (r) { lines.push("- " + r); });
+                lines.push("", L.questions + ":");
+                s.questions.forEach(function (q) { lines.push("- " + q); });
+                return lines.join('\n');
+            }
+            document.addEventListener('DOMContentLoaded', function () {
+                var tabs = document.querySelectorAll('.cmo-scenario-tab');
+                var pre = document.getElementById('cmo-scenario-brief');
+                var panel = document.getElementById('cmo-scenario-panel');
+                if (!tabs.length || !pre) return;
+                function activate(index) {
+                    var s = SCENARIOS[index];
+                    if (!s) return;
+                    pre.textContent = panelText(s);
+                    tabs.forEach(function (btn, i) {
+                        var on = i === index;
+                        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+                        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+                        btn.setAttribute('tabindex', on ? '0' : '-1');
+                        if (panel && on) panel.setAttribute("aria-labelledby", btn.id);
+                    });
+                }
+                tabs.forEach(function (btn, i) {
+                    btn.addEventListener('click', function () {
+                        activate(i);
+                    });
+                    btn.addEventListener('keydown', function (e) {
+                        var max = tabs.length - 1;
+                        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            var n = i < max ? i + 1 : 0;
+                            tabs[n].focus();
+                            activate(n);
+                        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            var p = i > 0 ? i - 1 : max;
+                            tabs[p].focus();
+                            activate(p);
+                        }
+                    });
+                });
             });
         })();
     </script>

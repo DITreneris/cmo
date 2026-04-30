@@ -1,0 +1,47 @@
+[
+  {
+    "id": "weekly-review",
+    "label": "Weekly review",
+    "brief": "You are my marketing analyst. Last week’s metrics: [PASTE NUMBERS OR SCREENSHOT SUMMARY]. Audience: [AUDIENCE]. Channels: [CHANNELS]. Give me: (1) the single biggest insight from the data, (2) three prioritized actions for next week with owner + deadline, (3) one metric to watch and why.",
+    "nextAction": "Schedule a 20-minute metrics review with the owner named for action #1.",
+    "bottomLine": "Three actions beat ten vague ideas—ship the smallest test that reduces uncertainty.",
+    "risks": [
+      "Cherry-picking one spike without checking sample size",
+      "Optimizing vanity metrics (likes) instead of pipeline or revenue signals"
+    ],
+    "questions": [
+      "Which number changed week-over-week and by how much?",
+      "What did we intentionally not do last week that could explain the result?"
+    ]
+  },
+  {
+    "id": "campaign-launch",
+    "label": "Campaign launch brief",
+    "brief": "You are my campaign lead. Objective: [ONE SENTENCE GOAL]. Audience: [AUDIENCE]. Offer: [OFFER]. Channels: [CHANNELS]. Budget/time box: [CONSTRAINT]. Produce: (1) core message in one line, (2) three hook variants aligned to the objective, (3) channel-specific tweaks (max 2 bullets per channel), (4) KPIs with targets and measurement window.",
+    "nextAction": "Pick one hook + one channel for a 7-day pilot before scaling spend.",
+    "bottomLine": "One objective, one primary KPI—everything else is diagnostic.",
+    "risks": [
+      "Hooks that promise outcomes we cannot substantiate",
+      "Too many KPIs so nobody owns the primary metric"
+    ],
+    "questions": [
+      "What would make us stop or pivot this campaign?",
+      "What proof do we need before we scale creative or budget?"
+    ]
+  },
+  {
+    "id": "stakeholder-update",
+    "label": "Stakeholder update",
+    "brief": "You are my communications partner. I need a stakeholder update for [AUDIENCE / ROLE]. Decision needed: [YES/NO OR CHOICE]. Context: [2–4 bullets]. Risks: [BULLETS]. Produce: (1) bottom line in 2 sentences, (2) recommendation with trade-offs, (3) explicit ask (decision, budget, or timeline), (4) next meeting or follow-up if no reply.",
+    "nextAction": "Send the draft and put the decision deadline in the subject line.",
+    "bottomLine": "If the decision isn’t obvious in 30 seconds, rewrite the top.",
+    "risks": [
+      "Burying the ask below background",
+      "Soft language that avoids ownership or dates"
+    ],
+    "questions": [
+      "What happens if we do nothing for two weeks?",
+      "Who can approve this on their own authority?"
+    ]
+  }
+]

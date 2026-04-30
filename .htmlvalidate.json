@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "aria-label-misuse": "off",
+    "hidden-focusable": "off",
+    "no-inline-style": "off",
+    "no-inline-script": "off",
+    "no-implicit-button-type": "off",
+    "no-raw-characters": "off",
+    "no-redundant-role": "off",
+    "no-trailing-whitespace": "off",
+    "prefer-native-element": "off"
+  }
+}
+

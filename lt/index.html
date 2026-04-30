@@ -39,53 +39,6 @@
             box-sizing: border-box;
         }
 
-        :root {
-            /* Spin-off Nr. 2 – oranžinė CTA paletė (aukštesnis CTA) */
-            --bg: #F7F8FA;
-            --white: #FFFFFF;
-            --text: #1A202C;
-            --text-light: #4A5568;
-            --border: #CBD5E0;
-
-            /* Pagrindinis akcentas – oranžinė, ~12% mažesnis saturation (mažiau agresyvu); WCAG2AA 4.5:1 */
-            --accent-primary: #c75515;
-            --accent-primary-hover: #b54f14;
-            --accent-gold: #c75515;
-            --accent-gold-dark: #b54f14;
-
-            /* Antrinis akcentas (tamsiai pilka) – hero, outline mygtukai */
-            --accent-dark: #3C485A;
-            --accent-dark-hover: #2D3848;
-
-            /* Hero: tamsesnis viršuje, šviesesnis apačioje; sumažintas saturation */
-            --hero-gradient-start: #a85c32;
-            --hero-gradient-mid: #c46d3d;
-            --hero-gradient-end: #dc8f5e;
-            --cta-bg: #c75515;
-            --cta-text: #FFFFFF;
-            --cta-hover: var(--accent-primary-hover);
-
-            /* Tertiarinė (bibliotekos identitetas) – teal */
-            --tertiary: #0D9488;
-            --tertiary-dark: #0a5c54;
-            --tertiary-hover: #0f766e;
-            --tertiary-light: #CCFBF1;
-
-            /* Semantiniai – suderinti su oranžine palete */
-            --blue: #3C485A;
-            --blue-light: #E8ECF0;
-            --orange: #c75515;
-            --orange-light: #FFF7ED;
-            --green: #38A169;
-            --green-dark: #2F855A;
-            --error: #E53E3E;
-            --bg-subtle: #F7FAFC;
-
-            /* Community CTA – palikta green (hierarchija) arba suderinta */
-            --community-cta-green: #0E7A33;
-            --community-cta-green-hover: #0B6B2D;
-        }
-
         /* Skip link – prieinamumas (matomas tik su focus) */
         .skip-link {
             position: absolute;
@@ -112,8 +65,8 @@
             font-family: 'Inter', -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
-            font-size: 18px;
+            line-height: var(--line-height-body);
+            font-size: var(--font-size-body);
         }
 
         .container {
@@ -122,39 +75,32 @@
             padding: 60px 28px;
         }
 
-        /* ===== HEADER ===== */
+        /* ===== HEADER (light hero – Prompt Anatomy) ===== */
         .header {
             position: relative;
-            /* Vertikalus gradientas: tamsesnis viršuje, šviesesnis apačioje – mažiau „reklaminė“, daugiau „produktas“ */
-            background: linear-gradient(180deg, var(--hero-gradient-start) 0%, var(--hero-gradient-mid) 50%, var(--hero-gradient-end) 100%);
-            color: white;
+            background: var(--hero-bg);
+            color: var(--hero-ink);
             padding: 46px 48px;
             border-radius: 20px;
             margin-bottom: 40px;
-            box-shadow: 0 20px 40px rgba(60, 72, 90, 0.22);
+            box-shadow: var(--shadow-elevation-hero);
             overflow: hidden;
+            border: 1px solid var(--border);
         }
 
-        /* Subtilus tamsesnis overlay – tekstas aiškesnis */
         .header::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.08);
-            pointer-events: none;
-            z-index: 0;
+            display: none;
         }
 
-        /* Švelni noise tekstūra (~6%) – „minkštesnis“ fonas */
         .header::after {
             content: '';
             position: absolute;
             inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            opacity: 0.04;
+            opacity: 0.03;
             pointer-events: none;
             z-index: 0;
-            mix-blend-mode: overlay;
+            mix-blend-mode: multiply;
         }
 
         .header .header-badges,
@@ -177,7 +123,7 @@
 
         .badge {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(11, 19, 32, 0.06);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px); /* Safari palaikymas */
             padding: 8px 16px;
@@ -186,10 +132,12 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
+            color: var(--hero-ink);
+            border: 1px solid rgba(11, 19, 32, 0.08);
         }
 
         .badge-spinoff {
-            border: 1px solid rgba(217, 164, 65, 0.5);
+            border: 1px solid rgba(207, 167, 58, 0.45);
         }
 
         .lang-switcher {
@@ -198,9 +146,9 @@
             align-items: center;
         }
         .lang-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: inherit;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(11, 19, 32, 0.04);
+            color: var(--hero-ink);
+            border: 1px solid rgba(11, 19, 32, 0.12);
             padding: 6px 12px;
             min-width: 44px;
             min-height: 44px;
@@ -212,14 +160,14 @@
         }
         .lang-btn:hover,
         .lang-btn:focus-visible {
-            background: rgba(255, 255, 255, 0.35);
-            border-color: rgba(255, 255, 255, 0.9);
-            outline: 2px solid white;
+            background: rgba(11, 19, 32, 0.08);
+            border-color: rgba(11, 19, 32, 0.22);
+            outline: 2px solid var(--accent-primary);
             outline-offset: 2px;
         }
         .lang-btn.is-active {
-            background: rgba(255, 255, 255, 0.4);
-            border-color: white;
+            background: rgba(207, 167, 58, 0.2);
+            border-color: var(--accent-primary);
         }
 
         /* Promptų anatomija – mažesnis kontrastas ir padding, kad nekonkuruotų su hero */
@@ -230,39 +178,150 @@
             align-items: center;
             min-height: 44px;
             min-width: 44px;
-            color: inherit;
+            color: var(--hero-ink);
             text-decoration: none;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.17);
+            background: rgba(11, 19, 32, 0.05);
             padding: 6px 14px;
             font-size: 13px;
         }
         .header-badges a.badge:hover,
         .header-badges a.badge:focus-visible {
-            background: rgba(255, 255, 255, 0.28);
-            outline: 2px solid white;
+            background: rgba(11, 19, 32, 0.09);
+            outline: 2px solid var(--accent-primary);
             outline-offset: 2px;
         }
 
         .header h1 {
-            font-size: 52px;
+            font-size: var(--font-size-display);
             font-weight: 800;
-            line-height: 1.1;
+            line-height: var(--line-height-tight);
             margin-bottom: 16px;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
+            color: var(--hero-ink);
+        }
+
+        @media (min-width: 768px) {
+            .header h1 {
+                font-size: var(--font-size-display-lg);
+            }
         }
 
         .header p {
-            font-size: 20px;
+            font-size: var(--font-size-body-lg);
             line-height: 1.5;
-            opacity: 0.95;
+            opacity: 1;
             font-weight: 500;
+            color: var(--hero-muted);
         }
 
 
+        /* Hero trust strip (above the fold) */
+        .header-trust {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .trust-pills {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .trust-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 9999px;
+            border: 1px solid rgba(11, 19, 32, 0.1);
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            color: var(--hero-ink);
+            min-height: 36px;
+        }
+
+        .header-trust a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 36px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            opacity: 1;
+            transition: opacity 0.2s ease, color 0.2s ease;
+        }
+
+        .header-trust a:hover {
+            color: var(--accent-gold-dark);
+        }
+
+        .header-trust a:focus-visible {
+            outline: 3px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        /* Hero instant demo (mini prompt) */
+        .header-demo {
+            margin-top: 14px;
+            border: 1px solid rgba(11, 19, 32, 0.08);
+            background: rgba(255, 255, 255, 0.72);
+            border-radius: 14px;
+            padding: 12px 14px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .header-demo-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            color: var(--hero-ink);
+        }
+
+        .header-demo pre {
+            margin: 0;
+            padding: 12px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(11, 19, 32, 0.1);
+            background: rgba(11, 19, 32, 0.04);
+            color: var(--hero-ink);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 120px;
+            overflow: auto;
+            white-space: pre-wrap;
+        }
+
+        .header-demo .btn {
+            padding: 10px 14px;
+            font-size: 14px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-cta);
+        }
+
         .header-note {
             font-size: 13px;
-            opacity: 0.85;
+            color: var(--hero-muted);
             margin-top: 16px;
             font-weight: 500;
         }
@@ -292,18 +351,18 @@
             cursor: pointer;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             text-decoration: none;
-            box-shadow: 0 4px 14px rgba(60, 72, 90, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            box-shadow: var(--shadow-cta);
             outline: none;
         }
 
         .cta-button:hover {
             background: var(--cta-hover);
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(60, 72, 90, 0.35), 0 0 12px rgba(255, 255, 255, 0.08);
+            box-shadow: var(--shadow-cta-hover);
         }
 
         .cta-button:focus-visible {
-            outline: 3px solid var(--white);
+            outline: 3px solid var(--accent-dark);
             outline-offset: 2px;
         }
 
@@ -313,45 +372,44 @@
             justify-content: center;
             gap: 10px;
             background: transparent;
-            color: var(--white);
+            color: var(--hero-ink);
             padding: 20px 32px;
             min-height: 44px;
             min-width: 44px;
             border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(11, 19, 32, 0.18);
             font-size: 17px;
             font-weight: 700;
             cursor: pointer;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             text-decoration: none;
             outline: none;
-            opacity: 0.85;
+            opacity: 1;
         }
 
         .cta-button-outline:hover,
         .cta-button-outline:focus-visible {
-            opacity: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--white);
-            color: var(--white);
+            background: rgba(11, 19, 32, 0.04);
+            border-color: var(--accent-dark);
+            color: var(--hero-ink);
         }
 
         .cta-button-outline:focus-visible {
-            outline: 3px solid var(--white);
+            outline: 3px solid var(--accent-primary);
             outline-offset: 2px;
         }
 
         .cta-secondary {
             font-size: 15px;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--accent-dark);
             text-decoration: underline;
             text-underline-offset: 3px;
             transition: color 0.2s ease;
         }
 
         .cta-secondary:hover {
-            color: var(--white);
+            color: var(--hero-ink);
         }
 
         /* ===== MODAL / KONTAKTŲ FORMA (rezervuota būsimai – žr. INTEGRACIJA.md) ===== */
@@ -385,7 +443,7 @@
             width: 100%;
             max-height: calc(100vh - 40px);
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-modal);
             transform: scale(0.9);
             transition: transform 0.3s ease;
             position: relative;
@@ -862,6 +920,43 @@
             margin-bottom: 20px;
         }
 
+        .prompt-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: -6px 0 14px;
+        }
+
+        .prompt-tag {
+            display: inline-flex;
+            align-items: center;
+            min-height: 28px;
+            padding: 6px 10px;
+            border-radius: 9999px;
+            border: 1px solid rgba(60, 72, 90, 0.18);
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--text-light);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .prompt-recommended {
+            padding: 6px 12px;
+            background: rgba(199, 85, 21, 0.12);
+            color: var(--accent-dark);
+            border: 1px solid rgba(199, 85, 21, 0.35);
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+        }
+
         .number {
             width: 48px;
             height: 48px;
@@ -906,6 +1001,18 @@
         /* ===== PROMPT BODY ===== */
         .prompt-body {
             padding: 40px;
+        }
+
+        .edit-hint {
+            margin: 0 0 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(60, 72, 90, 0.18);
+            background: rgba(255, 247, 237, 0.65);
+            color: var(--accent-dark);
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.4;
         }
 
         .code-block {
@@ -1014,7 +1121,7 @@
             align-items: center;
             gap: 12px;
             background: var(--cta-bg);
-            color: white;
+            color: var(--cta-text);
             padding: 22px 36px;
             min-height: 44px;
             min-width: 44px;
@@ -1025,19 +1132,19 @@
             cursor: pointer;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
             font-family: 'Inter', sans-serif;
-            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+            box-shadow: var(--shadow-cta);
             outline: none;
         }
 
         .btn:focus-visible {
-            outline: 3px solid var(--accent-gold);
+            outline: 3px solid var(--accent-dark);
             outline-offset: 2px;
         }
 
         .btn:hover {
             background: var(--cta-hover);
             transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(234, 88, 12, 0.28);
+            box-shadow: var(--shadow-cta-hover);
         }
 
         .btn:active {
@@ -1089,6 +1196,16 @@
             padding: 14px 20px;
             margin-bottom: 24px;
             min-height: 44px;
+            position: sticky;
+            top: 14px;
+            z-index: 900;
+        }
+
+        .progress-wrap.is-sticky {
+            background: rgba(255, 247, 237, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
         }
 
         .progress-wrap p {
@@ -1647,6 +1764,29 @@
             </div>
             <h1>Turinio DI sistema<br>rinkodaros vadovams</h1>
             <p>Per 45 min. susikursi turinio variklį, kuris dirba kasdien.</p>
+            <div class="header-trust">
+                <ul class="trust-pills">
+                    <li class="trust-pill" id="heroTrustPill1"><span aria-hidden="true">🔒</span> Be duomenų rinkimo</li>
+                    <li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">🧩</span> 10 promptų seka</li>
+                    <li class="trust-pill" id="heroTrustPill3"><span aria-hidden="true">⏱</span> ~45 min rezultatas</li>
+                </ul>
+                <a id="heroTrustLink" href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer" aria-label="Oficiali metodika: Prompt Anatomy (atidaroma naujame lange)">Oficiali metodika →</a>
+            </div>
+            <div class="header-demo">
+                <div class="header-demo-title">
+                    <span id="heroDemoTitle">Pavyzdys (nukopijuok ir pabandyk)</span>
+                    <button class="btn"
+                            id="heroDemoCopyBtn"
+                            aria-label="Kopijuoti pavyzdinį promptą į mainų atmintinę"
+                            data-prompt-id="promptDemo">
+                        <span aria-hidden="true">📋</span>
+                        <span id="heroDemoCopyBtnText">Kopijuoti pavyzdį</span>
+                    </button>
+                </div>
+                <pre id="promptDemo">META: Tu esi rinkodaros strategas.
+INPUT: Auditorija [ ], tikslas [ ].
+OUTPUT: 5 idėjos su kabliuku + CTA + KPI.</pre>
+            </div>
             <div class="header-cta">
                 <a href="#block1" class="cta-button" aria-label="Gauti nemokamai – pereiti prie promptų">Gauti nemokamai</a>
                 <a href="#community" class="cta-button-outline" aria-label="Prisijunk prie bendruomenės – pereiti prie Telegram ir nuorodų">Prisijunk prie bendruomenės</a>
@@ -1735,6 +1875,48 @@
             </div>
         </div>
 
+        <section class="cmo-context" id="cmo-context" aria-labelledby="cmo-context-title">
+            <h2 id="cmo-context-title" class="cmo-context-title">Rinkodaros kontekstas (vienas blokas, kiekvienam kopijavimui)</h2>
+            <p class="cmo-context-intro">Užpildyk vieną kartą. Šios penkios reikšmės ir taisyklės žemiau automatiškai pridedamos kiekvieną kartą paspaudus <strong>Kopijuoti promptą</strong>. Saugojama tik šios naršyklės sesijoje.</p>
+            <div class="cmo-context-form" id="cmoContextForm">
+                <fieldset class="cmo-context-fields">
+                    <legend class="cmo-context-legend">Rinkodaros konteksto laukai</legend>
+                    <div class="cmo-context-row">
+                        <label for="cmoCtxAudience">Auditorija</label>
+                        <input type="text" id="cmoCtxAudience" name="audience" maxlength="160" placeholder="pvz. B2B rinkodaros vadovai Europoje, 50–500 FTE">
+                    </div>
+                    <div class="cmo-context-row">
+                        <label for="cmoCtxOffer">Pasiūlymas / UPP</label>
+                        <input type="text" id="cmoCtxOffer" name="offer" maxlength="160" placeholder="pvz. AI turinio sistema: 100 vienetų per 30 d.">
+                    </div>
+                    <div class="cmo-context-row">
+                        <label for="cmoCtxChannels">Kanalai</label>
+                        <input type="text" id="cmoCtxChannels" name="channels" maxlength="160" placeholder="pvz. LinkedIn, el. paštas, SEO">
+                    </div>
+                    <div class="cmo-context-row">
+                        <label for="cmoCtxGoal">Tikslas (šis mėnuo)</label>
+                        <input type="text" id="cmoCtxGoal" name="goal" maxlength="160" placeholder="pvz. 30 kvalifikuotų demo">
+                    </div>
+                    <div class="cmo-context-row">
+                        <label for="cmoCtxConstraint">Pagrindinis apribojimas</label>
+                        <input type="text" id="cmoCtxConstraint" name="constraint" maxlength="160" placeholder="pvz. 5 val./sav., nėra dizaino pagalbos">
+                    </div>
+                </fieldset>
+                <div class="cmo-context-actions">
+                    <button type="button" class="btn cmo-context-clear" id="cmoCtxClear">Išvalyti kontekstą</button>
+                    <span class="cmo-context-status" id="cmoCtxStatus" aria-live="polite"></span>
+                </div>
+            </div>
+            <div class="cmo-context-rules" id="cmoContextRules" role="note" aria-label="Privalomos taisyklės įterpiamos kopijuojant">
+                <p class="cmo-context-rules-title"><strong>TAISYKLĖS (privalomos)</strong></p>
+                <ul>
+                    <li>Be bendro patarimo. Jei trūksta konteksto, pirmiausia užduok iki 3 tikslinių klausimų.</li>
+                    <li>Nesugalvok skaičių, teiginių ar atsiliepimų. Pažymėk, ką reikia patvirtinti.</li>
+                    <li>Išvestis turi būti naudojama: skyriai, savininkas kur tinkama, kitas veiksmas su terminu.</li>
+                </ul>
+            </div>
+        </section>
+
         <!-- PROMPT 1 -->
         <article class="prompt">
             <div class="prompt-header">
@@ -1742,6 +1924,7 @@
                     <div class="number">1</div>
                     <div class="category">Pradžia</div>
                     <span class="prompt-time">~5–10 min</span>
+                    <span class="prompt-recommended" id="prompt1Recommended">Pradėk nuo čia</span>
                 </div>
                 <h2 class="prompt-title">30 dienų turinio sistema</h2>
                 <p class="prompt-desc">Sukurk 30 dienų turinio planą pagal 4 turinio principus</p>
@@ -1766,6 +1949,12 @@ OUTPUT: Lentelė/sąrašas – 30 dienų: tema, įžanginis kabliukas, formatas,
                         <p>4 principai = balansas: autoritetas, problema, įrodymas, pasiūlymas.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected1" aria-label="Tikėtinas atsakymas promptui 1">
+                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>
+                        <li>30 dienų lentelė: tema, kabliukas, formatas, CTA, KPI</li>
+                        <li>Savaitinės temos susietos su 4 stulpais (Autoritetas, Problema, Įrodymas, Pasiūlymas)</li>
+                        <li>Vienas kitas veiksmas pirmajai savaitei su savininku ir terminu</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
@@ -1775,6 +1964,7 @@ OUTPUT: Lentelė/sąrašas – 30 dienų: tema, įžanginis kabliukas, formatas,
                     <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Atidaryti ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Atidaryti Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Atidaryti Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="1" aria-label="Pažymėti, kad atlikai šį žingsnį">
                     <span>Pažymėjau kaip atlikau</span>
@@ -1813,6 +2003,12 @@ OUTPUT: 7 blokai – LinkedIn, karuselė, 30s video, el. laiškas, titulinis ekr
                         <p>1 idėja = 7 vienetų. Laikas sutaupomas, nuoseklumas išlaikomas.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected2" aria-label="Tikėtinas atsakymas promptui 2">
+                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>
+                        <li>7 pritaikyti turinio vienetai: LinkedIn įrašas, karuselė, 30 s scenarijus, el. laiškas, landing hero, reklama, 3 kabliukai</li>
+                        <li>Ta pati esminė žinutė skirtinguose kanaluose su kanalui tinkančiais patobulinimais</li>
+                        <li>3 paruošti testuoti kabliukai su vienu rekomenduojamu pasirinkimu</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Įklijuok į ChatGPT arba Claude ir pakeisk laukus savo duomenimis.</p>
@@ -1822,6 +2018,7 @@ OUTPUT: 7 blokai – LinkedIn, karuselė, 30s video, el. laiškas, titulinis ekr
                     <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Atidaryti ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Atidaryti Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Atidaryti Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="2" aria-label="Pažymėti, kad atlikai šį žingsnį">
                     <span>Pažymėjau kaip atlikau</span>
@@ -1860,6 +2057,12 @@ OUTPUT: 1 postas – įžanginis kabliukas, 3 punktai, 1 pavyzdys, raginimas vei
                         <p>Įrodymai + konkretūs punktai = pasitikėjimas ir reakcija.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected3" aria-label="Tikėtinas atsakymas promptui 3">
+                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>
+                        <li>1 LinkedIn įrašas (150–200 žodžių) su kabliuku, 3 punktais, pavyzdžiu ir CTA</li>
+                        <li>Konkretus įrodymas (skaičius ar kliento rezultatas)</li>
+                        <li>Patikrinimo žyma bet kokiam nepagrąstam teiginiui</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
@@ -1869,6 +2072,7 @@ OUTPUT: 1 postas – įžanginis kabliukas, 3 punktai, 1 pavyzdys, raginimas vei
                     <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Atidaryti ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Atidaryti Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Atidaryti Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="3" aria-label="Pažymėti, kad atlikai šį žingsnį">
                     <span>Pažymėjau kaip atlikau</span>
@@ -1907,6 +2111,12 @@ OUTPUT: Laiko žymės – 0–2 s įžanginis kabliukas, 3 punktai (~8–10 s ki
                         <p>2 sekundės = liks arba slinks toliau. Įžūgis – esmė.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected4" aria-label="Tikėtinas atsakymas promptui 4">
+                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>
+                        <li>30 sekundžių scenarijus su žymomis: 0–2 s kabliukas, 3 akcentai, įrodymas, CTA</li>
+                        <li>Vizualinis ar B-roll signalas kiekvienam akcentui</li>
+                        <li>Vienas alternatyvus kabliukas A/B testui</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok, įklijuok į DI įrankį ir pakeisk [tema], [pavyzdys] savo duomenimis.</p>
@@ -1916,6 +2126,7 @@ OUTPUT: Laiko žymės – 0–2 s įžanginis kabliukas, 3 punktai (~8–10 s ki
                     <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Atidaryti ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Atidaryti Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Atidaryti Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="4" aria-label="Pažymėti, kad atlikai šį žingsnį">
                     <span>Pažymėjau kaip atlikau</span>
@@ -1954,6 +2165,13 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                         <p>Rodikliai be veiksmų = stovėjimas vietoje. Duomenys → sprendimai.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected5" aria-label="Tikėtinas atsakymas promptui 5">
+                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>
+                        <li>Kas neefektyvu su € ar % poveikiu</li>
+                        <li>Hipotezė kodėl, atskirta nuo faktų</li>
+                        <li>Kitas testas (šią savaitę) ir ką stabdyti dabar</li>
+                        <li>Savininkas ir sprendimo terminas</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
@@ -1963,6 +2181,7 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                     <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Atidaryti ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Atidaryti Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Atidaryti Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="5" aria-label="Pažymėti, kad atlikai šį žingsnį">
                     <span>Pažymėjau kaip atlikau</span>
@@ -2001,6 +2220,12 @@ OUTPUT: 10 vienetų – postai/el. laiškai/landing, prieštaravimas + argumenta
                         <p>Realūs klausimai + atsakymai = mažesnė trintis, didesnis pasitikėjimas.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected6" aria-label="Tikėtinas atsakymas promptui 6">
+                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>
+                        <li>10 turinio vienetų, po vieną pagrindiniam prieštaravimui</li>
+                        <li>Kiekvienam: prieštaravimas, naujas kampas, įrodymas, CTA</li>
+                        <li>Kanalo pasiūlymas (įrašas, el. laiškas, landing fragmentas)</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Įklijuok į ChatGPT arba Claude – pakeisk prieštaravimus ir kontekstą.</p>
@@ -2010,6 +2235,7 @@ OUTPUT: 10 vienetų – postai/el. laiškai/landing, prieštaravimas + argumenta
                     <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Atidaryti ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Atidaryti Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Atidaryti Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="6" aria-label="Pažymėti, kad atlikai šį žingsnį">
                     <span>Pažymėjau kaip atlikau</span>
@@ -2048,6 +2274,12 @@ OUTPUT: (1) Postas: įžanginis kabliukas, nauda, raginimas veikti. (2) 4 žinut
                         <p>Seka: sekėjas → klientas. Struktūra didina konversiją.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected7" aria-label="Tikėtinas atsakymas promptui 7">
+                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>
+                        <li>1 lead magneto įrašas: kabliukas, vertė, CTA</li>
+                        <li>4 žingsnių DM seka: atidarymas, kvalifikacija, vertė, pasiūlymas</li>
+                        <li>Aiškus kitas žingsnis kiekvienoje žinutėje</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
@@ -2057,6 +2289,7 @@ OUTPUT: (1) Postas: įžanginis kabliukas, nauda, raginimas veikti. (2) 4 žinut
                     <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Atidaryti ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Atidaryti Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Atidaryti Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="7" aria-label="Pažymėti, kad atlikai šį žingsnį">
                     <span>Pažymėjau kaip atlikau</span>
@@ -2095,6 +2328,12 @@ OUTPUT: 6 sekcijos – Problema, Sprendimas, Procesas, Rezultatas, Pagrindinės 
                         <p>Skaičiai + procesas = kredibilitetas ir konversija.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected8" aria-label="Tikėtinas atsakymas promptui 8">
+                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>
+                        <li>6 skyriai: Problema, Sprendimas, Procesas, Rezultatai, Esminė išvada, CTA</li>
+                        <li>Konkretūs rezultatai su € poveikiu, kai įmanoma</li>
+                        <li>Kliento citatos laukas (patvirtinti prieš publikuojant)</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok – įrašyk kliento duomenis ir gauk struktūrizuotą istoriją.</p>
@@ -2104,6 +2343,7 @@ OUTPUT: 6 sekcijos – Problema, Sprendimas, Procesas, Rezultatas, Pagrindinės 
                     <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Atidaryti ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Atidaryti Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Atidaryti Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="8" aria-label="Pažymėti, kad atlikai šį žingsnį">
                     <span>Pažymėjau kaip atlikau</span>
@@ -2142,6 +2382,12 @@ OUTPUT: (1) 1 pagrindinė tema – pavadinimas, aprašymas, raginimas veikti. (2
                         <p>Pagrindinė tema + subtemos = pasiekiamumas ir eksperto pozicija.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected9" aria-label="Tikėtinas atsakymas promptui 9">
+                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>
+                        <li>1 pagrindinio puslapio schema su CTA</li>
+                        <li>8 subtemių pavadinimai su paieškos intencijos žyma</li>
+                        <li>Vidinių nuorodų žemėlapis tarp pagrindinės temos ir subtemių</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
@@ -2151,6 +2397,7 @@ OUTPUT: (1) 1 pagrindinė tema – pavadinimas, aprašymas, raginimas veikti. (2
                     <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Atidaryti ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Atidaryti Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Atidaryti Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="9" aria-label="Pažymėti, kad atlikai šį žingsnį">
                     <span>Pažymėjau kaip atlikau</span>
@@ -2189,6 +2436,13 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                         <p>Viskas vienoje vietoje: 30 d. planas, 1→7, testavimas, prioritetai.</p>
                     </div>
                 </div>
+                <ul class="prompt-expected" id="expected10" aria-label="Tikėtinas atsakymas promptui 10">
+                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>
+                        <li>30 dienų planas + 5 turinio vienetai šiai savaitei</li>
+                        <li>1 idėja išplėsta į 7 formatus</li>
+                        <li>3 testų hipotezės su sėkmės kriterijais</li>
+                        <li>3 prioritetiniai veiksmai rytoj su savininkais</li>
+                </ul>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Šis promptas apima viską – nukopijuok, įklijuok ir pildyk savo verslo laukus.</p>
@@ -2198,12 +2452,72 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     <span aria-hidden="true">📋</span>
                     <span>Kopijuoti promptą</span>
                 </button>
+                <div class="cmo-provider-row no-print" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke"><a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Atidaryti ChatGPT</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Atidaryti Claude</a><span class="cmo-provider-sep" aria-hidden="true">·</span><a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Atidaryti Gemini</a></div>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="10" aria-label="Pažymėti, kad atlikai šį žingsnį">
                     <span>Pažymėjau kaip atlikau</span>
                 </label>
             </div>
         </article>
+
+        <section class="cmo-scenarios" id="cmo-scenarios" aria-labelledby="cmo-scenarios-title">
+            <h2 id="cmo-scenarios-title" class="cmo-scenarios-title">Pasirink scenarijų</h2>
+            <p class="cmo-scenarios-intro">Pasirink praktikos eigą. Kopijuojant įtraukiamas išsaugotas rinkodaros kontekstas ir taisyklės, jei užpildyta.</p>
+            <div class="cmo-scenarios-tablist" role="tablist" aria-label="Scenarijų kortelės">
+                    <button type="button" class="cmo-scenario-tab" role="tab" id="cmo-scenario-tab-0" aria-selected="true" aria-controls="cmo-scenario-panel" tabindex="0" data-scenario-index="0" aria-pressed="true">Savaitės apžvalga</button>
+                    <button type="button" class="cmo-scenario-tab" role="tab" id="cmo-scenario-tab-1" aria-selected="false" aria-controls="cmo-scenario-panel" tabindex="-1" data-scenario-index="1" aria-pressed="false">Kampanijos startas</button>
+                    <button type="button" class="cmo-scenario-tab" role="tab" id="cmo-scenario-tab-2" aria-selected="false" aria-controls="cmo-scenario-panel" tabindex="-1" data-scenario-index="2" aria-pressed="false">Suinteresuotųjų atnaujinimas</button>
+            </div>
+            <div id="cmo-scenario-panel" class="cmo-scenario-panel" role="tabpanel" tabindex="0" aria-labelledby="cmo-scenario-tab-0">
+                <div class="code-block cmo-scenario-code" role="region" aria-label="Kopijuoti scenarijaus santrauką">
+                    <pre class="code-text" id="cmo-scenario-brief">Tu esi mano rinkodaros analitikas. Praėjusios savaitės rodikliai: [ĮKELK SKAIČIUS ARBA SANTRAUKĄ]. Auditorija: [AUDITORIJA]. Kanalai: [KANALAI]. Duok: (1) vieną svarbiausią įžvalgą iš duomenų, (2) tris prioritetizuotus veiksmus kitai savaitei su savininku ir terminu, (3) vieną rodiklį, kurį stebėti ir kodėl.
+
+Kitas veiksmas: Suplanuok 20 min. rodiklių peržiūrą su savininku, kuriam priskirtas veiksmas Nr. 1.
+Esminė mintis: Trys veiksmai geriau nei dešimt miglotų idėjų—paleisk mažiausią testą, kuris sumažina neaiškumą.
+
+Rizikos:
+- Vieno šuolio išsirinkimas nepatikrinus imties dydžio
+- Tuščios šlovės rodiklių (patinka) optimizavimas vietoj piltuvo ar pajamų signalų
+
+Klausimai:
+- Kuris skaičius pasikeitė savaitė prieš savaitę ir kiek?
+- Ko sąmoningai nedarėme praėjusią savaitę ir tai galėtų paaiškinti rezultatą?</pre>
+                </div>
+                <button type="button" class="btn" data-prompt-id="cmo-scenario-brief" aria-label="Kopijuoti scenarijaus santrauką">
+                    <span aria-hidden="true">📋</span>
+                    <span>Kopijuoti santrauką</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="cmo-safety" id="cmo-safety" aria-labelledby="cmo-safety-title">
+            <h2 id="cmo-safety-title" class="cmo-safety-title">Tikrinti prieš publikuojant</h2>
+            <p class="cmo-safety-intro">Paleisk šį recenzento promptą prieš publikuodamas DI pagalbtą rinkodarą. Kopijuojant įtraukiamas sesijos kontekstas ir taisyklės, jei nustatyta.</p>
+            <div class="cmo-safety-copy">
+                <div class="code-block cmo-safety-pre-wrap" role="region" aria-label="Kopijuoti recenzento promptą">
+                    <pre class="code-text" id="cmo-safety-reviewer-prompt">Veik kaip rinkodaros rizikų recenzentas. Peržiūrėk šį DI sugeneruotą turinį prieš publikuodamas: [TEKSTAS].
+Auditorija: [AUDITORIJA]. Kanalas: [KANALAS]. Grąžink:
+1) faktinius teiginius, kuriuos reikia patvirtinti (skaičiai, klientų citatos, palyginimai),
+2) prekės ženklo / tono rizikas,
+3) teisines ar pasitikėjimo rizikas (teiginiai, atsisakymai, intelektinė nuosavybė, atsiliepimai),
+4) trūkstamą kontekstą, kurio skaitytojui reikia prieš veikdamas,
+5) saugesnę pataisytą versiją, jei reikia.</pre>
+                </div>
+                <button type="button" class="btn" data-prompt-id="cmo-safety-reviewer-prompt" aria-label="Kopijuoti recenzento promptą">
+                    <span aria-hidden="true">📋</span>
+                    <span>Kopijuoti recenzento promptą</span>
+                </button>
+            </div>
+            <div class="cmo-safety-checks">
+                <p class="cmo-safety-checks-title">Greita kontrolė</p>
+                <ul role="list">
+                    <li>Faktai patvirtinti</li>
+                    <li>Prekės ženklas / tonas</li>
+                    <li>Teisė / pasitikėjimas</li>
+                    <li>CTA + savininkas</li>
+                </ul>
+            </div>
+        </section>
 
         <!-- KAS TOLIAU? (S2) -->
         <section class="next-steps" aria-labelledby="next-steps-title">
@@ -2263,6 +2577,11 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
         </section>
 
         <footer class="footer">
+            <div class="cmo-footer-meta print-muted">
+                <p class="cmo-footer-crosslink">Reikia CEO/COO rinkinio? <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Atidaryti Prompt Anatomy Leader</a></p>
+                <p class="cmo-kit-version" data-version="1.3.0">Prompt Anatomy CMO rinkinys v1.3.0</p>
+            </div>
+
             <h3>Sėkmės rinkodaroje <span aria-hidden="true">🚀</span></h3>
             <p>Nepamiršk pakeisti <strong>[auditorija]</strong>, <strong>[galvos skausmas]</strong>, <strong>[unikalus pardavimo pasiūlymas]</strong>, <strong>[kanalas]</strong> ir kitus laukus savo duomenimis</p>
             <p class="footer-product-link">Tai Spin-off Nr. 2 iš „Promptų anatomijos“. Pilnas interaktyvus mokymas ir kiti kursai: <a href="https://www.promptanatomy.app/" target="_blank" rel="noopener noreferrer">Promptų anatomija →</a></p>
@@ -2379,6 +2698,15 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 if (cta1) { cta1.textContent = 'Get free'; setLabel(cta1, 'Get free – go to prompts'); }
                 var cta2 = q('.header-cta .cta-button-outline');
                 if (cta2) { cta2.textContent = 'Join the community'; setLabel(cta2, 'Join community – go to Telegram and links'); }
+                setText('#heroTrustPill1', '🔒 No data collection');
+                setText('#heroTrustPill2', '🧩 10-step prompt sequence');
+                setText('#heroTrustPill3', '⏱ ~45 min outcome');
+                var trustLink = el('heroTrustLink');
+                if (trustLink) { trustLink.textContent = 'Official method →'; setLabel(trustLink, 'Official method: Prompt Anatomy (opens in new tab)'); }
+                setText('#heroDemoTitle', 'Example (copy and try it)');
+                setText('#heroDemoCopyBtnText', 'Copy example');
+                setLabel('#heroDemoCopyBtn', 'Copy example prompt to clipboard');
+                setText('#promptDemo', 'META: You are a marketing strategist.\nINPUT: Audience [ ], goal [ ].\nOUTPUT: 5 ideas with hook + CTA + KPI.');
 
                 var objTitle = el('objectives-title');
                 if (objTitle) objTitle.innerHTML = '<span aria-hidden="true">🎯</span> What you actually get';
@@ -2485,6 +2813,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     var preEl = art.querySelector('.code-block pre');
                     if (preEl && enPromptPre[i]) preEl.textContent = enPromptPre[i];
                 });
+                setText('#prompt1Recommended', 'Start here');
 
                 var nextTitle = el('next-steps-title');
                 if (nextTitle) nextTitle.textContent = 'What next?';
@@ -2645,7 +2974,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     return;
                 }
 
-                const promptText = promptElement.textContent?.trim();
+                const promptText = (window.__CMO_COMPILE ? window.__CMO_COMPILE(promptId, promptElement.textContent?.trim()) : promptElement.textContent?.trim());
                 if (!promptText) {
                     showError(button, uiText('Promptas tuščias', 'Prompt is empty'));
                     return;
@@ -2723,7 +3052,29 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 button.innerHTML = '<span aria-hidden="true">✓</span><span>' + uiText('Nukopijuota!', 'Copied!') + '</span>';
                 button.classList.add('success');
                 button.setAttribute('aria-label', uiText('Promptas sėkmingai nukopijuotas', 'Prompt copied successfully'));
-                showToast();
+                (function() {
+                    var pid = button.getAttribute('data-prompt-id') || '';
+                    var n = pid.replace('prompt', '');
+                    var isNumbered = /^\d+$/.test(n);
+                    var message = '';
+                    if (pid === 'promptDemo') {
+                        message = uiText(
+                            'Pavyzdys nukopijuotas. Įklijuok į ChatGPT ir pakeisk [ ] laukus.',
+                            'Example copied. Paste into ChatGPT and replace [ ] placeholders.'
+                        );
+                    } else if (isNumbered) {
+                        message = uiText(
+                            'Promptas #' + n + ' nukopijuotas. Įklijuok į ChatGPT → pakeisk [ ] laukus.',
+                            'Prompt #' + n + ' copied. Paste into ChatGPT → replace [ ] placeholders.'
+                        );
+                    } else {
+                        message = uiText(
+                            'Nukopijuota. Įklijuok į ChatGPT ir pakeisk [ ] laukus.',
+                            'Copied. Paste into ChatGPT and replace [ ] placeholders.'
+                        );
+                    }
+                    showToast(message);
+                })();
                 
                 setTimeout(() => {
                     button.innerHTML = original;
@@ -2760,9 +3111,13 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
             /**
              * Rodyti toast pranešimą
              */
-            function showToast() {
+            function showToast(message) {
                 const toast = document.getElementById('toast');
                 if (!toast) return;
+                if (message) {
+                    var span = toast.querySelector('span');
+                    if (span) span.textContent = message;
+                }
 
                 toast.classList.add('show');
                 toast.setAttribute('aria-live', 'polite');
@@ -2860,6 +3215,100 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 }
             }
 
+            function renderEditHints() {
+                var hintsLt = [
+                    'Pakeisk: [auditorija], [galvos skausmas], [USP], [kanalas].',
+                    'Pakeisk: [idėja] (viena branduolinė žinutė).',
+                    'Pakeisk: [tema], [pavyzdys/skaičius].',
+                    'Pakeisk: [tema], [pavyzdys].',
+                    'Pakeisk: [rodikliai], [kontekstas], [hipotezė].',
+                    'Pakeisk: [prieštaravimai], [kontekstas].',
+                    'Pakeisk: [tema], [auditorija], [pasiūlymas].',
+                    'Pakeisk: [klientas], [procesas], [rezultatai].',
+                    'Pakeisk: [pagrindinė tema], [auditorija].',
+                    'Pakeisk: [verslas], [auditorija], [tikslai], [kanalai].'
+                ];
+                var hintsEn = [
+                    'Replace: [audience], [pain point], [USP], [channel].',
+                    'Replace: [idea] (one core message).',
+                    'Replace: [topic], [proof/number].',
+                    'Replace: [topic], [example].',
+                    'Replace: [metrics], [context], [hypothesis].',
+                    'Replace: [objections], [context].',
+                    'Replace: [topic], [audience], [offer].',
+                    'Replace: [customer], [process], [results].',
+                    'Replace: [main topic], [audience].',
+                    'Replace: [business], [audience], [goals], [channels].'
+                ];
+                var hints = locale === 'en' ? hintsEn : hintsLt;
+                document.querySelectorAll('article.prompt').forEach(function(art, i) {
+                    var body = art.querySelector('.prompt-body');
+                    if (!body) return;
+                    var codeBlock = body.querySelector('.code-block');
+                    if (!codeBlock) return;
+
+                    var hint = body.querySelector('.edit-hint');
+                    if (!hint) {
+                        hint = document.createElement('p');
+                        hint.className = 'edit-hint';
+                        body.insertBefore(hint, codeBlock);
+                    }
+                    hint.textContent = hints[i] || uiText('Pakeisk [ ] laukus savo duomenimis.', 'Replace [ ] placeholders with your data.');
+                });
+            }
+
+            function renderPromptTags() {
+                var tagsLt = [
+                    ['Planas', 'Sistema'],
+                    ['Repurpose', 'Formatai'],
+                    ['LinkedIn', 'Autoritetas'],
+                    ['Video', 'Kabliukas'],
+                    ['Rodikliai', 'Sprendimai'],
+                    ['Prieštaravimai', 'Konversija'],
+                    ['Lead gen', 'DM seka'],
+                    ['Istorija', 'Įrodymai'],
+                    ['SEO', 'Temų klasteris'],
+                    ['Valdymas', 'Prioritetai']
+                ];
+                var tagsEn = [
+                    ['Plan', 'System'],
+                    ['Repurpose', 'Formats'],
+                    ['LinkedIn', 'Authority'],
+                    ['Video', 'Hook'],
+                    ['Metrics', 'Decisions'],
+                    ['Objections', 'Conversion'],
+                    ['Lead gen', 'DM sequence'],
+                    ['Story', 'Proof'],
+                    ['SEO', 'Topic cluster'],
+                    ['Control', 'Priorities']
+                ];
+                var tags = locale === 'en' ? tagsEn : tagsLt;
+
+                document.querySelectorAll('article.prompt').forEach(function(art, i) {
+                    var header = art.querySelector('.prompt-header');
+                    if (!header) return;
+                    var meta = header.querySelector('.prompt-meta');
+                    if (!meta) return;
+
+                    var tagWrap = header.querySelector('.prompt-tags');
+                    if (!tagWrap) {
+                        tagWrap = document.createElement('div');
+                        tagWrap.className = 'prompt-tags';
+                        header.insertBefore(tagWrap, meta.nextSibling);
+                    }
+
+                    var list = tags[i] || [];
+                    tagWrap.innerHTML = '';
+                    list.slice(0, 2).forEach(function(t) {
+                        if (!t) return;
+                        var s = document.createElement('span');
+                        s.className = 'prompt-tag';
+                        s.textContent = t;
+                        tagWrap.appendChild(s);
+                    });
+                });
+            }
+
             // ===== INICIALIZACIJA =====
             document.addEventListener('DOMContentLoaded', function() {
                 bindPromptInteractions();
@@ -2877,8 +3326,34 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 // S1: progreso indikatorius
                 updateProgressIndicator();
 
+                // Sticky progress polish: add shadow only when stuck
+                (function initStickyProgressState() {
+                    var prog = document.getElementById('progressIndicator');
+                    if (!prog) return;
+                    var topPx = 14;
+                    var ticking = false;
+
+                    function onScrollOrResize() {
+                        if (ticking) return;
+                        ticking = true;
+                        window.requestAnimationFrame(function() {
+                            ticking = false;
+                            try {
+                                var rect = prog.getBoundingClientRect();
+                                prog.classList.toggle('is-sticky', rect.top <= topPx + 0.5);
+                            } catch (_) { /* ignore */ }
+                        });
+                    }
+
+                    onScrollOrResize();
+                    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+                    window.addEventListener('resize', onScrollOrResize);
+                })();
+
                 // LT/EN: atnaujinti statinį tekstą pagal locale
                 applyStaticLocaleText();
+                renderEditHints();
+                renderPromptTags();
 
                 // Kalbos perjungiklis: active būsena ir paspaudimai
                 var langLtBtn = document.getElementById('langLtBtn');
@@ -2914,6 +3389,156 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     });
                 }
 
+            });
+        })();
+    </script>
+    <script>
+        (function () {
+            'use strict';
+            if (!document.getElementById || !document.getElementById('cmo-context')) return;
+
+            var STORAGE_KEY = 'cmo.context.v1';
+            var FIELDS = [
+                { id: 'cmoCtxAudience', label: 'Auditorija' },
+                { id: 'cmoCtxOffer', label: 'Pasiūlymas / UPP' },
+                { id: 'cmoCtxChannels', label: 'Kanalai' },
+                { id: 'cmoCtxGoal', label: 'Tikslas (šis mėnuo)' },
+                { id: 'cmoCtxConstraint', label: 'Pagrindinis apribojimas' }
+            ];
+            var RULES_HEADER = 'TAISYKLĖS (privalomos)';
+            var RULES = [
+                '- Be bendro patarimo. Jei trūksta konteksto, pirmiausia užduok iki 3 tikslinių klausimų.',
+                '- Nesugalvok skaičių, teiginių ar atsiliepimų. Pažymėk, ką reikia patvirtinti.',
+                '- Išvestis turi būti naudojama: skyriai, savininkas kur tinkama, kitas veiksmas su terminu.'
+            ];
+
+            function readContext() {
+                var out = {};
+                var anyValue = false;
+                FIELDS.forEach(function (f) {
+                    var el = document.getElementById(f.id);
+                    var v = el ? (el.value || '').trim() : '';
+                    out[f.id] = v;
+                    if (v) anyValue = true;
+                });
+                out.__hasAny = anyValue;
+                return out;
+            }
+
+            function persistContext() {
+                try {
+                    var values = {};
+                    FIELDS.forEach(function (f) {
+                        var el = document.getElementById(f.id);
+                        values[f.id] = el ? el.value : '';
+                    });
+                    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+                } catch (e) { /* ignore */ }
+            }
+
+            function restoreContext() {
+                try {
+                    var raw = sessionStorage.getItem(STORAGE_KEY);
+                    if (!raw) return;
+                    var values = JSON.parse(raw);
+                    if (!values || typeof values !== 'object') return;
+                    FIELDS.forEach(function (f) {
+                        var el = document.getElementById(f.id);
+                        if (el && typeof values[f.id] === 'string') el.value = values[f.id];
+                    });
+                } catch (e) { /* ignore */ }
+            }
+
+            function clearContext() {
+                FIELDS.forEach(function (f) {
+                    var el = document.getElementById(f.id);
+                    if (el) el.value = '';
+                });
+                try { sessionStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ }
+                var status = document.getElementById('cmoCtxStatus');
+                if (status) status.textContent = 'Kontekstas išvalytas.';
+            }
+
+            window.__CMO_COMPILE = function (promptId, originalText) {
+                if (!originalText) return originalText;
+                if (promptId === 'promptDemo') return originalText;
+                var ctx = readContext();
+                var lines = [];
+                if (ctx.__hasAny) {
+                    lines.push('KONTEKSTAS');
+                    FIELDS.forEach(function (f) {
+                        var v = ctx[f.id];
+                        lines.push('- ' + f.label + ': ' + (v ? v : '[nenurodyta]'));
+                    });
+                    lines.push('');
+                }
+                lines.push(RULES_HEADER);
+                RULES.forEach(function (r) { lines.push(r); });
+                lines.push('');
+                lines.push('---');
+                lines.push('');
+                return lines.join('\n') + originalText;
+            };
+
+            document.addEventListener('DOMContentLoaded', function () {
+                restoreContext();
+                FIELDS.forEach(function (f) {
+                    var el = document.getElementById(f.id);
+                    if (el) el.addEventListener('input', persistContext);
+                });
+                var clearBtn = document.getElementById('cmoCtxClear');
+                if (clearBtn) clearBtn.addEventListener('click', clearContext);
+            });
+        })();
+    </script>
+    <script>
+        (function () {
+            'use strict';
+            var SCENARIOS = [{"id":"weekly-review","label":"Savaitės apžvalga","brief":"Tu esi mano rinkodaros analitikas. Praėjusios savaitės rodikliai: [ĮKELK SKAIČIUS ARBA SANTRAUKĄ]. Auditorija: [AUDITORIJA]. Kanalai: [KANALAI]. Duok: (1) vieną svarbiausią įžvalgą iš duomenų, (2) tris prioritetizuotus veiksmus kitai savaitei su savininku ir terminu, (3) vieną rodiklį, kurį stebėti ir kodėl.","nextAction":"Suplanuok 20 min. rodiklių peržiūrą su savininku, kuriam priskirtas veiksmas Nr. 1.","bottomLine":"Trys veiksmai geriau nei dešimt miglotų idėjų—paleisk mažiausią testą, kuris sumažina neaiškumą.","risks":["Vieno šuolio išsirinkimas nepatikrinus imties dydžio","Tuščios šlovės rodiklių (patinka) optimizavimas vietoj piltuvo ar pajamų signalų"],"questions":["Kuris skaičius pasikeitė savaitė prieš savaitę ir kiek?","Ko sąmoningai nedarėme praėjusią savaitę ir tai galėtų paaiškinti rezultatą?"]},{"id":"campaign-launch","label":"Kampanijos startas","brief":"Tu esi mano kampanijos vadovas. Tikslas: [VIENO SAKINIO TIKSLAS]. Auditorija: [AUDITORIJA]. Pasiūlymas: [PASIŪLYMAS]. Kanalai: [KANALAI]. Biudžetas / laiko rėmai: [APRIBOJIMAS]. Paruošk: (1) esminę žinutę viena eilute, (2) tris kabliuko variantus, suderintus su tikslu, (3) kanalų patobulinimus (daugiausia 2 punktai kanalui), (4) KPI su tikslais ir matavimo laikotarpiu.","nextAction":"Pasirink vieną kabliuką ir vieną kanalą 7 dienų pilotui prieš didinant išlaidas.","bottomLine":"Vienas tikslas, vienas pagrindinis KPI—visa kita diagnostika.","risks":["Kabliukai, žadantys rezultatus, kurių negalime pagrįsti","Per daug KPI, todėl niekas neatsakingas už pagrindinį rodiklį"],"questions":["Kas priverstų mus stabdyti ar keisti kampaniją?","Kokio įrodymo reikia prieš didinant kūrybą ar biudžetą?"]},{"id":"stakeholder-update","label":"Suinteresuotųjų atnaujinimas","brief":"Tu esi mano komunikacijos partneris. Reikia suinteresuotųjų atnaujinimo: [AUDITORIJA / ROLĖ]. Reikalingas sprendimas: [TAIP/NE ARBA PASIRINKIMAS]. Kontekstas: [2–4 punktai]. Rizikos: [PUNKTAI]. Paruošk: (1) esmę dviem sakiniais, (2) rekomendaciją su kompromisais, (3) aiškų prašymą (sprendimas, biudžetas ar terminas), (4) kitą susitikimą ar seką, jei nėra atsakymo.","nextAction":"Išsiųsk juodraštį ir į temos eilutę įrašyk sprendimo terminą.","bottomLine":"Jei sprendimas per 30 sekundžių neaiškus—perrašyk pradžią.","risks":["Prašymo slėpimas po fonu","Minkšta kalba be atsakomybės ar datų"],"questions":["Kas nutiks, jei dvi savaites nieko nedarysime?","Kas gali tai patvirtinti savo kompetencija?"]}];
+            var L = {"next":"Kitas veiksmas","bottom":"Esminė mintis","risks":"Rizikos","questions":"Klausimai"};
+            function panelText(s) {
+                var lines = [s.brief, "", L.next + ": " + s.nextAction, L.bottom + ": " + s.bottomLine, "", L.risks + ":"];
+                s.risks.forEach(function (r) { lines.push("- " + r); });
+                lines.push("", L.questions + ":");
+                s.questions.forEach(function (q) { lines.push("- " + q); });
+                return lines.join('\n');
+            }
+            document.addEventListener('DOMContentLoaded', function () {
+                var tabs = document.querySelectorAll('.cmo-scenario-tab');
+                var pre = document.getElementById('cmo-scenario-brief');
+                var panel = document.getElementById('cmo-scenario-panel');
+                if (!tabs.length || !pre) return;
+                function activate(index) {
+                    var s = SCENARIOS[index];
+                    if (!s) return;
+                    pre.textContent = panelText(s);
+                    tabs.forEach(function (btn, i) {
+                        var on = i === index;
+                        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+                        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+                        btn.setAttribute('tabindex', on ? '0' : '-1');
+                        if (panel && on) panel.setAttribute("aria-labelledby", btn.id);
+                    });
+                }
+                tabs.forEach(function (btn, i) {
+                    btn.addEventListener('click', function () {
+                        activate(i);
+                    });
+                    btn.addEventListener('keydown', function (e) {
+                        var max = tabs.length - 1;
+                        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            var n = i < max ? i + 1 : 0;
+                            tabs[n].focus();
+                            activate(n);
+                        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            var p = i > 0 ? i - 1 : max;
+                            tabs[p].focus();
+                            activate(p);
+                        }
+                    });
+                });
             });
         })();
     </script>

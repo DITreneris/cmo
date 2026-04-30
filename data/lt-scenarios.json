@@ -1,0 +1,47 @@
+[
+  {
+    "id": "weekly-review",
+    "label": "Savaitės apžvalga",
+    "brief": "Tu esi mano rinkodaros analitikas. Praėjusios savaitės rodikliai: [ĮKELK SKAIČIUS ARBA SANTRAUKĄ]. Auditorija: [AUDITORIJA]. Kanalai: [KANALAI]. Duok: (1) vieną svarbiausią įžvalgą iš duomenų, (2) tris prioritetizuotus veiksmus kitai savaitei su savininku ir terminu, (3) vieną rodiklį, kurį stebėti ir kodėl.",
+    "nextAction": "Suplanuok 20 min. rodiklių peržiūrą su savininku, kuriam priskirtas veiksmas Nr. 1.",
+    "bottomLine": "Trys veiksmai geriau nei dešimt miglotų idėjų—paleisk mažiausią testą, kuris sumažina neaiškumą.",
+    "risks": [
+      "Vieno šuolio išsirinkimas nepatikrinus imties dydžio",
+      "Tuščios šlovės rodiklių (patinka) optimizavimas vietoj piltuvo ar pajamų signalų"
+    ],
+    "questions": [
+      "Kuris skaičius pasikeitė savaitė prieš savaitę ir kiek?",
+      "Ko sąmoningai nedarėme praėjusią savaitę ir tai galėtų paaiškinti rezultatą?"
+    ]
+  },
+  {
+    "id": "campaign-launch",
+    "label": "Kampanijos startas",
+    "brief": "Tu esi mano kampanijos vadovas. Tikslas: [VIENO SAKINIO TIKSLAS]. Auditorija: [AUDITORIJA]. Pasiūlymas: [PASIŪLYMAS]. Kanalai: [KANALAI]. Biudžetas / laiko rėmai: [APRIBOJIMAS]. Paruošk: (1) esminę žinutę viena eilute, (2) tris kabliuko variantus, suderintus su tikslu, (3) kanalų patobulinimus (daugiausia 2 punktai kanalui), (4) KPI su tikslais ir matavimo laikotarpiu.",
+    "nextAction": "Pasirink vieną kabliuką ir vieną kanalą 7 dienų pilotui prieš didinant išlaidas.",
+    "bottomLine": "Vienas tikslas, vienas pagrindinis KPI—visa kita diagnostika.",
+    "risks": [
+      "Kabliukai, žadantys rezultatus, kurių negalime pagrįsti",
+      "Per daug KPI, todėl niekas neatsakingas už pagrindinį rodiklį"
+    ],
+    "questions": [
+      "Kas priverstų mus stabdyti ar keisti kampaniją?",
+      "Kokio įrodymo reikia prieš didinant kūrybą ar biudžetą?"
+    ]
+  },
+  {
+    "id": "stakeholder-update",
+    "label": "Suinteresuotųjų atnaujinimas",
+    "brief": "Tu esi mano komunikacijos partneris. Reikia suinteresuotųjų atnaujinimo: [AUDITORIJA / ROLĖ]. Reikalingas sprendimas: [TAIP/NE ARBA PASIRINKIMAS]. Kontekstas: [2–4 punktai]. Rizikos: [PUNKTAI]. Paruošk: (1) esmę dviem sakiniais, (2) rekomendaciją su kompromisais, (3) aiškų prašymą (sprendimas, biudžetas ar terminas), (4) kitą susitikimą ar seką, jei nėra atsakymo.",
+    "nextAction": "Išsiųsk juodraštį ir į temos eilutę įrašyk sprendimo terminą.",
+    "bottomLine": "Jei sprendimas per 30 sekundžių neaiškus—perrašyk pradžią.",
+    "risks": [
+      "Prašymo slėpimas po fonu",
+      "Minkšta kalba be atsakomybės ar datų"
+    ],
+    "questions": [
+      "Kas nutiks, jei dvi savaites nieko nedarysime?",
+      "Kas gali tai patvirtinti savo kompetencija?"
+    ]
+  }
+]
