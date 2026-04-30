@@ -2,14 +2,18 @@
 
 **Tikslas:** Dokumentų atnaujinimo, versijavimo ir archyvavimo tvarka. Taisyklės: [.cursorrules](../.cursorrules), [AGENTS.md](../AGENTS.md).
 
+**Įėjimo taškas (indeksas):** [docs/INDEX.md](INDEX.md) – navigacija pagal rolę ir užduotį.
+
 ---
 
 ## 0. Greita schema – kas kur ir kam
 
 | Sritis | Dokumentas | Kam skirta |
 |--------|------------|------------|
+| **Indeksas** | [docs/INDEX.md](INDEX.md) | Visi agentai ir žmonės: kur skaityti pirmiausia |
 | **Verslas ir procesai** | [AGENTS.md](../AGENTS.md) | Agentų rolės, workflow (Content, Curriculum, UI/UX, QA, Orchestrator) |
 | **Kodas ir turinys** | [docs/LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) | Ką galima keisti keičiant turinį; HTML/JS struktūra |
+| **LT/EN** | [docs/MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) | Keliai, kalbos jungiklis, sinchronizacija su build |
 | **Dizainas** | [STYLEGUIDE.md](../STYLEGUIDE.md) | Spalvos, tipografija, komponentai |
 | **Kokybė** | [docs/QA_STANDARTAS.md](QA_STANDARTAS.md) | QA kriterijai, komandos (`npm test`, pa11y) |
 | **Testavimas** | [docs/TESTAVIMAS.md](TESTAVIMAS.md) | Gyvo testavimo scenarijai ir žurnalas |
@@ -22,6 +26,7 @@
 
 | Dokumentas | Paskirtis | Atsakingas agentas / tipas | Kada atnaujinti |
 |------------|-----------|----------------------------|------------------|
+| docs/INDEX.md | Dokumentacijos navigacija (rolės, užduotys, kodas ↔ docs) | Orchestrator / QA | Nauji docs failai, pasikeitus pipeline ar agentų modeliui |
 | README.md | Apžvalga, naudojimas, struktūra | Content / Orchestrator | Naujos funkcijos, deployment, struktūros pakeitimai |
 | AGENTS.md | Agentų rolės, workflow, commit prefiksai | Orchestrator | Workflow / rolės pakeitimai |
 | .cursorrules | Saugumas, kokybė, dokumentacijos taisyklės | QA + Orchestrator | Taisyklų pakeitimai, nauji reikalavimai |
@@ -41,13 +46,13 @@
 | lt/index.html, en/index.html | Generuojami locale puslapiai (path-based) | (build output) | Po kiekvieno `npm run build`; deploy reikalauja build prieš upload |
 | tests/design-system-smoke.test.js | Dizaino sistemos smoke testas (importai, tokenai, būtinieji selektoriai) | QA | Keičiant CSS sluoksnius arba tokenų struktūrą |
 | tests/a11y-smoke.test.js | A11y smoke testas (skip-link, focus-visible, reduced-motion, aria-label) | QA | Keičiant interaktyvius elementus ar a11y taisykles |
-| docs/DESIGN_SYSTEM_BASELINE.md | Refaktoriaus baseline auditas ir sprendimai | UI/UX + QA | Pradėjus naują dizaino sistemos etapą ar auditą |
 | DEPLOYMENT.md | Deploy instrukcijos, troubleshooting | QA / Orchestrator | Platforma, URL, post-deploy |
 | docs/QA_STANDARTAS.md | QA standartas (nuoroda spinoff01) | QA | Kriterijai, komandos, spinoff01 |
 | docs/TESTAVIMAS.md | Gyvo testavimo scenarijai ir žurnalas | QA | Po deploy testavimas, rezultatai |
 | docs/LEGACY_GOLDEN_STANDARD.md | Atskaitos kodas ir taisyklės keičiant turinį | QA / Orchestrator | Golden standard atnaujinimas, struktūros pakeitimai |
+| docs/MULTILINGUAL_STRUCTURE.md | LT/EN path atitikmenys ir sinchronizacija | Curriculum / QA | Locale routing, `EN_REPLACEMENTS`, hreflang |
+| docs/BULLET_PROOF_PROMPTS.md | Promptų kokybės standartas (META/INPUT/OUTPUT) | Content | Promptų šablonų keitimai |
 | docs/PEDAGOGINES_SPECIFIKACIJA.md | Pedagoginiai tikslai, auditorija, terminologija, paprasta kalba | Curriculum / Content | Kriterijų ar terminologijos pakeitimai |
-| docs/TURINIO_AUDITAS_DETALUS.md | Detalus turinio auditas (eilutė po eilutės) | Content | Atnaujinti po turinio pakeitimų |
 
 ---
 
@@ -70,7 +75,7 @@
 ## 4. Archyvavimo politika
 
 - **Versijavimas:** Dokumentai versijuojami per **Git** (istorija = audit trail).
-- **Archyvas:** Pasirinktinai naudojamas `docs/archive/`. Ten kopijuoti tik tada, kai dokumentas **radikaliai** keičiamas ar pervadinamas (pvz. `MUST_TODO_2026-Q1.md`), o dabartinis failas lieka pagrindinis. Root dokumentai (README, AGENTS, CHANGELOG) paprastai lieka vieni.
+- **Archyvas:** Istoriniai šablonai laikomi Git istorijoje; atskiro `docs/archive/` katalogo šiuo metu nenaudojame.
 - **Retention:** Automatinio dokumentų trynimo nenaudoti; archyve laikyti pagal poreikį (auditas, istorija).
 
 ---

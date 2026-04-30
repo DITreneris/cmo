@@ -40,7 +40,7 @@ Po kiekvieno deploy atlikti gyvą testavimą ir rezultatus įrašyti čia (arba 
 ### Turinio / bullet-proof (META, INPUT, OUTPUT)
 
 - [ ] **Struktūra:** Kiekvienas iš 8 promptų turi aiškius META, INPUT, OUTPUT blokus (kopijuojamas tekstas).
-- [ ] **Copyable:** Į mainų atmintinę kopijuojamas tik META+INPUT+OUTPUT; instrukcijos (Naudok kai, Pakeisk prieš naudodamas, Ką daryti) rodomos atskirame bloke „Prieš naudojant“ ir nekopijuojamos.
+- [ ] **Copyable:** Į darbinių atmintinę kopijuojamas tik META+INPUT+OUTPUT; instrukcijos (Naudok kai, Pakeisk prieš naudodamas, Ką daryti) rodomos atskirame bloke „Prieš naudojant“ ir nekopijuojamos.
 - [ ] **Instrukcijos:** „Kaip naudoti“ ir footer aiškina: [ĮMONĖ]/[MANO ROLĖ] keisti; DI rolės keisti nereikia.
 - [ ] **Turinio patikra:** Nukopijuoti 1–2 promptus, įklijuoti – įklijuotas tekstas tik META+INPUT+OUTPUT (žr. [BULLET_PROOF_PROMPTS.md](BULLET_PROOF_PROMPTS.md)).
 

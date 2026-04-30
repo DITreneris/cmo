@@ -60,4 +60,4 @@ Naudoti santykinius kelius iš root (pvz. `../en/`, `../lt/`) arba su base path 
 Kai keičiami **anglų (EN)** UI tekstai (`en/index.html`, `en/privacy.html`), būtina atnaujinti atitinkamus **lietuviškus (LT)** tekstus `lt/index.html` ir `lt/privatumas.html`, kad abi kalbos būtų išlygintos.
 
 - **Pagrindinės vietos:** hero (h1, subline, „Who it’s for“, CTA), sekcijos antraštės (objectives, instructions, progress, next steps, community, footer), mygtukai („Copy prompt“, „Mark as done“), klaidos ir toast pranešimai (JS), code-block tooltip (CSS `::before`), privacy puslapio antraštės ir nuorodos.
-- **Nuoroda:** visi EN stringai inventorizuoti audite [docs/MICROCOPY_AUDIT_EN.md](MICROCOPY_AUDIT_EN.md); pakeitus EN – peržiūrėti atitikmenis LT.
+- **Šaltiniai:** faktiniai stringai – root [`index.html`](../index.html), build poros – [`scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) (`EN_REPLACEMENTS` ir susiję žingsniai); po pakeitimų paleisti `npm run build` ir `npm test`.

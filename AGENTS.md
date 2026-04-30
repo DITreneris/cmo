@@ -1,7 +1,7 @@
 # Agentų Sistemos Modelis – Apžvalga
 
-**Projektas:** DI Promptų Biblioteka  
-**Versija:** 1.0  
+**Projektas:** DI Promptų Biblioteka (Turinio DI sistema – CMO rinkinys)  
+**Šio dokumento versija:** 1.1 (sinchronizuota su repo pipeline ir `docs/LEGACY_GOLDEN_STANDARD.md`)  
 **Kalba:** LT
 
 ---
@@ -30,8 +30,8 @@ ORCHESTRATOR AGENT (koordinacija)
 
 ### Curriculum Agent
 - **Tikslas:** Nustato turinio struktūrą ir mokymosi logiką
-- **Įvestis:** Tikslai, auditorija, MVP_ROADMAP.md
-- **Išvestis:** Promptų seka, priklausomybių modelis
+- **Įvestis:** Tikslai, auditorija, [docs/PEDAGOGINES_SPECIFIKACIJA.md](docs/PEDAGOGINES_SPECIFIKACIJA.md), [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md), [CHANGELOG.md](CHANGELOG.md) (naujausi scope); `MVP_ROADMAP.md` – tik *historical* kontekstui
+- **Išvestis:** Promptų seka, priklausomybių modelis, LT/EN atitikmenų reikalavimai
 
 ### UI/UX & Usability Agent
 - **Tikslas:** Sąsajos kokybė, prieinamumas, vartotojo patirtis
@@ -40,9 +40,9 @@ ORCHESTRATOR AGENT (koordinacija)
 
 ### QA Agent
 - **Tikslas:** Tikrina kokybę – kodas ir turinys
-- **Įvestis:** Pakeitimų diff, MUST_TODO.md, test scenarijai
+- **Įvestis:** Pakeitimų diff, [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) (struktūros kontraktas), `npm test` / `tests/*.test.js`, [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md); `MUST_TODO.md` – tik jei liečia aktyvų scope (dokumentas *historical*)
 - **Išvestis:** Klaidų ataskaitos, acceptance checklist
-- **Dokumentacija:** Prieš merge tikrina, ar pakeitimams atitinka dokumentacijos atnaujinimai (žr. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md)). Prieš release – ar CHANGELOG.md atnaujintas ir versija atitinka SemVer.
+- **Dokumentacija:** Prieš merge tikrina, ar pakeitimams atitinka dokumentacijos atnaujinimai (žr. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md)). Prieš release – ar CHANGELOG.md atnaujintas ir `package.json` versija atitinka SemVer.
 
 ### Orchestrator Agent
 - **Tikslas:** Koordinuoja agentus, prioritizuoja užduotis
@@ -97,13 +97,13 @@ ORCHESTRATOR AGENT (koordinacija)
 | `npm run lint:js` | ESLint visiems .js failams |
 | CI (GitHub Actions) | Lint, test, pa11y a11y – automatiškai push/PR |
 
-Prieš PR įsitikinti, kad `npm test` praeina. A11y tikrinimas – per CI arba lokaliai: `npx serve -s . -l 3000` ir `npx pa11y http://localhost:3000/ --standard WCAG2AA`.
+Prieš PR įsitikinti, kad `npm test` praeina. A11y tikrinimas – per CI arba lokaliai: `npx serve -s . -l 3000` ir `npx pa11y` į `/lt/` bei `/en/` (žr. [README.md](README.md), [.github/workflows/ci.yml](.github/workflows/ci.yml)).
 
 ---
 
 ## 7. Release seka
 
-1. Orchestrator → Curriculum: release scope (MUST_TODO, roadmap).
+1. Orchestrator → Curriculum: release scope ([CHANGELOG.md](CHANGELOG.md), aktyvūs PR tikslai; `MUST_TODO` / `MVP_ROADMAP` – historical).
 2. Orchestrator → Content / UI/UX: reikiai (jei yra).
 3. Orchestrator → QA: release validacija.
 4. QA: `npm test`, CHANGELOG atnaujintas (SemVer), rankinis QA (naršyklės, mobilus, kopijavimas, a11y).
@@ -113,16 +113,19 @@ Prieš PR įsitikinti, kad `npm test` praeina. A11y tikrinimas – per CI arba l
 
 ## 8. Susiję dokumentai
 
-- [.cursorrules](.cursorrules) – projekto taisyklės (saugumas, kokybė, dokumentacija)
-- [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) – dokumentų valdymas, atsakomybės, archyvavimas
+- [docs/INDEX.md](docs/INDEX.md) – **indeksas**: rolės, užduotys, kodas ↔ dokumentai
+- [.cursorrules](.cursorrules) – Cursor: saugumas, kokybė, dokumentacija, commit formatas
+- [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) – dokumentų inventorius ir atsakomybės
+- [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – golden standard (struktūra, ID, JS API, checklist)
+- [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md) – LT/EN keliai ir build sinchronizacija
+- [docs/BULLET_PROOF_PROMPTS.md](docs/BULLET_PROOF_PROMPTS.md) – promptų META/INPUT/OUTPUT standartas
+- [docs/PEDAGOGINES_SPECIFIKACIJA.md](docs/PEDAGOGINES_SPECIFIKACIJA.md) – pedagogika ir auditorija
 - [docs/QA_STANDARTAS.md](docs/QA_STANDARTAS.md) – QA standartas (nuoroda į [DITreneris/spinoff01](https://github.com/DITreneris/spinoff01))
-- [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md) – gyvo testavimo scenarijai ir žurnalas
-- [DEPLOYMENT.md](DEPLOYMENT.md) – deploy (GitHub Pages), post-deploy testavimas
-- [CHANGELOG.md](CHANGELOG.md) – versijų pakeitimų istorija (Keep a Changelog)
-- [MUST_TODO.md](MUST_TODO.md) – MVP kritinės užduotys
-- [MVP_ROADMAP.md](MVP_ROADMAP.md) – roadmap
+- [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md) – gyvas testavimas ir žurnalas
+- [DEPLOYMENT.md](DEPLOYMENT.md) – GitHub Pages, BASE_PATH, post-deploy
+- [CHANGELOG.md](CHANGELOG.md) – versijų istorija (Keep a Changelog, SemVer)
+- [MUST_TODO.md](MUST_TODO.md), [MVP_ROADMAP.md](MVP_ROADMAP.md) – *historical* planai (kontekstas, ne vienintelis scope šaltinis)
 - [feedback-schema.md](feedback-schema.md) – Feedback Store schema
-- [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – atskaitos kodas ir taisyklės keičiant turinį
 
 ---
 
@@ -136,8 +139,8 @@ Keičiant **turinį** – atsakingas Content Agent; keičiant **struktūrą arba
 | 2 | **Curriculum** | Nustato promptų seką, priklausomybes, mokymosi tikslus | Scope iš Orchestrator | Specifikacija: ką keisti, kokia seka |
 | 3 | **Content** | Redaguoja tik turinį (promptai, antraštės, aprašymai, info boksai); **privalo laikytis** [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) | Specifikacija | Pakeisti tekstai; nekeičia id/klasės/JS |
 | 4 | **UI/UX** | Keičia tik išvaizdą/a11y (CSS, ARIA, layout) – ne promptų teksto | Reikalavimai; golden standard struktūra | CSS/HTML pakeitimai, a11y patikros |
-| 5 | **QA** | Vykdo `npm test`, pa11y, dokumentacijos atitikimą; prieš merge – diff vs golden standard | Pakeitimų diff, MUST_TODO, docs/DOCUMENTATION.md | Ataskaita: pass / grąžinti Content/UI |
+| 5 | **QA** | Vykdo `npm test`, pa11y (CI), dokumentacijos atitikimą; prieš merge – diff vs [LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) | Pakeitimų diff, LEGACY, docs/DOCUMENTATION.md | Ataskaita: pass / grąžinti Content/UI |
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-02-18
+**Paskutinis atnaujinimas:** 2026-04-30

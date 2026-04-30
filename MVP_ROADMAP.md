@@ -17,7 +17,7 @@
 - [x] Kontaktų rinkimo forma su Google Sheets integracija
 - [x] Accessibility palaikymas (ARIA, keyboard navigation)
 - [x] Error handling ir fallback mechanizmai
-- [x] Dokumentacija (README.md, INTEGRACIJA.md, VARIANTU_PALYGINIMAS.md)
+- [x] Dokumentacija (README.md, INTEGRACIJA.md, docs/DOCUMENTATION.md)
 - [x] Cursor rules (.cursorrules)
 
 ### ⚠️ Reikia Patobulinti

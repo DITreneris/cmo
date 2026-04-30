@@ -18,7 +18,7 @@ Vienoda trijų blokų struktūra kiekvienam promptui:
 
 **Kodėl:** KISS – vienodas skaitymas; vartotojas iš karto mato, ką įrašyti (INPUT) ir ką gauti (OUTPUT), be priklausomybės nuo instrukcijų viršuje.
 
-**UI:** Į mainų atmintinę kopijuojamas tik META+INPUT+OUTPUT. Instrukcijos (Naudok kai, Pakeisk prieš naudodamas, Ką daryti) rodomos atskirame bloke „Prieš naudojant“ po code-block ir nekopijuojamos.
+**UI:** Į darbinių atmintinę kopijuojamas tik META+INPUT+OUTPUT. Instrukcijos (Naudok kai, Pakeisk prieš naudodamas, Ką daryti) rodomos atskirame bloke „Prieš naudojant“ po code-block ir nekopijuojamos.
 
 ---
 
