@@ -1384,7 +1384,8 @@ function getEnReplacementsForHtml(html) {
 
 function applyEnReplacements(html) {
   const list = getEnReplacementsForHtml(html);
-  let out = html;
+  // Normalize line endings so template matches are stable across OS/checkout settings.
+  let out = String(html).replace(/\r\n/g, '\n').replace(/\r/g, '\n');
   const missingCritical = [];
   for (const [from, to] of list) {
     const hits = countOccurrences(out, from);
@@ -1395,7 +1396,8 @@ function applyEnReplacements(html) {
   }
   if (missingCritical.length > 0) {
     throw new Error(
-      `EN replacement safety check failed. Missing critical templates: ${missingCritical.length}`
+      `EN replacement safety check failed. Missing critical templates: ${missingCritical.length}\n` +
+        missingCritical.join('\n')
     );
   }
   return out;
