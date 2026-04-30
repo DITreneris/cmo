@@ -55,6 +55,7 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 ├── README.md               # Ši dokumentacija
 ├── AGENTS.md               # Agentų rolės ir workflow
 ├── CHANGELOG.md            # Versijų istorija (Keep a Changelog)
+├── og.png                  # OG/Twitter preview paveikslas (1200×630)
 ├── STYLEGUIDE.md           # Spalvos, komponentai, tipografija
 ├── DEPLOYMENT.md           # Deploy į GitHub Pages (cmo)
 ├── package.json            # npm test, lint:html, lint:js

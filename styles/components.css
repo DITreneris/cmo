@@ -5,6 +5,232 @@ body {
   color: var(--color-text-primary);
 }
 
+/* Page-level section chrome overrides (beats inline CSS via later load order) */
+.objectives,
+.upgrade-section,
+.instructions,
+.next-steps,
+.community,
+.footer {
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-default);
+  box-shadow: var(--shadow-elevation-1);
+}
+
+.objectives,
+.upgrade-section {
+  border-radius: var(--radius-xl);
+  padding: var(--space-7);
+  margin: var(--space-6) 0;
+}
+
+.objectives h2,
+.upgrade-section h2 {
+  margin: 0 0 var(--space-3);
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+}
+
+.upgrade-section p,
+.objectives p {
+  color: var(--color-text-secondary);
+}
+
+.upgrade-section strong,
+.objectives strong {
+  color: var(--color-text-primary);
+}
+
+.quoteable-block {
+  background: var(--color-surface-subtle);
+  border-left-color: var(--color-brand-primary);
+}
+
+.objectives li::before {
+  color: var(--color-brand-tertiary);
+}
+
+/* Setup panel (tool-like onboarding) */
+.setup-panel {
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-7);
+  margin: var(--space-6) 0;
+  box-shadow: var(--shadow-elevation-1);
+}
+
+.setup-panel-head h2 {
+  margin: 0 0 var(--space-2);
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+}
+
+.setup-panel-lead {
+  margin: 0 0 var(--space-5);
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+}
+
+.setup-panel-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  margin-bottom: var(--space-5);
+}
+
+.setup-panel .progress-wrap {
+  margin: 0 0 var(--space-5);
+}
+
+.setup-panel .cmo-provider-hub {
+  margin: 0 0 var(--space-5);
+}
+
+.setup-panel .cmo-context {
+  margin: 0;
+  box-shadow: none;
+}
+
+/* Preflight: skim-first list */
+.preflight-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.preflight-list li {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-surface-card) 92%, var(--color-surface-subtle));
+}
+
+.preflight-list li strong {
+  font-weight: 800;
+}
+
+.preflight-list li span {
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+}
+
+.preflight-list li a {
+  justify-self: start;
+  color: var(--color-brand-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.preflight-list li a:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-brand-primary);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-sm);
+}
+
+/* How it works tabs (system-map submodule) */
+.how-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+}
+
+.how-tab {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-surface-page);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.how-tab[aria-selected="true"] {
+  border-color: var(--color-brand-primary);
+  background: var(--color-surface-subtle);
+  box-shadow: 0 0 0 1px var(--color-brand-primary);
+}
+
+.how-tab:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-brand-primary);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.how-panel {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-subtle);
+  padding: var(--space-5);
+}
+
+.how-panel + .how-panel {
+  margin-top: var(--space-3);
+}
+
+/* Value density grids (executive summary, what you get) */
+.value-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-5);
+}
+
+.value-grid.value-grid-4 {
+  margin-bottom: var(--space-4);
+}
+
+.value-card {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-surface-card) 92%, var(--color-surface-subtle));
+  padding: var(--space-5);
+}
+
+.value-card-title {
+  margin: 0 0 var(--space-2);
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+}
+
+.value-card-lead {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+.value-card-list {
+  margin: 0;
+  padding-left: var(--space-5);
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+}
+
+@media (min-width: 900px) {
+  .value-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .value-grid.value-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 .prompt,
 .objectives,
 .instructions,
@@ -647,6 +873,7 @@ body {
   aspect-ratio: 16 / 9;
   object-fit: cover;
   background: var(--color-surface-subtle);
+  max-height: 320px;
 }
 
 .meme-caption {

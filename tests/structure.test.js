@@ -21,6 +21,7 @@ const EN_PROMPT_INLINE_JS = path.join(__dirname, '..', 'js', 'en-prompt-bodies-i
 const PACKAGE_JSON_PATH = path.join(__dirname, '..', 'package.json');
 const PROD_ORIGIN = 'https://ditreneris.github.io';
 const PROD_BASE = '/cmo';
+const PROD_OG_IMAGE_URL = `${PROD_ORIGIN}${PROD_BASE}/og.png`;
 
 function readPackageVersion() {
   const raw = readFile(PACKAGE_JSON_PATH);
@@ -55,6 +56,17 @@ function assertPageSeoContracts(pageHtml, expected) {
     pageHtml.includes(`<link rel="alternate" hreflang="lt" href="${expected.lt}">`) &&
     pageHtml.includes(`<link rel="alternate" hreflang="en" href="${expected.en}">`) &&
     pageHtml.includes(`<link rel="alternate" hreflang="x-default" href="${expected.xDefault}">`)
+  );
+}
+
+function assertOgImageContracts(pageHtml, expectedOgImageUrl) {
+  return (
+    pageHtml.includes(`<meta property="og:image" content="${expectedOgImageUrl}">`) &&
+    pageHtml.includes('<meta property="og:image:width" content="1200">') &&
+    pageHtml.includes('<meta property="og:image:height" content="630">') &&
+    pageHtml.includes('<meta property="og:image:alt" content="') &&
+    pageHtml.includes(`<meta name="twitter:image" content="${expectedOgImageUrl}">`) &&
+    pageHtml.includes('<meta name="twitter:image:alt" content="')
   );
 }
 
@@ -146,6 +158,10 @@ function run() {
   if (assert(html.includes('lang="lt"'), 'HTML lang="lt"')) passed++;
   else failed++;
 
+  // --- OG/Twitter preview image contract (root) ---
+  if (assert(assertOgImageContracts(html, PROD_OG_IMAGE_URL), `index.html naudoja OG paveikslą ${PROD_OG_IMAGE_URL} (su width/height/alt)`)) passed++;
+  else failed++;
+
   // --- LT/EN locale puslapiai (generuojami per npm run build) ---
   const ltHtml = readFile(LT_INDEX_PATH);
   if (assert(ltHtml !== null && ltHtml.includes('lang="lt"'), 'lt/index.html egzistuoja ir turi lang="lt"')) passed++;
@@ -176,6 +192,12 @@ function run() {
     }),
     'en/index.html SEO kontraktas atitinka production host/path'
   )) passed++;
+  else failed++;
+
+  // --- OG/Twitter preview image contract (lt/en) ---
+  if (ltHtml && assert(assertOgImageContracts(ltHtml, PROD_OG_IMAGE_URL), `lt/index.html naudoja OG paveikslą ${PROD_OG_IMAGE_URL} (su width/height/alt)`)) passed++;
+  else failed++;
+  if (enHtml && assert(assertOgImageContracts(enHtml, PROD_OG_IMAGE_URL), `en/index.html naudoja OG paveikslą ${PROD_OG_IMAGE_URL} (su width/height/alt)`)) passed++;
   else failed++;
 
   // --- Privacy parity + SEO ---

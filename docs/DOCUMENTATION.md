@@ -39,6 +39,7 @@
 | .github/PULL_REQUEST_TEMPLATE.md | PR šablonas | Orchestrator / QA | Checklist pakeitimai |
 | .github/workflows/ci.yml | CI | QA / Orchestrator | Nauji testai, lint, a11y |
 | .github/workflows/deploy.yml | GitHub Pages deploy | QA / Orchestrator | Deploy žingsniai, environment |
+| og.png | OG/Twitter preview paveikslas (1200×630), naudojamas `og:image`/`twitter:image` | UI/UX + QA | Kai keičiasi brand’as / vizualas; po pakeitimo sutikrinti `tests/structure.test.js` SEO/OG kontraktus |
 | index.html | Pagrindinis UI ir „upgrade-only“ aiškinamasis sluoksnis (`#what-is-prompt`, `#prompt-anatomy`, `#framework-schema`, `#faq`) + 10 promptų branduolys | Content + UI/UX + QA | Keičiant vartotojui matomą turinį, naujus edukacinius blokus ar promptų sekcijas |
 | styles/design-tokens.json | Dizaino tokenų vienas šaltinis (spalvos, spacing, radius, focus, motion) | UI/UX + QA | Keičiant dizaino sistemos semantinius tokenus |
 | styles/tokens.css, styles/components.css, styles/utilities.css | Dizaino sistemos CSS sluoksniai (tokenai, komponentai, utility) | UI/UX | Keičiant komponentų vizualiką ar būsenas |
