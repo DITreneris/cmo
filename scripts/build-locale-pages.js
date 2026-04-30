@@ -1069,6 +1069,14 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
   ['Pakeisk <code>[auditorija]</code>, <code>[galvos skausmas]</code>, <code>[unikalus pardavimo pasiūlymas]</code>, <code>[kanalas]</code> ir kitus laukus savo duomenimis – ir gauk rezultatą', 'Replace <code>[audience]</code>, <code>[pain point]</code>, <code>[unique selling proposition]</code>, <code>[channel]</code>, and any city or budget placeholders with your real data'],
   // Upgrade layer: explain blocks
   ['Kas yra prompt?', 'What is a prompt?'],
+  // Preflight strip (under hero)
+  ['Prieš kopijuojant (1 min)', 'Before you copy (1 min)'],
+  ['Aiški instrukcija DI įrankiui: kontekstas + tikslas + ribos + formatas.', 'A clear instruction for an AI tool: context + goal + constraints + format.'],
+  ['Struktūra, kuri padaro rezultatą nuoseklų ir pakartojamą.', 'A structure that makes outputs consistent and repeatable.'],
+  ['Eik per žingsnius ir dirbk ciklu: Planuok → Kurk → Tikrink → Tobulink.', 'Go step by step and run the loop: Plan → Create → Check → Improve.'],
+  ['Pilnas paaiškinimas', 'Full explanation'],
+  ['<a href="#framework-schema">Schema</a>', '<a href="#framework-schema">Framework</a>'],
+  ['<p class="objectives-eco-hint"><a href="#block1"><strong>Praleisti → Promptas 1</strong></a></p>', '<p class="objectives-eco-hint"><a href="#block1"><strong>Skip → Prompt 1</strong></a></p>'],
   ['Promptas yra aiški instrukcija DI įrankiui: ką daryti, kam daryti ir kokiu formatu grąžinti rezultatą.', 'A prompt is a clear instruction to an AI tool: what to do, for whom, and in which format.'],
   ['Kuo promptas tikslesnis, tuo mažiau taisymų po pirmo atsakymo.', 'The clearer the prompt, the fewer fixes you need after the first answer.'],
   ['Kontekstas + Tikslas + Ribos + Formatas', 'Context + Goal + Constraints + Format'],
@@ -1153,6 +1161,15 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
 const EN_REPLACEMENTS_SUFFIX = [
   // Prompt 1
   ['<div class="category">Pradžia</div>', '<div class="category">Start</div>'],
+  // Breath moments (non-ID breaks)
+  [
+    '<p><strong>Įkvėpk (10 s):</strong> ar čia yra konkretus <strong>kabliukas</strong> + <strong>įrodymas</strong> + <strong>vienas CTA</strong>? Jei ne – patikslink 1 eilute ir paleisk dar kartą.</p>',
+    '<p><strong>Breathe (10 sec):</strong> do you have a clear <strong>hook</strong> + <strong>proof</strong> + <strong>one CTA</strong>? If not, refine one line and run again.</p>'
+  ],
+  [
+    '<p><strong>Reset (10 s):</strong> surašyk 3 tikrus prieštaravimus kaip cituoja klientai. Tada paleisk šį promptą dar kartą – rezultatas bus 2× taiklesnis.</p>',
+    '<p><strong>Reset (10 sec):</strong> write down 3 real objections in the customer’s own words. Run the prompt again — the output will be much sharper.</p>'
+  ],
   ['<h2 class="prompt-title">30 dienų turinio sistema</h2>', '<h2 class="prompt-title">30-day content system</h2>'],
   ['<p class="prompt-desc">Sukurk 30 dienų turinio planą pagal 4 turinio principus</p>', '<p class="prompt-desc">Create a 30-day content plan using 4 content principles</p>'],
   ['aria-label="Pasirinkti ir kopijuoti promptą 1"', 'aria-label="Select and copy prompt 1"'],
