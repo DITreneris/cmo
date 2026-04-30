@@ -26,7 +26,6 @@ Desktop.ini
 
 # Node modules (if you add any in the future)
 node_modules/
-package-lock.json
 yarn.lock
 
 # Environment files
