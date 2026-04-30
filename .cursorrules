@@ -1,9 +1,11 @@
 # Cursor Rules - DI Promptų Biblioteka Projektas
 
 ## 🎯 Projekto Apžvalga
-Šis projektas yra interaktyvi HTML platforma verslo analitikams su Google Sheets integracija. Visi taisykles turi atsižvelgti į statinio HTML pobūdį, saugumą ir konfidencialumą.
+**DI Promptų Biblioteka** – statinė HTML platforma rinkodaros vadovams (10 CMO promptų, LT šaltinis `index.html`, build į `/lt/` ir `/en/`). Google Sheets / kontaktų forma – **pasirenkamai**, vėlesniems etapams (žr. [INTEGRACIJA.md](INTEGRACIJA.md)); dabartinė minimali versija duomenų nerinkia.
 
-**Agentams:** Rolės ir workflow – [AGENTS.md](AGENTS.md). Dokumentų valdymas ir atsakomybės – [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md). Pakeitimų istorija – [CHANGELOG.md](CHANGELOG.md).
+**Agentams ir žmonėms:** [docs/INDEX.md](docs/INDEX.md) (navigacija) → [AGENTS.md](AGENTS.md) (rolės, workflow) → [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) (kas fiksuota vs keičiamas turinys). Dokumentų inventorius – [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md). Pakeitimų istorija – [CHANGELOG.md](CHANGELOG.md).
+
+**Cursor Agent Skills** (globalūs, ne šiame repo): jei naudojami – papildo šias taisykles; merge vis tiek turi atitikti `npm test` ir Legacy.
 
 ---
 
@@ -118,8 +120,8 @@
 - ✅ Naudokite feature detection, ne browser detection
 
 ### Testing
-- ⚠️ **Rekomenduojama** pridėti unit testus kritinėms funkcijoms
-- ✅ Testuokite visus user flows rankiniu būdu prieš commit
+- ✅ **Automatiniai testai:** `npm test` (build `lt/` + `en/`, `tests/structure.test.js`, design-system ir a11y smoke, `lint:html`, `lint:js`) – privaloma prieš merge
+- ✅ Testuokite kritinius user flows rankiniu būdu prieš release (žr. [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md))
 - ✅ Testuokite error scenarijus (pvz., network klaidos, invalid input)
 - ✅ Patikrinkite, ar veikia su JavaScript išjungtu (graceful degradation)
 
@@ -142,11 +144,14 @@
 - ✅ Dokumentuokite breaking changes
 
 ### Dokumentacijos Struktūra
+- ✅ [docs/INDEX.md](docs/INDEX.md) – įėjimo taškas: rolės, užduotys, kodas ↔ dokumentai
 - ✅ README.md - projekto apžvalga, instaliacija, naudojimas
 - ✅ CHANGELOG.md - versijų pakeitimų istorija (Keep a Changelog, SemVer). **Release** = atnaujinti CHANGELOG („Nereleisuota“ → nauja versija su data).
-- ✅ docs/DOCUMENTATION.md - dokumentų inventorius, atsakomybės, archyvavimo taisyklės (žr. kada ką atnaujinti).
-- ✅ INTEGRACIJA.md - detali integracijos instrukcija
-- ✅ VARIANTU_PALYGINIMAS.md - palyginimas tarp variantų
+- ✅ docs/DOCUMENTATION.md - dokumentų inventorius, atsakomybės (žr. kada ką atnaujinti).
+- ✅ docs/LEGACY_GOLDEN_STANDARD.md - golden standard: ID, JS API, checklist keičiant turinį / struktūrą
+- ✅ INTEGRACIJA.md - forma / Sheets (vėlesniems etapams)
+- ✅ docs/MULTILINGUAL_STRUCTURE.md - LT/EN keliai ir sinchronizacija su build
+- ✅ docs/BULLET_PROOF_PROMPTS.md, docs/PEDAGOGINES_SPECIFIKACIJA.md, docs/QA_STANDARTAS.md, docs/TESTAVIMAS.md
 - ✅ AGENTS.md - agentų rolės, workflow, commit prefiksai
 - ✅ feedback-schema.md - Feedback Store duomenų schema
 - ✅ Kodo komentarai - inline dokumentacija sudėtingoms vietoms
@@ -339,12 +344,12 @@ Prieš commit, patikrinkite:
 
 Jei kyla klausimų dėl šių taisyklių:
 1. Perskaitykite atitinkamą sekciją dar kartą
-2. Patikrinkite dokumentaciją: README.md, INTEGRACIJA.md, [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md), [CHANGELOG.md](CHANGELOG.md)
+2. [docs/INDEX.md](docs/INDEX.md) → README.md, [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md), [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md), [CHANGELOG.md](CHANGELOG.md)
 3. Agentų rolės ir workflow – [AGENTS.md](AGENTS.md)
-4. Jei reikia, konsultuokitės su komandos nariais
+4. INTEGRACIJA.md – tik jei liečia būsimą formą / Sheets
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-02-18  
-**Projekto kalba:** Lietuvių kalba  
-**Projekto tipas:** Statinis HTML su JavaScript ir Google Apps Script integracija
+**Paskutinis atnaujinimas:** 2026-04-30  
+**Projekto kalba:** Lietuvių kalba (LT šaltinis; EN build)  
+**Projekto tipas:** Statinis HTML, CSS sluoksniai, inline JS `index.html`, locale build (`scripts/build-locale-pages.js`)

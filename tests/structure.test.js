@@ -162,7 +162,7 @@ function run() {
       canonical: `${PROD_ORIGIN}${PROD_BASE}/lt/`,
       lt: `${PROD_ORIGIN}${PROD_BASE}/lt/`,
       en: `${PROD_ORIGIN}${PROD_BASE}/en/`,
-      xDefault: `${PROD_ORIGIN}${PROD_BASE}/lt/`
+      xDefault: `${PROD_ORIGIN}${PROD_BASE}/en/`
     }),
     'lt/index.html SEO kontraktas atitinka production host/path'
   )) passed++;
@@ -172,7 +172,7 @@ function run() {
       canonical: `${PROD_ORIGIN}${PROD_BASE}/en/`,
       lt: `${PROD_ORIGIN}${PROD_BASE}/lt/`,
       en: `${PROD_ORIGIN}${PROD_BASE}/en/`,
-      xDefault: `${PROD_ORIGIN}${PROD_BASE}/lt/`
+      xDefault: `${PROD_ORIGIN}${PROD_BASE}/en/`
     }),
     'en/index.html SEO kontraktas atitinka production host/path'
   )) passed++;
@@ -271,7 +271,7 @@ function run() {
     else failed++;
     if (assert(
       enHtml.includes('Frequently asked questions before you start') &&
-      enHtml.includes('Meme slot #3: When you realize AI was not the issue, the vague instruction was.'),
+      enHtml.includes('Meme #3 — when you realize AI was not the issue, the vague instruction was.'),
       'en/index.html: FAQ ir meme slotai EN kalba'
     )) passed++;
     else failed++;
@@ -335,7 +335,7 @@ function run() {
     )) passed++;
     else failed++;
     const enGemini = (enHtml.match(/gemini\.google\.com/g) || []).length;
-    if (assert(enGemini >= 10, `en/index.html: Gemini provider nuorodų >= 10 (rasta: ${enGemini})`)) passed++;
+    if (assert(enGemini >= 1, `en/index.html: Gemini provider nuoroda (bendras hub, rasta: ${enGemini})`)) passed++;
     else failed++;
 
     // --- v2.1 LT: parity su EN kontekstu, tikėtinu atsakymu, safety, scenarios ---
@@ -369,7 +369,7 @@ function run() {
       )) passed++;
       else failed++;
       const ltGemini = (ltHtml.match(/gemini\.google\.com/g) || []).length;
-      if (assert(ltGemini >= 10, `lt/index.html: Gemini provider nuorodų >= 10 (rasta: ${ltGemini})`)) passed++;
+      if (assert(ltGemini >= 1, `lt/index.html: Gemini provider nuoroda (bendras hub, rasta: ${ltGemini})`)) passed++;
       else failed++;
     }
   }

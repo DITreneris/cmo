@@ -6,7 +6,7 @@
 
 Kontaktų rinkimo forma leidžia vartotojams palikti el. pašto adresą ir klausimus. Duomenys gali būti įrašomi į Google Sheets arba siunčiami kitais būdais.
 
-**📊 Nežinote, kurį variantą pasirinkti?** Žr. [VARIANTU_PALYGINIMAS.md](./VARIANTU_PALYGINIMAS.md)
+**Greitas pasirinkimas:** jei reikia duomenų lentelėje ir eksporto – **Google Sheets + Apps Script**; jei pakanka el. laiško be lentelės – **EmailJS** arba **Formspree** (žr. sekcijas žemiau).
 
 ## Variantai integracijos
 

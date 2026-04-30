@@ -80,12 +80,12 @@
 - **9 (Plėtra):** Temų grupė (SEO/turinio struktūra).
 - **10:** Pagrindinis promptas – viskas kartu, valdymo centras.
 
-Content Agent išlaiko šią seką ir kategorijas; keičia tik tekstus pagal šią specifikaciją ir [TURINIO_AUDITAS_DETALUS.md](TURINIO_AUDITAS_DETALUS.md).
+Content Agent išlaiko šią seką ir kategorijas; keičia tik tekstus pagal šią specifikaciją ir [docs/LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) (leidžiami tekstiniai laukai be struktūros keitimo).
 
 ---
 
 ## 7. Susiję dokumentai
 
-- [TURINIO_AUDITAS_DETALUS.md](TURINIO_AUDITAS_DETALUS.md) – konkrečios eilutės ir pataisymai
 - [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) – struktūra ir ID nekeičiami; keičiamas tik turinys (tekstai)
+- [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) – LT/EN keliai ir sinchronizacija
 - [.cursorrules](../.cursorrules) – Tu, lakoniškai, palaikantis tonas
