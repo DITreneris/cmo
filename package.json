@@ -28,5 +28,8 @@
     "pa11y": "^6.2.3",
     "serve": "^14.2.1",
     "wait-on": "^8.0.1"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
   }
 }

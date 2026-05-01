@@ -13,6 +13,44 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const PUBLIC_DIR = path.join(ROOT, 'public');
 
+/** Vercel Web Analytics (plain HTML): https://vercel.com/docs/analytics/quickstart */
+const VERCEL_INSIGHTS_SCRIPT = '/_vercel/insights/script.js';
+const VERCEL_WEB_ANALYTICS_SNIPPET = [
+  '<script>',
+  '  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };',
+  '</script>',
+  `<script defer src="${VERCEL_INSIGHTS_SCRIPT}"></script>`
+].join('\n');
+
+function injectVercelWebAnalytics(html) {
+  if (html.includes(VERCEL_INSIGHTS_SCRIPT)) {
+    return html;
+  }
+  const closeBody = '</body>';
+  const idx = html.lastIndexOf(closeBody);
+  if (idx === -1) {
+    return html;
+  }
+  return html.slice(0, idx) + VERCEL_WEB_ANALYTICS_SNIPPET + '\n' + html.slice(idx);
+}
+
+function injectAnalyticsIntoHtmlUnderDir(dirPath) {
+  if (!fs.existsSync(dirPath)) return;
+  const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+  for (const ent of entries) {
+    const full = path.join(dirPath, ent.name);
+    if (ent.isDirectory()) {
+      injectAnalyticsIntoHtmlUnderDir(full);
+    } else if (ent.name.endsWith('.html')) {
+      const raw = fs.readFileSync(full, 'utf8');
+      const next = injectVercelWebAnalytics(raw);
+      if (next !== raw) {
+        fs.writeFileSync(full, next, 'utf8');
+      }
+    }
+  }
+}
+
 function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
 }
@@ -66,6 +104,8 @@ function main() {
 
   // GitHub Pages helper; harmless on Vercel
   if (existsRel('.nojekyll')) copyFile('.nojekyll');
+
+  injectAnalyticsIntoHtmlUnderDir(PUBLIC_DIR);
 
   console.log('Exported static site to public/');
 }
