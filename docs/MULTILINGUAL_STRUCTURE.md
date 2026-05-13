@@ -26,9 +26,9 @@
   - `lt/index.html`
   - `en/index.html`
 - Build metu canonical/hreflang URL sudaromi iš:
-  - `SITE_ORIGIN` (default: `https://ditreneris.github.io`)
-  - `BASE_PATH` (default: `/cmo`)
-- Deploy profile (GitHub Pages): `SITE_ORIGIN=https://ditreneris.github.io`, `BASE_PATH=/cmo`.
+  - `SITE_ORIGIN` (default: `https://promptanatomy.space`)
+  - `BASE_PATH` (default: tuščia eilutė – šaknis)
+- Deploy (GitHub Actions): `SITE_ORIGIN=https://promptanatomy.space`, `BASE_PATH=` (tuščia). Veidrodžiui į GitHub Pages su keliu `/cmo` – nustatyti env rankiniu būdu.
 
 ### Kalbos jungiklis
 

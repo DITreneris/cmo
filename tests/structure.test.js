@@ -19,8 +19,8 @@ const SITEMAP_PATH = path.join(__dirname, '..', 'sitemap.xml');
 const EN_PROMPT_BODIES_JSON = path.join(__dirname, '..', 'data', 'en-prompt-bodies.json');
 const EN_PROMPT_INLINE_JS = path.join(__dirname, '..', 'js', 'en-prompt-bodies-inline.js');
 const PACKAGE_JSON_PATH = path.join(__dirname, '..', 'package.json');
-const PROD_ORIGIN = 'https://ditreneris.github.io';
-const PROD_BASE = '/cmo';
+const PROD_ORIGIN = 'https://promptanatomy.space';
+const PROD_BASE = '';
 const PROD_OG_IMAGE_URL = `${PROD_ORIGIN}${PROD_BASE}/og.png`;
 
 function readPackageVersion() {

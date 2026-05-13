@@ -3,7 +3,7 @@
  * Also writes js/en-prompt-bodies-inline.js from data/en-prompt-bodies.json (single EN source).
  * LT = Lithuanian (default), EN = English (replacements applied; META LT taken from index <pre>).
  * Run: node scripts/build-locale-pages.js
- * Optional overrides: BASE_PATH and SITE_ORIGIN.
+ * Optional overrides: BASE_PATH and SITE_ORIGIN (defaults: CMO USA site at https://promptanatomy.space/, root path).
  */
 'use strict';
 
@@ -12,9 +12,18 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const INDEX_PATH = path.join(ROOT, 'index.html');
-const DEFAULT_BASE_PATH = '/cmo';
-const BASE_PATH = (process.env.BASE_PATH || DEFAULT_BASE_PATH).replace(/\/?$/, '');
-const SITE_ORIGIN = (process.env.SITE_ORIGIN || 'https://ditreneris.github.io').replace(/\/$/, '');
+const DEFAULT_BASE_PATH = '';
+const DEFAULT_SITE_ORIGIN = 'https://promptanatomy.space';
+const BASE_PATH = (
+  process.env.BASE_PATH !== undefined && process.env.BASE_PATH !== null
+    ? String(process.env.BASE_PATH)
+    : DEFAULT_BASE_PATH
+).replace(/\/?$/, '');
+const SITE_ORIGIN = (
+  process.env.SITE_ORIGIN !== undefined && process.env.SITE_ORIGIN !== null
+    ? String(process.env.SITE_ORIGIN)
+    : DEFAULT_SITE_ORIGIN
+).replace(/\/$/, '');
 
 function readIndex() {
   const html = fs.readFileSync(INDEX_PATH, 'utf8');
@@ -905,20 +914,13 @@ function insertSeo(html, locale) {
   const ltUrl = makeAbsoluteUrl('/lt/');
   const enUrl = makeAbsoluteUrl('/en/');
   const canonical = makeAbsoluteUrl(canonicalPath);
-  const ogLocale = locale === 'lt' ? 'lt_LT' : 'en_US';
-  const title =
-    locale === 'lt'
-      ? 'Prompt Anatomy CMO: 10 promptų (~45 min)'
-      : 'Prompt Anatomy CMO Kit: 10 copy‑paste prompts (45 min)';
+  /** USA CMO audience: all locales share English SEO (title, description, OG/Twitter). */
+  const ogLocale = 'en_US';
+  const title = 'Prompt Anatomy CMO Kit: 10 copy‑paste prompts (45 min)';
   const description =
-    locale === 'lt'
-      ? 'Prompt Anatomy CMO rinkinys: 10 promptų, kurie padeda susidėlioti 30 d. planą, 1→7 formatus ir KPI ciklą. Kopijuok, įklijuok, paleisk. Be registracijos.'
-      : 'Prompt Anatomy CMO Kit: 10 prompts to build a 30‑day plan, repurpose 1→7 formats, and run a KPI loop. Copy, paste, run. No sign‑up.';
+    'Prompt Anatomy CMO Kit: 10 prompts to build a 30‑day plan, repurpose 1→7 formats, and run a KPI loop. Copy, paste, run. No sign‑up.';
   const ogImageUrl = makeAbsoluteUrl('/og.png');
-  const ogImageAlt =
-    locale === 'lt'
-      ? 'Prompt Anatomy CMO rinkinys: 10 promptų (~45 min) – peržiūros paveikslas'
-      : 'Prompt Anatomy CMO Kit: 10 copy-paste prompts (45 min) – preview image';
+  const ogImageAlt = 'Prompt Anatomy CMO Kit: 10 copy-paste prompts (45 min) – preview image';
   const insert = [
     `<link rel="canonical" href="${canonical}">`,
     `<link rel="alternate" hreflang="lt" href="${ltUrl}">`,
@@ -942,9 +944,13 @@ function insertSeo(html, locale) {
     `<meta name="twitter:image" content="${ogImageUrl}">`,
     `<meta name="twitter:image:alt" content="${ogImageAlt}">`
   ].join('\n    ');
-  return cleanHtml.replace(
+  const withSeo = cleanHtml.replace(
     /<meta name="viewport" content="[^"]*">/,
     '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n    ' + insert
+  );
+  return withSeo.replace(
+    /<title>[\s\S]*?<\/title>/,
+    '<title>' + escapeHtml(title) + '</title>'
   );
 }
 
@@ -979,10 +985,6 @@ function assertLocaleStructure(html, locale) {
 const EN_REPLACEMENTS_PREFIX = [
   // Skip & meta
   ['Pereiti prie turinio', 'Skip to content'],
-  [
-    '<title>Prompt Anatomy CMO: 10 promptų (~45 min)</title>',
-    '<title>Prompt Anatomy CMO Kit: 10 copy‑paste prompts (45 min)</title>'
-  ],
   // Hero
   ['aria-label="Pilna Promptų anatomija – interaktyvus mokymas (atidaroma naujame lange)"', 'aria-label="Full Prompt Anatomy – interactive training (opens in new tab)"'],
   [

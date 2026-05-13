@@ -48,11 +48,11 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - run: npm ci
-      - name: Build locale pages (lt/en) with BASE_PATH for GitHub Pages
+      - name: Build locale pages (lt/en) with production SEO URLs
         run: npm run build
         env:
-          BASE_PATH: '/cmo'
-          SITE_ORIGIN: 'https://ditreneris.github.io'
+          BASE_PATH: ''
+          SITE_ORIGIN: 'https://promptanatomy.space'
       - uses: actions/upload-pages-artifact@v4
         with:
           path: .

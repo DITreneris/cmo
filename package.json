@@ -4,7 +4,8 @@
   "private": true,
   "description": "DI Promptų Biblioteka – statinė HTML platforma",
   "scripts": {
-    "build": "node scripts/build-locale-pages.js && node scripts/vercel-export-public.js",
+    "generate:og": "node scripts/generate-og.js",
+    "build": "node scripts/generate-og.js && node scripts/build-locale-pages.js && node scripts/vercel-export-public.js",
     "test": "npm run build && node tests/structure.test.js && node tests/design-system-smoke.test.js && node tests/a11y-smoke.test.js && npm run lint:html && npm run lint:js",
     "test:structure": "node tests/structure.test.js",
     "test:design-system": "node tests/design-system-smoke.test.js",
@@ -27,7 +28,8 @@
     "html-validator-cli": "^7.0.0",
     "pa11y": "^6.2.3",
     "serve": "^14.2.1",
-    "wait-on": "^8.0.1"
+    "wait-on": "^8.0.1",
+    "sharp": "^0.34.2"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1"
