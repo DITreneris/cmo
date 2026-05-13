@@ -65,12 +65,24 @@ async function main() {
   const buf = await sharp(Buffer.from(svg, 'utf8'))
     .png({ compressionLevel: 9 })
     .toBuffer();
-  await sharp(buf)
+  const output = await sharp(buf)
     .resize(1200, 630, { fit: 'fill', kernel: sharp.kernel.lanczos3 })
     .png({ compressionLevel: 9 })
-    .toFile(OUT);
-  const st = fs.statSync(OUT);
-  console.log('Wrote', path.relative(ROOT, OUT), '(' + st.size + ' bytes, 1200×630)');
+    .toBuffer();
+
+  if (fs.existsSync(OUT)) {
+    if (fs.readFileSync(OUT).equals(output)) {
+      console.log('Unchanged', path.relative(ROOT, OUT), '(' + output.length + ' bytes, 1200×630)');
+      return;
+    }
+    if (process.env.UPDATE_OG !== '1') {
+      console.log('Keeping existing', path.relative(ROOT, OUT), '(set UPDATE_OG=1 to refresh)');
+      return;
+    }
+  }
+
+  fs.writeFileSync(OUT, output);
+  console.log('Wrote', path.relative(ROOT, OUT), '(' + output.length + ' bytes, 1200×630)');
 }
 
 main().catch((err) => {
