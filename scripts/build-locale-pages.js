@@ -37,6 +37,38 @@ function ensureDir(dirPath) {
   }
 }
 
+function detectExistingEol(filePath) {
+  if (!fs.existsSync(filePath)) return '\n';
+  const existing = fs.readFileSync(filePath, 'utf8');
+  const crlf = (existing.match(/\r\n/g) || []).length;
+  const totalLf = (existing.match(/\n/g) || []).length;
+  const lf = totalLf - crlf;
+  return crlf > lf ? '\r\n' : '\n';
+}
+
+function normalizeEol(content, eol) {
+  return String(content).replace(/\r\n|\r|\n/g, eol);
+}
+
+function canonicalGeneratedText(content) {
+  return String(content).replace(/\s+/g, '');
+}
+
+function writeTextFileStable(filePath, content) {
+  const eol = detectExistingEol(filePath);
+  const normalized = normalizeEol(content, eol);
+  if (fs.existsSync(filePath)) {
+    const existing = fs.readFileSync(filePath, 'utf8');
+    if (
+      existing === normalized ||
+      canonicalGeneratedText(existing) === canonicalGeneratedText(normalized)
+    ) {
+      return;
+    }
+  }
+  fs.writeFileSync(filePath, normalized, 'utf8');
+}
+
 const DATA_DIR = path.join(ROOT, 'data');
 const EN_PROMPT_BODIES_PATH = path.join(DATA_DIR, 'en-prompt-bodies.json');
 const EN_PROMPT_EXPECTED_PATH = path.join(DATA_DIR, 'en-prompt-expected.json');
@@ -180,7 +212,7 @@ function writeEnPromptInlineJs(enBodies) {
     "'use strict';\nwindow.__EN_PROMPT_PRE = " +
     JSON.stringify(enBodies) +
     ';\n';
-  fs.writeFileSync(EN_PROMPT_INLINE_JS_PATH, content, 'utf8');
+  writeTextFileStable(EN_PROMPT_INLINE_JS_PATH, content);
 }
 
 const EN_PROMPT_BODIES = loadEnPromptBodies();
@@ -1555,8 +1587,8 @@ function main() {
   const enHtml = buildLocale('en');
   assertLocaleStructure(ltHtml, 'lt');
   assertLocaleStructure(enHtml, 'en');
-  fs.writeFileSync(path.join(ROOT, 'lt', 'index.html'), ltHtml, 'utf8');
-  fs.writeFileSync(path.join(ROOT, 'en', 'index.html'), enHtml, 'utf8');
+  writeTextFileStable(path.join(ROOT, 'lt', 'index.html'), ltHtml);
+  writeTextFileStable(path.join(ROOT, 'en', 'index.html'), enHtml);
   assertPrivacySeo();
   console.log('Built lt/index.html, en/index.html, js/en-prompt-bodies-inline.js (+ privacy SEO checks)');
 }
