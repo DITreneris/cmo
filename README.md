@@ -55,14 +55,15 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 ├── README.md               # Ši dokumentacija
 ├── AGENTS.md               # Agentų rolės ir workflow
 ├── CHANGELOG.md            # Versijų istorija (Keep a Changelog)
-├── og.png                  # OG/Twitter preview paveikslas (1200×630)
+├── og.png                  # OG/Twitter preview (1200×630); šaltinis scripts/generate-og.js
 ├── STYLEGUIDE.md           # Spalvos, komponentai, tipografija
 ├── DEPLOYMENT.md           # Deploy į GitHub Pages (cmo)
 ├── package.json            # npm test, lint:html, lint:js
 ├── .cursorrules            # Cursor: saugumas, kokybė, dokumentacija
 ├── .pa11yrc.json           # A11y (pa11y) – Chrome launch args CI
 ├── scripts/
-│   └── build-locale-pages.js   # Generuoja lt/, en/, js/en-prompt-bodies-inline.js
+│   ├── build-locale-pages.js   # Generuoja lt/, en/, js/en-prompt-bodies-inline.js
+│   └── generate-og.js          # OG paveikslas (SVG → PNG); kviečia `npm run build`
 ├── docs/
 │   ├── INDEX.md            # Navigacija pagal rolę ir užduotį
 │   ├── DOCUMENTATION.md    # Dokumentų inventorius ir atsakomybės

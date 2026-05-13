@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ditreneris.github.io/cmo/sitemap.xml
+Sitemap: https://promptanatomy.space/sitemap.xml
