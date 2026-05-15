@@ -38,10 +38,21 @@ Po deploy testuoti **abu** taikinius (bent svarbiausius scenarijus primary; mirr
 - [ ] **Focus:** Matomas focus (pvz. focus-visible) ant mygtukų ir nuorodų.
 - [ ] **Pa11y:** CI jau bėga į `/lt/`, `/en/`, `/lt/privatumas.html`, `/en/privacy.html`. Lokaliai: `npx pa11y http://localhost:3000/lt/ --standard WCAG2AA --ignore "warning"` (ir `/en/`).
 
+### UX scroll compression (v1.5.0)
+
+- [ ] **Hero:** Mini-promptas `<details>` atsidaro/užsidaro; 2 trust pills matomi.
+- [ ] **Preflight:** `.preflight-list` – 3 punktai, nuorodos į `#prompt-basics` / `#framework-schema`.
+- [ ] **Executive summary:** 3 `.value-card` kortelės; „Žr. greitai“ nuorodos veikia.
+- [ ] **Prompt basics:** `#prompt-basics` `<details>` – viduje `#what-is-prompt`, `#prompt-anatomy`, `#definitions` (hash navigacija).
+- [ ] **Progress jump:** `#progressJump` 1–10, Safety, FAQ – scroll į teisingą sekciją.
+- [ ] **Sticky bar (≤768px):** Po `#block1` pasirodo juosta; Kopijuoti – kopijuoja aktyvų promptą; Kitas → – sekantis `#blockN`.
+- [ ] **Collapse:** CMO kontekstas, tikėtinas atsakymas (prompt 1 atidarytas), scenarijai, safety reviewer – `<details>` veikia klaviatūra.
+- [ ] **Meme:** Tik 3 slotai (po prompt 1, 2, FAQ) – be perteklinio scroll.
+
 ### Responsive / naršyklės
 
 - [ ] **Desktop:** Veikia Chrome / Firefox / Edge (arba Safari).
-- [ ] **Mobilus:** Veikia vienoje iš: iOS Safari, Chrome Mobile (layoutas, mygtukai, kopijavimas).
+- [ ] **Mobilus:** Veikia vienoje iš: iOS Safari, Chrome Mobile (layoutas, mygtukai, kopijavimas, sticky bar).
 
 ### Turinio / bullet-proof (META, INPUT, OUTPUT)
 

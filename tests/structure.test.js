@@ -123,9 +123,14 @@ function run() {
   if (assert(
     html.includes('id="meme-slot-1"') &&
     html.includes('id="meme-slot-2"') &&
-    html.includes('id="meme-slot-3"'),
-    'Meme slotai (1-3) egzistuoja'
+    html.includes('id="meme-slot-6"') &&
+    !html.includes('id="meme-slot-3"') &&
+    !html.includes('id="meme-slot-4"') &&
+    !html.includes('id="meme-slot-5"'),
+    'Meme slotai (1, 2, 6) – 3 pattern break'
   )) passed++;
+  else failed++;
+  if (assert(html.includes('id="prompt-basics"') && html.includes('id="progressJump"') && html.includes('id="stickyPromptBar"'), 'UX: prompt-basics, progress-jump, sticky bar')) passed++;
   else failed++;
   if (assert(html.includes('id="toast"') && html.includes('role="status"'), 'Toast pranešimas')) passed++;
   else failed++;
@@ -291,12 +296,18 @@ function run() {
       'en/index.html: upgrade aiškinamieji blokai EN kalba'
     )) passed++;
     else failed++;
+    const enMemeSlotCount = (enHtml.match(/id="meme-slot-\d+"/g) || []).length;
+    const ltMemeSlotCount = ltHtml ? (ltHtml.match(/id="meme-slot-\d+"/g) || []).length : 0;
     if (assert(
       enHtml.includes('Frequently asked questions before you start') &&
-      enHtml.includes('Error 3: Blaming the tool') &&
-      enHtml.includes('meme-lesson-title') &&
-      !enHtml.includes('meme-caption'),
-      'en/index.html: meme lesson slotai EN kalba (Variant C)'
+      enMemeSlotCount === 3 &&
+      ltMemeSlotCount === 3 &&
+      !enHtml.includes('meme-lesson') &&
+      !enHtml.includes('meme-caption') &&
+      ltHtml &&
+      !ltHtml.includes('meme-lesson') &&
+      !ltHtml.includes('meme-caption'),
+      `lt/en index.html: 3 švarūs meme slotai be matomo heading/caption (LT: ${ltMemeSlotCount}, EN: ${enMemeSlotCount})`
     )) passed++;
     else failed++;
 

@@ -4,6 +4,33 @@ Visi reikšmingi projekto pakeitimai dokumentuojami šiame faile.
 
 Formatas pagal [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), versijavimas – [Semantic Versioning](https://semver.org/).
 
+## [1.5.0] - 2026-05-15
+
+### Prideta
+
+- **Mobilus sticky CTA (`#stickyPromptBar`):** Fiksuota juosta ≤768px po pirmo prompto – kopijuoti aktyvų promptą, nuoroda „Kitas →“; `body.sticky-bar-visible` padding; `IntersectionObserver` seka aktyvų kortelę.
+- **Greita navigacija (`#progressJump`):** Nuorodos 1–10, `#cmo-safety`, `#faq` po progreso indikatoriaus.
+- **Instrukcijų FAQ nuorodos:** `.instructions-faq-hint` → `#faq-beginner`, `#faq-all-ten`, `#faq`.
+- **CSS komponentai:** `.header-demo-details`, `.executive-summary-lead`, `.instructions-faq-hint`, `.progress-jump`, `.sticky-prompt-bar`, `.meme-slot--compact`, `scroll-margin-top` ant `.prompt`; mobilus padding trim `@media (max-width: 480px)`.
+
+### Pakeista
+
+- **[UI] UX scroll compression (fazės 1–4):** Sumažintas scroll iki `#block1` ir promptų ciklo metu.
+  - **Fazė 1:** Hero – 2 trust pills („Be duomenų rinkimo“, „10 promptų · ~45 min“); mini-promptas `<details class="header-demo-details">` (uždarytas pagal nutylėjimą). Preflight – `.preflight-list` (3 punktai + nuorodos). Executive summary + objectives sujungti į vieną `#executive-summary` su `.value-grid` (3 `.value-card`). Meme #1 perkeltas po Prompt 1 (`.meme-slot--compact`).
+  - **Fazė 2:** `#what-is-prompt`, `#prompt-anatomy`, `#definitions` – viename `<details id="prompt-basics">` (privalomi ID viduje išlaikyti). Build: `.prompt-expected` `<details>` (prompt 1 `open`), `#cmo-context` forma + taisyklės – `<details id="cmo-context-details">`. Meme slotai **6 → 3** (`meme-slot-1`, `meme-slot-2`, `meme-slot-6`); pašalinti `.breath-break` ir slotai 3–5.
+  - **Fazė 3:** Build – `#cmo-scenarios` `<details class="cmo-scenarios-details">`; safety recenzento `pre` – `<details>` su santrauka; checklist lieka matomas.
+  - **Fazė 4:** `docs/TESTAVIMAS.md` – rankinis UX v1.5.0 checklist; `npm test` (97 struktūriniai teiginiai) + lint + a11y smoke.
+- **EN paritetas:** `EN_REPLACEMENTS` ir `applyStaticLocaleText()` – value grid, preflight, hero summary, progress jump, sticky bar, prompt-basics; pašalinti pasenusios objectives / breath moment šablonai.
+- **Dokumentacija:** [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – 3 meme slotai, `#prompt-basics`, collapsible CMO blokai; [tests/structure.test.js](tests/structure.test.js) – meme skaičius pagal `id="meme-slot-N"`.
+
+### Pašalinta
+
+- Antra hero trust pill (`#heroTrustPill3`) ir atskira `#objectives-title` sekcija (turinys – value grid).
+- Meme slotai `meme-slot-3`, `meme-slot-4`, `meme-slot-5`; meme iš preflight.
+- „Įkvėpk“ / „Reset“ breath-break pastraipos tarp promptų.
+
+---
+
 ## [1.3.5] - 2026-05-15
 
 ### Pašalinta
@@ -32,6 +59,7 @@ Formatas pagal [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), versija
 
 ### Pakeista
 
+- **Meme sluoksnis be matomų paaiškinimų (2026-05-15):** Meme kortelės supaprastintos iki paveikslo-only pattern break: pašalinti `.meme-lesson-header`, `.meme-lesson-title`, `.meme-lesson-lead` ir bet koks matomas „Klaida / Error“ tekstas virš paveikslo. Puslapyje dabar 6 statiniai meme slotai (`meme-slot-1`…`meme-slot-6`) tarp turinio blokų; prasmė lieka pačiame paveiksle ir `alt` tekste. Pridėti nauji assetai `meme-random-prompting-gambling.webp`, `meme-output-control.png`, `meme-team-ahead.png`; nenaudojami numeruoti assetai neversijuojami. Atnaujinti `index.html`, `styles/components.css`, `scripts/build-locale-pages.js`, `tests/structure.test.js`, `docs/LEGACY_GOLDEN_STANDARD.md`.
 - **Meme paveikslų vardai (2026-05-15):** Pervadinti į semantinius pavadinimus: `data/Untitled design (35).png` → `data/meme-error-1-no-context.png`, `(36).png` → `meme-error-2-generic.png`, `(22).png` → `meme-error-3-blame-tool.png`. Atnaujinti `<img src>` [index.html](index.html) `meme-slot-1`, `meme-slot-2`, `meme-slot-3`. Locale build'as juos regeneruoja į `lt/`, `en/`, `public/`.
 - Pasenusios ar dubliuojančios dokumentų bylos: root `KODO_BAZES_ANALIZE.md`, `LT_EN_UI_UX_REPORT.md`, `VARIANTU_PALYGINIMAS.md`; `docs/GILI_ANALIZE_LT_EN_TERMINOLOGIJA.md`, `docs/MICROCOPY_AUDIT_EN.md`, `docs/TURINIO_AUDITAS_DETALUS.md`, `docs/DESIGN_SYSTEM_BASELINE.md`; dublikatai `docs/archive/`. Nuorodos sutvarkytos į `docs/MULTILINGUAL_STRUCTURE.md`, `docs/LEGACY_GOLDEN_STANDARD.md`, `npm test`.
 

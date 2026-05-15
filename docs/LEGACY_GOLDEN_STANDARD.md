@@ -78,11 +78,14 @@ index.html (LT bazė) → po `npm run build` → lt/index.html, en/index.html
 │       │           └── <input type="checkbox" class="prompt-done" data-prompt-id="N" aria-label="Pažymėti, kad atlikai šį žingsnį">
 │       ├── [build inject] <section id="cmo-safety">    (pre-publish saugumo recenzentas)
 │       ├── [build inject] <section id="cmo-scenarios"> (scenarijų skirtukai, ~3 scenarijai)
-│       ├── <section id="preflight">       (meme-slot-1: .meme-lesson-header virš img)
-│       ├── <section id="what-is-prompt">  (h2#what-is-prompt-title)
-│       ├── <section id="prompt-anatomy">  (h2#prompt-anatomy-title, .anatomy-parts, meme-slot-2)
+│       ├── <section id="preflight">       (.preflight-list; be meme)
+│       ├── <figure id="meme-slot-1">      (po Prompt 1; `.meme-slot--compact`)
+│       ├── <figure id="meme-slot-2">      (po Prompt 2)
+│       ├── <details id="prompt-basics">   (what-is-prompt, prompt-anatomy, definitions – ID išlaikyti)
+│       ├── <nav id="progressJump">        (1–10, #cmo-safety, #faq)
+│       ├── `#stickyPromptBar`             (mobilus, ≤768px)
 │       ├── <section class="next-steps">   (h2#next-steps-title, p, <details> su summary#next-steps-jump, .next-steps-links > a → #block1..10)
-│       ├── <section id="faq">             (su meme-slot-3)
+│       ├── <section id="faq">             (su meme-slot-6)
 │       ├── <section id="ecosystem-strip"> (h2#ecosystem-strip-title, .ecosystem-strip-list)
 │       ├── <section class="community" id="community">
 │       └── <footer class="footer">        (.footer-product-link su `data-version` iš package.json, .footer-email, .copyright)
@@ -174,6 +177,7 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 - [ ] **NE pridėti** inline `onclick` / `onkeydown` atributų – binding per `addEventListener`.
 - [ ] Nauji ar pakeisti promptai naudoja tą patį HTML šabloną.
 - [ ] Upgrade sekcijos: `id="what-is-prompt"` ir `id="prompt-anatomy"` lieka **po** 10-uoju `article.prompt`, prieš `next-steps`; `id="framework-schema"` lieka prieš `progressIndicator` (žr. §2).
+- [ ] Meme slotų kontraktas: tiksliai 3× `<figure class="meme-slot" id="meme-slot-N">` (`meme-slot-1`, `meme-slot-2`, `meme-slot-6`) su vienu `<img>` viduje. Jokių matomų `.meme-lesson-*` heading'ų ar `.meme-caption`; prasmė perduodama pačiu paveikslu ir `alt` tekstu.
 - [ ] CMO v2 blokai (`#cmo-context`, `.prompt-expected`, `#cmo-safety`, `#cmo-scenarios`, `window.__CMO_COMPILE`) **negali būti rankomis kuriami `index.html`** – jie generuojami iš build skripto + `data/*.json`.
 - [ ] `data/en-prompt-bodies.json` turi 10 EN META eilučių (atitiks 10 LT promptų root `index.html`).
 - [ ] `data/{en,lt}-prompt-expected.json` ir `data/{en,lt}-scenarios.json` – sutampa su locale poreikiu.

@@ -63,7 +63,7 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 │   ├── lt-prompt-expected.json   # „Tikėtinas atsakymas" LT
 │   ├── en-scenarios.json         # CMO „Clarity practice" scenarijai EN
 │   ├── lt-scenarios.json         # CMO scenarijai LT
-│   └── *.png                     # 3 meme slot paveikslai
+│   └── meme-*.(png|webp)         # 6 meme slot paveikslai
 ├── scripts/
 │   ├── build-locale-pages.js     # Generuoja lt/, en/ + inject CMO v2 + EN_REPLACEMENTS
 │   ├── generate-og.js            # OG paveikslas (SVG → PNG, 1200×630)

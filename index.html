@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://promptanatomy.space/lt/">
+    <link rel="canonical" href="https://promptanatomy.space/en/">
     <link rel="alternate" hreflang="lt" href="https://promptanatomy.space/lt/">
     <link rel="alternate" hreflang="en" href="https://promptanatomy.space/en/">
     <link rel="alternate" hreflang="x-default" href="https://promptanatomy.space/en/">
@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Prompt Anatomy CMO Kit: 10 copy‑paste prompts (45 min)">
     <meta property="og:description" content="Prompt Anatomy CMO Kit: 10 prompts to build a 30‑day plan, repurpose 1→7 formats, and run a KPI loop. Copy, paste, run. No sign‑up.">
-    <meta property="og:url" content="https://promptanatomy.space/lt/">
+    <meta property="og:url" content="https://promptanatomy.space/en/">
     <meta property="og:site_name" content="Prompt Anatomy">
     <meta property="og:locale" content="en_US">
     <meta property="og:image" content="https://promptanatomy.space/og.png">
@@ -31,7 +31,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <script type="application/ld+json">
-        {"@context":"https://schema.org","@type":"WebSite","name":"Prompt Anatomy Teams","url":"https://promptanatomy.space/","inLanguage":["lt","en"],"publisher":{"@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/"}}
+        {"@context":"https://schema.org","@type":"WebSite","name":"Prompt Anatomy Teams","url":"https://promptanatomy.space/","inLanguage":["en","lt"],"publisher":{"@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/"}}
     </script>
     <script type="application/ld+json">
         {"@context":"https://schema.org","@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/","sameAs":["https://promptanatomy.space/","https://t.me/prompt_anatomy"]}
@@ -1848,11 +1848,12 @@
             <div class="header-trust">
                 <ul class="trust-pills">
                     <li class="trust-pill" id="heroTrustPill1"><span aria-hidden="true">🔒</span> Be duomenų rinkimo</li>
-                    <li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">🧩</span> 10 promptų seka</li>
-                    <li class="trust-pill" id="heroTrustPill3"><span aria-hidden="true">⏱</span> ~45 min rezultatas</li>
+                    <li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">⏱</span> 10 promptų · ~45 min</li>
                 </ul>
             </div>
-            <div class="header-demo">
+            <details class="header-demo-details">
+                <summary id="heroDemoSummary">Išbandyk mini-promptą (10 s)</summary>
+                <div class="header-demo">
                 <div class="header-demo-title">
                     <span id="heroDemoTitle">Išbandyk be registracijos</span>
                     <button class="btn"
@@ -1866,7 +1867,8 @@
                 <pre id="promptDemo">META: Tu esi rinkodaros strategas.
 INPUT: Auditorija [ ], tikslas [ ].
 OUTPUT: 5 idėjos su kabliuku + CTA + KPI.</pre>
-            </div>
+                </div>
+            </details>
             <div class="header-cta">
                 <a href="#block1" class="cta-button" aria-label="Pradėti nuo pirmo prompto – pereiti prie bibliotekos">Pradėti nuo 1-o prompto</a>
                 <p class="header-cta-note"><a href="#community" class="cta-secondary" aria-label="Prisijunk prie bendruomenės – pereiti prie Telegram">Bendruomenė: Telegram</a></p>
@@ -1875,63 +1877,44 @@ OUTPUT: 5 idėjos su kabliuku + CTA + KPI.</pre>
 
         <section class="upgrade-section" id="preflight" aria-labelledby="preflight-title">
             <h2 id="preflight-title">Prieš kopijuojant (1 min)</h2>
-            <p><strong>Kas yra prompt?</strong> Aiški instrukcija DI įrankiui: kontekstas + tikslas + ribos + formatas. <a href="#what-is-prompt">Pilnas paaiškinimas</a>.</p>
-            <p><strong>Kas yra Prompt Anatomy?</strong> Struktūra, kuri padaro rezultatą nuoseklų ir pakartojamą. <a href="#prompt-anatomy">Pilnas paaiškinimas</a>.</p>
-            <p><strong>Kaip naudoti?</strong> Eik per žingsnius ir dirbk ciklu: Planuok → Kurk → Tikrink → Tobulink. <a href="#framework-schema">Schema</a>.</p>
+            <ul class="preflight-list">
+                <li>
+                    <strong>Kas yra prompt?</strong>
+                    <span>Aiški instrukcija DI įrankiui: kontekstas + tikslas + ribos + formatas.</span>
+                    <a href="#prompt-basics">Pilnas paaiškinimas</a>
+                </li>
+                <li>
+                    <strong>Kas yra Prompt Anatomy?</strong>
+                    <span>Struktūra, kuri padaro rezultatą nuoseklų ir pakartojamą.</span>
+                    <a href="#prompt-basics">Pilnas paaiškinimas</a>
+                </li>
+                <li>
+                    <strong>Kaip naudoti?</strong>
+                    <span>Planuok → Kurk → Tikrink → Tobulink.</span>
+                    <a href="#framework-schema">Schema</a>
+                </li>
+            </ul>
             <p class="objectives-eco-hint"><a href="#block1"><strong>Praleisti → Promptas 1</strong></a></p>
-            <!-- Breath moment: one meme before prompts -->
-            <figure class="meme-slot" id="meme-slot-1" aria-labelledby="meme-slot-1-title">
-                <div class="meme-lesson-header">
-                    <p class="meme-lesson-title" id="meme-slot-1-title">Klaida 1: per mažai konteksto</p>
-                    <p class="meme-lesson-lead">Neaiškus įvedimas sukuria neaiškų rezultatą.</p>
-                </div>
-                <img src="data/meme-error-1-no-context.png" alt="Neaiškus promptas – neaiškus rezultatas" loading="lazy" decoding="async">
-            </figure>
         </section>
 
         <section class="objectives" id="executive-summary" aria-labelledby="executive-summary-title">
-            <h2 id="executive-summary-title"><span aria-hidden="true">🧭</span> Executive santrauka</h2>
-            <div class="quoteable-block">
-                <strong>Kas tai yra</strong>
-                <p><strong>Prompt Anatomy CMO rinkinys</strong> – struktūruota promptų sistema (framework + seka), skirta rinkodaros vadovams ir komandoms greičiau priimti turinio sprendimus.</p>
-            </div>
-            <div class="quoteable-block">
-                <strong>Kur panaudosi</strong>
-                <ul>
-                    <li>30 d. turinio planas ir prioritetai</li>
-                    <li>1 idėja → 7 formatai (cross-channel nuoseklumas)</li>
-                    <li>KPI ciklas: matuok → spręsk → tobulink</li>
-                </ul>
-            </div>
-            <div class="quoteable-block">
-                <strong>Kuo skiriasi</strong>
-                <ul>
-                    <li>„Random promptai“ → chaosas ir nepastovi kokybė</li>
-                    <li>„Prompt engineering tips“ → žinios, bet ne vykdymo ritmas</li>
-                    <li><strong>Prompt Anatomy seka</strong> → pakartojamas operacinis ciklas</li>
-                </ul>
+            <h2 id="executive-summary-title"><span aria-hidden="true">🧭</span> Ką gauni ir kodėl tai veikia</h2>
+            <p class="executive-summary-lead" id="objectives-title">Per ~45 min. – turinio sistema, 100 vienetų ir 30 d. planas rinkodaros vadovui.</p>
+            <div class="value-grid">
+                <article class="value-card">
+                    <h3 class="value-card-title">Kas tai yra</h3>
+                    <p class="value-card-lead"><strong>Prompt Anatomy CMO rinkinys</strong> – struktūruota promptų seka ir framework greitesniems turinio sprendimams.</p>
+                </article>
+                <article class="value-card">
+                    <h3 class="value-card-title">Ką gausi</h3>
+                    <p class="value-card-lead">30 d. planas, 1 idėja → 7 formatai, KPI ciklas: matuok → spręsk → tobulink.</p>
+                </article>
+                <article class="value-card">
+                    <h3 class="value-card-title">Kuo skiriasi</h3>
+                    <p class="value-card-lead">Ne atsitiktiniai promptai – pakartojamas operacinis ciklas su aiškiais laukais ir vertinimu.</p>
+                </article>
             </div>
             <p class="objectives-eco-hint"><strong>Žr. greitai:</strong> <a href="#block1">30 d. planas</a> · <a href="#block5">analizė pagal KPI</a> · <a href="#block9">temų grupė</a> · <a href="#cmo-safety">tikrinti prieš publikuojant</a> · <a href="#ecosystem-strip">ekosistema</a>.</p>
-        </section>
-
-        <!-- KĄ REALIAI GAUSI -->
-        <section class="objectives" aria-labelledby="objectives-title">
-            <h2 id="objectives-title"><span aria-hidden="true">🎯</span> Ką realiai gausi</h2>
-            <ul>
-                <li>Per 3/4 val. turėsi aiškią turinio sistemą, 100 turinio vienetų ir 30 d. planą</li>
-                <li>Generuosi turinį pagal 4 principus</li>
-                <li>Testuosi ir optimizuosi pagal aiškius matavimo rodiklius</li>
-                <li>Dirbsi uždaru ciklu: Planuok → Kurk → Platink → Matuok → Spręsk</li>
-            </ul>
-            <div class="quoteable-block">
-                <strong>Apibrėžimas CMO lygmeniui</strong>
-                <p>Prompt Anatomy yra praktinė AI operacinė sistema komandai: mažiau spėjimų, daugiau kontrolės ir aiškus sprendimų ciklas.</p>
-            </div>
-            <div class="quoteable-block">
-                <strong>Kada naudoti</strong>
-                <p>Naudok, kai reikia greičiau paleisti turinį, sumažinti komandų trintį ir išlaikyti vienodą kokybę per kanalus.</p>
-            </div>
-            <p class="objectives-eco-hint">Oficiali metodika, kursai ir kontaktai – <a href="#ecosystem-strip">skiltis „Ekosistema“ žemiau</a>.</p>
         </section>
 
         <!-- INSTRUCTIONS (M4: laiko signalas) -->
@@ -1941,6 +1924,11 @@ OUTPUT: 5 idėjos su kabliuku + CTA + KPI.</pre>
                 <span>Kaip naudoti šią biblioteką</span>
                 <span class="prompt-time" role="status" aria-label="Orientacinis laikas: 3–5 min per žingsnį">~3–5 min per žingsnį</span>
             </h2>
+            <p class="instructions-faq-hint" id="instructions-faq-hint">
+                <a href="#faq-beginner">Ar tinka pradedančiajam?</a> ·
+                <a href="#faq-all-ten">Ar būtina visi 10?</a> ·
+                <a href="#faq">Visi DUK</a>
+            </p>
             <ol>
                 <li>Pasirink promptą ir spausk ant jo – tekstas pažymėsis</li>
                 <li>Spausk <strong>„Kopijuoti promptą“</strong> arba <code>Ctrl+C</code> / <code>Cmd+C</code></li>
@@ -1966,6 +1954,22 @@ OUTPUT: 5 idėjos su kabliuku + CTA + KPI.</pre>
                 <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
             </div>
         </div>
+
+        <nav class="progress-jump no-print" id="progressJump" aria-label="Greita navigacija per promptus">
+            <a href="#block1">1</a>
+            <a href="#block2">2</a>
+            <a href="#block3">3</a>
+            <a href="#block4">4</a>
+            <a href="#block5">5</a>
+            <a href="#block6">6</a>
+            <a href="#block7">7</a>
+            <a href="#block8">8</a>
+            <a href="#block9">9</a>
+            <a href="#block10">10</a>
+            <span class="progress-jump-sep" aria-hidden="true">·</span>
+            <a href="#cmo-safety" id="progressJumpSafety">Sauga</a>
+            <a href="#faq" id="progressJumpFaq">DUK</a>
+        </nav>
 
         <div class="cmo-provider-hub no-print" role="region" aria-labelledby="cmo-provider-hub-title">
             <p class="cmo-provider-hub-title" id="cmo-provider-hub-title">DI įrankiai (naujame skirtuke)</p>
@@ -2026,6 +2030,10 @@ OUTPUT: Lentelė/sąrašas – 30 dienų: tema, įžanginis kabliukas, formatas,
             </div>
         </article>
 
+        <figure class="meme-slot meme-slot--compact" id="meme-slot-1">
+            <img src="data/meme-error-1-no-context.png" alt="Daug DI įrankių neišsprendžia chaotiškos instrukcijos" loading="lazy" decoding="async">
+        </figure>
+
         <!-- PROMPT 2 -->
         <article class="prompt">
             <div class="prompt-header">
@@ -2073,6 +2081,10 @@ OUTPUT: 7 blokai – LinkedIn, karuselė, 30s video, el. laiškas, titulinis ekr
             </div>
         </article>
 
+        <figure class="meme-slot" id="meme-slot-2">
+            <img src="data/meme-random-prompting-gambling.webp" alt="Atsitiktinis promptinimas yra lošimas, struktūruotas promptinimas yra inžinerija" loading="lazy" decoding="async">
+        </figure>
+
         <!-- PROMPT 3 -->
         <article class="prompt">
             <div class="prompt-header">
@@ -2119,10 +2131,6 @@ OUTPUT: 1 postas – įžanginis kabliukas, 3 punktai, 1 pavyzdys, raginimas vei
                 </label>
             </div>
         </article>
-
-        <section class="upgrade-section breath-break" role="note" aria-label="Breath moment">
-            <p><strong>Įkvėpk (10 s):</strong> ar čia yra konkretus <strong>kabliukas</strong> + <strong>įrodymas</strong> + <strong>vienas CTA</strong>? Jei ne – patikslink 1 eilute ir paleisk dar kartą.</p>
-        </section>
 
         <!-- PROMPT 4 -->
         <article class="prompt">
@@ -2264,10 +2272,6 @@ OUTPUT: 10 vienetų – postai/el. laiškai/landing, prieštaravimas + argumenta
                 </label>
             </div>
         </article>
-
-        <section class="upgrade-section breath-break" role="note" aria-label="Breath moment">
-            <p><strong>Reset (10 s):</strong> surašyk 3 tikrus prieštaravimus kaip cituoja klientai. Tada paleisk šį promptą dar kartą – rezultatas bus 2× taiklesnis.</p>
-        </section>
 
         <!-- PROMPT 7 -->
         <article class="prompt">
@@ -2457,39 +2461,33 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
             </div>
         </article>
 
-        <section class="upgrade-section" id="what-is-prompt" aria-labelledby="what-is-prompt-title">
-            <h2 id="what-is-prompt-title">Kas yra prompt?</h2>
-            <p>Promptas yra aiški instrukcija DI įrankiui: ką daryti, kam daryti ir kokiu formatu grąžinti rezultatą.</p>
-            <p>Kuo promptas tikslesnis, tuo mažiau taisymų po pirmo atsakymo.</p>
-            <p><span class="mini-formula">Kontekstas + Tikslas + Ribos + Formatas</span></p>
-        </section>
-
-        <section class="upgrade-section" id="prompt-anatomy" aria-labelledby="prompt-anatomy-title">
-            <h2 id="prompt-anatomy-title">Kas yra Prompt Anatomy?</h2>
-            <p>Prompt Anatomy yra struktūra, kuri padeda rašyti promptus taip, kad rezultatas būtų nuoseklus ir pakartojamas.</p>
-            <ul class="anatomy-parts">
-                <li>Rolė: kas kalba ir kokio lygio ekspertika.</li>
-                <li>Kontekstas: situacija, auditorija ir apribojimai.</li>
-                <li>Tikslas: vienas aiškus rezultatas.</li>
-                <li>Ribos: tonas, ilgis, kas neleidžiama.</li>
-                <li>Formatas: kaip turi atrodyti atsakymas.</li>
-                <li>Vertinimas: pagal ką spręsti ar atsakymas geras.</li>
-            </ul>
-            <figure class="meme-slot" id="meme-slot-2" aria-labelledby="meme-slot-2-title">
-                <div class="meme-lesson-header">
-                    <p class="meme-lesson-title" id="meme-slot-2-title">Klaida 2: per bendras instrukcijas</p>
-                    <p class="meme-lesson-lead">Be laukų ir formato rezultatas lieka atsitiktinis.</p>
-                </div>
-                <img src="data/meme-error-2-generic.png" alt="Chaotiškas prašymas vs aiški promptų struktūra" loading="lazy" decoding="async">
-            </figure>
-        </section>
-
-        <section class="upgrade-section" id="definitions" aria-labelledby="definitions-title">
-            <h2 id="definitions-title">Sąvokos (1 min)</h2>
-            <p><strong>Promptas:</strong> aiški instrukcija DI įrankiui su kontekstu, tikslu ir pageidaujamu formatu.</p>
-            <p><strong>Prompt Anatomy:</strong> framework, kuris suvienodina promptų struktūrą ir padaro rezultatą pakartojamą.</p>
-            <p><strong>Turinio DI sistema:</strong> procesas + promptų seka, kuri paverčia „idėjas“ į planą, publikavimą ir matuojamus veiksmus.</p>
-        </section>
+        <details class="upgrade-section prompt-basics-details" id="prompt-basics">
+            <summary id="prompt-basics-summary">Promptų pagrindai (1 min)</summary>
+            <section class="upgrade-section" id="what-is-prompt" aria-labelledby="what-is-prompt-title">
+                <h2 id="what-is-prompt-title">Kas yra prompt?</h2>
+                <p>Promptas yra aiški instrukcija DI įrankiui: ką daryti, kam daryti ir kokiu formatu grąžinti rezultatą.</p>
+                <p>Kuo promptas tikslesnis, tuo mažiau taisymų po pirmo atsakymo.</p>
+                <p><span class="mini-formula">Kontekstas + Tikslas + Ribos + Formatas</span></p>
+            </section>
+            <section class="upgrade-section" id="prompt-anatomy" aria-labelledby="prompt-anatomy-title">
+                <h2 id="prompt-anatomy-title">Kas yra Prompt Anatomy?</h2>
+                <p>Prompt Anatomy yra struktūra, kuri padeda rašyti promptus taip, kad rezultatas būtų nuoseklus ir pakartojamas.</p>
+                <ul class="anatomy-parts">
+                    <li>Rolė: kas kalba ir kokio lygio ekspertika.</li>
+                    <li>Kontekstas: situacija, auditorija ir apribojimai.</li>
+                    <li>Tikslas: vienas aiškus rezultatas.</li>
+                    <li>Ribos: tonas, ilgis, kas neleidžiama.</li>
+                    <li>Formatas: kaip turi atrodyti atsakymas.</li>
+                    <li>Vertinimas: pagal ką spręsti ar atsakymas geras.</li>
+                </ul>
+            </section>
+            <div class="prompt-basics-defs" id="definitions" aria-labelledby="definitions-title">
+                <h3 class="visually-hidden" id="definitions-title">Sąvokos</h3>
+                <p><strong>Promptas:</strong> aiški instrukcija DI įrankiui su kontekstu, tikslu ir pageidaujamu formatu.</p>
+                <p><strong>Prompt Anatomy:</strong> framework, kuris suvienodina promptų struktūrą ir padaro rezultatą pakartojamą.</p>
+                <p><strong>Turinio DI sistema:</strong> procesas + promptų seka, kuri paverčia „idėjas“ į planą, publikavimą ir matuojamus veiksmus.</p>
+            </div>
+        </details>
 
         <!-- KAS TOLIAU? (S2) -->
         <section class="next-steps" aria-labelledby="next-steps-title">
@@ -2515,11 +2513,11 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
         <section class="upgrade-section" id="faq" aria-labelledby="faq-title">
             <h2 id="faq-title">Dažniausi klausimai prieš startą</h2>
             <div class="faq-items">
-                <details class="faq-item">
+                <details class="faq-item" id="faq-beginner">
                     <summary>Ar tinka pradedančiajam?</summary>
                     <p>Taip, jei pildai laukus savo situacija, ne bendrais žodžiais.</p>
                 </details>
-                <details class="faq-item">
+                <details class="faq-item" id="faq-all-ten">
                     <summary>Ar būtina naudoti visus 10?</summary>
                     <p>Ne, pradėk nuo 1–3 ir plėskis pagal poreikį.</p>
                 </details>
@@ -2552,11 +2550,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
             <script type="application/ld+json">
                 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Ar tinka pradedančiajam?","acceptedAnswer":{"@type":"Answer","text":"Taip, jei pildai laukus savo situacija, ne bendrais žodžiais."}},{"@type":"Question","name":"Ar būtina naudoti visus 10?","acceptedAnswer":{"@type":"Answer","text":"Ne, pradėk nuo 1–3 ir plėskis pagal poreikį."}},{"@type":"Question","name":"Kuo tai geriau nei random promptas?","acceptedAnswer":{"@type":"Answer","text":"Čia turi nuoseklią seką, aiškų tikslą ir vertinimą."}},{"@type":"Question","name":"Kiek laiko skirti kasdien?","acceptedAnswer":{"@type":"Answer","text":"20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“."}},{"@type":"Question","name":"Ar tai kursas ar įrankis?","acceptedAnswer":{"@type":"Answer","text":"Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk)."}},{"@type":"Question","name":"Kam tai skirta?","acceptedAnswer":{"@type":"Answer","text":"CMO, rinkodaros vadovams, produktų/augimo komandoms ir vadovams, kuriems reikia greito, pakartojamo turinio ciklo."}},{"@type":"Question","name":"Kuo skiriasi nuo promptų šablonų?","acceptedAnswer":{"@type":"Answer","text":"Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą."}},{"@type":"Question","name":"Ar tinka B2B SaaS, paslaugoms ir e. komercijai?","acceptedAnswer":{"@type":"Answer","text":"Taip. Tiesiog pakeisk auditoriją, pasiūlymą, kanalus ir metrikas – struktūra išlieka ta pati."}}]}
             </script>
-            <figure class="meme-slot" id="meme-slot-3" aria-labelledby="meme-slot-3-title">
-                <div class="meme-lesson-header">
-                    <p class="meme-lesson-title" id="meme-slot-3-title">Klaida 3: kaltiname įrankį</p>
-                    <p class="meme-lesson-lead">Problema dažnai ne DI, o neaiški instrukcija.</p>
-                </div>
+            <figure class="meme-slot" id="meme-slot-6">
                 <img src="data/meme-error-3-blame-tool.png" alt="Problema ne DI, o neaiški instrukcija" loading="lazy" decoding="async">
             </figure>
         </section>
@@ -2600,8 +2594,19 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
     </div>
 
     <textarea class="hidden" id="hiddenTextarea" aria-label="Kopijuojamo teksto laukas" aria-hidden="true"></textarea>
-    
-    <div class="toast" 
+
+    <div class="sticky-prompt-bar no-print" id="stickyPromptBar" hidden>
+        <p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Promptas</p>
+        <div class="sticky-prompt-bar-actions">
+            <button type="button" class="btn sticky-prompt-bar-copy" id="stickyPromptBarCopy" aria-label="Kopijuoti dabartinį promptą">
+                <span aria-hidden="true">📋</span>
+                <span id="stickyPromptBarCopyText">Kopijuoti</span>
+            </button>
+            <a href="#block2" class="sticky-prompt-bar-next" id="stickyPromptBarNext">Kitas →</a>
+        </div>
+    </div>
+
+    <div class="toast"
          id="toast" 
          role="status" 
          aria-live="polite" 
@@ -2618,7 +2623,21 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
 
             // ===== LOCALE (LT/EN) =====
             var LANG_KEY = 'di_promptu_biblioteka_lang';
-            var locale = 'lt';
+            var locale = 'en';
+
+            function prefersLithuanianBrowser() {
+                var langs = [];
+                if (navigator.language) langs.push(navigator.language);
+                if (navigator.languages) {
+                    for (var i = 0; i < navigator.languages.length; i++) {
+                        langs.push(navigator.languages[i]);
+                    }
+                }
+                for (var j = 0; j < langs.length; j++) {
+                    if (langs[j] && String(langs[j]).toLowerCase().indexOf('lt') === 0) return true;
+                }
+                return false;
+            }
 
             function getLocaleFromPathname() {
                 var path = (window.location.pathname || '').toLowerCase();
@@ -2653,20 +2672,32 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     var stored = localStorage.getItem(LANG_KEY);
                     if (stored === 'lt' || stored === 'en') { locale = stored; return; }
                 } catch (e) { /* ignore */ }
-                locale = (navigator.language && navigator.language.toLowerCase().indexOf('lt') === 0) ? 'lt' : 'en';
+                locale = prefersLithuanianBrowser() ? 'lt' : 'en';
             }
             resolveLocale();
 
-            // If user is on the project root (e.g. /cmo/), redirect to fully built locale pages (/cmo/lt/ or /cmo/en/).
-            // This prevents mixed-language rendering on the LT source page.
-            (function redirectRootToLocale() {
+            /** True when URL is site root, not already under /lt/ or /en/ (incl. /cmo/ mirror). */
+            function isRootEntryPage() {
                 var path = (window.location.pathname || '').replace(/\/index\.html?$/i, '');
+                var pl = path.toLowerCase();
+                if (/\/lt(?:\/|$)/.test(pl) || /\/en(?:\/|$)/.test(pl)) return false;
+                var normalized = pl.replace(/\/+$/, '') || '/';
+                if (normalized === '/' || normalized === '') return true;
+                var segs = normalized.split('/').filter(function(s) { return s.length > 0; });
+                return segs.length <= 1;
+            }
+
+            // Root / or /cmo/ → /en/ or /lt/ (browser + storage); avoids LT source page at bare host.
+            (function redirectRootToLocale() {
+                if (!isRootEntryPage()) return;
                 var base = getBasePathPrefix();
-                if (!base) return;
-                var pl = path.toLowerCase().replace(/\/?$/, '/');
-                var bl = base.toLowerCase().replace(/\/?$/, '/');
-                if (pl !== bl) return;
-                var target = base + '/' + (locale === 'en' ? 'en' : 'lt') + '/' + (window.location.hash || '');
+                var loc = locale === 'en' ? 'en' : 'lt';
+                var target;
+                if (base) {
+                    target = base.replace(/\/?$/, '') + '/' + loc + '/' + (window.location.hash || '');
+                } else {
+                    target = '/' + loc + '/' + (window.location.hash || '');
+                }
                 try { window.location.replace(target); } catch (_) { window.location.href = target; }
             })();
 
@@ -2709,26 +2740,60 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     setLabel(ctaNote, 'Join the community – go to Telegram');
                 }
                 setText('#heroTrustPill1', '🔒 No data collection');
-                setText('#heroTrustPill2', '🧩 10-step prompt sequence');
-                setText('#heroTrustPill3', '⏱ ~45 min outcome');
+                setText('#heroTrustPill2', '⏱ 10 prompts · ~45 min');
+                setText('#heroDemoSummary', 'Try mini-prompt (10 sec)');
                 setText('#heroDemoTitle', 'Try without signing up');
                 setText('#heroDemoCopyBtnText', 'Copy mini-prompt');
                 setLabel('#heroDemoCopyBtn', 'Copy mini-prompt to clipboard');
                 setText('#promptDemo', 'META: You are a marketing strategist.\nINPUT: Audience [ ], goal [ ].\nOUTPUT: 5 ideas with hook + CTA + KPI.');
 
-                var objTitle = el('objectives-title');
-                if (objTitle) objTitle.innerHTML = '<span aria-hidden="true">🎯</span> What you get';
-                var objLi = qa('.objectives ul li');
-                if (objLi.length >= 4) {
-                    objLi[0].textContent = 'In 45 minutes, you get a clear content system, 100 content assets, and a 30-day plan';
-                    objLi[1].textContent = 'Generate content with 4 proven pillars';
-                    objLi[2].textContent = 'Test and optimize with clear KPIs';
-                    objLi[3].textContent = 'Run a closed loop: Plan → Create → Distribute → Measure → Decide';
+                setText('#executive-summary-title', '🧭 What you get and why it works');
+                var objLead = el('objectives-title');
+                if (objLead) objLead.textContent = 'In ~45 minutes – content system, 100 assets, and a 30-day plan for marketing leaders.';
+                var valueTitles = qa('.value-card-title');
+                var valueLeads = qa('.value-card-lead');
+                var valueTitleTexts = ['What this is', 'What you get', 'How it differs'];
+                var valueLeadTexts = [
+                    'Prompt Anatomy CMO Kit – structured prompt sequence and framework for faster content decisions.',
+                    '30-day plan, one idea → 7 formats, KPI loop: measure → decide → improve.',
+                    'Not random prompts – a repeatable operating cycle with clear fields and evaluation.'
+                ];
+                valueTitles.forEach(function(n, i) { if (valueTitleTexts[i]) n.textContent = valueTitleTexts[i]; });
+                valueLeads.forEach(function(n, i) { if (valueLeadTexts[i]) n.textContent = valueLeadTexts[i]; });
+                var objEcoHints = qa('.objectives-eco-hint');
+                if (objEcoHints.length >= 2) {
+                    objEcoHints[1].innerHTML = '<strong>See:</strong> <a href="#block1">30-day plan</a> · <a href="#block5">KPI analysis</a> · <a href="#block9">topic cluster</a> · <a href="#cmo-safety">pre-publish safety</a> · <a href="#ecosystem-strip">ecosystem</a>.';
                 }
-                var objEco = q('.objectives-eco-hint');
-                if (objEco) {
-                    objEco.innerHTML = 'Official methodology, courses, and contacts – <a href="#ecosystem-strip">Ecosystem section below</a>.';
+                setText('#preflight-title', 'Before you copy (1 min)');
+                var preflightStrong = qa('.preflight-list li strong');
+                var preflightSpan = qa('.preflight-list li span');
+                var preflightStrongTexts = ['What is a prompt?', 'What is Prompt Anatomy?', 'How to use?'];
+                var preflightSpanTexts = [
+                    'A clear instruction for an AI tool: context + goal + constraints + format.',
+                    'A structure that makes outputs consistent and repeatable.',
+                    'Plan → Create → Check → Improve.'
+                ];
+                preflightStrong.forEach(function(n, i) { if (preflightStrongTexts[i]) n.textContent = preflightStrongTexts[i]; });
+                preflightSpan.forEach(function(n, i) { if (preflightSpanTexts[i]) n.textContent = preflightSpanTexts[i]; });
+                var preflightLinks = qa('.preflight-list li a');
+                preflightLinks.forEach(function(a) {
+                    if (a.getAttribute('href') === '#framework-schema') a.textContent = 'Framework';
+                    else if (a.getAttribute('href') === '#prompt-basics') a.textContent = 'Full explanation';
+                });
+                var skipPreflight = q('#preflight .objectives-eco-hint a');
+                if (skipPreflight) skipPreflight.textContent = 'Skip → Prompt 1';
+                setText('#prompt-basics-summary', 'Prompt basics (1 min)');
+                var instrFaq = el('instructions-faq-hint');
+                if (instrFaq) {
+                    instrFaq.innerHTML = '<a href="#faq-beginner">Good for beginners?</a> · <a href="#faq-all-ten">Need all 10?</a> · <a href="#faq">All FAQ</a>';
                 }
+                var progJump = el('progressJump');
+                if (progJump) progJump.setAttribute('aria-label', 'Quick jump between prompts');
+                setText('#progressJumpSafety', 'Safety');
+                setText('#progressJumpFaq', 'FAQ');
+                setText('#stickyPromptBarCopyText', 'Copy');
+                setLabel('#stickyPromptBarCopy', 'Copy current prompt');
+                setText('#stickyPromptBarNext', 'Next →');
                 var instrTitle = el('instructions-title');
                 if (instrTitle) {
                     var spanNote = instrTitle.querySelector('.prompt-time');
@@ -2751,11 +2816,10 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     promptExpl[1].textContent = 'The clearer the prompt, the fewer fixes you need after the first answer.';
                 }
                 setText('#what-is-prompt .mini-formula', 'Context + Goal + Constraints + Format');
-                setText('#meme-slot-1 .meme-lesson-title', 'Error 1: Not enough context');
-                setText('#meme-slot-1 .meme-lesson-lead', 'Vague input creates vague output.');
                 var meme1img = document.querySelector('#meme-slot-1 img');
-                if (meme1img) meme1img.setAttribute('alt', 'Vague prompt – vague output');
-
+                if (meme1img) meme1img.setAttribute('alt', 'More AI tools do not fix chaotic instructions');
+                var meme2img = document.querySelector('#meme-slot-2 img');
+                if (meme2img) meme2img.setAttribute('alt', 'Random prompting is gambling; structured prompting is engineering');
                 setText('#prompt-anatomy-title', 'What is Prompt Anatomy?');
                 var anatomyP = qa('#prompt-anatomy p');
                 if (anatomyP.length >= 1) {
@@ -2771,11 +2835,6 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     'Evaluation: how to judge response quality.'
                 ];
                 anatomyLi.forEach(function(item, i) { if (anatomyTexts[i]) item.textContent = anatomyTexts[i]; });
-                setText('#meme-slot-2 .meme-lesson-title', 'Error 2: Instructions too generic');
-                setText('#meme-slot-2 .meme-lesson-lead', 'Without fields and format, output stays random.');
-                var meme2img = document.querySelector('#meme-slot-2 img');
-                if (meme2img) meme2img.setAttribute('alt', 'Chaotic request vs clear prompt structure');
-
                 setText('#framework-schema-title', 'Framework: how to work with this library');
                 var schemaLi = qa('#framework-schema .schema-steps li');
                 var schemaTexts = [
@@ -2870,10 +2929,8 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 if (faqEco) {
                     faqEco.innerHTML = 'For full methodology and executive context, use the <a href="#ecosystem-strip">ecosystem section</a> – all links in one place.';
                 }
-                setText('#meme-slot-3 .meme-lesson-title', 'Error 3: Blaming the tool');
-                setText('#meme-slot-3 .meme-lesson-lead', 'The issue is usually the instruction, not the AI.');
-                var meme3img = document.querySelector('#meme-slot-3 img');
-                if (meme3img) meme3img.setAttribute('alt', 'The issue is the instruction, not the AI');
+                var meme6img = document.querySelector('#meme-slot-6 img');
+                if (meme6img) meme6img.setAttribute('alt', 'The issue is the instruction, not the AI');
 
                 var commTitle = el('community-title');
                 if (commTitle) commTitle.innerHTML = 'Want more?<br>Join our US-focused Telegram group.';
@@ -3395,6 +3452,84 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 applyStaticLocaleText();
                 renderEditHints();
                 renderPromptTags();
+
+                (function initStickyPromptBar() {
+                    var bar = document.getElementById('stickyPromptBar');
+                    var label = document.getElementById('stickyPromptBarLabel');
+                    var copyBtn = document.getElementById('stickyPromptBarCopy');
+                    var nextLink = document.getElementById('stickyPromptBarNext');
+                    var firstBlock = document.getElementById('block1');
+                    if (!bar || !copyBtn || !firstBlock) return;
+
+                    var currentPromptId = 'prompt1';
+                    var promptBlocks = [];
+                    document.querySelectorAll('article.prompt .code-block[id^="block"]').forEach(function(cb) {
+                        var pre = cb.querySelector('pre');
+                        if (pre && pre.id) {
+                            promptBlocks.push({ blockId: cb.id, promptId: pre.id });
+                        }
+                    });
+
+                    function isMobile() {
+                        return window.matchMedia('(max-width: 768px)').matches;
+                    }
+
+                    function setBarVisible(visible) {
+                        bar.hidden = !visible;
+                        document.body.classList.toggle('sticky-bar-visible', visible);
+                    }
+
+                    function updateNextHref(promptId) {
+                        if (!nextLink || !promptBlocks.length) return;
+                        var idx = promptBlocks.findIndex(function(p) { return p.promptId === promptId; });
+                        if (idx < 0) idx = 0;
+                        var next = promptBlocks[Math.min(idx + 1, promptBlocks.length - 1)];
+                        nextLink.href = '#' + next.blockId;
+                        nextLink.textContent = idx >= promptBlocks.length - 1
+                            ? uiText('Baigta', 'Done')
+                            : uiText('Kitas →', 'Next →');
+                    }
+
+                    function syncBarForPrompt(promptId) {
+                        currentPromptId = promptId;
+                        var art = document.getElementById(promptId);
+                        if (art) art = art.closest('article.prompt');
+                        var titleEl = art && art.querySelector('.prompt-title');
+                        if (label && titleEl) label.textContent = titleEl.textContent;
+                        updateNextHref(promptId);
+                    }
+
+                    var blockObs = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (!entry.isIntersecting) return;
+                            var pre = entry.target.querySelector('pre');
+                            if (pre && pre.id) syncBarForPrompt(pre.id);
+                        });
+                    }, { root: null, rootMargin: '-40% 0px -45% 0px', threshold: 0 });
+
+                    promptBlocks.forEach(function(p) {
+                        var el = document.getElementById(p.blockId);
+                        if (el) blockObs.observe(el);
+                    });
+
+                    var passedFirst = false;
+                    var firstObs = new IntersectionObserver(function(entries) {
+                        passedFirst = entries.some(function(e) { return !e.isIntersecting && e.boundingClientRect.top < 0; });
+                        setBarVisible(isMobile() && passedFirst);
+                    }, { threshold: [0, 1] });
+                    firstObs.observe(firstBlock);
+
+                    window.addEventListener('resize', function() {
+                        setBarVisible(isMobile() && passedFirst);
+                    }, { passive: true });
+
+                    copyBtn.addEventListener('click', function() {
+                        var btn = document.querySelector('.prompt-footer .btn[data-prompt-id="' + currentPromptId + '"]');
+                        if (btn) btn.click();
+                    });
+
+                    syncBarForPrompt('prompt1');
+                })();
 
                 // Kalbos perjungiklis: active būsena ir paspaudimai
                 var langLtBtn = document.getElementById('langLtBtn');

@@ -1,0 +1,12 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "header", "key": "accept-language", "value": ".*lt.*" }],
+      "destination": "/lt/",
+      "permanent": false
+    },
+    { "source": "/", "destination": "/en/", "permanent": false },
+    { "source": "/index.html", "destination": "/en/", "permanent": false }
+  ]
+}
