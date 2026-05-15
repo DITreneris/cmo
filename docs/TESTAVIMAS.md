@@ -11,9 +11,12 @@ Po kiekvieno deploy atlikti gyvą testavimą ir rezultatus įrašyti čia (arba 
 
 | Laukas | Reikšmė |
 |--------|--------|
-| Production URL | https://ditreneris.github.io/cmo/ |
+| Primary URL | https://promptanatomy.space/ (Vercel) |
+| Mirror URL | https://ditreneris.github.io/cmo/ (GitHub Pages) |
 | Naršyklė(ės) | Chrome, Firefox, Safari, Edge |
 | Mobilus | iOS Safari / Chrome Mobile (pasirinktinai) |
+
+Po deploy testuoti **abu** taikinius (bent svarbiausius scenarijus primary; mirror – greitas smoke).
 
 ---
 
@@ -21,16 +24,19 @@ Po kiekvieno deploy atlikti gyvą testavimą ir rezultatus įrašyti čia (arba 
 
 ### Funkcionalumas
 
-- [ ] **Kopijavimas:** Visi 10 promptų – pasirinkti → „Kopijuoti promptą“ → įklijuoti į DI (pvz. ChatGPT) – tekstas teisingas.
-- [ ] **Progresas:** „Pažymėjau kaip atlikau“ – varnelė įrašoma; perkrovus puslapį – progresas išsaugotas (localStorage).
-- [ ] **Skip link:** Tab iki „Praleisti į turinį“ – Enter – fokusas pereina į pagrindinį turinį.
+- [ ] **Kopijavimas:** Visi 10 promptų – pasirinkti → „Kopijuoti promptą" → įklijuoti į DI (pvz. ChatGPT) – tekstas teisingas; **CMO v2 kontekstas + taisyklės prepend'inamos** (jei užpildyta).
+- [ ] **CMO kontekstas:** Užpildyti `#cmo-context` laukus → kopijuoti promptą → įklijuotas tekstas turi konteksto bloką ir „TAISYKLĖS (privalomos)" / „RULES (non-negotiable)".
+- [ ] **Scenarijai:** `#cmo-scenarios` skirtukai veikia (klaviatūra: rodyklės); kopijavimas iš scenarijaus į clipboard.
+- [ ] **Safety blokas:** `#cmo-safety` recenzento promptas kopijuojasi.
+- [ ] **Progresas:** „Pažymėjau kaip atlikau" – varnelė įrašoma; perkrovus puslapį – progresas išsaugotas (localStorage).
+- [ ] **Skip link:** Tab iki „Praleisti į turinį" – Enter – fokusas pereina į pagrindinį turinį.
 - [ ] **Privatumas:** Veikia `lt/privatumas.html` ir `en/privacy.html`; rodomos teisingos canonical/hreflang žymos.
 
 ### Prieinamumas (a11y)
 
 - [ ] **Klaviatūra:** Navigacija Tab, Enter, Esc – veikia be įstrigimo.
 - [ ] **Focus:** Matomas focus (pvz. focus-visible) ant mygtukų ir nuorodų.
-- [ ] **Pa11y:** CI jau bėga; pasirinktinai lokaliai: `npx pa11y <production-url>/ --standard WCAG2AA --ignore "warning"`.
+- [ ] **Pa11y:** CI jau bėga į `/lt/`, `/en/`, `/lt/privatumas.html`, `/en/privacy.html`. Lokaliai: `npx pa11y http://localhost:3000/lt/ --standard WCAG2AA --ignore "warning"` (ir `/en/`).
 
 ### Responsive / naršyklės
 
@@ -39,10 +45,10 @@ Po kiekvieno deploy atlikti gyvą testavimą ir rezultatus įrašyti čia (arba 
 
 ### Turinio / bullet-proof (META, INPUT, OUTPUT)
 
-- [ ] **Struktūra:** Kiekvienas iš 8 promptų turi aiškius META, INPUT, OUTPUT blokus (kopijuojamas tekstas).
-- [ ] **Copyable:** Į darbinių atmintinę kopijuojamas tik META+INPUT+OUTPUT; instrukcijos (Naudok kai, Pakeisk prieš naudodamas, Ką daryti) rodomos atskirame bloke „Prieš naudojant“ ir nekopijuojamos.
-- [ ] **Instrukcijos:** „Kaip naudoti“ ir footer aiškina: [ĮMONĖ]/[MANO ROLĖ] keisti; DI rolės keisti nereikia.
-- [ ] **Turinio patikra:** Nukopijuoti 1–2 promptus, įklijuoti – įklijuotas tekstas tik META+INPUT+OUTPUT (žr. [BULLET_PROOF_PROMPTS.md](BULLET_PROOF_PROMPTS.md)).
+- [ ] **Struktūra:** Kiekvienas iš **10** promptų turi aiškius META, INPUT, OUTPUT blokus (kopijuojamas tekstas).
+- [ ] **Copyable:** Į darbinių atmintinę kopijuojamas META+INPUT+OUTPUT su CMO v2 prepend (kontekstas + taisyklės, jei aktyvūs); info-box ir „Tikėtinas atsakymas" sekcijos rodomos atskirai ir nekopijuojamos.
+- [ ] **Tikėtinas atsakymas:** Po kiekvienu promptu matosi `.prompt-expected` su ≥2 bullet'ais.
+- [ ] **Turinio patikra:** Nukopijuoti 1–2 promptus, įklijuoti – įklijuotas tekstas turi tinkamą formatą (žr. [BULLET_PROOF_PROMPTS.md](BULLET_PROOF_PROMPTS.md)).
 
 ### Kiti
 
@@ -73,10 +79,10 @@ Po kiekvieno deploy atlikti gyvą testavimą ir rezultatus įrašyti čia (arba 
 ## 2026-02-18 – pirmas deploy
 
 - **Testeris:** QA
-- **URL:** https://ditreneris.github.io/cmo/
+- **URL:** https://promptanatomy.space/ (primary), https://ditreneris.github.io/cmo/ (mirror)
 - **Naršyklė:** Chrome (desktop)
-- **Rezultatas:** ✅ Kopijavimas, progresas, skip link, privatumas – OK. Console be klaidų.
-- **Pastabos:** A11y tikrinta per CI (pa11y). Mobilus – planuojama kitame cikle.
+- **Rezultatas:** ✅ Kopijavimas, CMO kontekstas, progresas, skip link, privatumas – OK. Console be klaidų.
+- **Pastabos:** A11y tikrinta per CI (pa11y į /lt/, /en/, privacy). Mobilus – planuojama kitame cikle.
 ```
 
 ---
@@ -87,4 +93,4 @@ Po kiekvieno deploy atlikti gyvą testavimą ir rezultatus įrašyti čia (arba 
 - [QA_STANDARTAS.md](QA_STANDARTAS.md) – QA kriterijai ir nuoroda į spinoff01  
 - [DEPLOYMENT.md](../DEPLOYMENT.md) – kaip deploy ir kad po deploy būtų testuojama gyvai  
 
-**Paskutinis atnaujinimas:** 2026-02-18
+**Paskutinis atnaujinimas:** 2026-05-15

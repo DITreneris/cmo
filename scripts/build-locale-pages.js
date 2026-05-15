@@ -1123,12 +1123,8 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
   ['Promptas yra aiški instrukcija DI įrankiui: ką daryti, kam daryti ir kokiu formatu grąžinti rezultatą.', 'A prompt is a clear instruction to an AI tool: what to do, for whom, and in which format.'],
   ['Kuo promptas tikslesnis, tuo mažiau taisymų po pirmo atsakymo.', 'The clearer the prompt, the fewer fixes you need after the first answer.'],
   ['Kontekstas + Tikslas + Ribos + Formatas', 'Context + Goal + Constraints + Format'],
-  ['aria-label="Meme vieta 1"', 'aria-label="Meme slot 1"'],
-  ['Meme vieta #1: Kai parašai vieną neaiškų sakinį ir tikiesi tobulo plano.', 'Meme slot #1: When you write one vague sentence and expect a perfect plan.'],
-  [
-    '<figcaption class="meme-caption">Meme #1 — kai parašai vieną neaiškų sakinį ir tikiesi tobulo plano.</figcaption>',
-    '<figcaption class="meme-caption">Meme #1 — when you write one vague sentence and expect a perfect plan.</figcaption>'
-  ],
+  ['Klaida 1: per mažai konteksto', 'Error 1: Not enough context'],
+  ['Neaiškus įvedimas sukuria neaiškų rezultatą.', 'Vague input creates vague output.'],
   ['Kas yra Prompt Anatomy?', 'What is Prompt Anatomy?'],
   ['Prompt Anatomy yra struktūra, kuri padeda rašyti promptus taip, kad rezultatas būtų nuoseklus ir pakartojamas.', 'Prompt Anatomy is a structure that helps you write prompts with consistent and repeatable results.'],
   // Definitions (tiny GEO/AI module)
@@ -1151,40 +1147,31 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
   ['Ribos: tonas, ilgis, kas neleidžiama.', 'Constraints: tone, length, what is not allowed.'],
   ['Formatas: kaip turi atrodyti atsakymas.', 'Format: how the response must look.'],
   ['Vertinimas: pagal ką spręsti ar atsakymas geras.', 'Evaluation: how to judge response quality.'],
-  ['aria-label="Meme vieta 2"', 'aria-label="Meme slot 2"'],
-  [
-    'Meme vieta #2: Kai iš „parašyk kažką“ pereini į aiškią struktūrą ir rezultatas pagaliau normalus.',
-    'Meme slot #2: When you move from "write something" to a clear structure and the output is finally solid.'
-  ],
-  [
-    '<figcaption class="meme-caption">Meme #2 — kai iš „parašyk kažką“ pereini į aiškią struktūrą ir rezultatas pagaliau normalus.</figcaption>',
-    '<figcaption class="meme-caption">Meme #2 — when you move from “write something” to a clear structure and the output is finally solid.</figcaption>'
-  ],
+  ['Klaida 2: per bendras instrukcijas', 'Error 2: Instructions too generic'],
+  ['Be laukų ir formato rezultatas lieka atsitiktinis.', 'Without fields and format, output stays random.'],
   ['Schema: kaip dirbti su šia biblioteka', 'Framework: how to work with this library'],
   ['Planuok: pasirink vieną tikslą ir vieną auditoriją.', 'Plan: choose one goal and one audience.'],
   ['Kurk: paleisk promptą su savo duomenimis.', 'Create: run the prompt with your real data.'],
   ['Tikrink: įvertink rezultatą pagal matavimo rodiklius.', 'Check: evaluate output by your metrics.'],
   ['Tobulink: pakoreguok promptą ir kartok ciklą.', 'Improve: refine the prompt and repeat the cycle.'],
   [
-    'alt="Meme apie neaiškų promptą ir netikslų rezultatą"',
-    'alt="Meme: a vague one-line prompt and a messy AI result"'
+    'alt="Neaiškus promptas – neaiškus rezultatas"',
+    'alt="Vague prompt – vague output"'
   ],
   [
-    'alt="Meme apie perėjimą nuo chaoso prie aiškios promptų struktūros"',
-    'alt="Meme: from chaotic prompts to a clear structure that works"'
+    'alt="Chaotiškas prašymas vs aiški promptų struktūra"',
+    'alt="Chaotic request vs clear prompt structure"'
   ],
   [
-    'alt="Meme apie tai, kad problema buvo ne AI, o neaiški instrukcija"',
-    'alt="Meme: bad output came from vague instructions, not from AI"'
+    'alt="Problema ne DI, o neaiški instrukcija"',
+    'alt="The issue is the instruction, not the AI"'
   ],
   [
     '{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Ar tinka pradedančiajam?","acceptedAnswer":{"@type":"Answer","text":"Taip, jei pildai laukus savo situacija, ne bendrais žodžiais."}},{"@type":"Question","name":"Ar būtina naudoti visus 10?","acceptedAnswer":{"@type":"Answer","text":"Ne, pradėk nuo 1–3 ir plėskis pagal poreikį."}},{"@type":"Question","name":"Kuo tai geriau nei random promptas?","acceptedAnswer":{"@type":"Answer","text":"Čia turi nuoseklią seką, aiškų tikslą ir vertinimą."}},{"@type":"Question","name":"Kiek laiko skirti kasdien?","acceptedAnswer":{"@type":"Answer","text":"20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“."}},{"@type":"Question","name":"Ar tai kursas ar įrankis?","acceptedAnswer":{"@type":"Answer","text":"Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk)."}},{"@type":"Question","name":"Kam tai skirta?","acceptedAnswer":{"@type":"Answer","text":"CMO, rinkodaros vadovams, produktų/augimo komandoms ir vadovams, kuriems reikia greito, pakartojamo turinio ciklo."}},{"@type":"Question","name":"Kuo skiriasi nuo promptų šablonų?","acceptedAnswer":{"@type":"Answer","text":"Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą."}},{"@type":"Question","name":"Ar tinka B2B SaaS, paslaugoms ir e. komercijai?","acceptedAnswer":{"@type":"Answer","text":"Taip. Tiesiog pakeisk auditoriją, pasiūlymą, kanalus ir metrikas – struktūra išlieka ta pati."}}]}',
     '{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this for beginners?","acceptedAnswer":{"@type":"Answer","text":"Yes, if you fill placeholders with your real context."}},{"@type":"Question","name":"Do I need all 10 prompts?","acceptedAnswer":{"@type":"Answer","text":"No, start with 1–3 and expand when needed."}},{"@type":"Question","name":"Why is this better than random prompts?","acceptedAnswer":{"@type":"Answer","text":"You get a clear sequence, goal, and evaluation."}},{"@type":"Question","name":"How much time daily?","acceptedAnswer":{"@type":"Answer","text":"20–30 minutes is enough if you run Create → Check → Improve."}},{"@type":"Question","name":"Is this a course or a tool?","acceptedAnswer":{"@type":"Answer","text":"It’s an interactive prompt library + framework. You can use it immediately (copy → paste → run)."}},{"@type":"Question","name":"Who is this for?","acceptedAnswer":{"@type":"Answer","text":"CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence."}},{"@type":"Question","name":"How is this different from prompt templates?","acceptedAnswer":{"@type":"Answer","text":"You get a sequence, clear fields, evaluation, and a KPI loop — not a one-off output."}},{"@type":"Question","name":"Does this work for B2B SaaS, services, and ecommerce?","acceptedAnswer":{"@type":"Answer","text":"Yes. Swap the audience, offer, channels, and metrics — the structure stays the same."}}]}'
   ],
-  [
-    '<figcaption class="meme-caption">Meme #3 — kai supranti, kad problema buvo ne DI, o neaiški instrukcija.</figcaption>',
-    '<figcaption class="meme-caption">Meme #3 — when you realize the issue wasn’t AI, it was the vague instruction.</figcaption>'
-  ],
+  ['Klaida 3: kaltiname įrankį', 'Error 3: Blaming the tool'],
+  ['Problema dažnai ne DI, o neaiški instrukcija.', 'The issue is usually the instruction, not the AI.'],
   // Progress
   ['Panaudojai 0 iš 10 promptų', 'You used 0 of 10 prompts'],
   ['aria-label="Progresas: 0 iš 10 promptų"', 'aria-label="Progress: 0 of 10 prompts"'],
@@ -1365,11 +1352,6 @@ const EN_REPLACEMENTS_SUFFIX = [
   [
     '<p class="faq-eco-hint">Pilnai metodikai ir vadovų kontekstui naudok <a href="#ecosystem-strip">ekosistemos skiltį</a> – ten suvestos nuorodos.</p>',
     '<p class="faq-eco-hint">For full methodology and executive context, use the <a href="#ecosystem-strip">ecosystem section</a> – all links in one place.</p>'
-  ],
-  ['aria-label="Meme vieta 3"', 'aria-label="Meme slot 3"'],
-  [
-    'Meme vieta #3: Kai supranti, kad problema buvo ne DI, o neaiški instrukcija.',
-    'Meme slot #3: When you realize AI was not the issue, the vague instruction was.'
   ],
   // Community
   ['<h2 id="community-title">Nori daugiau?<br>Prisijunk prie Telegram grupės.</h2>', '<h2 id="community-title">Want more?<br>Join our US-focused Telegram group.</h2>'],

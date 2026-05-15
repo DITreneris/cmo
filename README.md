@@ -9,12 +9,13 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 ### Funkcijos
 
 - **10 promptų** (Pradžia, Įgūdžiai, Plėtra, Viskas kartu) – kopijuoti į ChatGPT, Claude ar kitą DI įrankį
-- **Upgrade sluoksnis prieš promptus** – aiškinimas „Kas yra prompt?“, „Kas yra Prompt Anatomy?“ ir darbo schema
-- **FAQ + meme slotai** – numatytos vietos greitam aiškumui ir lengvam dėmesio atstatymui
-- **Interaktyvus dizainas** – oranžinė paletė, aiškūs mygtukai, progresas (0/10)
-- **Kopijavimas** – pasirink promptą, spausk „Kopijuoti promptą“, įklijuok ir pakeisk laukus
+- **Upgrade sluoksnis prieš promptus** – aiškinimas „Kas yra prompt?", „Kas yra Prompt Anatomy?" ir darbo schema
+- **CMO v2 kontekstas + scenarijai + safety** – paspaudus „Kopijuoti promptą", kontekstas (auditorija, USP, kanalai, tikslas, apribojimas) ir privalomos taisyklės automatiškai prepend'inamos prie prompto teksto
+- **FAQ + meme slotai** – greitas aiškumas ir lengvas dėmesio atstatymas
+- **Interaktyvus dizainas** – premium paletė, aiškūs mygtukai, progresas (0/10)
+- **Kopijavimas** – pasirink promptą, spausk „Kopijuoti promptą", įklijuok ir pakeisk laukus
 - **Responsive** – veikia desktop ir mobiliai (Mobile UI First)
-- **Be duomenų rinkimo** – kontaktų formos nėra; „Pažymėjau kaip atlikau“ saugoma tik tavo įrenginyje (localStorage)
+- **Be duomenų rinkimo** – kontaktų formos nėra; „Pažymėjau kaip atlikau" saugoma tik tavo įrenginyje (localStorage), kontekstas – sessionStorage
 
 ## Promptų sąrašas
 
@@ -24,24 +25,26 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 4. **Sukurti video – lengviau dar nebuvo!** – 30 s scenarijus: įžanginis kabliukas, 3 punktai, pavyzdys, raginimas veikti
 5. **Kasdienė analizė (Veikla→Sprendimas)** – iš rodiklių suprask: kas neveikia, kodėl, ką daryti
 6. **Prieštaravimų apdorojimo įrankis** – 10 turinio vienetų iš klientų prieštaravimų
-7. **Lead generator postas + DM seka** – postas + 4 žinučių seka (pristatyti → kvalifikacija → vertė → pasiūlymas)
-8. **Kliento istorijos struktūra** – problema, sprendimas, procesas, rezultatas, pagrindinės mintys, raginimas veikti
-9. **Temų grupė** – 1 pagrindinė tema + 8 subtemos, vidinės nuorodos, raginimas veikti
-10. **Pagrindinis promptas (valdymo centras)** – 30 d. struktūra, 5 turinio vienetai, vienos idėjos daug formatų, hipotezės, veiksmai
+7. **Lead generator postas + DM seka** – postas + 4 žinučių seka
+8. **Kliento istorijos struktūra** – problema, sprendimas, procesas, rezultatas, raginimas veikti
+9. **Temų grupė** – 1 pagrindinė tema + 8 subtemos, vidinės nuorodos
+10. **Pagrindinis promptas (valdymo centras)** – 30 d. struktūra, 5 turinio vienetai, hipotezės, veiksmai
 
 ## Kaip naudoti
 
-1. Atidarykite [index.html](index.html) naršyklėje arba gyvą svetainę: [ditreneris.github.io/cmo](https://ditreneris.github.io/cmo/)
-2. Pasirinkite promptą ir spauskite ant jo – tekstas pažymėsis
-3. Spauskite **„Kopijuoti promptą“** arba `Ctrl+C` / `Cmd+C`
-4. Įklijuokite į ChatGPT, Claude ar kitą DI (dirbtinio intelekto) įrankį
-5. Pakeiskite `[auditorija]`, `[galvos skausmas]`, `[unikalus pardavimo pasiūlymas]`, `[kanalas]` ir kitus laukus savo duomenimis
+1. Atidaryk [primary URL](https://promptanatomy.space/lt/) arba [mirror URL](https://ditreneris.github.io/cmo/lt/)
+2. (Pasirenkama) Užpildyk **kontekstą** viršuje (auditorija, USP, kanalai, tikslas, apribojimas) – jis išliks tik šioje sesijoje
+3. Pasirink promptą ir spausk ant jo – tekstas pažymėsis
+4. Spausk **„Kopijuoti promptą"** arba `Ctrl+C` / `Cmd+C` (kontekstas ir taisyklės automatiškai prepend'inamos)
+5. Įklijuok į ChatGPT, Claude ar kitą DI įrankį
+6. Pakeisk likusius placeholder'ius (jei yra) savo duomenimis
 
 ## Technologijos
 
 - **HTML5** – semantinė struktūra, prieinamumas (skip link, ARIA, progress)
-- **CSS3** – kintamieji, responsive, oranžinė paletė (žr. [STYLEGUIDE.md](STYLEGUIDE.md))
-- **Vanilla JavaScript** – kopijavimas, progresas (localStorage), be frameworkų
+- **CSS3** – kintamieji ([styles/tokens.css](styles/tokens.css), [styles/design-tokens.json](styles/design-tokens.json)), responsive, premium paletė (žr. [STYLEGUIDE.md](STYLEGUIDE.md))
+- **Vanilla JavaScript** – kopijavimas, progresas (localStorage), CMO v2 kontekstas (sessionStorage), be frameworkų
+- **Build:** Node.js skriptai ([scripts/build-locale-pages.js](scripts/build-locale-pages.js), [scripts/generate-og.js](scripts/generate-og.js), [scripts/vercel-export-public.js](scripts/vercel-export-public.js))
 - **Google Fonts** – Inter, JetBrains Mono
 
 ## Struktūra
@@ -50,57 +53,75 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 
 ```
 .
-├── index.html              # LT šaltinis: hero, upgrade sluoksnis, 10 promptų, CMO kontekstas
-├── privatumas.html         # Legacy LT privatumas (root); kanonas – lt/privatumas.html
-├── README.md               # Ši dokumentacija
-├── AGENTS.md               # Agentų rolės ir workflow
-├── CHANGELOG.md            # Versijų istorija (Keep a Changelog)
-├── og.png                  # OG/Twitter preview (1200×630); šaltinis scripts/generate-og.js
-├── STYLEGUIDE.md           # Spalvos, komponentai, tipografija
-├── DEPLOYMENT.md           # Deploy į GitHub Pages (cmo)
-├── package.json            # npm test, lint:html, lint:js
-├── .cursorrules            # Cursor: saugumas, kokybė, dokumentacija
-├── .pa11yrc.json           # A11y (pa11y) – Chrome launch args CI
+├── index.html                # LT bazė: hero, upgrade sluoksnis, 10 promptų, CMO konteksto/scenarijų jokio – inject build metu
+├── privatumas.html           # Legacy LT privatumas (root, backward compat); kanonas – lt/privatumas.html
+├── lt/                       # Generuojama: lt/index.html, lt/privatumas.html (su CMO v2)
+├── en/                       # Generuojama: en/index.html, en/privacy.html (su CMO v2)
+├── data/                     # JSON šaltiniai build'ui
+│   ├── en-prompt-bodies.json     # 10 EN META eilučių
+│   ├── en-prompt-expected.json   # „Expected output" EN
+│   ├── lt-prompt-expected.json   # „Tikėtinas atsakymas" LT
+│   ├── en-scenarios.json         # CMO „Clarity practice" scenarijai EN
+│   ├── lt-scenarios.json         # CMO scenarijai LT
+│   └── *.png                     # 3 meme slot paveikslai
 ├── scripts/
-│   ├── build-locale-pages.js   # Generuoja lt/, en/, js/en-prompt-bodies-inline.js
-│   └── generate-og.js          # OG paveikslas (SVG → PNG); kviečia `npm run build`
+│   ├── build-locale-pages.js     # Generuoja lt/, en/ + inject CMO v2 + EN_REPLACEMENTS
+│   ├── generate-og.js            # OG paveikslas (SVG → PNG, 1200×630)
+│   └── vercel-export-public.js   # Vercel statinio output į public/ + analytics
+├── styles/
+│   ├── design-tokens.json
+│   ├── tokens.css
+│   ├── components.css
+│   └── utilities.css
+├── js/
+│   └── en-prompt-bodies-inline.js  # Generuojama iš data/en-prompt-bodies.json
+├── public/                   # Vercel deploy artefaktas (gitignored, generuojamas)
+├── tests/
+│   ├── structure.test.js         # 96+ struktūriniai teiginiai (įsk. CMO v2)
+│   ├── design-system-smoke.test.js
+│   └── a11y-smoke.test.js
 ├── docs/
-│   ├── INDEX.md            # Navigacija pagal rolę ir užduotį
-│   ├── DOCUMENTATION.md    # Dokumentų inventorius ir atsakomybės
-│   ├── LEGACY_GOLDEN_STANDARD.md   # Golden standard (struktūra, ID, JS)
-│   ├── MULTILINGUAL_STRUCTURE.md   # LT/EN keliai ir build
-│   ├── BULLET_PROOF_PROMPTS.md     # Promptų šablonas
+│   ├── INDEX.md              # Navigacija pagal rolę ir užduotį
+│   ├── DOCUMENTATION.md      # Dokumentų inventorius
+│   ├── LEGACY_GOLDEN_STANDARD.md  # Golden standard (struktūra, ID, JS, CMO v2)
+│   ├── MULTILINGUAL_STRUCTURE.md  # LT/EN keliai ir build
+│   ├── BULLET_PROOF_PROMPTS.md    # Promptų šablonas
 │   ├── PEDAGOGINES_SPECIFIKACIJA.md
-│   ├── QA_STANDARTAS.md    # QA (spinoff01)
-│   └── TESTAVIMAS.md       # Gyvo testavimo žurnalas
+│   ├── QA_STANDARTAS.md      # QA (spinoff01)
+│   └── TESTAVIMAS.md         # Gyvo testavimo žurnalas
 ├── .github/workflows/
-│   ├── ci.yml              # npm test + pa11y (/lt/, /en/, privacy)
-│   └── deploy.yml          # GitHub Pages
-└── tests/
-    ├── structure.test.js
-    ├── design-system-smoke.test.js
-    └── a11y-smoke.test.js
+│   ├── ci.yml                # npm test + pa11y (/lt/, /en/, privacy)
+│   └── deploy.yml            # GitHub Pages mirror
+├── README.md, AGENTS.md, CHANGELOG.md, DEPLOYMENT.md, STYLEGUIDE.md
+├── .cursorrules              # Cursor: kokybė, a11y, docs, commit
+├── .pa11yrc.json, .htmlvalidate.json, .eslintrc.json, .nojekyll
+├── og.png, favicon.svg
+├── robots.txt, sitemap.xml
+└── package.json              # npm test, lint:html, lint:js, build
 ```
 
 ## Privatumas
 
-- **Minimali aplikacija:** šiuo metu **nerinkime jokių asmens duomenų**. Visas naudojimas vyksta tik tavo įrenginyje (kopijavimas, „Pažymėjau kaip atlikau“ – localStorage).
-- **Privatumo politika:** LT [lt/privatumas.html](lt/privatumas.html), EN [en/privacy.html](en/privacy.html) – aprašymas, kad duomenų nerinkime; jei vėliau bus įjungta kontaktų forma, bus atnaujinta.
+- **Minimali aplikacija:** **nerinkime jokių asmens duomenų**. Visas naudojimas vyksta tik tavo įrenginyje (kopijavimas, „Pažymėjau kaip atlikau" – localStorage; CMO kontekstas – sessionStorage).
+- **Privatumo politika:** LT [lt/privatumas.html](lt/privatumas.html), EN [en/privacy.html](en/privacy.html).
 
 ## Deployment ir gyvas testavimas
 
-- **Deploy:** GitHub Pages per [.github/workflows/deploy.yml](.github/workflows/deploy.yml). Instrukcijos: [DEPLOYMENT.md](DEPLOYMENT.md).
-- **Production URL:** https://ditreneris.github.io/cmo/ (deploy tik į repo **cmo**, žr. [DEPLOYMENT.md](DEPLOYMENT.md))
+- **Primary URL:** [promptanatomy.space](https://promptanatomy.space) (Vercel, default `BASE_PATH=''`).
+- **Mirror URL:** [ditreneris.github.io/cmo](https://ditreneris.github.io/cmo/) (GitHub Pages backup, `BASE_PATH=/cmo`).
+- **Deploy:** Vercel auto-deploy iš `main`; GitHub Pages per [.github/workflows/deploy.yml](.github/workflows/deploy.yml). Instrukcijos: [DEPLOYMENT.md](DEPLOYMENT.md).
 - **QA standartas:** [DITreneris/spinoff01](https://github.com/DITreneris/spinoff01). Projektas laikosi [docs/QA_STANDARTAS.md](docs/QA_STANDARTAS.md); po deploy – gyvas testavimas pagal [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md).
 
 ## Reikalavimai
 
-- **Naudojimui:** Nėra būtinų priklausomybių – atidarykite index.html arba [ditreneris.github.io/cmo](https://ditreneris.github.io/cmo/)
-- **Development/CI:** `npm install`, `npm test` (build + `tests/structure` + `tests/design-system-smoke` + `tests/a11y-smoke` + `lint:html` + `lint:js`). A11y lokaliai: `npx serve -s . -l 3000` ir `npx pa11y http://localhost:3000/lt/ --standard WCAG2AA`.
-
-## Kontaktų rinkimas (vėlesniems etapams)
-
-Dabartinė versija minimali – kontaktų formos nėra. Jei vėliau reikės rinkti atsiliepimus, integracijos instrukcijos saugomos repozitorijoje (vėlesniems etapams).
+- **Naudojimui:** Nėra būtinų priklausomybių – atidaryk primary arba mirror URL.
+- **Development/CI:**
+  ```bash
+  npm install
+  npm test            # build + tests + lint
+  npm run build       # tik build (generate-og + locale + public)
+  ```
+- **A11y lokaliai:** `npx serve -s . -l 3000` ir `npx pa11y http://localhost:3000/lt/ --standard WCAG2AA`.
 
 ## Licencija
 
