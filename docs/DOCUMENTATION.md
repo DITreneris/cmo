@@ -58,7 +58,7 @@
 | [data/en-prompt-bodies.json](../data/en-prompt-bodies.json) | 10 EN META eilučių (`<pre>` turiniui) | Content | Keičiant EN promptų tekstą |
 | [data/en-prompt-expected.json](../data/en-prompt-expected.json), [data/lt-prompt-expected.json](../data/lt-prompt-expected.json) | „Expected output“ bullet'ai kiekvienam promptui | Content / Curriculum | Pridedant / keičiant tikėtinus rezultatus |
 | [data/en-scenarios.json](../data/en-scenarios.json), [data/lt-scenarios.json](../data/lt-scenarios.json) | CMO v2 „Clarity practice“ scenarijų skirtukai | Content / Curriculum | Scenarijų pakeitimai |
-| [data/](../data/) `*.png` (3 meme paveikslai) | Meme slot 1–3 binariniai šaltiniai | UI/UX | Meme atnaujinimas |
+| [data/](../data/) `meme-*.(png\|webp)` (6 meme paveikslai) | Meme slot 1–6 binariniai šaltiniai | UI/UX | Meme atnaujinimas |
 | [styles/design-tokens.json](../styles/design-tokens.json) | Dizaino tokenų vienas šaltinis | UI/UX + QA | Keičiant semantinius tokenus |
 | [styles/tokens.css](../styles/tokens.css), [styles/components.css](../styles/components.css), [styles/utilities.css](../styles/utilities.css) | CSS sluoksniai (tokenai, komponentai, utility) | UI/UX | Keičiant komponentų vizualiką ar būsenas |
 | [scripts/build-locale-pages.js](../scripts/build-locale-pages.js) | Generuoja lt/en + inject CMO v2 blokus + EN_REPLACEMENTS | QA / Orchestrator | LT/EN replace sąrašas, BASE_PATH, canonical/hreflang, CMO v2 inject |

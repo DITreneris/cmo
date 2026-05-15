@@ -239,6 +239,8 @@ const EN_CONTEXT_BLOCK_HTML =
   '<section class="cmo-context" id="cmo-context" aria-labelledby="cmo-context-title">\n' +
   '            <h2 id="cmo-context-title" class="cmo-context-title">Marketing context (one block, every copy)</h2>\n' +
   '            <p class="cmo-context-intro">Optional: you can start with empty fields. If you fill once, these five values plus the rules below are auto-prepended every time you click <strong>Copy prompt</strong>. Stored only in this browser session.</p>\n' +
+  '            <details class="cmo-context-details" id="cmo-context-details">\n' +
+  '                <summary>Optional: marketing context (improves every copy)</summary>\n' +
   '            <div class="cmo-context-form" id="cmoContextForm">\n' +
   '                <fieldset class="cmo-context-fields">\n' +
   '                    <legend class="cmo-context-legend">Marketing context fields</legend>\n' +
@@ -276,6 +278,7 @@ const EN_CONTEXT_BLOCK_HTML =
   '                    <li>Output must be usable: sections, owner where relevant, next action with deadline.</li>\n' +
   '                </ul>\n' +
   '            </div>\n' +
+  '            </details>\n' +
   '        </section>\n\n' +
   '        <!-- PROMPT 1 -->';
 
@@ -293,11 +296,15 @@ function injectEnExpectedBullets(html) {
     const bullets = EN_PROMPT_EXPECTED[i - 1]
       .map((b) => '                        <li>' + escapeHtml(b) + '</li>')
       .join('\n');
+    const openAttr = i === 1 ? ' open' : '';
     const block =
-      '\n                <ul class="prompt-expected" id="expected' + i + '" aria-label="Expected output for prompt ' + i + '">\n' +
+      '\n                <details class="faq-item prompt-expected-details"' + openAttr + ' id="expected-details-' + i + '">\n' +
+      '                    <summary>Expected output</summary>\n' +
+      '                <ul class="prompt-expected" id="expected' + i + '" aria-label="Expected output for prompt ' + i + '">\n' +
       '                    <li class="prompt-expected-title">Expected output</li>\n' +
       bullets +
-      '\n                </ul>';
+      '\n                </ul>\n' +
+      '                </details>';
     const re = new RegExp(
       '(<pre class="code-text" id="prompt' + i + '">[\\s\\S]*?</div>)(\\s*</div>\\s*<div class="prompt-footer">)',
       ''
@@ -519,6 +526,10 @@ function buildScenarioStripSection(locale) {
     })
     .join('\n');
   return (
+    '        <details class="cmo-scenarios-details">\n' +
+    '            <summary class="cmo-scenarios-summary">' +
+    escapeHtml(labels.title) +
+    '</summary>\n' +
     '        <section class="cmo-scenarios" id="cmo-scenarios" aria-labelledby="cmo-scenarios-title">\n' +
     '            <h2 id="cmo-scenarios-title" class="cmo-scenarios-title">' +
     escapeHtml(labels.title) +
@@ -549,7 +560,8 @@ function buildScenarioStripSection(locale) {
     '</span>\n' +
     '                </button>\n' +
     '            </div>\n' +
-    '        </section>\n\n'
+    '        </section>\n' +
+    '        </details>\n\n'
   );
 }
 
@@ -557,6 +569,8 @@ function buildSafetySection(locale) {
   const reviewerText = locale === 'en' ? EN_SAFETY_REVIEWER_TEXT : LT_SAFETY_REVIEWER_TEXT;
   const copyLabel =
     locale === 'en' ? 'Copy reviewer prompt' : 'Kopijuoti recenzento promptą';
+  const reviewerSummary =
+    locale === 'en' ? 'Reviewer prompt (copy)' : 'Recenzento promptas (kopijuoti)';
   const title = locale === 'en' ? 'Pre-publish safety' : 'Tikrinti prieš publikuojant';
   const intro =
     locale === 'en'
@@ -579,6 +593,10 @@ function buildSafetySection(locale) {
     escapeHtml(intro) +
     '</p>\n' +
     '            <div class="cmo-safety-copy">\n' +
+    '                <details class="faq-item cmo-safety-reviewer-details">\n' +
+    '                    <summary>' +
+    escapeHtml(reviewerSummary) +
+    '</summary>\n' +
     '                <div class="code-block cmo-safety-pre-wrap" role="region" aria-label="' +
     escapeHtml(copyLabel) +
     '">\n' +
@@ -594,6 +612,7 @@ function buildSafetySection(locale) {
     escapeHtml(copyLabel) +
     '</span>\n' +
     '                </button>\n' +
+    '                </details>\n' +
     '            </div>\n' +
     '            <div class="cmo-safety-checks">\n' +
     '                <p class="cmo-safety-checks-title">' +
@@ -620,6 +639,8 @@ const LT_CONTEXT_BLOCK_HTML =
   '<section class="cmo-context" id="cmo-context" aria-labelledby="cmo-context-title">\n' +
   '            <h2 id="cmo-context-title" class="cmo-context-title">Rinkodaros kontekstas (vienas blokas, kiekvienam kopijavimui)</h2>\n' +
   '            <p class="cmo-context-intro">Neprivaloma: gali pradėti ir tuščiais laukais. Jei užpildai vieną kartą, penkios reikšmės ir taisyklės žemiau pridedamos kiekvieną kartą paspaudus <strong>Kopijuoti promptą</strong>. Saugojama tik šios naršyklės sesijoje.</p>\n' +
+  '            <details class="cmo-context-details" id="cmo-context-details">\n' +
+  '                <summary>Neprivaloma: rinkodaros kontekstas (pagerina kiekvieną kopijavimą)</summary>\n' +
   '            <div class="cmo-context-form" id="cmoContextForm">\n' +
   '                <fieldset class="cmo-context-fields">\n' +
   '                    <legend class="cmo-context-legend">Rinkodaros konteksto laukai</legend>\n' +
@@ -657,6 +678,7 @@ const LT_CONTEXT_BLOCK_HTML =
   '                    <li>Išvestis turi būti naudojama: skyriai, savininkas kur tinkama, kitas veiksmas su terminu.</li>\n' +
   '                </ul>\n' +
   '            </div>\n' +
+  '            </details>\n' +
   '        </section>\n\n' +
   '        <!-- PROMPT 1 -->';
 
@@ -674,15 +696,19 @@ function injectLtExpectedBullets(html) {
     const bullets = LT_PROMPT_EXPECTED[i - 1]
       .map((b) => '                        <li>' + escapeHtml(b) + '</li>')
       .join('\n');
+    const openAttr = i === 1 ? ' open' : '';
     const block =
-      '\n                <ul class="prompt-expected" id="expected' +
+      '\n                <details class="faq-item prompt-expected-details"' + openAttr + ' id="expected-details-' + i + '">\n' +
+      '                    <summary>Tikėtinas atsakymas</summary>\n' +
+      '                <ul class="prompt-expected" id="expected' +
       i +
       '" aria-label="Tikėtinas atsakymas promptui ' +
       i +
       '">\n' +
       '                    <li class="prompt-expected-title">Tikėtinas atsakymas</li>\n' +
       bullets +
-      '\n                </ul>';
+      '\n                </ul>\n' +
+      '                </details>';
     const re = new RegExp(
       '(<pre class="code-text" id="prompt' + i + '">[\\s\\S]*?</div>)(\\s*</div>\\s*<div class="prompt-footer">)',
       ''
@@ -1042,13 +1068,10 @@ const EN_REPLACEMENTS_PREFIX = [
     '<li class="trust-pill" id="heroTrustPill1"><span aria-hidden="true">🔒</span> No data collection</li>'
   ],
   [
-    '<li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">🧩</span> 10 promptų seka</li>',
-    '<li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">🧩</span> 10-step prompt sequence</li>'
+    '<li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">⏱</span> 10 promptų · ~45 min</li>',
+    '<li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">⏱</span> 10 prompts · ~45 min</li>'
   ],
-  [
-    '<li class="trust-pill" id="heroTrustPill3"><span aria-hidden="true">⏱</span> ~45 min rezultatas</li>',
-    '<li class="trust-pill" id="heroTrustPill3"><span aria-hidden="true">⏱</span> ~45 min outcome</li>'
-  ],
+  ['<summary id="heroDemoSummary">Išbandyk mini-promptą (10 s)</summary>', '<summary id="heroDemoSummary">Try mini-prompt (10 sec)</summary>'],
   ['<span class="prompt-recommended" id="prompt1Recommended">Pradėk nuo čia</span>', '<span class="prompt-recommended" id="prompt1Recommended">Start here</span>'],
   ['aria-label="Pradėti nuo pirmo prompto – pereiti prie bibliotekos"', 'aria-label="Start with prompt 1 – go to the library"'],
   ['Pradėti nuo 1-o prompto', 'Start with prompt 1'],
@@ -1067,35 +1090,38 @@ OUTPUT: 5 idėjos su kabliuku + CTA + KPI.</pre>`,
 INPUT: Audience [ ], goal [ ].
 OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
   ],
-  // Objectives
-  ['<span aria-hidden="true">🎯</span> Ką realiai gausi', '<span aria-hidden="true">🎯</span> What you get'],
-  ['Per 3/4 val. turėsi aiškią turinio sistemą, 100 turinio vienetų ir 30 d. planą', 'In 45 minutes, you get a clear content system, 100 content assets, and a 30-day plan'],
-  ['Generuosi turinį pagal 4 principus', 'Generate content with 4 proven pillars'],
-  ['Testuosi ir optimizuosi pagal aiškius matavimo rodiklius', 'Test and optimize with clear KPIs'],
-  ['Dirbsi uždaru ciklu: Planuok → Kurk → Platink → Matuok → Spręsk', 'Run a closed loop: Plan → Create → Distribute → Measure → Decide'],
-  ['<strong>Apibrėžimas CMO lygmeniui</strong>', '<strong>CMO-level definition</strong>'],
-  ['<p>Prompt Anatomy yra praktinė AI operacinė sistema komandai: mažiau spėjimų, daugiau kontrolės ir aiškus sprendimų ciklas.</p>', '<p>Prompt Anatomy is a practical AI operating system for teams: less guesswork, more control, and a clear decision loop.</p>'],
-  ['<strong>Kada naudoti</strong>', '<strong>When to use</strong>'],
-  ['<p>Naudok, kai reikia greičiau paleisti turinį, sumažinti komandų trintį ir išlaikyti vienodą kokybę per kanalus.</p>', '<p>Use it when you need faster content execution, less team friction, and consistent quality across channels.</p>'],
+  // Executive summary (value grid)
+  ['<span aria-hidden="true">🧭</span> Ką gauni ir kodėl tai veikia', '<span aria-hidden="true">🧭</span> What you get and why it works'],
   [
-    '<p class="objectives-eco-hint">Oficiali metodika, kursai ir kontaktai – <a href="#ecosystem-strip">skiltis „Ekosistema“ žemiau</a>.</p>',
-    '<p class="objectives-eco-hint">Official methodology, courses, and contacts – <a href="#ecosystem-strip">Ecosystem section below</a>.</p>'
+    '<p class="executive-summary-lead" id="objectives-title">Per ~45 min. – turinio sistema, 100 vienetų ir 30 d. planas rinkodaros vadovui.</p>',
+    '<p class="executive-summary-lead" id="objectives-title">In ~45 minutes – content system, 100 assets, and a 30-day plan for marketing leaders.</p>'
   ],
-  // Executive summary (GEO/AI block)
-  ['<span aria-hidden="true">🧭</span> Executive santrauka', '<span aria-hidden="true">🧭</span> Executive summary'],
-  ['<strong>Kas tai yra</strong>', '<strong>What this is</strong>'],
+  ['<h3 class="value-card-title">Kas tai yra</h3>', '<h3 class="value-card-title">What this is</h3>'],
   [
-    '<p><strong>Prompt Anatomy CMO rinkinys</strong> – struktūruota promptų sistema (framework + seka), skirta rinkodaros vadovams ir komandoms greičiau priimti turinio sprendimus.</p>',
-    '<p><strong>Prompt Anatomy CMO Kit</strong> is a structured prompting system (framework + sequence) for marketing leaders and teams to make faster content decisions.</p>'
+    '<p class="value-card-lead"><strong>Prompt Anatomy CMO rinkinys</strong> – struktūruota promptų seka ir framework greitesniems turinio sprendimams.</p>',
+    '<p class="value-card-lead"><strong>Prompt Anatomy CMO Kit</strong> – structured prompt sequence and framework for faster content decisions.</p>'
   ],
-  ['<strong>Kur panaudosi</strong>', '<strong>Use it for</strong>'],
-  ['30 d. turinio planas ir prioritetai', 'A 30-day content plan and priorities'],
-  ['1 idėja → 7 formatai (cross-channel nuoseklumas)', 'One idea → 7 formats (cross-channel consistency)'],
-  ['KPI ciklas: matuok → spręsk → tobulink', 'A KPI loop: measure → decide → improve'],
-  ['<strong>Kuo skiriasi</strong>', '<strong>How it differs</strong>'],
-  ['„Random promptai“ → chaosas ir nepastovi kokybė', 'Random prompts → chaos and inconsistent quality'],
-  ['„Prompt engineering tips“ → žinios, bet ne vykdymo ritmas', 'Prompt tips → knowledge, but no execution cadence'],
-  ['<strong>Prompt Anatomy seka</strong> → pakartojamas operacinis ciklas', '<strong>Prompt Anatomy sequence</strong> → repeatable operating cadence'],
+  ['<h3 class="value-card-title">Ką gausi</h3>', '<h3 class="value-card-title">What you get</h3>'],
+  [
+    '<p class="value-card-lead">30 d. planas, 1 idėja → 7 formatai, KPI ciklas: matuok → spręsk → tobulink.</p>',
+    '<p class="value-card-lead">30-day plan, one idea → 7 formats, KPI loop: measure → decide → improve.</p>'
+  ],
+  ['<h3 class="value-card-title">Kuo skiriasi</h3>', '<h3 class="value-card-title">How it differs</h3>'],
+  [
+    '<p class="value-card-lead">Ne atsitiktiniai promptai – pakartojamas operacinis ciklas su aiškiais laukais ir vertinimu.</p>',
+    '<p class="value-card-lead">Not random prompts – a repeatable operating cycle with clear fields and evaluation.</p>'
+  ],
+  ['<a href="#faq-beginner">Ar tinka pradedančiajam?</a>', '<a href="#faq-beginner">Good for beginners?</a>'],
+  ['<a href="#faq-all-ten">Ar būtina visi 10?</a>', '<a href="#faq-all-ten">Need all 10?</a>'],
+  ['<a href="#faq">Visi DUK</a>', '<a href="#faq">All FAQ</a>'],
+  ['<summary id="prompt-basics-summary">Promptų pagrindai (1 min)</summary>', '<summary id="prompt-basics-summary">Prompt basics (1 min)</summary>'],
+  ['aria-label="Greita navigacija per promptus"', 'aria-label="Quick jump between prompts"'],
+  ['<a href="#cmo-safety" id="progressJumpSafety">Sauga</a>', '<a href="#cmo-safety" id="progressJumpSafety">Safety</a>'],
+  ['<a href="#faq" id="progressJumpFaq">DUK</a>', '<a href="#faq" id="progressJumpFaq">FAQ</a>'],
+  ['<p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Promptas</p>', '<p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Prompt</p>'],
+  ['<span id="stickyPromptBarCopyText">Kopijuoti</span>', '<span id="stickyPromptBarCopyText">Copy</span>'],
+  ['aria-label="Kopijuoti dabartinį promptą"', 'aria-label="Copy current prompt"'],
+  ['<a href="#block2" class="sticky-prompt-bar-next" id="stickyPromptBarNext">Kitas →</a>', '<a href="#block2" class="sticky-prompt-bar-next" id="stickyPromptBarNext">Next →</a>'],
   [
     '<p class="objectives-eco-hint"><strong>Žr. greitai:</strong> <a href="#block1">30 d. planas</a> · <a href="#block5">analizė pagal KPI</a> · <a href="#block9">temų grupė</a> · <a href="#cmo-safety">tikrinti prieš publikuojant</a> · <a href="#ecosystem-strip">ekosistema</a>.</p>',
     '<p class="objectives-eco-hint"><strong>See:</strong> <a href="#block1">30-day plan</a> · <a href="#block5">KPI analysis</a> · <a href="#block9">topic cluster</a> · <a href="#cmo-safety">pre-publish safety</a> · <a href="#ecosystem-strip">ecosystem</a>.</p>'
@@ -1110,21 +1136,22 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
   ["content: '💡 Spausk čia ir nukopijuok';", "content: '💡 Click to select and copy';"],
   ['Įklijuok į ChatGPT, Claude ar kitą DI (dirbtinio intelekto) įrankį', 'Paste into ChatGPT, Claude or another AI tool'],
   ['Pakeisk <code>[auditorija]</code>, <code>[galvos skausmas]</code>, <code>[unikalus pardavimo pasiūlymas]</code>, <code>[kanalas]</code> ir kitus laukus savo duomenimis – ir gauk rezultatą', 'Replace <code>[audience]</code>, <code>[pain point]</code>, <code>[unique selling proposition]</code>, <code>[channel]</code>, and any city or budget placeholders with your real data'],
-  // Upgrade layer: explain blocks
-  ['Kas yra prompt?', 'What is a prompt?'],
   // Preflight strip (under hero)
   ['Prieš kopijuojant (1 min)', 'Before you copy (1 min)'],
+  ['<strong>Kas yra prompt?</strong>', '<strong>What is a prompt?</strong>'],
+  ['<strong>Kas yra Prompt Anatomy?</strong>', '<strong>What is Prompt Anatomy?</strong>'],
+  ['<strong>Kaip naudoti?</strong>', '<strong>How to use?</strong>'],
   ['Aiški instrukcija DI įrankiui: kontekstas + tikslas + ribos + formatas.', 'A clear instruction for an AI tool: context + goal + constraints + format.'],
   ['Struktūra, kuri padaro rezultatą nuoseklų ir pakartojamą.', 'A structure that makes outputs consistent and repeatable.'],
-  ['Eik per žingsnius ir dirbk ciklu: Planuok → Kurk → Tikrink → Tobulink.', 'Go step by step and run the loop: Plan → Create → Check → Improve.'],
+  ['<span>Planuok → Kurk → Tikrink → Tobulink.</span>', '<span>Plan → Create → Check → Improve.</span>'],
   ['Pilnas paaiškinimas', 'Full explanation'],
   ['<a href="#framework-schema">Schema</a>', '<a href="#framework-schema">Framework</a>'],
   ['<p class="objectives-eco-hint"><a href="#block1"><strong>Praleisti → Promptas 1</strong></a></p>', '<p class="objectives-eco-hint"><a href="#block1"><strong>Skip → Prompt 1</strong></a></p>'],
+  // Upgrade layer: explain blocks (after preflight <strong> replacements)
+  ['<h2 id="what-is-prompt-title">Kas yra prompt?</h2>', '<h2 id="what-is-prompt-title">What is a prompt?</h2>'],
   ['Promptas yra aiški instrukcija DI įrankiui: ką daryti, kam daryti ir kokiu formatu grąžinti rezultatą.', 'A prompt is a clear instruction to an AI tool: what to do, for whom, and in which format.'],
   ['Kuo promptas tikslesnis, tuo mažiau taisymų po pirmo atsakymo.', 'The clearer the prompt, the fewer fixes you need after the first answer.'],
   ['Kontekstas + Tikslas + Ribos + Formatas', 'Context + Goal + Constraints + Format'],
-  ['Klaida 1: per mažai konteksto', 'Error 1: Not enough context'],
-  ['Neaiškus įvedimas sukuria neaiškų rezultatą.', 'Vague input creates vague output.'],
   ['Kas yra Prompt Anatomy?', 'What is Prompt Anatomy?'],
   ['Prompt Anatomy yra struktūra, kuri padeda rašyti promptus taip, kad rezultatas būtų nuoseklus ir pakartojamas.', 'Prompt Anatomy is a structure that helps you write prompts with consistent and repeatable results.'],
   // Definitions (tiny GEO/AI module)
@@ -1147,16 +1174,26 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
   ['Ribos: tonas, ilgis, kas neleidžiama.', 'Constraints: tone, length, what is not allowed.'],
   ['Formatas: kaip turi atrodyti atsakymas.', 'Format: how the response must look.'],
   ['Vertinimas: pagal ką spręsti ar atsakymas geras.', 'Evaluation: how to judge response quality.'],
-  ['Klaida 2: per bendras instrukcijas', 'Error 2: Instructions too generic'],
-  ['Be laukų ir formato rezultatas lieka atsitiktinis.', 'Without fields and format, output stays random.'],
   ['Schema: kaip dirbti su šia biblioteka', 'Framework: how to work with this library'],
   ['Planuok: pasirink vieną tikslą ir vieną auditoriją.', 'Plan: choose one goal and one audience.'],
   ['Kurk: paleisk promptą su savo duomenimis.', 'Create: run the prompt with your real data.'],
   ['Tikrink: įvertink rezultatą pagal matavimo rodiklius.', 'Check: evaluate output by your metrics.'],
   ['Tobulink: pakoreguok promptą ir kartok ciklą.', 'Improve: refine the prompt and repeat the cycle.'],
   [
-    'alt="Neaiškus promptas – neaiškus rezultatas"',
-    'alt="Vague prompt – vague output"'
+    'alt="Daug DI įrankių neišsprendžia chaotiškos instrukcijos"',
+    'alt="More AI tools do not fix chaotic instructions"'
+  ],
+  [
+    'alt="Atsitiktinis promptinimas yra lošimas, struktūruotas promptinimas yra inžinerija"',
+    'alt="Random prompting is gambling; structured prompting is engineering"'
+  ],
+  [
+    'alt="Atrodai valdantis procesą, bet rezultatas nestabilus be struktūros"',
+    'alt="You look in control, but your output is unstable without structure"'
+  ],
+  [
+    'alt="Komanda jau naudoja DI, bet vadovas atsilieka, jei nesupranta sistemos"',
+    'alt="Your team is already using AI; leaders fall behind when they do not understand the system"'
   ],
   [
     'alt="Chaotiškas prašymas vs aiški promptų struktūra"',
@@ -1170,8 +1207,6 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
     '{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Ar tinka pradedančiajam?","acceptedAnswer":{"@type":"Answer","text":"Taip, jei pildai laukus savo situacija, ne bendrais žodžiais."}},{"@type":"Question","name":"Ar būtina naudoti visus 10?","acceptedAnswer":{"@type":"Answer","text":"Ne, pradėk nuo 1–3 ir plėskis pagal poreikį."}},{"@type":"Question","name":"Kuo tai geriau nei random promptas?","acceptedAnswer":{"@type":"Answer","text":"Čia turi nuoseklią seką, aiškų tikslą ir vertinimą."}},{"@type":"Question","name":"Kiek laiko skirti kasdien?","acceptedAnswer":{"@type":"Answer","text":"20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“."}},{"@type":"Question","name":"Ar tai kursas ar įrankis?","acceptedAnswer":{"@type":"Answer","text":"Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk)."}},{"@type":"Question","name":"Kam tai skirta?","acceptedAnswer":{"@type":"Answer","text":"CMO, rinkodaros vadovams, produktų/augimo komandoms ir vadovams, kuriems reikia greito, pakartojamo turinio ciklo."}},{"@type":"Question","name":"Kuo skiriasi nuo promptų šablonų?","acceptedAnswer":{"@type":"Answer","text":"Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą."}},{"@type":"Question","name":"Ar tinka B2B SaaS, paslaugoms ir e. komercijai?","acceptedAnswer":{"@type":"Answer","text":"Taip. Tiesiog pakeisk auditoriją, pasiūlymą, kanalus ir metrikas – struktūra išlieka ta pati."}}]}',
     '{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this for beginners?","acceptedAnswer":{"@type":"Answer","text":"Yes, if you fill placeholders with your real context."}},{"@type":"Question","name":"Do I need all 10 prompts?","acceptedAnswer":{"@type":"Answer","text":"No, start with 1–3 and expand when needed."}},{"@type":"Question","name":"Why is this better than random prompts?","acceptedAnswer":{"@type":"Answer","text":"You get a clear sequence, goal, and evaluation."}},{"@type":"Question","name":"How much time daily?","acceptedAnswer":{"@type":"Answer","text":"20–30 minutes is enough if you run Create → Check → Improve."}},{"@type":"Question","name":"Is this a course or a tool?","acceptedAnswer":{"@type":"Answer","text":"It’s an interactive prompt library + framework. You can use it immediately (copy → paste → run)."}},{"@type":"Question","name":"Who is this for?","acceptedAnswer":{"@type":"Answer","text":"CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence."}},{"@type":"Question","name":"How is this different from prompt templates?","acceptedAnswer":{"@type":"Answer","text":"You get a sequence, clear fields, evaluation, and a KPI loop — not a one-off output."}},{"@type":"Question","name":"Does this work for B2B SaaS, services, and ecommerce?","acceptedAnswer":{"@type":"Answer","text":"Yes. Swap the audience, offer, channels, and metrics — the structure stays the same."}}]}'
   ],
-  ['Klaida 3: kaltiname įrankį', 'Error 3: Blaming the tool'],
-  ['Problema dažnai ne DI, o neaiški instrukcija.', 'The issue is usually the instruction, not the AI.'],
   // Progress
   ['Panaudojai 0 iš 10 promptų', 'You used 0 of 10 prompts'],
   ['aria-label="Progresas: 0 iš 10 promptų"', 'aria-label="Progress: 0 of 10 prompts"'],
@@ -1191,15 +1226,6 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
 const EN_REPLACEMENTS_SUFFIX = [
   // Prompt 1
   ['<div class="category">Pradžia</div>', '<div class="category">Start</div>'],
-  // Breath moments (non-ID breaks)
-  [
-    '<p><strong>Įkvėpk (10 s):</strong> ar čia yra konkretus <strong>kabliukas</strong> + <strong>įrodymas</strong> + <strong>vienas CTA</strong>? Jei ne – patikslink 1 eilute ir paleisk dar kartą.</p>',
-    '<p><strong>Breathe (10 sec):</strong> do you have a clear <strong>hook</strong> + <strong>proof</strong> + <strong>one CTA</strong>? If not, refine one line and run again.</p>'
-  ],
-  [
-    '<p><strong>Reset (10 s):</strong> surašyk 3 tikrus prieštaravimus kaip cituoja klientai. Tada paleisk šį promptą dar kartą – rezultatas bus 2× taiklesnis.</p>',
-    '<p><strong>Reset (10 sec):</strong> write down 3 real objections in the customer’s own words. Run the prompt again — the output will be much sharper.</p>'
-  ],
   ['<h2 class="prompt-title">30 dienų turinio sistema</h2>', '<h2 class="prompt-title">30-day content system</h2>'],
   ['<p class="prompt-desc">Sukurk 30 dienų turinio planą pagal 4 turinio principus</p>', '<p class="prompt-desc">Create a 30-day content plan using 4 content principles</p>'],
   ['aria-label="Pasirinkti ir kopijuoti promptą 1"', 'aria-label="Select and copy prompt 1"'],

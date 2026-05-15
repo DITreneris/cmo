@@ -231,6 +231,179 @@ body {
   }
 }
 
+.executive-summary-lead {
+  margin: 0 0 var(--space-5);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.header-demo-details {
+  margin: var(--space-4) 0;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-surface-card) 94%, var(--color-surface-subtle));
+  padding: 0 var(--space-4);
+}
+
+.header-demo-details summary {
+  cursor: pointer;
+  font-weight: 700;
+  padding: var(--space-3) 0;
+  list-style: none;
+}
+
+.header-demo-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.header-demo-details[open] summary {
+  border-bottom: 1px solid var(--color-border-default);
+  margin-bottom: var(--space-3);
+}
+
+.instructions-faq-hint {
+  margin: 0 0 var(--space-4);
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+}
+
+.instructions-faq-hint a {
+  color: var(--color-brand-primary);
+  font-weight: 600;
+}
+
+.progress-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  margin: var(--space-3) 0 var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-subtle);
+  font-size: 0.85rem;
+}
+
+.progress-jump a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0 6px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  text-decoration: none;
+}
+
+.progress-jump a:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-brand-primary);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.progress-jump-sep {
+  color: var(--color-text-secondary);
+}
+
+.prompt-basics-details summary,
+.cmo-context-details summary,
+.prompt-expected-details summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.cmo-context-details {
+  margin-top: var(--space-4);
+}
+
+.meme-slot--compact {
+  margin: var(--space-3) 0;
+}
+
+.meme-slot--compact img {
+  max-height: 220px;
+  margin: 0 auto;
+}
+
+article.prompt {
+  scroll-margin-top: 5.5rem;
+}
+
+.sticky-prompt-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  padding-bottom: max(var(--space-3), env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--color-surface-card) 96%, transparent);
+  border-top: 1px solid var(--color-border-default);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.sticky-prompt-bar-label {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sticky-prompt-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.sticky-prompt-bar-copy {
+  min-height: 44px;
+}
+
+.sticky-prompt-bar-next {
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 10px 8px;
+}
+
+body.sticky-bar-visible {
+  padding-bottom: 4.5rem;
+}
+
+@media (max-width: 480px) {
+  .objectives,
+  .upgrade-section {
+    padding: var(--space-5);
+    margin: var(--space-4) 0;
+  }
+
+  .header {
+    padding-bottom: var(--space-4);
+  }
+}
+
+@media (min-width: 769px) {
+  .sticky-prompt-bar {
+    display: none !important;
+  }
+}
+
 .prompt,
 .objectives,
 .instructions,
@@ -867,25 +1040,6 @@ body {
   box-shadow: var(--shadow-raised);
 }
 
-.meme-lesson-header {
-  padding: var(--space-4) var(--space-4) var(--space-3);
-}
-
-.meme-lesson-title {
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.35;
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-1);
-}
-
-.meme-lesson-lead {
-  font-size: 0.875rem;
-  line-height: 1.55;
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
 .meme-slot img {
   display: block;
   width: 100%;
@@ -940,6 +1094,8 @@ body {
   .upgrade-section,
   .progress-wrap,
   .toast,
+  .sticky-prompt-bar,
+  .progress-jump,
   .prompt-done-wrap,
   .info-box,
   .cmo-provider-hub,

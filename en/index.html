@@ -31,7 +31,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <script type="application/ld+json">
-        {"@context":"https://schema.org","@type":"WebSite","name":"Prompt Anatomy Teams","url":"https://promptanatomy.space/","inLanguage":["lt","en"],"publisher":{"@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/"}}
+        {"@context":"https://schema.org","@type":"WebSite","name":"Prompt Anatomy Teams","url":"https://promptanatomy.space/","inLanguage":["en","lt"],"publisher":{"@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/"}}
     </script>
     <script type="application/ld+json">
         {"@context":"https://schema.org","@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/","sameAs":["https://promptanatomy.space/","https://t.me/prompt_anatomy"]}
@@ -1848,11 +1848,12 @@
             <div class="header-trust">
                 <ul class="trust-pills">
                     <li class="trust-pill" id="heroTrustPill1"><span aria-hidden="true">🔒</span> No data collection</li>
-                    <li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">🧩</span> 10-step prompt sequence</li>
-                    <li class="trust-pill" id="heroTrustPill3"><span aria-hidden="true">⏱</span> ~45 min outcome</li>
+                    <li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">⏱</span> 10 prompts · ~45 min</li>
                 </ul>
             </div>
-            <div class="header-demo">
+            <details class="header-demo-details">
+                <summary id="heroDemoSummary">Try mini-prompt (10 sec)</summary>
+                <div class="header-demo">
                 <div class="header-demo-title">
                     <span id="heroDemoTitle">Try without signing up</span>
                     <button class="btn"
@@ -1866,7 +1867,8 @@
                 <pre id="promptDemo">META: You are a marketing strategist.
 INPUT: Audience [ ], goal [ ].
 OUTPUT: 5 ideas with hook + CTA + KPI.</pre>
-            </div>
+                </div>
+            </details>
             <div class="header-cta">
                 <a href="#block1" class="cta-button" aria-label="Start with prompt 1 – go to the library">Start with prompt 1</a>
                 <p class="header-cta-note"><a href="#community" class="cta-secondary" aria-label="Join the community – go to Telegram">Community: Telegram</a></p>
@@ -1875,63 +1877,44 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>
 
         <section class="upgrade-section" id="preflight" aria-labelledby="preflight-title">
             <h2 id="preflight-title">Before you copy (1 min)</h2>
-            <p><strong>What is a prompt?</strong> A clear instruction for an AI tool: context + goal + constraints + format. <a href="#what-is-prompt">Full explanation</a>.</p>
-            <p><strong>What is Prompt Anatomy?</strong> A structure that makes outputs consistent and repeatable. <a href="#prompt-anatomy">Full explanation</a>.</p>
-            <p><strong>Kaip naudoti?</strong> Go step by step and run the loop: Plan → Create → Check → Improve. <a href="#framework-schema">Framework</a>.</p>
+            <ul class="preflight-list">
+                <li>
+                    <strong>What is a prompt?</strong>
+                    <span>A clear instruction for an AI tool: context + goal + constraints + format.</span>
+                    <a href="#prompt-basics">Full explanation</a>
+                </li>
+                <li>
+                    <strong>What is Prompt Anatomy?</strong>
+                    <span>A structure that makes outputs consistent and repeatable.</span>
+                    <a href="#prompt-basics">Full explanation</a>
+                </li>
+                <li>
+                    <strong>How to use?</strong>
+                    <span>Plan → Create → Check → Improve.</span>
+                    <a href="#framework-schema">Framework</a>
+                </li>
+            </ul>
             <p class="objectives-eco-hint"><a href="#block1"><strong>Skip → Prompt 1</strong></a></p>
-            <!-- Breath moment: one meme before prompts -->
-            <figure class="meme-slot" id="meme-slot-1" aria-labelledby="meme-slot-1-title">
-                <div class="meme-lesson-header">
-                    <p class="meme-lesson-title" id="meme-slot-1-title">Error 1: Not enough context</p>
-                    <p class="meme-lesson-lead">Vague input creates vague output.</p>
-                </div>
-                <img src="../data/meme-error-1-no-context.png" alt="Vague prompt – vague output" loading="lazy" decoding="async">
-            </figure>
         </section>
 
         <section class="objectives" id="executive-summary" aria-labelledby="executive-summary-title">
-            <h2 id="executive-summary-title"><span aria-hidden="true">🧭</span> Executive summary</h2>
-            <div class="quoteable-block">
-                <strong>What this is</strong>
-                <p><strong>Prompt Anatomy CMO Kit</strong> is a structured prompting system (framework + sequence) for marketing leaders and teams to make faster content decisions.</p>
-            </div>
-            <div class="quoteable-block">
-                <strong>Use it for</strong>
-                <ul>
-                    <li>A 30-day content plan and priorities</li>
-                    <li>One idea → 7 formats (cross-channel consistency)</li>
-                    <li>A KPI loop: measure → decide → improve</li>
-                </ul>
-            </div>
-            <div class="quoteable-block">
-                <strong>How it differs</strong>
-                <ul>
-                    <li>Random prompts → chaos and inconsistent quality</li>
-                    <li>Prompt tips → knowledge, but no execution cadence</li>
-                    <li><strong>Prompt Anatomy sequence</strong> → repeatable operating cadence</li>
-                </ul>
+            <h2 id="executive-summary-title"><span aria-hidden="true">🧭</span> What you get and why it works</h2>
+            <p class="executive-summary-lead" id="objectives-title">In ~45 minutes – content system, 100 assets, and a 30-day plan for marketing leaders.</p>
+            <div class="value-grid">
+                <article class="value-card">
+                    <h3 class="value-card-title">What this is</h3>
+                    <p class="value-card-lead"><strong>Prompt Anatomy CMO Kit</strong> – structured prompt sequence and framework for faster content decisions.</p>
+                </article>
+                <article class="value-card">
+                    <h3 class="value-card-title">What you get</h3>
+                    <p class="value-card-lead">30-day plan, one idea → 7 formats, KPI loop: measure → decide → improve.</p>
+                </article>
+                <article class="value-card">
+                    <h3 class="value-card-title">How it differs</h3>
+                    <p class="value-card-lead">Not random prompts – a repeatable operating cycle with clear fields and evaluation.</p>
+                </article>
             </div>
             <p class="objectives-eco-hint"><strong>See:</strong> <a href="#block1">30-day plan</a> · <a href="#block5">KPI analysis</a> · <a href="#block9">topic cluster</a> · <a href="#cmo-safety">pre-publish safety</a> · <a href="#ecosystem-strip">ecosystem</a>.</p>
-        </section>
-
-        <!-- KĄ REALIAI GAUSI -->
-        <section class="objectives" aria-labelledby="objectives-title">
-            <h2 id="objectives-title"><span aria-hidden="true">🎯</span> What you get</h2>
-            <ul>
-                <li>In 45 minutes, you get a clear content system, 100 content assets, and a 30-day plan</li>
-                <li>Generate content with 4 proven pillars</li>
-                <li>Test and optimize with clear KPIs</li>
-                <li>Run a closed loop: Plan → Create → Distribute → Measure → Decide</li>
-            </ul>
-            <div class="quoteable-block">
-                <strong>CMO-level definition</strong>
-                <p>Prompt Anatomy is a practical AI operating system for teams: less guesswork, more control, and a clear decision loop.</p>
-            </div>
-            <div class="quoteable-block">
-                <strong>When to use</strong>
-                <p>Use it when you need faster content execution, less team friction, and consistent quality across channels.</p>
-            </div>
-            <p class="objectives-eco-hint">Official methodology, courses, and contacts – <a href="#ecosystem-strip">Ecosystem section below</a>.</p>
         </section>
 
         <!-- INSTRUCTIONS (M4: laiko signalas) -->
@@ -1941,6 +1924,11 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>
                 <span>How to use this library</span>
                 <span class="prompt-time" role="status" aria-label="Estimated time: 3–5 min per step">~3–5 min per step</span>
             </h2>
+            <p class="instructions-faq-hint" id="instructions-faq-hint">
+                <a href="#faq-beginner">Good for beginners?</a> ·
+                <a href="#faq-all-ten">Need all 10?</a> ·
+                <a href="#faq">All FAQ</a>
+            </p>
             <ol>
                 <li>Select a prompt and click it to auto-select the text</li>
                 <li>Click <strong>"Copy prompt"</strong> or <code>Ctrl+C</code> / <code>Cmd+C</code></li>
@@ -1967,6 +1955,22 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>
             </div>
         </div>
 
+        <nav class="progress-jump no-print" id="progressJump" aria-label="Quick jump between prompts">
+            <a href="#block1">1</a>
+            <a href="#block2">2</a>
+            <a href="#block3">3</a>
+            <a href="#block4">4</a>
+            <a href="#block5">5</a>
+            <a href="#block6">6</a>
+            <a href="#block7">7</a>
+            <a href="#block8">8</a>
+            <a href="#block9">9</a>
+            <a href="#block10">10</a>
+            <span class="progress-jump-sep" aria-hidden="true">·</span>
+            <a href="#cmo-safety" id="progressJumpSafety">Safety</a>
+            <a href="#faq" id="progressJumpFaq">FAQ</a>
+        </nav>
+
         <div class="cmo-provider-hub no-print" role="region" aria-labelledby="cmo-provider-hub-title">
             <p class="cmo-provider-hub-title" id="cmo-provider-hub-title">AI tools (new tab)</p>
             <div class="cmo-provider-row" role="group" aria-label="Open third-party AI provider sites in a new tab">
@@ -1981,6 +1985,8 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>
         <section class="cmo-context" id="cmo-context" aria-labelledby="cmo-context-title">
             <h2 id="cmo-context-title" class="cmo-context-title">Marketing context (one block, every copy)</h2>
             <p class="cmo-context-intro">Optional: you can start with empty fields. If you fill once, these five values plus the rules below are auto-prepended every time you click <strong>Copy prompt</strong>. Stored only in this browser session.</p>
+            <details class="cmo-context-details" id="cmo-context-details">
+                <summary>Optional: marketing context (improves every copy)</summary>
             <div class="cmo-context-form" id="cmoContextForm">
                 <fieldset class="cmo-context-fields">
                     <legend class="cmo-context-legend">Marketing context fields</legend>
@@ -2018,6 +2024,7 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>
                     <li>Output must be usable: sections, owner where relevant, next action with deadline.</li>
                 </ul>
             </div>
+            </details>
         </section>
 
         <!-- PROMPT 1 -->
@@ -2052,12 +2059,15 @@ OUTPUT: A 30-day table with topic, hook, format, CTA, KPI, and expected outcome.
                         <p>4 principles = balance: authority, problem, proof, offer.</p>
                     </div>
                 </div>
+                <details class="faq-item prompt-expected-details" open id="expected-details-1">
+                    <summary>Expected output</summary>
                 <ul class="prompt-expected" id="expected1" aria-label="Expected output for prompt 1">
                     <li class="prompt-expected-title">Expected output</li>
                         <li>30-day table: topic, hook, format, CTA, KPI</li>
                         <li>Weekly themes mapped to 4 pillars (Authority, Problem, Proof, Offer)</li>
                         <li>One next action for week 1 with owner and deadline</li>
                 </ul>
+                </details>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.</p>
@@ -2073,6 +2083,10 @@ OUTPUT: A 30-day table with topic, hook, format, CTA, KPI, and expected outcome.
                 </label>
             </div>
         </article>
+
+        <figure class="meme-slot meme-slot--compact" id="meme-slot-1">
+            <img src="../data/meme-error-1-no-context.png" alt="More AI tools do not fix chaotic instructions" loading="lazy" decoding="async">
+        </figure>
 
         <!-- PROMPT 2 -->
         <article class="prompt">
@@ -2105,12 +2119,15 @@ OUTPUT: 7 assets: LinkedIn post, carousel, 30-sec short video, email, landing he
                         <p>1 idea = 7 units. Time saved, consistency kept.</p>
                     </div>
                 </div>
+                <details class="faq-item prompt-expected-details" id="expected-details-2">
+                    <summary>Expected output</summary>
                 <ul class="prompt-expected" id="expected2" aria-label="Expected output for prompt 2">
                     <li class="prompt-expected-title">Expected output</li>
                         <li>7 native US-context assets: LinkedIn post, carousel, 30-sec script, email, landing hero, ad, 3 hooks</li>
                         <li>Same core message across channels with channel-fit tweaks</li>
                         <li>3 ready-to-test hooks with one chosen recommendation</li>
                 </ul>
+                </details>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Paste into ChatGPT or Claude and replace placeholders with your data.</p>
@@ -2126,6 +2143,10 @@ OUTPUT: 7 assets: LinkedIn post, carousel, 30-sec short video, email, landing he
                 </label>
             </div>
         </article>
+
+        <figure class="meme-slot" id="meme-slot-2">
+            <img src="../data/meme-random-prompting-gambling.webp" alt="Random prompting is gambling; structured prompting is engineering" loading="lazy" decoding="async">
+        </figure>
 
         <!-- PROMPT 3 -->
         <article class="prompt">
@@ -2158,12 +2179,15 @@ OUTPUT: 1 post with hook, 3 clear points, 1 concrete example, and CTA. Write lik
                         <p>Proof + concrete points = trust and engagement.</p>
                     </div>
                 </div>
+                <details class="faq-item prompt-expected-details" id="expected-details-3">
+                    <summary>Expected output</summary>
                 <ul class="prompt-expected" id="expected3" aria-label="Expected output for prompt 3">
                     <li class="prompt-expected-title">Expected output</li>
                         <li>1 LinkedIn post (150-200 words) with hook, 3 points, example, CTA</li>
                         <li>Concrete proof point cited (number or customer outcome)</li>
                         <li>Verification flag for any unsupported claim</li>
                 </ul>
+                </details>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.</p>
@@ -2179,10 +2203,6 @@ OUTPUT: 1 post with hook, 3 clear points, 1 concrete example, and CTA. Write lik
                 </label>
             </div>
         </article>
-
-        <section class="upgrade-section breath-break" role="note" aria-label="Breath moment">
-            <p><strong>Breathe (10 sec):</strong> do you have a clear <strong>hook</strong> + <strong>proof</strong> + <strong>one CTA</strong>? If not, refine one line and run again.</p>
-        </section>
 
         <!-- PROMPT 4 -->
         <article class="prompt">
@@ -2215,12 +2235,15 @@ OUTPUT: Timestamped script: 0-2s hook, 3 key beats, proof/example, CTA. Keep it 
                         <p>2 seconds = stay or scroll. The hook is key.</p>
                     </div>
                 </div>
+                <details class="faq-item prompt-expected-details" id="expected-details-4">
+                    <summary>Expected output</summary>
                 <ul class="prompt-expected" id="expected4" aria-label="Expected output for prompt 4">
                     <li class="prompt-expected-title">Expected output</li>
                         <li>30-second timestamped script: 0-2s hook, 3 beats, proof, CTA</li>
                         <li>Visual or B-roll cue per beat</li>
                         <li>One alternate hook for A/B testing</li>
                 </ul>
+                </details>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy, paste into your AI tool, and replace [topic] and [example] with your data.</p>
@@ -2268,6 +2291,8 @@ OUTPUT: 4 blocks: (1) What's underperforming, (2) Why (hypothesis), (3) What to 
                         <p>Metrics without action = standing still. Data → decisions.</p>
                     </div>
                 </div>
+                <details class="faq-item prompt-expected-details" id="expected-details-5">
+                    <summary>Expected output</summary>
                 <ul class="prompt-expected" id="expected5" aria-label="Expected output for prompt 5">
                     <li class="prompt-expected-title">Expected output</li>
                         <li>What is underperforming with $ or % impact</li>
@@ -2275,6 +2300,7 @@ OUTPUT: 4 blocks: (1) What's underperforming, (2) Why (hypothesis), (3) What to 
                         <li>Next test (this week) and what to pause now</li>
                         <li>Owner and decision deadline</li>
                 </ul>
+                </details>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.</p>
@@ -2322,12 +2348,15 @@ OUTPUT: 10 pieces (posts, emails, landing snippets): objection, reframing angle,
                         <p>Real questions + answers = less friction, more trust.</p>
                     </div>
                 </div>
+                <details class="faq-item prompt-expected-details" id="expected-details-6">
+                    <summary>Expected output</summary>
                 <ul class="prompt-expected" id="expected6" aria-label="Expected output for prompt 6">
                     <li class="prompt-expected-title">Expected output</li>
                         <li>10 content units, one per top objection</li>
                         <li>Per unit: objection, reframing angle, proof, CTA</li>
                         <li>Channel suggestion per unit (post, email, landing snippet)</li>
                 </ul>
+                </details>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Paste into ChatGPT or Claude – replace objections and context.</p>
@@ -2343,10 +2372,6 @@ OUTPUT: 10 pieces (posts, emails, landing snippets): objection, reframing angle,
                 </label>
             </div>
         </article>
-
-        <section class="upgrade-section breath-break" role="note" aria-label="Breath moment">
-            <p><strong>Reset (10 sec):</strong> write down 3 real objections in the customer’s own words. Run the prompt again — the output will be much sharper.</p>
-        </section>
 
         <!-- PROMPT 7 -->
         <article class="prompt">
@@ -2379,12 +2404,15 @@ OUTPUT: (1) Post: hook, value, CTA. (2) Four DM messages with clear next step. K
                         <p>Sequence: follower → customer. Structure increases conversion.</p>
                     </div>
                 </div>
+                <details class="faq-item prompt-expected-details" id="expected-details-7">
+                    <summary>Expected output</summary>
                 <ul class="prompt-expected" id="expected7" aria-label="Expected output for prompt 7">
                     <li class="prompt-expected-title">Expected output</li>
                         <li>1 lead-magnet post: hook, value, CTA</li>
                         <li>4-step DM sequence: opener, qualify, value, offer</li>
                         <li>Clear next step in every message</li>
                 </ul>
+                </details>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.</p>
@@ -2432,12 +2460,15 @@ OUTPUT: 6 sections: Problem, Solution, Process, Results, Key takeaway, CTA. Prio
                         <p>Numbers + process = credibility and conversion.</p>
                     </div>
                 </div>
+                <details class="faq-item prompt-expected-details" id="expected-details-8">
+                    <summary>Expected output</summary>
                 <ul class="prompt-expected" id="expected8" aria-label="Expected output for prompt 8">
                     <li class="prompt-expected-title">Expected output</li>
                         <li>6 sections: Problem, Solution, Process, Results, Key takeaway, CTA</li>
                         <li>Concrete outcomes with $ impact when available</li>
                         <li>Customer quote slot (verify before publishing)</li>
                 </ul>
+                </details>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy and paste – enter customer data and get a structured story.</p>
@@ -2485,12 +2516,15 @@ OUTPUT: (1) Pillar page outline with CTA, (2) 8 subtopic titles with intent tags
                         <p>Main topic + subtopics = reach and expert position.</p>
                     </div>
                 </div>
+                <details class="faq-item prompt-expected-details" id="expected-details-9">
+                    <summary>Expected output</summary>
                 <ul class="prompt-expected" id="expected9" aria-label="Expected output for prompt 9">
                     <li class="prompt-expected-title">Expected output</li>
                         <li>1 pillar page outline with CTA</li>
                         <li>8 subtopic titles tagged by search intent</li>
                         <li>Internal link map between pillar and subtopics</li>
                 </ul>
+                </details>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.</p>
@@ -2538,6 +2572,8 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                         <p>Everything in one place: 30-day plan, 1→7, testing, priorities.</p>
                     </div>
                 </div>
+                <details class="faq-item prompt-expected-details" id="expected-details-10">
+                    <summary>Expected output</summary>
                 <ul class="prompt-expected" id="expected10" aria-label="Expected output for prompt 10">
                     <li class="prompt-expected-title">Expected output</li>
                         <li>30-day plan + 5 content assets for this week</li>
@@ -2545,6 +2581,7 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
                         <li>3 test hypotheses with success criteria</li>
                         <li>3 prioritised actions for tomorrow with owners</li>
                 </ul>
+                </details>
             </div>
             <div class="prompt-footer">
                 <p class="prompt-cta">This prompt covers everything—copy, paste, and fill in your business fields.</p>
@@ -2561,40 +2598,36 @@ OUTPUT: 6 blocks: (1) 30-day plan, (2) 5 content assets for this week, (3) one i
             </div>
         </article>
 
-        <section class="upgrade-section" id="what-is-prompt" aria-labelledby="what-is-prompt-title">
-            <h2 id="what-is-prompt-title">What is a prompt?</h2>
-            <p>A prompt is a clear instruction to an AI tool: what to do, for whom, and in which format.</p>
-            <p>The clearer the prompt, the fewer fixes you need after the first answer.</p>
-            <p><span class="mini-formula">Context + Goal + Constraints + Format</span></p>
-        </section>
+        <details class="upgrade-section prompt-basics-details" id="prompt-basics">
+            <summary id="prompt-basics-summary">Prompt basics (1 min)</summary>
+            <section class="upgrade-section" id="what-is-prompt" aria-labelledby="what-is-prompt-title">
+                <h2 id="what-is-prompt-title">What is a prompt?</h2>
+                <p>A prompt is a clear instruction to an AI tool: what to do, for whom, and in which format.</p>
+                <p>The clearer the prompt, the fewer fixes you need after the first answer.</p>
+                <p><span class="mini-formula">Context + Goal + Constraints + Format</span></p>
+            </section>
+            <section class="upgrade-section" id="prompt-anatomy" aria-labelledby="prompt-anatomy-title">
+                <h2 id="prompt-anatomy-title">What is Prompt Anatomy?</h2>
+                <p>Prompt Anatomy is a structure that helps you write prompts with consistent and repeatable results.</p>
+                <ul class="anatomy-parts">
+                    <li>Role: who is speaking and at what expertise level.</li>
+                    <li>Context: situation, audience, and limits.</li>
+                    <li>Goal: one clear result.</li>
+                    <li>Constraints: tone, length, what is not allowed.</li>
+                    <li>Format: how the response must look.</li>
+                    <li>Evaluation: how to judge response quality.</li>
+                </ul>
+            </section>
+            <div class="prompt-basics-defs" id="definitions" aria-labelledby="definitions-title">
+                <h3 class="visually-hidden" id="definitions-title">Sąvokos</h3>
+                <p><strong>Prompt:</strong> a clear instruction for an AI tool with context, a goal, and a required format.</p>
+                <p><strong>Prompt Anatomy:</strong> a framework that standardizes prompt structure and makes outputs repeatable.</p>
+                <p><strong>Content AI system:</strong> a process + prompt sequence that turns “ideas” into a plan, publishing, and measurable actions.</p>
+            </div>
+        </details>
 
-        <section class="upgrade-section" id="prompt-anatomy" aria-labelledby="prompt-anatomy-title">
-            <h2 id="prompt-anatomy-title">What is Prompt Anatomy?</h2>
-            <p>Prompt Anatomy is a structure that helps you write prompts with consistent and repeatable results.</p>
-            <ul class="anatomy-parts">
-                <li>Role: who is speaking and at what expertise level.</li>
-                <li>Context: situation, audience, and limits.</li>
-                <li>Goal: one clear result.</li>
-                <li>Constraints: tone, length, what is not allowed.</li>
-                <li>Format: how the response must look.</li>
-                <li>Evaluation: how to judge response quality.</li>
-            </ul>
-            <figure class="meme-slot" id="meme-slot-2" aria-labelledby="meme-slot-2-title">
-                <div class="meme-lesson-header">
-                    <p class="meme-lesson-title" id="meme-slot-2-title">Error 2: Instructions too generic</p>
-                    <p class="meme-lesson-lead">Without fields and format, output stays random.</p>
-                </div>
-                <img src="../data/meme-error-2-generic.png" alt="Chaotic request vs clear prompt structure" loading="lazy" decoding="async">
-            </figure>
-        </section>
-
-        <section class="upgrade-section" id="definitions" aria-labelledby="definitions-title">
-            <h2 id="definitions-title">Definitions (1 min)</h2>
-            <p><strong>Prompt:</strong> a clear instruction for an AI tool with context, a goal, and a required format.</p>
-            <p><strong>Prompt Anatomy:</strong> a framework that standardizes prompt structure and makes outputs repeatable.</p>
-            <p><strong>Content AI system:</strong> a process + prompt sequence that turns “ideas” into a plan, publishing, and measurable actions.</p>
-        </section>
-
+        <details class="cmo-scenarios-details">
+            <summary class="cmo-scenarios-summary">Choose a scenario</summary>
         <section class="cmo-scenarios" id="cmo-scenarios" aria-labelledby="cmo-scenarios-title">
             <h2 id="cmo-scenarios-title" class="cmo-scenarios-title">Choose a scenario</h2>
             <p class="cmo-scenarios-intro">Pick a practice flow. Copy includes your saved marketing context and rules when set.</p>
@@ -2624,11 +2657,14 @@ Questions:
                 </button>
             </div>
         </section>
+        </details>
 
         <section class="cmo-safety" id="cmo-safety" aria-labelledby="cmo-safety-title">
             <h2 id="cmo-safety-title" class="cmo-safety-title">Pre-publish safety</h2>
             <p class="cmo-safety-intro">Run this reviewer prompt before you publish AI-assisted marketing. Copy includes your session context and rules when set.</p>
             <div class="cmo-safety-copy">
+                <details class="faq-item cmo-safety-reviewer-details">
+                    <summary>Reviewer prompt (copy)</summary>
                 <div class="code-block cmo-safety-pre-wrap" role="region" aria-label="Copy reviewer prompt">
                     <pre class="code-text" id="cmo-safety-reviewer-prompt">Act as a marketing risk reviewer. Review this AI-generated content before I publish it: [TEXT].
 Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
@@ -2642,6 +2678,7 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
                     <span aria-hidden="true">📋</span>
                     <span>Copy reviewer prompt</span>
                 </button>
+                </details>
             </div>
             <div class="cmo-safety-checks">
                 <p class="cmo-safety-checks-title">Quick checks</p>
@@ -2678,11 +2715,11 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
         <section class="upgrade-section" id="faq" aria-labelledby="faq-title">
             <h2 id="faq-title">Frequently asked questions before you start</h2>
             <div class="faq-items">
-                <details class="faq-item">
+                <details class="faq-item" id="faq-beginner">
                     <summary>Is this for beginners?</summary>
                     <p>Yes, if you fill placeholders with your real context.</p>
                 </details>
-                <details class="faq-item">
+                <details class="faq-item" id="faq-all-ten">
                     <summary>Do I need all 10 prompts?</summary>
                     <p>No, start with 1–3 and expand when needed.</p>
                 </details>
@@ -2715,11 +2752,7 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
             <script type="application/ld+json">
                 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this for beginners?","acceptedAnswer":{"@type":"Answer","text":"Yes, if you fill placeholders with your real context."}},{"@type":"Question","name":"Do I need all 10 prompts?","acceptedAnswer":{"@type":"Answer","text":"No, start with 1–3 and expand when needed."}},{"@type":"Question","name":"Why is this better than random prompts?","acceptedAnswer":{"@type":"Answer","text":"You get a clear sequence, goal, and evaluation."}},{"@type":"Question","name":"How much time daily?","acceptedAnswer":{"@type":"Answer","text":"20–30 minutes is enough if you run Create → Check → Improve."}},{"@type":"Question","name":"Is this a course or a tool?","acceptedAnswer":{"@type":"Answer","text":"It’s an interactive prompt library + framework. You can use it immediately (copy → paste → run)."}},{"@type":"Question","name":"Who is this for?","acceptedAnswer":{"@type":"Answer","text":"CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence."}},{"@type":"Question","name":"How is this different from prompt templates?","acceptedAnswer":{"@type":"Answer","text":"You get a sequence, clear fields, evaluation, and a KPI loop — not a one-off output."}},{"@type":"Question","name":"Does this work for B2B SaaS, services, and ecommerce?","acceptedAnswer":{"@type":"Answer","text":"Yes. Swap the audience, offer, channels, and metrics — the structure stays the same."}}]}
             </script>
-            <figure class="meme-slot" id="meme-slot-3" aria-labelledby="meme-slot-3-title">
-                <div class="meme-lesson-header">
-                    <p class="meme-lesson-title" id="meme-slot-3-title">Error 3: Blaming the tool</p>
-                    <p class="meme-lesson-lead">The issue is usually the instruction, not the AI.</p>
-                </div>
+            <figure class="meme-slot" id="meme-slot-6">
                 <img src="../data/meme-error-3-blame-tool.png" alt="The issue is the instruction, not the AI" loading="lazy" decoding="async">
             </figure>
         </section>
@@ -2746,7 +2779,7 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
         <footer class="footer">
             <div class="cmo-footer-meta print-muted">
                 <p class="cmo-footer-crosslink">Need the CEO/COO kit? <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Open Prompt Anatomy Leader</a></p>
-                <p class="cmo-kit-version" data-version="1.4.0">Prompt Anatomy CMO Kit v1.4.0</p>
+                <p class="cmo-kit-version" data-version="1.5.0">Prompt Anatomy CMO Kit v1.5.0</p>
             </div>
 
             <h3>Go win your market <span aria-hidden="true">🚀</span></h3>
@@ -2768,8 +2801,19 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
     </div>
 
     <textarea class="hidden" id="hiddenTextarea" aria-label="Text to copy field" aria-hidden="true"></textarea>
-    
-    <div class="toast" 
+
+    <div class="sticky-prompt-bar no-print" id="stickyPromptBar" hidden>
+        <p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Prompt</p>
+        <div class="sticky-prompt-bar-actions">
+            <button type="button" class="btn sticky-prompt-bar-copy" id="stickyPromptBarCopy" aria-label="Copy current prompt">
+                <span aria-hidden="true">📋</span>
+                <span id="stickyPromptBarCopyText">Copy</span>
+            </button>
+            <a href="#block2" class="sticky-prompt-bar-next" id="stickyPromptBarNext">Next →</a>
+        </div>
+    </div>
+
+    <div class="toast"
          id="toast" 
          role="status" 
          aria-live="polite" 
@@ -2786,7 +2830,21 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
 
             // ===== LOCALE (LT/EN) =====
             var LANG_KEY = 'di_promptu_biblioteka_lang';
-            var locale = 'lt';
+            var locale = 'en';
+
+            function prefersLithuanianBrowser() {
+                var langs = [];
+                if (navigator.language) langs.push(navigator.language);
+                if (navigator.languages) {
+                    for (var i = 0; i < navigator.languages.length; i++) {
+                        langs.push(navigator.languages[i]);
+                    }
+                }
+                for (var j = 0; j < langs.length; j++) {
+                    if (langs[j] && String(langs[j]).toLowerCase().indexOf('lt') === 0) return true;
+                }
+                return false;
+            }
 
             function getLocaleFromPathname() {
                 var path = (window.location.pathname || '').toLowerCase();
@@ -2821,20 +2879,32 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
                     var stored = localStorage.getItem(LANG_KEY);
                     if (stored === 'lt' || stored === 'en') { locale = stored; return; }
                 } catch (e) { /* ignore */ }
-                locale = (navigator.language && navigator.language.toLowerCase().indexOf('lt') === 0) ? 'lt' : 'en';
+                locale = prefersLithuanianBrowser() ? 'lt' : 'en';
             }
             resolveLocale();
 
-            // If user is on the project root (e.g. /cmo/), redirect to fully built locale pages (/cmo/lt/ or /cmo/en/).
-            // This prevents mixed-language rendering on the LT source page.
-            (function redirectRootToLocale() {
+            /** True when URL is site root, not already under /lt/ or /en/ (incl. /cmo/ mirror). */
+            function isRootEntryPage() {
                 var path = (window.location.pathname || '').replace(/\/index\.html?$/i, '');
+                var pl = path.toLowerCase();
+                if (/\/lt(?:\/|$)/.test(pl) || /\/en(?:\/|$)/.test(pl)) return false;
+                var normalized = pl.replace(/\/+$/, '') || '/';
+                if (normalized === '/' || normalized === '') return true;
+                var segs = normalized.split('/').filter(function(s) { return s.length > 0; });
+                return segs.length <= 1;
+            }
+
+            // Root / or /cmo/ → /en/ or /lt/ (browser + storage); avoids LT source page at bare host.
+            (function redirectRootToLocale() {
+                if (!isRootEntryPage()) return;
                 var base = getBasePathPrefix();
-                if (!base) return;
-                var pl = path.toLowerCase().replace(/\/?$/, '/');
-                var bl = base.toLowerCase().replace(/\/?$/, '/');
-                if (pl !== bl) return;
-                var target = base + '/' + (locale === 'en' ? 'en' : 'lt') + '/' + (window.location.hash || '');
+                var loc = locale === 'en' ? 'en' : 'lt';
+                var target;
+                if (base) {
+                    target = base.replace(/\/?$/, '') + '/' + loc + '/' + (window.location.hash || '');
+                } else {
+                    target = '/' + loc + '/' + (window.location.hash || '');
+                }
                 try { window.location.replace(target); } catch (_) { window.location.href = target; }
             })();
 
@@ -2877,26 +2947,60 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
                     setLabel(ctaNote, 'Join the community – go to Telegram');
                 }
                 setText('#heroTrustPill1', '🔒 No data collection');
-                setText('#heroTrustPill2', '🧩 10-step prompt sequence');
-                setText('#heroTrustPill3', '⏱ ~45 min outcome');
+                setText('#heroTrustPill2', '⏱ 10 prompts · ~45 min');
+                setText('#heroDemoSummary', 'Try mini-prompt (10 sec)');
                 setText('#heroDemoTitle', 'Try without signing up');
                 setText('#heroDemoCopyBtnText', 'Copy mini-prompt');
                 setLabel('#heroDemoCopyBtn', 'Copy mini-prompt to clipboard');
                 setText('#promptDemo', 'META: You are a marketing strategist.\nINPUT: Audience [ ], goal [ ].\nOUTPUT: 5 ideas with hook + CTA + KPI.');
 
-                var objTitle = el('objectives-title');
-                if (objTitle) objTitle.innerHTML = '<span aria-hidden="true">🎯</span> What you get';
-                var objLi = qa('.objectives ul li');
-                if (objLi.length >= 4) {
-                    objLi[0].textContent = 'In 45 minutes, you get a clear content system, 100 content assets, and a 30-day plan';
-                    objLi[1].textContent = 'Generate content with 4 proven pillars';
-                    objLi[2].textContent = 'Test and optimize with clear KPIs';
-                    objLi[3].textContent = 'Run a closed loop: Plan → Create → Distribute → Measure → Decide';
+                setText('#executive-summary-title', '🧭 What you get and why it works');
+                var objLead = el('objectives-title');
+                if (objLead) objLead.textContent = 'In ~45 minutes – content system, 100 assets, and a 30-day plan for marketing leaders.';
+                var valueTitles = qa('.value-card-title');
+                var valueLeads = qa('.value-card-lead');
+                var valueTitleTexts = ['What this is', 'What you get', 'How it differs'];
+                var valueLeadTexts = [
+                    'Prompt Anatomy CMO Kit – structured prompt sequence and framework for faster content decisions.',
+                    '30-day plan, one idea → 7 formats, KPI loop: measure → decide → improve.',
+                    'Not random prompts – a repeatable operating cycle with clear fields and evaluation.'
+                ];
+                valueTitles.forEach(function(n, i) { if (valueTitleTexts[i]) n.textContent = valueTitleTexts[i]; });
+                valueLeads.forEach(function(n, i) { if (valueLeadTexts[i]) n.textContent = valueLeadTexts[i]; });
+                var objEcoHints = qa('.objectives-eco-hint');
+                if (objEcoHints.length >= 2) {
+                    objEcoHints[1].innerHTML = '<strong>See:</strong> <a href="#block1">30-day plan</a> · <a href="#block5">KPI analysis</a> · <a href="#block9">topic cluster</a> · <a href="#cmo-safety">pre-publish safety</a> · <a href="#ecosystem-strip">ecosystem</a>.';
                 }
-                var objEco = q('.objectives-eco-hint');
-                if (objEco) {
-                    objEco.innerHTML = 'Official methodology, courses, and contacts – <a href="#ecosystem-strip">Ecosystem section below</a>.';
+                setText('#preflight-title', 'Before you copy (1 min)');
+                var preflightStrong = qa('.preflight-list li strong');
+                var preflightSpan = qa('.preflight-list li span');
+                var preflightStrongTexts = ['What is a prompt?', 'What is Prompt Anatomy?', 'How to use?'];
+                var preflightSpanTexts = [
+                    'A clear instruction for an AI tool: context + goal + constraints + format.',
+                    'A structure that makes outputs consistent and repeatable.',
+                    'Plan → Create → Check → Improve.'
+                ];
+                preflightStrong.forEach(function(n, i) { if (preflightStrongTexts[i]) n.textContent = preflightStrongTexts[i]; });
+                preflightSpan.forEach(function(n, i) { if (preflightSpanTexts[i]) n.textContent = preflightSpanTexts[i]; });
+                var preflightLinks = qa('.preflight-list li a');
+                preflightLinks.forEach(function(a) {
+                    if (a.getAttribute('href') === '#framework-schema') a.textContent = 'Framework';
+                    else if (a.getAttribute('href') === '#prompt-basics') a.textContent = 'Full explanation';
+                });
+                var skipPreflight = q('#preflight .objectives-eco-hint a');
+                if (skipPreflight) skipPreflight.textContent = 'Skip → Prompt 1';
+                setText('#prompt-basics-summary', 'Prompt basics (1 min)');
+                var instrFaq = el('instructions-faq-hint');
+                if (instrFaq) {
+                    instrFaq.innerHTML = '<a href="#faq-beginner">Good for beginners?</a> · <a href="#faq-all-ten">Need all 10?</a> · <a href="#faq">All FAQ</a>';
                 }
+                var progJump = el('progressJump');
+                if (progJump) progJump.setAttribute('aria-label', 'Quick jump between prompts');
+                setText('#progressJumpSafety', 'Safety');
+                setText('#progressJumpFaq', 'FAQ');
+                setText('#stickyPromptBarCopyText', 'Copy');
+                setLabel('#stickyPromptBarCopy', 'Copy current prompt');
+                setText('#stickyPromptBarNext', 'Next →');
                 var instrTitle = el('instructions-title');
                 if (instrTitle) {
                     var spanNote = instrTitle.querySelector('.prompt-time');
@@ -2919,11 +3023,10 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
                     promptExpl[1].textContent = 'The clearer the prompt, the fewer fixes you need after the first answer.';
                 }
                 setText('#what-is-prompt .mini-formula', 'Context + Goal + Constraints + Format');
-                setText('#meme-slot-1 .meme-lesson-title', 'Error 1: Not enough context');
-                setText('#meme-slot-1 .meme-lesson-lead', 'Vague input creates vague output.');
                 var meme1img = document.querySelector('#meme-slot-1 img');
-                if (meme1img) meme1img.setAttribute('alt', 'Vague prompt – vague output');
-
+                if (meme1img) meme1img.setAttribute('alt', 'More AI tools do not fix chaotic instructions');
+                var meme2img = document.querySelector('#meme-slot-2 img');
+                if (meme2img) meme2img.setAttribute('alt', 'Random prompting is gambling; structured prompting is engineering');
                 setText('#prompt-anatomy-title', 'What is Prompt Anatomy?');
                 var anatomyP = qa('#prompt-anatomy p');
                 if (anatomyP.length >= 1) {
@@ -2939,11 +3042,6 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
                     'Evaluation: how to judge response quality.'
                 ];
                 anatomyLi.forEach(function(item, i) { if (anatomyTexts[i]) item.textContent = anatomyTexts[i]; });
-                setText('#meme-slot-2 .meme-lesson-title', 'Error 2: Instructions too generic');
-                setText('#meme-slot-2 .meme-lesson-lead', 'Without fields and format, output stays random.');
-                var meme2img = document.querySelector('#meme-slot-2 img');
-                if (meme2img) meme2img.setAttribute('alt', 'Chaotic request vs clear prompt structure');
-
                 setText('#framework-schema-title', 'Framework: how to work with this library');
                 var schemaLi = qa('#framework-schema .schema-steps li');
                 var schemaTexts = [
@@ -3038,10 +3136,8 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
                 if (faqEco) {
                     faqEco.innerHTML = 'For full methodology and executive context, use the <a href="#ecosystem-strip">ecosystem section</a> – all links in one place.';
                 }
-                setText('#meme-slot-3 .meme-lesson-title', 'Error 3: Blaming the tool');
-                setText('#meme-slot-3 .meme-lesson-lead', 'The issue is usually the instruction, not the AI.');
-                var meme3img = document.querySelector('#meme-slot-3 img');
-                if (meme3img) meme3img.setAttribute('alt', 'The issue is the instruction, not the AI');
+                var meme6img = document.querySelector('#meme-slot-6 img');
+                if (meme6img) meme6img.setAttribute('alt', 'The issue is the instruction, not the AI');
 
                 var commTitle = el('community-title');
                 if (commTitle) commTitle.innerHTML = 'Want more?<br>Join our US-focused Telegram group.';
@@ -3563,6 +3659,84 @@ Audience: [AUDIENCE]. Channel: [CHANNEL]. Return:
                 applyStaticLocaleText();
                 renderEditHints();
                 renderPromptTags();
+
+                (function initStickyPromptBar() {
+                    var bar = document.getElementById('stickyPromptBar');
+                    var label = document.getElementById('stickyPromptBarLabel');
+                    var copyBtn = document.getElementById('stickyPromptBarCopy');
+                    var nextLink = document.getElementById('stickyPromptBarNext');
+                    var firstBlock = document.getElementById('block1');
+                    if (!bar || !copyBtn || !firstBlock) return;
+
+                    var currentPromptId = 'prompt1';
+                    var promptBlocks = [];
+                    document.querySelectorAll('article.prompt .code-block[id^="block"]').forEach(function(cb) {
+                        var pre = cb.querySelector('pre');
+                        if (pre && pre.id) {
+                            promptBlocks.push({ blockId: cb.id, promptId: pre.id });
+                        }
+                    });
+
+                    function isMobile() {
+                        return window.matchMedia('(max-width: 768px)').matches;
+                    }
+
+                    function setBarVisible(visible) {
+                        bar.hidden = !visible;
+                        document.body.classList.toggle('sticky-bar-visible', visible);
+                    }
+
+                    function updateNextHref(promptId) {
+                        if (!nextLink || !promptBlocks.length) return;
+                        var idx = promptBlocks.findIndex(function(p) { return p.promptId === promptId; });
+                        if (idx < 0) idx = 0;
+                        var next = promptBlocks[Math.min(idx + 1, promptBlocks.length - 1)];
+                        nextLink.href = '#' + next.blockId;
+                        nextLink.textContent = idx >= promptBlocks.length - 1
+                            ? uiText('Baigta', 'Done')
+                            : uiText('Kitas →', 'Next →');
+                    }
+
+                    function syncBarForPrompt(promptId) {
+                        currentPromptId = promptId;
+                        var art = document.getElementById(promptId);
+                        if (art) art = art.closest('article.prompt');
+                        var titleEl = art && art.querySelector('.prompt-title');
+                        if (label && titleEl) label.textContent = titleEl.textContent;
+                        updateNextHref(promptId);
+                    }
+
+                    var blockObs = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (!entry.isIntersecting) return;
+                            var pre = entry.target.querySelector('pre');
+                            if (pre && pre.id) syncBarForPrompt(pre.id);
+                        });
+                    }, { root: null, rootMargin: '-40% 0px -45% 0px', threshold: 0 });
+
+                    promptBlocks.forEach(function(p) {
+                        var el = document.getElementById(p.blockId);
+                        if (el) blockObs.observe(el);
+                    });
+
+                    var passedFirst = false;
+                    var firstObs = new IntersectionObserver(function(entries) {
+                        passedFirst = entries.some(function(e) { return !e.isIntersecting && e.boundingClientRect.top < 0; });
+                        setBarVisible(isMobile() && passedFirst);
+                    }, { threshold: [0, 1] });
+                    firstObs.observe(firstBlock);
+
+                    window.addEventListener('resize', function() {
+                        setBarVisible(isMobile() && passedFirst);
+                    }, { passive: true });
+
+                    copyBtn.addEventListener('click', function() {
+                        var btn = document.querySelector('.prompt-footer .btn[data-prompt-id="' + currentPromptId + '"]');
+                        if (btn) btn.click();
+                    });
+
+                    syncBarForPrompt('prompt1');
+                })();
 
                 // Kalbos perjungiklis: active būsena ir paspaudimai
                 var langLtBtn = document.getElementById('langLtBtn');
