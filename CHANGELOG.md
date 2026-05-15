@@ -4,18 +4,53 @@ Visi reikšmingi projekto pakeitimai dokumentuojami šiame faile.
 
 Formatas pagal [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), versijavimas – [Semantic Versioning](https://semver.org/).
 
+## [1.3.5] - 2026-05-15
+
+### Pašalinta
+
+- Meme slotų „galerijos“ UI: matomi užrašai „Meme #1–3“, apačios `.meme-caption` juosta po vaizdu, `aria-label="Meme N"`. Inline `.meme-slot` / `.meme-caption` taisyklės iš `index.html` (stilius tik per `styles/components.css`).
+
+### Pakeista
+
+- **[UI] Meme slotai → premium lesson komponentas (Variant C):** Visi 3 `#meme-slot-*` (preflight, `#prompt-anatomy`, `#faq`) perrašyti į mokymų kortelę: `.meme-lesson-header` su `.meme-lesson-title` + `.meme-lesson-lead` virš vaizdo; `aria-labelledby` vietoje `aria-label`. LT: „Klaida 1–3“ + lead; EN: „Error 1–3“ (build + `applyStaticLocaleText`). `alt` be žodžio „Meme“. Vaizdas: `object-fit: contain`, `height: auto` — be `aspect-ratio`, `cover` ir `max-height` crop. Atnaujinta: `index.html`, `styles/components.css`, `scripts/build-locale-pages.js`, `docs/LEGACY_GOLDEN_STANDARD.md`, `tests/structure.test.js`.
+
+---
+
 ## [Nereleisuota]
 
 ### Pašalinta
 
-- Pasenusios ar dubliuojančios dokumentų bylos: root `KODO_BAZES_ANALIZE.md`, `LT_EN_UI_UX_REPORT.md`, `VARIANTU_PALYGINIMAS.md`; `docs/GILI_ANALIZE_LT_EN_TERMINOLOGIJA.md`, `docs/MICROCOPY_AUDIT_EN.md`, `docs/TURINIO_AUDITAS_DETALUS.md`, `docs/DESIGN_SYSTEM_BASELINE.md`; dublikatai `docs/archive/MUST_TODO.md`, `docs/archive/MVP_ROADMAP.md` (kanonas – root `MUST_TODO.md` / `MVP_ROADMAP.md` su historical žyma). Nuorodos sutvarkytos į `docs/MULTILINGUAL_STRUCTURE.md`, `docs/LEGACY_GOLDEN_STANDARD.md`, `npm test`.
+- **Negyvi failai ir formos likučiai (2026-05-15):** Pašalinta visa neaktyvios kontaktų / atsiliepimų formos infrastruktūra ir senų planavimo dokumentų liekanos.
+  - `google-apps-script.js` (3 KB) – Google Apps Script formai, kurios produktas nebenaudoja.
+  - `INTEGRACIJA.md` (8 KB) – „vėlesniems etapams" instrukcijos formai; sprendimas: nereikės.
+  - `feedback-schema.md` (2.9 KB) – duomenų schema tai pačiai formai.
+  - `MUST_TODO.md` (9 KB), `MVP_ROADMAP.md` (13 KB) – self-deklaruoti „Historical / Deprecated"; istorija lieka Git'e.
+  - `data/Untitled design (23).png` (~2 MB) – nenaudojamas joks kodas.
+  - `index.html`: išvalyti komentarai apie buvusią kontaktų formą / Google Sheets (CSS antraštė + JS pastaba); modal stilius palikti kaip bendrąjį komponentą.
+  - `.eslintrc.json`: pašalinti Google Apps Script globals (`SpreadsheetApp`, `ContentService`, `MailApp`, `Logger`) ir `google-apps-script.js` override; pridėtas `public/` į ignore.
+  - `package.json`: nereikalinga `html-validator-cli` (`^7.0.0`) devDependency pašalinta (`lint:html` naudoja `html-validate`, ne šį paketą).
 
 ### Pakeista
+
+- **Meme paveikslų vardai (2026-05-15):** Pervadinti į semantinius pavadinimus: `data/Untitled design (35).png` → `data/meme-error-1-no-context.png`, `(36).png` → `meme-error-2-generic.png`, `(22).png` → `meme-error-3-blame-tool.png`. Atnaujinti `<img src>` [index.html](index.html) `meme-slot-1`, `meme-slot-2`, `meme-slot-3`. Locale build'as juos regeneruoja į `lt/`, `en/`, `public/`.
+- Pasenusios ar dubliuojančios dokumentų bylos: root `KODO_BAZES_ANALIZE.md`, `LT_EN_UI_UX_REPORT.md`, `VARIANTU_PALYGINIMAS.md`; `docs/GILI_ANALIZE_LT_EN_TERMINOLOGIJA.md`, `docs/MICROCOPY_AUDIT_EN.md`, `docs/TURINIO_AUDITAS_DETALUS.md`, `docs/DESIGN_SYSTEM_BASELINE.md`; dublikatai `docs/archive/`. Nuorodos sutvarkytos į `docs/MULTILINGUAL_STRUCTURE.md`, `docs/LEGACY_GOLDEN_STANDARD.md`, `npm test`.
+
+### Pakeista
+
+- **Dokumentacijos konsolidacija pagal valymą (2026-05-15):** Po formos likučių pašalinimo (žr. „Pašalinta") dokumentacija perrašyta į vieną tiesos šaltinį.
+  - [`.cursorrules`](.cursorrules) sutrumpintas ~50% (~16 KB → ~7 KB): pašalinti Google Apps Script, kontaktų formos, CAPTCHA, EmailJS, formos GDPR skyriai; palikti tik aktyvūs kokybės, a11y, agentų, commit reikalavimai.
+  - [`docs/LEGACY_GOLDEN_STANDARD.md`](docs/LEGACY_GOLDEN_STANDARD.md) atnaujintas į **v1.7**: pridėtas naujas §0 „Šaltinio modelis" (`index.html` + `data/*.json` + build inject), CMO v2 kontraktas (`#cmo-context`, `.prompt-expected`, `#cmo-safety`, `#cmo-scenarios`, `window.__CMO_COMPILE`, `data-version`), pašalintos pasenusios `onclick`/`onkeydown` schemos (kodas naudoja `addEventListener`), suvienodintas `BASE_PATH` (default `''` primary, `/cmo` mirror).
+  - [`docs/INDEX.md`](docs/INDEX.md) ir [`docs/DOCUMENTATION.md`](docs/DOCUMENTATION.md): pipeline diagrama atspindi tris build žingsnius (`generate-og` → `build-locale-pages` → `vercel-export-public`); inventoriuje pridėti `data/*.json`, `scripts/{generate-og,vercel-export-public}.js`, `robots.txt`, `sitemap.xml`, `favicon.svg`, `og.png`, `public/`. Pašalintos nuorodos į trinamus failus.
+  - [`DEPLOYMENT.md`](DEPLOYMENT.md) perrašytas: §0 lentelė rodanti primary (Vercel, `promptanatomy.space`) + mirror (GitHub Pages, `ditreneris.github.io/cmo`); aiškus `BASE_PATH` paaiškinimas; Vercel troubleshooting.
+  - [`README.md`](README.md): struktūros medis atspindi realią repo struktūrą (data/, scripts/, public/, .pa11yrc.json, .htmlvalidate.json, .eslintrc.json, .nojekyll); abu production URL; pašalintas „Kontaktų rinkimas (vėlesniems etapams)" skyrius.
+  - [`AGENTS.md`](AGENTS.md) **v1.2**: Curriculum/QA įvestyse pašalinti istoriniai planai, pridėti `data/*.json` šaltiniai; §8 „Susiję dokumentai" be `MUST_TODO`, `MVP_ROADMAP`, `feedback-schema`.
+  - [`docs/TESTAVIMAS.md`](docs/TESTAVIMAS.md): abu URL (primary + mirror); CMO v2 scenarijai pridėti į checklist'ą; pa11y nurodytas į `/lt/`, `/en/`.
+  - [`docs/QA_STANDARTAS.md`](docs/QA_STANDARTAS.md): pa11y pavyzdys atnaujintas į `/lt/` ir `/en/` (sutampa su CI).
 
 - **Frontpage „premium SaaS“ productizacija (2026-04-30):** LT/EN frontpage perstruktūruotas iš „dokumento su dėžėmis“ į „įrankio / sistemos“ patirtį: hero iš karto seka naujas **Setup** modulis (kontekstas + progresas + DI įrankių nuorodos), pridėta **How it works** sekcija su vizualiu ciklu ir prieinamais tab’ais (`.system-map`, `.how-tab`), „Executive summary“ ir „Ką gausi / What you get“ pakeisti į kompaktiškas **value grid** korteles (`.value-grid`), pridėtas **Proof / Įrodymas** blokas (`.output-proof`) su before/after + kokybės kriterijais. Preflight perrašytas į skim-first sąrašą su unikaliomis nuorodomis (`.preflight-list`). Meme #1 demotuotas: perkeltas po Prompt 1 ir apribotas aukštis (nebėra „antras hero“). Pagrindinis vizualinis sluoksnis suvienodintas į 1px border + subtilus elevation per `styles/components.css` (užgožia senus 3px inline rėmelius). Pakeitimai: `lt/index.html`, `en/index.html`, `styles/components.css`. `npm test` praeina.
 
 - **SEO + GEO micro-optimizacijos (AI discoverability, 2026-04-30):** `scripts/build-locale-pages.js` `insertSeo()` atnaujintas su aukštesnio ketinimo LT/EN `<title>` ir suvienodintais aprašymais (`meta description`, `og:*`, `twitter:*`). `index.html` pridėta trumpa `#executive-summary` santrauka (kas tai yra / use-cases / compared-to + vidinės nuorodos į `#block1`, `#block5`, `#block9`, `#cmo-safety`, `#ecosystem-strip`) ir kompaktiškas sąvokų blokas `#definitions` (3 aiškios definicijos LLM citavimui). Išplėstas FAQ (+4 klausimai) ir `FAQPage` JSON‑LD atnaujintas, kad tiksliai sutaptų su matomu turiniu tiek LT, tiek EN locale.
-- **OG preview paveikslas FB/LinkedIn (2026-04-30):** `og:image` ir `twitter:image` suvienodinti į self-hosted `og.png` (1200×630) per `scripts/build-locale-pages.js` `insertSeo()` ir root `index.html`. Pridėti stabilumą gerinantys tag’ai: `og:image:width`, `og:image:height`, `og:image:alt`, `twitter:image:alt`. `tests/structure.test.js` papildytas kontraktu, kad OG URL būtų `https://ditreneris.github.io/cmo/og.png`.
+- **OG preview paveikslas FB/LinkedIn (2026-04-30):** `og:image` ir `twitter:image` suvienodinti į self-hosted `og.png` (1200×630) per `scripts/build-locale-pages.js` `insertSeo()` ir root `index.html`. Pridėti stabilumą gerinantys tag’ai: `og:image:width`, `og:image:height`, `og:image:alt`, `twitter:image:alt`. `tests/structure.test.js` papildytas kontraktu, kad OG URL būtų `https://promptanatomy.space/og.png` (primary host).
 - **Vercel deploy: statinis output į `public/` (2026-04-30):** `npm run build` papildytas `scripts/vercel-export-public.js`, kuris sukuria `public/` ir sukopijuoja deploy reikalingus failus (root `index.html`, `lt/`, `en/`, `styles/`, `js/`, `data/`, `robots.txt`, `sitemap.xml`, `favicon.svg`, `og.png`, privatumas). `public/` pridėtas į `.gitignore`, kad nebūtų komituojamas build artefaktas. Pataiso Vercel klaidą „No Output Directory named `public`“.
 - **EN stop-ship lokalizacijos pataisymai + microcopy polish (2026-04-30):** Pašalinti LT nutekėjimai EN puslapyje: hero demo mini-prompt (`#promptDemo`) ir meme `figcaption` tekstai dabar statiniai EN (ne vien runtime). `scripts/build-locale-pages.js` papildytas tiksliomis LT→EN poromis, taip pat pašalintos likusios LT eilutės EN generuojamame JS (pvz. „Kopijuoti…“ komentarai/aria-label dalys), kad `en/index.html` neturėtų LT tokenų. Papildomai sutvarkytos kelios aukšto poveikio EN frazės promptų kortelėse (gramatika + US-native formuluotės) ir suvienodinta CTA instrukcija be „templated“ tono; `index.html` EN `promptData` atnaujintas, kad runtime EN režimas atitiktų build output.
 - **CMO CRO uplift – „system, not prompts“ + paid-first CTA (2026-04-30):** `en/index.html` hero perrašytas į „operacinę sistemą“ (prognozuojamas rezultatas), primary CTA nukreiptas į `promptanatomy.app`, demo CTA paliktas kaip antrinis („Try prompt 1“). Virš pirmo scroll pridėtos dvi autoriteto sekcijos: `#system-map` (Inputs/Controls/Outputs + vykdymo ciklas) ir `#output-proof` (Before/After + rezultatų kriterijų checklist) su nuosekliais paid→demo CTA. Instrukcijos perrašytos į „skim-first“ (3 bullet) + pilnas checklist po `<details>`, sumažinant kognityvinį krūvį. `styles/components.css` pridėti `system-map`, `output-proof`, `section-cta`, `instructions-details` komponentai. `lt/index.html` sutapatintas su EN struktūra ir CTA logika; bendruomenės blokas pakeistas į paid-first (Telegram – optional).

@@ -50,7 +50,7 @@
 | `npm test` | Build (`lt/en`) + struktūra + design-system smoke + a11y smoke + HTML/JS lint |
 | `npm run lint:html` | HTML validacija (`index.html`, `lt/index.html`, `lt/privatumas.html`, `en/index.html`, `en/privacy.html`) |
 | `npm run lint:js` | ESLint |
-| A11y lokaliai | `npx serve -s . -l 3000` + `npx pa11y http://localhost:3000/ --standard WCAG2AA` |
+| A11y lokaliai | `npx serve -s . -l 3000` + `npx pa11y http://localhost:3000/lt/ --standard WCAG2AA` ir `/en/` (kaip CI [.github/workflows/ci.yml](../.github/workflows/ci.yml)) |
 
 ---
 

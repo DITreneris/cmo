@@ -1,7 +1,7 @@
 # Agentų Sistemos Modelis – Apžvalga
 
 **Projektas:** DI Promptų Biblioteka (Turinio DI sistema – CMO rinkinys)  
-**Šio dokumento versija:** 1.1 (sinchronizuota su repo pipeline ir `docs/LEGACY_GOLDEN_STANDARD.md`)  
+**Šio dokumento versija:** 1.2 (sinchronizuota su repo pipeline ir `docs/LEGACY_GOLDEN_STANDARD.md` v1.7)  
 **Kalba:** LT
 
 ---
@@ -30,8 +30,8 @@ ORCHESTRATOR AGENT (koordinacija)
 
 ### Curriculum Agent
 - **Tikslas:** Nustato turinio struktūrą ir mokymosi logiką
-- **Įvestis:** Tikslai, auditorija, [docs/PEDAGOGINES_SPECIFIKACIJA.md](docs/PEDAGOGINES_SPECIFIKACIJA.md), [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md), [CHANGELOG.md](CHANGELOG.md) (naujausi scope); `MVP_ROADMAP.md` – tik *historical* kontekstui
-- **Išvestis:** Promptų seka, priklausomybių modelis, LT/EN atitikmenų reikalavimai
+- **Įvestis:** Tikslai, auditorija, [docs/PEDAGOGINES_SPECIFIKACIJA.md](docs/PEDAGOGINES_SPECIFIKACIJA.md), [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md), [CHANGELOG.md](CHANGELOG.md) (naujausi scope), [data/](data/) (`*-prompt-expected.json`, `*-scenarios.json`)
+- **Išvestis:** Promptų seka, priklausomybių modelis, LT/EN atitikmenų reikalavimai, CMO v2 scenarijų / expected turinys
 
 ### UI/UX & Usability Agent
 - **Tikslas:** Sąsajos kokybė, prieinamumas, vartotojo patirtis
@@ -40,7 +40,7 @@ ORCHESTRATOR AGENT (koordinacija)
 
 ### QA Agent
 - **Tikslas:** Tikrina kokybę – kodas ir turinys
-- **Įvestis:** Pakeitimų diff, [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) (struktūros kontraktas), `npm test` / `tests/*.test.js`, [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md); `MUST_TODO.md` – tik jei liečia aktyvų scope (dokumentas *historical*)
+- **Įvestis:** Pakeitimų diff, [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) (struktūros kontraktas, CMO v2), `npm test` / `tests/*.test.js`, [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md)
 - **Išvestis:** Klaidų ataskaitos, acceptance checklist
 - **Dokumentacija:** Prieš merge tikrina, ar pakeitimams atitinka dokumentacijos atnaujinimai (žr. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md)). Prieš release – ar CHANGELOG.md atnaujintas ir `package.json` versija atitinka SemVer.
 
@@ -103,7 +103,7 @@ Prieš PR įsitikinti, kad `npm test` praeina. A11y tikrinimas – per CI arba l
 
 ## 7. Release seka
 
-1. Orchestrator → Curriculum: release scope ([CHANGELOG.md](CHANGELOG.md), aktyvūs PR tikslai; `MUST_TODO` / `MVP_ROADMAP` – historical).
+1. Orchestrator → Curriculum: release scope ([CHANGELOG.md](CHANGELOG.md), aktyvūs PR tikslai).
 2. Orchestrator → Content / UI/UX: reikiai (jei yra).
 3. Orchestrator → QA: release validacija.
 4. QA: `npm test`, CHANGELOG atnaujintas (SemVer), rankinis QA (naršyklės, mobilus, kopijavimas, a11y).
@@ -114,18 +114,16 @@ Prieš PR įsitikinti, kad `npm test` praeina. A11y tikrinimas – per CI arba l
 ## 8. Susiję dokumentai
 
 - [docs/INDEX.md](docs/INDEX.md) – **indeksas**: rolės, užduotys, kodas ↔ dokumentai
-- [.cursorrules](.cursorrules) – Cursor: saugumas, kokybė, dokumentacija, commit formatas
+- [.cursorrules](.cursorrules) – Cursor: kokybė, a11y, dokumentacija, commit formatas
 - [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) – dokumentų inventorius ir atsakomybės
-- [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – golden standard (struktūra, ID, JS API, checklist)
+- [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – golden standard (struktūra, ID, JS API, CMO v2, checklist)
 - [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md) – LT/EN keliai ir build sinchronizacija
 - [docs/BULLET_PROOF_PROMPTS.md](docs/BULLET_PROOF_PROMPTS.md) – promptų META/INPUT/OUTPUT standartas
 - [docs/PEDAGOGINES_SPECIFIKACIJA.md](docs/PEDAGOGINES_SPECIFIKACIJA.md) – pedagogika ir auditorija
 - [docs/QA_STANDARTAS.md](docs/QA_STANDARTAS.md) – QA standartas (nuoroda į [DITreneris/spinoff01](https://github.com/DITreneris/spinoff01))
 - [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md) – gyvas testavimas ir žurnalas
-- [DEPLOYMENT.md](DEPLOYMENT.md) – GitHub Pages, BASE_PATH, post-deploy
+- [DEPLOYMENT.md](DEPLOYMENT.md) – primary (Vercel) + mirror (GitHub Pages), BASE_PATH, post-deploy
 - [CHANGELOG.md](CHANGELOG.md) – versijų istorija (Keep a Changelog, SemVer)
-- [MUST_TODO.md](MUST_TODO.md), [MVP_ROADMAP.md](MVP_ROADMAP.md) – *historical* planai (kontekstas, ne vienintelis scope šaltinis)
-- [feedback-schema.md](feedback-schema.md) – Feedback Store schema
 
 ---
 
@@ -135,7 +133,7 @@ Keičiant **turinį** – atsakingas Content Agent; keičiant **struktūrą arba
 
 | Etapas | Agentas | Užduotis | Įvestis | Išvestis |
 |--------|---------|----------|---------|----------|
-| 1 | **Orchestrator** | Prioritizuoja užduotį, nustato scope | Verslo užduotis, MUST_TODO | Užduočių eilė, prioritetai |
+| 1 | **Orchestrator** | Prioritizuoja užduotį, nustato scope | Verslo užduotis, [CHANGELOG.md](CHANGELOG.md) (aktyvus scope) | Užduočių eilė, prioritetai |
 | 2 | **Curriculum** | Nustato promptų seką, priklausomybes, mokymosi tikslus | Scope iš Orchestrator | Specifikacija: ką keisti, kokia seka |
 | 3 | **Content** | Redaguoja tik turinį (promptai, antraštės, aprašymai, info boksai); **privalo laikytis** [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) | Specifikacija | Pakeisti tekstai; nekeičia id/klasės/JS |
 | 4 | **UI/UX** | Keičia tik išvaizdą/a11y (CSS, ARIA, layout) – ne promptų teksto | Reikalavimai; golden standard struktūra | CSS/HTML pakeitimai, a11y patikros |
@@ -143,4 +141,4 @@ Keičiant **turinį** – atsakingas Content Agent; keičiant **struktūrą arba
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-04-30
+**Paskutinis atnaujinimas:** 2026-05-15
