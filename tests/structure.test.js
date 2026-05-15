@@ -293,8 +293,10 @@ function run() {
     else failed++;
     if (assert(
       enHtml.includes('Frequently asked questions before you start') &&
-      enHtml.includes('Meme #3 — when you realize AI was not the issue, the vague instruction was.'),
-      'en/index.html: FAQ ir meme slotai EN kalba'
+      enHtml.includes('Error 3: Blaming the tool') &&
+      enHtml.includes('meme-lesson-title') &&
+      !enHtml.includes('meme-caption'),
+      'en/index.html: meme lesson slotai EN kalba (Variant C)'
     )) passed++;
     else failed++;
 

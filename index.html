@@ -428,7 +428,7 @@
             color: var(--hero-ink);
         }
 
-        /* ===== MODAL / KONTAKTŲ FORMA (rezervuota būsimai – žr. INTEGRACIJA.md) ===== */
+        /* ===== MODAL (bendrasis) ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -818,16 +818,6 @@
             padding: 6px 10px;
         }
 
-        .meme-slot {
-            margin: 16px 0;
-            background: linear-gradient(180deg, var(--white) 0%, var(--bg-subtle) 100%);
-            border: 1px solid rgba(30, 64, 175, 0.15);
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-            transition: transform 0.22s ease, box-shadow 0.22s ease;
-        }
-
         .quoteable-block {
             border-left: 4px solid var(--accent-primary);
             background: var(--orange-light);
@@ -871,29 +861,6 @@
         .faq-item p {
             margin: 8px 0 4px;
             font-size: 16px;
-        }
-
-        .meme-slot:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 36px rgba(15, 23, 42, 0.13);
-        }
-
-        .meme-slot img {
-            display: block;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            background: var(--bg-subtle);
-        }
-
-        .meme-caption {
-            padding: 12px 14px;
-            font-size: 14px;
-            line-height: 1.5;
-            color: var(--text-light);
-            border-top: 1px solid rgba(30, 64, 175, 0.12);
-            background: rgba(255, 255, 255, 0.92);
-            font-weight: 600;
         }
 
         .prompt-time {
@@ -1913,9 +1880,12 @@ OUTPUT: 5 idėjos su kabliuku + CTA + KPI.</pre>
             <p><strong>Kaip naudoti?</strong> Eik per žingsnius ir dirbk ciklu: Planuok → Kurk → Tikrink → Tobulink. <a href="#framework-schema">Schema</a>.</p>
             <p class="objectives-eco-hint"><a href="#block1"><strong>Praleisti → Promptas 1</strong></a></p>
             <!-- Breath moment: one meme before prompts -->
-            <figure class="meme-slot" id="meme-slot-1" aria-label="Meme 1">
-                <img src="data/Untitled%20design%20(35).png" alt="Meme apie neaiškų promptą ir netikslų rezultatą" loading="lazy" decoding="async">
-                <figcaption class="meme-caption">Meme #1 — kai parašai vieną neaiškų sakinį ir tikiesi tobulo plano.</figcaption>
+            <figure class="meme-slot" id="meme-slot-1" aria-labelledby="meme-slot-1-title">
+                <div class="meme-lesson-header">
+                    <p class="meme-lesson-title" id="meme-slot-1-title">Klaida 1: per mažai konteksto</p>
+                    <p class="meme-lesson-lead">Neaiškus įvedimas sukuria neaiškų rezultatą.</p>
+                </div>
+                <img src="data/meme-error-1-no-context.png" alt="Neaiškus promptas – neaiškus rezultatas" loading="lazy" decoding="async">
             </figure>
         </section>
 
@@ -2505,9 +2475,12 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 <li>Formatas: kaip turi atrodyti atsakymas.</li>
                 <li>Vertinimas: pagal ką spręsti ar atsakymas geras.</li>
             </ul>
-            <figure class="meme-slot" id="meme-slot-2" aria-label="Meme 2">
-                <img src="data/Untitled%20design%20(36).png" alt="Meme apie perėjimą nuo chaoso prie aiškios promptų struktūros" loading="lazy" decoding="async">
-                <figcaption class="meme-caption">Meme #2 — kai iš „parašyk kažką“ pereini į aiškią struktūrą ir rezultatas pagaliau normalus.</figcaption>
+            <figure class="meme-slot" id="meme-slot-2" aria-labelledby="meme-slot-2-title">
+                <div class="meme-lesson-header">
+                    <p class="meme-lesson-title" id="meme-slot-2-title">Klaida 2: per bendras instrukcijas</p>
+                    <p class="meme-lesson-lead">Be laukų ir formato rezultatas lieka atsitiktinis.</p>
+                </div>
+                <img src="data/meme-error-2-generic.png" alt="Chaotiškas prašymas vs aiški promptų struktūra" loading="lazy" decoding="async">
             </figure>
         </section>
 
@@ -2579,9 +2552,12 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
             <script type="application/ld+json">
                 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Ar tinka pradedančiajam?","acceptedAnswer":{"@type":"Answer","text":"Taip, jei pildai laukus savo situacija, ne bendrais žodžiais."}},{"@type":"Question","name":"Ar būtina naudoti visus 10?","acceptedAnswer":{"@type":"Answer","text":"Ne, pradėk nuo 1–3 ir plėskis pagal poreikį."}},{"@type":"Question","name":"Kuo tai geriau nei random promptas?","acceptedAnswer":{"@type":"Answer","text":"Čia turi nuoseklią seką, aiškų tikslą ir vertinimą."}},{"@type":"Question","name":"Kiek laiko skirti kasdien?","acceptedAnswer":{"@type":"Answer","text":"20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“."}},{"@type":"Question","name":"Ar tai kursas ar įrankis?","acceptedAnswer":{"@type":"Answer","text":"Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk)."}},{"@type":"Question","name":"Kam tai skirta?","acceptedAnswer":{"@type":"Answer","text":"CMO, rinkodaros vadovams, produktų/augimo komandoms ir vadovams, kuriems reikia greito, pakartojamo turinio ciklo."}},{"@type":"Question","name":"Kuo skiriasi nuo promptų šablonų?","acceptedAnswer":{"@type":"Answer","text":"Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą."}},{"@type":"Question","name":"Ar tinka B2B SaaS, paslaugoms ir e. komercijai?","acceptedAnswer":{"@type":"Answer","text":"Taip. Tiesiog pakeisk auditoriją, pasiūlymą, kanalus ir metrikas – struktūra išlieka ta pati."}}]}
             </script>
-            <figure class="meme-slot" id="meme-slot-3" aria-label="Meme 3">
-                <img src="data/Untitled%20design%20(22).png" alt="Meme apie tai, kad problema buvo ne AI, o neaiški instrukcija" loading="lazy" decoding="async">
-                <figcaption class="meme-caption">Meme #3 — kai supranti, kad problema buvo ne DI, o neaiški instrukcija.</figcaption>
+            <figure class="meme-slot" id="meme-slot-3" aria-labelledby="meme-slot-3-title">
+                <div class="meme-lesson-header">
+                    <p class="meme-lesson-title" id="meme-slot-3-title">Klaida 3: kaltiname įrankį</p>
+                    <p class="meme-lesson-lead">Problema dažnai ne DI, o neaiški instrukcija.</p>
+                </div>
+                <img src="data/meme-error-3-blame-tool.png" alt="Problema ne DI, o neaiški instrukcija" loading="lazy" decoding="async">
             </figure>
         </section>
 
@@ -2775,10 +2751,10 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     promptExpl[1].textContent = 'The clearer the prompt, the fewer fixes you need after the first answer.';
                 }
                 setText('#what-is-prompt .mini-formula', 'Context + Goal + Constraints + Format');
-                setText('#meme-slot-1 .meme-caption', 'Meme #1 — when you write one vague sentence and expect a perfect plan.');
-                setLabel('#meme-slot-1', 'Meme 1');
+                setText('#meme-slot-1 .meme-lesson-title', 'Error 1: Not enough context');
+                setText('#meme-slot-1 .meme-lesson-lead', 'Vague input creates vague output.');
                 var meme1img = document.querySelector('#meme-slot-1 img');
-                if (meme1img) meme1img.setAttribute('alt', 'Meme: a vague one-line prompt and a messy AI result');
+                if (meme1img) meme1img.setAttribute('alt', 'Vague prompt – vague output');
 
                 setText('#prompt-anatomy-title', 'What is Prompt Anatomy?');
                 var anatomyP = qa('#prompt-anatomy p');
@@ -2795,10 +2771,10 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     'Evaluation: how to judge response quality.'
                 ];
                 anatomyLi.forEach(function(item, i) { if (anatomyTexts[i]) item.textContent = anatomyTexts[i]; });
-                setText('#meme-slot-2 .meme-caption', 'Meme #2 — when you move from "write something" to a clear structure and the output is finally solid.');
-                setLabel('#meme-slot-2', 'Meme 2');
+                setText('#meme-slot-2 .meme-lesson-title', 'Error 2: Instructions too generic');
+                setText('#meme-slot-2 .meme-lesson-lead', 'Without fields and format, output stays random.');
                 var meme2img = document.querySelector('#meme-slot-2 img');
-                if (meme2img) meme2img.setAttribute('alt', 'Meme: from chaotic prompts to a clear structure that works');
+                if (meme2img) meme2img.setAttribute('alt', 'Chaotic request vs clear prompt structure');
 
                 setText('#framework-schema-title', 'Framework: how to work with this library');
                 var schemaLi = qa('#framework-schema .schema-steps li');
@@ -2894,10 +2870,10 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 if (faqEco) {
                     faqEco.innerHTML = 'For full methodology and executive context, use the <a href="#ecosystem-strip">ecosystem section</a> – all links in one place.';
                 }
-                setText('#meme-slot-3 .meme-caption', 'Meme #3 — when you realize AI was not the issue, the vague instruction was.');
-                setLabel('#meme-slot-3', 'Meme 3');
+                setText('#meme-slot-3 .meme-lesson-title', 'Error 3: Blaming the tool');
+                setText('#meme-slot-3 .meme-lesson-lead', 'The issue is usually the instruction, not the AI.');
                 var meme3img = document.querySelector('#meme-slot-3 img');
-                if (meme3img) meme3img.setAttribute('alt', 'Meme: bad output came from vague instructions, not from AI');
+                if (meme3img) meme3img.setAttribute('alt', 'The issue is the instruction, not the AI');
 
                 var commTitle = el('community-title');
                 if (commTitle) commTitle.innerHTML = 'Want more?<br>Join our US-focused Telegram group.';
@@ -3237,8 +3213,6 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     }
                 }
             });
-
-            // Kontaktų forma ir Google Sheets integracija šiame etape išjungta – minimali aplikacija, jokių duomenų nerinkime. Galima įjungti vėlesniuose etapuose (žr. INTEGRACIJA.md).
 
             // ===== "PAŽYMĖJAU KAIP ATLIKAU" – localStorage (M2) =====
             const PROMPT_DONE_KEY_PREFIX = 'di_prompt_done_';
