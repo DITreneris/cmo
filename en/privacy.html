@@ -29,7 +29,12 @@
         .lang-switcher .lang-current { margin-right: 0.5rem; }
         .lang-switcher a { color: #2B6CB0; text-decoration: none; padding: 6px 10px; border-radius: 6px; min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; }
         .lang-switcher a:hover, .lang-switcher a:focus-visible { background: #E2E8F0; outline: 2px solid #2B6CB0; outline-offset: 2px; }
+        address.contact-address { font-style: normal; margin-bottom: 0.75rem; }
+        .contact-address-lines { display: block; margin-top: 0.25rem; }
     </style>
+    <script type="application/ld+json">
+        {"@context":"https://schema.org","@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/","email":"info@promptanatomy.app","address":{"@type":"PostalAddress","streetAddress":"1311 Park St, Unit #654","addressLocality":"Alameda","addressRegion":"CA","postalCode":"94501","addressCountry":"US"},"sameAs":["https://promptanatomy.space/","https://t.me/prompt_anatomy"]}
+    </script>
 </head>
 <body>
     <nav class="lang-switcher" aria-label="Language"><span class="lang-current" aria-current="true">English</span> <a href="../lt/privatumas.html">Lietuvių</a></nav>
@@ -45,6 +50,13 @@
 
     <h2>If we add a form later</h2>
     <p>If we enable a contact form or similar, we’ll update this policy and clearly state what we collect and how we use it.</p>
+
+    <h2 id="contact">Contact</h2>
+    <p>Email: <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a></p>
+    <address class="contact-address" aria-labelledby="contact-address-label">
+        <span id="contact-address-label"><strong>Mailing address:</strong></span>
+        <span class="contact-address-lines">Prompt Anatomy<br>1311 Park St, Unit #654<br>Alameda, CA 94501, USA</span>
+    </address>
 
     <p style="margin-top: 2rem;"><a href="index.html">← Back to library</a></p>
 </body>

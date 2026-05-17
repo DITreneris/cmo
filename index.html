@@ -34,7 +34,7 @@
         {"@context":"https://schema.org","@type":"WebSite","name":"Prompt Anatomy Teams","url":"https://promptanatomy.space/","inLanguage":["en","lt"],"publisher":{"@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/"}}
     </script>
     <script type="application/ld+json">
-        {"@context":"https://schema.org","@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/","sameAs":["https://promptanatomy.space/","https://t.me/prompt_anatomy"]}
+        {"@context":"https://schema.org","@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/","email":"info@promptanatomy.app","address":{"@type":"PostalAddress","streetAddress":"1311 Park St, Unit #654","addressLocality":"Alameda","addressRegion":"CA","postalCode":"94501","addressCountry":"US"},"sameAs":["https://promptanatomy.space/","https://t.me/prompt_anatomy"]}
     </script>
     <style>
         * {
@@ -1533,7 +1533,16 @@
         }
 
         .footer-email {
+            margin-bottom: 12px;
+        }
+        .footer-address {
+            font-style: normal;
+            line-height: 1.5;
             margin-bottom: 24px;
+        }
+        .footer-address-lines {
+            display: block;
+            margin-top: 0.25rem;
         }
         .footer-email a {
             color: var(--tertiary);
@@ -2579,6 +2588,10 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
             <p>Nepamiršk pakeisti <strong>[auditorija]</strong>, <strong>[galvos skausmas]</strong>, <strong>[unikalus pardavimo pasiūlymas]</strong>, <strong>[kanalas]</strong> ir kitus laukus savo duomenimis</p>
             <p class="footer-product-link">Spin-off Nr. 2 (Prompt Anatomy). Pilnas mokymas, metodika ir brand centras: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>. Paskutinis atnaujinimas: 2026-04-30.</p>
             <p class="footer-email"><span id="footer-email-label">El. paštas:</span> <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a></p>
+            <address class="footer-address" id="footer-address" aria-labelledby="footer-address-label">
+                <span id="footer-address-label">Pašto adresas:</span>
+                <span class="footer-address-lines">Prompt Anatomy<br>1311 Park St, Unit #654<br>Alameda, CA 94501, USA</span>
+            </address>
             <div class="tags" role="list">
                 <span class="tag" role="listitem"><span aria-hidden="true">📣</span> Rinkodara</span>
                 <span class="tag" role="listitem"><span aria-hidden="true">📚</span> 10 promptų</span>
@@ -2968,6 +2981,8 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 });
                 var emailLabel = el('footer-email-label');
                 if (emailLabel) emailLabel.textContent = 'Email:';
+                var addressLabel = el('footer-address-label');
+                if (addressLabel) addressLabel.textContent = 'Mailing address:';
                 var copyright = q('.copyright p');
                 if (copyright) {
                     var path = (window.location.pathname || '').toLowerCase();

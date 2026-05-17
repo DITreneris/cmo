@@ -1023,6 +1023,7 @@ const EN_REPLACEMENTS_PREFIX = [
     '<p class="footer-product-link">Spin-off No. 2 (Prompt Anatomy). Full training, methodology, and brand hub: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>. Last updated: 2026-04-30.</p>'
   ],
   ['<span id="footer-email-label">El. paštas:</span>', '<span id="footer-email-label">Email:</span>'],
+  ['<span id="footer-address-label">Pašto adresas:</span>', '<span id="footer-address-label">Mailing address:</span>'],
   // Exact strings with "Promptų anatomija" before global replace below (order matters)
   ['aria-label="Atidaryti Promptų anatomija Telegram grupę naujame lange"', 'aria-label="Open Prompt Anatomy Telegram group in new tab"'],
   ['Promptų anatomija', 'Prompt Anatomy'],

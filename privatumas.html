@@ -25,7 +25,12 @@
         .back { display: inline-block; margin-bottom: 1.5rem; padding: 10px 20px; background: #2B6CB0; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; min-height: 44px; min-width: 44px; line-height: 24px; }
         .back:hover { background: #2C5282; }
         .back:focus-visible { outline: 3px solid #2B6CB0; outline-offset: 2px; }
+        address.contact-address { font-style: normal; margin-bottom: 0.75rem; }
+        .contact-address-lines { display: block; margin-top: 0.25rem; }
     </style>
+    <script type="application/ld+json">
+        {"@context":"https://schema.org","@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/","email":"info@promptanatomy.app","address":{"@type":"PostalAddress","streetAddress":"1311 Park St, Unit #654","addressLocality":"Alameda","addressRegion":"CA","postalCode":"94501","addressCountry":"US"},"sameAs":["https://promptanatomy.space/","https://t.me/prompt_anatomy"]}
+    </script>
 </head>
 <body>
     <nav class="lang-switcher" aria-label="Kalba"><span class="lang-current" aria-current="true">Lietuvių</span> <a href="en/privacy.html">English</a></nav>
@@ -41,6 +46,13 @@
 
     <h2>Jei vėliau bus forma</h2>
     <p>Jei įjungsime kontaktų formą ar panašią formą, ši politika bus atnaujinta – aiškiai nurodysime, ką renkame ir kaip naudojame.</p>
+
+    <h2 id="contact">Kontaktai</h2>
+    <p>El. paštas: <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a></p>
+    <address class="contact-address" aria-labelledby="contact-address-label">
+        <span id="contact-address-label"><strong>Pašto adresas:</strong></span>
+        <span class="contact-address-lines">Prompt Anatomy<br>1311 Park St, Unit #654<br>Alameda, CA 94501, USA</span>
+    </address>
 
     <p style="margin-top: 2rem;"><a href="index.html" id="back-link-footer">← Grįžti į DI Promptų biblioteką</a></p>
     <script>
