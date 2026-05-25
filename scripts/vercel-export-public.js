@@ -78,12 +78,42 @@ function existsRel(relPath) {
   return fs.existsSync(path.join(ROOT, relPath));
 }
 
+function assertNoPaidPdfsLeaked() {
+  const blockedDirs = [path.join(PUBLIC_DIR, 'api', '_private'), path.join(PUBLIC_DIR, 'paid-pdfs')];
+  for (const dir of blockedDirs) {
+    if (fs.existsSync(dir)) {
+      throw new Error(
+        'Refusing to publish: ' + dir + ' must never be inside public/. Paid PDFs are private (Vercel Blob).'
+      );
+    }
+  }
+  function walk(dir) {
+    if (!fs.existsSync(dir)) return;
+    for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, ent.name);
+      if (ent.isDirectory()) {
+        walk(full);
+      } else if (/\.pdf$/i.test(ent.name)) {
+        throw new Error(
+          'Refusing to publish: PDF found at ' + full + '. Paid PDFs must only live in api/_private/ and Vercel Blob.'
+        );
+      }
+    }
+  }
+  walk(PUBLIC_DIR);
+}
+
 function main() {
   resetDir(PUBLIC_DIR);
 
   // Root entrypoints
   copyFile('index.html');
   if (existsRel('privatumas.html')) copyFile('privatumas.html');
+
+  // Paid PDF storefront supporting pages (EN-only commerce, .space only)
+  if (existsRel('success.html')) copyFile('success.html');
+  if (existsRel('terms.html')) copyFile('terms.html');
+  if (existsRel('coming-soon.html')) copyFile('coming-soon.html');
 
   // Locales
   copyDir('lt');
@@ -94,9 +124,13 @@ function main() {
   copyDir('js');
   if (existsRel('data')) copyDir('data');
 
-  // SEO/robots
+  // PDF cover thumbnails + watermarked previews (storefront artwork, never the PDFs themselves)
+  if (existsRel('assets/pdf-covers')) copyDir('assets/pdf-covers');
+
+  // SEO/robots + Google Search Console HTML verification
   if (existsRel('robots.txt')) copyFile('robots.txt');
   if (existsRel('sitemap.xml')) copyFile('sitemap.xml');
+  if (existsRel('google7305663b2567346e.html')) copyFile('google7305663b2567346e.html');
 
   // Icons & previews
   if (existsRel('favicon.svg')) copyFile('favicon.svg');
@@ -106,6 +140,9 @@ function main() {
   if (existsRel('.nojekyll')) copyFile('.nojekyll');
 
   injectAnalyticsIntoHtmlUnderDir(PUBLIC_DIR);
+
+  // Safety net: never publish anything that could leak the paid PDFs
+  assertNoPaidPdfsLeaked();
 
   console.log('Exported static site to public/');
 }
