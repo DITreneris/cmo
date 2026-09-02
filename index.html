@@ -8,28 +8,32 @@
     <link rel="alternate" hreflang="en" href="https://promptanatomy.space/en/">
     <link rel="alternate" hreflang="x-default" href="https://promptanatomy.space/en/">
     <meta name="robots" content="index,follow,max-image-preview:large">
-    <meta name="description" content="Prompt Anatomy CMO Kit: 10 prompts to build a 30‑day plan, repurpose 1→7 formats, and run a KPI loop. Copy, paste, run. No sign‑up.">
+    <meta name="description" content="Free browser library: structured prompts for a 30-day plan, repurposing, and a KPI loop. Copy, paste, run. No sign-up. Optional PDF kits on promptanatomy.space.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Prompt Anatomy CMO Kit: 10 copy‑paste prompts (45 min)">
-    <meta property="og:description" content="Prompt Anatomy CMO Kit: 10 prompts to build a 30‑day plan, repurpose 1→7 formats, and run a KPI loop. Copy, paste, run. No sign‑up.">
+    <meta property="og:title" content="Prompt Anatomy · Content AI for Marketing Leaders">
+    <meta property="og:description" content="Free browser library: structured prompts for a 30-day plan, repurposing, and a KPI loop. Copy, paste, run. No sign-up. Optional PDF kits on promptanatomy.space.">
     <meta property="og:url" content="https://promptanatomy.space/en/">
     <meta property="og:site_name" content="Prompt Anatomy">
     <meta property="og:locale" content="en_US">
     <meta property="og:image" content="https://promptanatomy.space/og.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Prompt Anatomy CMO Kit: 10 copy-paste prompts (45 min) – preview image">
+    <meta property="og:image:alt" content="Prompt Anatomy – Content AI System for marketing leaders (free library on promptanatomy.space)">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Prompt Anatomy CMO Kit: 10 copy‑paste prompts (45 min)">
-    <meta name="twitter:description" content="Prompt Anatomy CMO Kit: 10 prompts to build a 30‑day plan, repurpose 1→7 formats, and run a KPI loop. Copy, paste, run. No sign‑up.">
+    <meta name="twitter:title" content="Prompt Anatomy · Content AI for Marketing Leaders">
+    <meta name="twitter:description" content="Free browser library: structured prompts for a 30-day plan, repurposing, and a KPI loop. Copy, paste, run. No sign-up. Optional PDF kits on promptanatomy.space.">
     <meta name="twitter:image" content="https://promptanatomy.space/og.png">
-    <meta name="twitter:image:alt" content="Prompt Anatomy CMO Kit: 10 copy-paste prompts (45 min) – preview image">
-    <title>Prompt Anatomy CMO Kit: 10 copy‑paste prompts (45 min)</title>
+    <meta name="twitter:image:alt" content="Prompt Anatomy – Content AI System for marketing leaders (free library on promptanatomy.space)">
+    <title>Prompt Anatomy · Content AI for Marketing Leaders</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
     <style>html { scroll-behavior: smooth; }</style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <script type="application/ld+json">
         {"@context":"https://schema.org","@type":"WebSite","name":"Prompt Anatomy Teams","url":"https://promptanatomy.space/","inLanguage":["en","lt"],"publisher":{"@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/"}}
     </script>
@@ -66,7 +70,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: var(--font-ui);
             background: var(--bg);
             color: var(--text);
             line-height: var(--line-height-body);
@@ -150,28 +154,30 @@
             align-items: center;
         }
         .lang-btn {
-            background: rgba(11, 19, 32, 0.04);
-            color: var(--hero-ink);
-            border: 1px solid rgba(11, 19, 32, 0.12);
-            padding: 6px 12px;
-            min-width: 44px;
-            min-height: 44px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
+            background: transparent;
+            color: var(--hero-muted);
+            border: 1px solid transparent;
+            padding: 4px 8px;
+            min-width: 36px;
+            min-height: 36px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
         }
         .lang-btn:hover,
         .lang-btn:focus-visible {
-            background: rgba(11, 19, 32, 0.08);
-            border-color: rgba(11, 19, 32, 0.22);
-            outline: 2px solid var(--accent-primary);
+            background: rgba(11, 19, 32, 0.06);
+            border-color: rgba(11, 19, 32, 0.14);
+            color: var(--hero-ink);
+            outline: 2px solid rgba(11, 19, 32, 0.25);
             outline-offset: 2px;
         }
         .lang-btn.is-active {
-            background: rgba(207, 167, 58, 0.2);
-            border-color: var(--accent-primary);
+            background: rgba(11, 19, 32, 0.06);
+            border-color: rgba(11, 19, 32, 0.18);
+            color: var(--hero-ink);
         }
 
         /* Promptų anatomija – mažesnis kontrastas ir padding, kad nekonkuruotų su hero */
@@ -198,7 +204,7 @@
 
         .header h1 {
             font-size: var(--font-size-display);
-            font-weight: 800;
+            font-weight: 700;
             line-height: var(--line-height-tight);
             margin-bottom: 16px;
             letter-spacing: -0.02em;
@@ -278,50 +284,7 @@
             outline-offset: 2px;
         }
 
-        /* Hero instant demo (mini prompt) */
-        .header-demo {
-            margin-top: 14px;
-            border: 1px solid rgba(11, 19, 32, 0.08);
-            background: rgba(255, 255, 255, 0.72);
-            border-radius: 14px;
-            padding: 12px 14px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .header-demo-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 10px;
-            font-size: 14px;
-            font-weight: 800;
-            letter-spacing: 0.01em;
-            color: var(--hero-ink);
-        }
-
-        .header-demo pre {
-            margin: 0;
-            padding: 12px 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(11, 19, 32, 0.1);
-            background: rgba(11, 19, 32, 0.04);
-            color: var(--hero-ink);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            max-height: 120px;
-            overflow: auto;
-            white-space: pre-wrap;
-        }
-
-        .header-demo .btn {
-            padding: 10px 14px;
-            font-size: 14px;
-            border-radius: 10px;
-            box-shadow: var(--shadow-cta);
-        }
+        /* Hero instant demo removed – Prompt 1 is the live demo */
 
         .header-note {
             font-size: 13px;
@@ -501,7 +464,7 @@
 
         .modal-title {
             font-size: 28px;
-            font-weight: 800;
+            font-weight: 700;
             margin-bottom: 12px;
             color: var(--text);
         }
@@ -540,10 +503,10 @@
             width: 100%;
             padding: 14px 18px;
             min-height: 44px;
-            border: 3px solid var(--border);
+            border: 1px solid var(--border);
             border-radius: 10px;
             font-size: 16px;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-ui);
             transition: all 0.2s;
             outline: none;
         }
@@ -581,7 +544,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-ui);
         }
 
         .form-submit:hover:not(:disabled) {
@@ -614,7 +577,7 @@
             left: 50%;
             margin-left: -10px;
             margin-top: -10px;
-            border: 3px solid white;
+            border: 1px solid white;
             border-radius: 50%;
             border-top-color: transparent;
             animation: spin 0.8s linear infinite;
@@ -649,7 +612,7 @@
 
         .form-success h3 {
             font-size: 24px;
-            font-weight: 800;
+            font-weight: 700;
             margin-bottom: 12px;
             color: var(--text);
         }
@@ -663,7 +626,7 @@
         /* ===== INSTRUCTIONS BOX ===== */
         .instructions {
             background: var(--orange-light);
-            border: 3px solid var(--accent-gold);
+            border: 1px solid var(--accent-gold);
             border-radius: 16px;
             padding: 36px 40px;
             margin-bottom: 48px;
@@ -671,7 +634,7 @@
 
         .instructions-title {
             font-size: 24px;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--accent-dark);
             margin-bottom: 24px;
             display: flex;
@@ -699,7 +662,7 @@
             content: counter(item) ".";
             position: absolute;
             left: -28px;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--accent-gold-dark);
             font-size: 20px;
         }
@@ -709,7 +672,7 @@
             border: 2px solid var(--accent-gold);
             padding: 4px 10px;
             border-radius: 6px;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: var(--font-mono);
             font-size: 16px;
             font-weight: 700;
             color: var(--accent-dark);
@@ -718,7 +681,7 @@
         /* ===== LEARNING OBJECTIVES (M1) ===== */
         .objectives {
             background: var(--white);
-            border: 3px solid var(--accent-dark);
+            border: 1px solid var(--accent-dark);
             border-radius: 16px;
             padding: 28px 36px;
             margin-bottom: 40px;
@@ -727,7 +690,7 @@
 
         .objectives h2 {
             font-size: 22px;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--accent-dark);
             margin-bottom: 16px;
             display: flex;
@@ -753,7 +716,7 @@
             content: '✓';
             position: absolute;
             left: 0;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--green);
             font-size: 18px;
         }
@@ -761,7 +724,7 @@
         /* ===== UPGRADE LAYER (explain + schema + FAQ) ===== */
         .upgrade-section {
             background: var(--white);
-            border: 3px solid var(--accent-dark);
+            border: 1px solid var(--accent-dark);
             border-radius: 16px;
             padding: 28px 32px;
             margin-bottom: 24px;
@@ -770,7 +733,7 @@
 
         .upgrade-section h2 {
             font-size: 24px;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--accent-dark);
             margin-bottom: 12px;
         }
@@ -805,7 +768,7 @@
             left: 6px;
             top: 0;
             color: var(--accent-gold-dark);
-            font-weight: 800;
+            font-weight: 700;
         }
 
         .mini-formula {
@@ -877,7 +840,7 @@
         /* ===== PROMPT CARD ===== */
         .prompt {
             background: var(--white);
-            border: 3px solid var(--border);
+            border: 1px solid var(--border);
             border-radius: 20px;
             margin-bottom: 32px;
             overflow: hidden;
@@ -920,7 +883,7 @@
             background: rgba(255, 255, 255, 0.7);
             color: var(--text-light);
             font-size: 12px;
-            font-weight: 800;
+            font-weight: 700;
             letter-spacing: 0.02em;
             text-transform: uppercase;
         }
@@ -932,7 +895,7 @@
             border: 1px solid rgba(199, 85, 21, 0.35);
             border-radius: 9999px;
             font-size: 13px;
-            font-weight: 800;
+            font-weight: 700;
             letter-spacing: 0.01em;
             line-height: 1;
             display: inline-flex;
@@ -950,7 +913,7 @@
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            font-weight: 800;
+            font-weight: 700;
             box-shadow: 0 4px 12px rgba(217, 164, 65, 0.35);
         }
 
@@ -968,7 +931,7 @@
 
         .prompt-title {
             font-size: 32px;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text);
             margin-bottom: 12px;
             line-height: 1.2;
@@ -994,13 +957,13 @@
             background: rgba(255, 247, 237, 0.65);
             color: var(--accent-dark);
             font-size: 14px;
-            font-weight: 800;
+            font-weight: 700;
             line-height: 1.4;
         }
 
         .code-block {
             background: var(--bg);
-            border: 3px solid var(--accent-dark);
+            border: 1px solid var(--accent-dark);
             border-radius: 12px;
             padding: 32px;
             margin-top: 20px;
@@ -1020,7 +983,7 @@
         }
 
         .code-block::before {
-            content: '💡 Spausk čia ir nukopijuok';
+            content: 'Spausk čia ir nukopijuok';
             position: absolute;
             top: 12px;
             right: 20px;
@@ -1053,7 +1016,7 @@
         }
 
         .code-text {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: var(--font-mono);
             font-size: 16px;
             line-height: 2;
             color: var(--text);
@@ -1081,7 +1044,7 @@
         .info-content strong {
             display: block;
             font-size: 18px;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--tertiary-dark);
             margin-bottom: 6px;
         }
@@ -1114,7 +1077,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--font-ui);
             box-shadow: var(--shadow-cta);
             outline: none;
         }
@@ -1213,79 +1176,6 @@
             transition: width 0.3s ease;
         }
 
-        /* ===== KAS TOLIAU (S2) ===== */
-        .next-steps {
-            background: var(--white);
-            border: 3px solid var(--tertiary);
-            border-radius: 16px;
-            padding: 28px 36px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-
-        .next-steps h2 {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--tertiary);
-            margin-bottom: 16px;
-        }
-
-        .next-steps p {
-            font-size: 16px;
-            color: var(--text);
-            margin-bottom: 16px;
-            line-height: 1.6;
-        }
-
-        .next-steps-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .next-steps-links a {
-            display: inline-flex;
-            align-items: center;
-            padding: 16px 18px;
-            min-height: 44px;
-            line-height: 24px;
-            background: var(--tertiary);
-            color: white;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 15px;
-            transition: background 0.2s ease, color 0.2s ease;
-        }
-
-        .next-steps-links a:hover {
-            background: var(--tertiary-hover);
-        }
-
-        .next-steps-links a:focus-visible {
-            outline: 3px solid var(--accent-gold);
-            outline-offset: 2px;
-        }
-
-        .next-steps-details {
-            margin-top: 8px;
-        }
-
-        .next-steps-summary {
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--tertiary);
-            padding: 12px 0;
-            list-style-position: outside;
-        }
-
-        .next-steps-summary:focus-visible {
-            outline: 3px solid var(--accent-gold);
-            outline-offset: 4px;
-            border-radius: 6px;
-        }
-
         .objectives-eco-hint,
         .faq-eco-hint {
             margin-top: 16px;
@@ -1300,25 +1190,6 @@
             font-weight: 700;
         }
 
-        .cmo-provider-hub {
-            margin-bottom: 28px;
-            padding: 16px 20px;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            background: var(--white, #fff);
-        }
-
-        .cmo-provider-hub-title {
-            margin: 0 0 8px;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .cmo-provider-hub .cmo-provider-row {
-            margin-top: 0;
-        }
-
         .ecosystem-strip {
             margin-bottom: 40px;
             padding: 28px 32px;
@@ -1329,7 +1200,7 @@
 
         .ecosystem-strip h2 {
             font-size: 22px;
-            font-weight: 800;
+            font-weight: 700;
             margin: 0 0 10px;
             color: var(--text);
         }
@@ -1377,7 +1248,7 @@
             bottom: 32px;
             right: 32px;
             background: white;
-            border: 3px solid var(--green);
+            border: 1px solid var(--green);
             color: var(--text);
             padding: 20px 32px;
             border-radius: 12px;
@@ -1408,7 +1279,7 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            font-weight: 800;
+            font-weight: 700;
         }
 
         /* ===== BENDRUOMENĖ (puslapio pabaiga) ===== */
@@ -1424,7 +1295,7 @@
 
         .community h2 {
             font-size: 24px;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text);
             margin-bottom: 16px;
             line-height: 1.3;
@@ -1497,7 +1368,7 @@
             margin-top: 48px;
             padding: 48px;
             background: white;
-            border: 3px solid var(--border);
+            border: 1px solid var(--border);
             border-radius: 20px;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -1505,7 +1376,7 @@
 
         .footer h3 {
             font-size: 28px;
-            font-weight: 800;
+            font-weight: 700;
             margin-bottom: 16px;
             color: var(--text);
         }
@@ -1749,16 +1620,6 @@
                 font-size: 24px;
             }
 
-            .next-steps-links {
-                gap: 10px;
-            }
-
-            .next-steps-links a {
-                padding: 12px 14px;
-                min-height: 44px;
-                font-size: 14px;
-            }
-
             .instructions {
                 padding: 20px 16px;
             }
@@ -1788,19 +1649,6 @@
 
             .progress-wrap {
                 padding: 12px 16px;
-            }
-
-            .next-steps {
-                padding: 20px 16px;
-            }
-
-            .next-steps h2 {
-                font-size: 18px;
-            }
-
-            .next-steps-links a {
-                padding: 12px 14px;
-                font-size: 14px;
             }
 
             .footer {
@@ -1844,122 +1692,91 @@
 
         <!-- HERO -->
         <header class="header">
-            <div class="header-badges">
-                <a href="https://promptanatomy.app/" class="badge" target="_blank" rel="noopener noreferrer" aria-label="Pilna Promptų anatomija – interaktyvus mokymas (atidaroma naujame lange)">Promptų anatomija</a>
-                <span class="badge badge-spinoff" role="status" aria-label="10 CMO promptų biblioteka naršyklėje, be registracijos">Nemokama biblioteka</span>
+            <div class="header-top header-bar">
+                <p class="header-brand">
+                    <span class="header-brand-mark">
+                        <img src="favicon.svg" width="28" height="28" alt="" aria-hidden="true">
+                        <span>Prompt Anatomy</span>
+                    </span>
+                </p>
                 <div class="lang-switcher" role="group" aria-label="Kalbos pasirinkimas">
                     <button type="button" class="lang-btn is-active" id="langLtBtn" aria-label="Perjungti į lietuvių kalbą" aria-pressed="true">LT</button>
                     <button type="button" class="lang-btn" id="langEnBtn" aria-label="Switch to English" aria-pressed="false">EN</button>
                 </div>
             </div>
-            <h1>Turinio DI sistema<br>rinkodaros vadovams</h1>
-            <p>10 CMO promptų naršyklėje: per ~45 min. susiformuos planas ir kasdienis turinio ciklas.</p>
-            <div class="header-trust">
-                <ul class="trust-pills">
-                    <li class="trust-pill" id="heroTrustPill1"><span aria-hidden="true">🔒</span> Be duomenų rinkimo</li>
-                    <li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">⏱</span> 10 promptų · ~45 min</li>
-                </ul>
-            </div>
-            <details class="header-demo-details">
-                <summary id="heroDemoSummary">Išbandyk mini-promptą (10 s)</summary>
-                <div class="header-demo">
-                <div class="header-demo-title">
-                    <span id="heroDemoTitle">Išbandyk be registracijos</span>
-                    <button class="btn"
-                            id="heroDemoCopyBtn"
-                            aria-label="Nukopijuoti mini-promptą į darbinių atmintinę"
-                            data-prompt-id="promptDemo">
-                        <span aria-hidden="true">📋</span>
-                        <span id="heroDemoCopyBtnText">Nukopijuoti mini-promptą</span>
-                    </button>
+            <div class="header-grid">
+                <div class="header-copy">
+                    <h1>Turinio DI sistema<br>rinkodaros vadovams</h1>
+                    <p class="header-lead" id="heroLead">Kartok rinkodaros workflow vietoj tuščio prompto kiekvieną kartą.</p>
+                    <p class="header-proof" id="heroProof">Nuo kampanijos plano iki kokybės patikros – viena kartojama sistema.</p>
+                    <div class="header-trust">
+                        <ul class="trust-pills">
+                            <li class="trust-pill" id="heroTrustPill1">Be paskyros</li>
+                            <li class="trust-pill" id="heroTrustPill2">ChatGPT ir Claude</li>
+                            <li class="trust-pill" id="heroTrustPill3">4 workflow nemokamai</li>
+                        </ul>
+                    </div>
+                    <div class="header-cta">
+                        <a href="#block1" class="cta-button" id="heroCtaSpine" aria-label="Pradėti pirmą workflow – pereiti prie workflow 1">Pradėti pirmą workflow</a>
+                        <a href="#creative-brief" class="cta-text-link" id="heroCtaBrief" aria-label="Kurti kūrybinį briefą – pereiti prie brief builder">Kurti kūrybinį briefą</a>
+                    </div>
                 </div>
-                <pre id="promptDemo">META: Tu esi rinkodaros strategas.
-INPUT: Auditorija [ ], tikslas [ ].
-OUTPUT: 5 idėjos su kabliuku + CTA + KPI.</pre>
+                <div class="header-visual">
+                    <figure class="hero-diagram" aria-labelledby="hero-diagram-label">
+                        <div class="hero-diagram__card">
+                            <p class="hero-diagram__label visually-hidden" id="hero-diagram-label">Planuok → Kurk → Tikrink → Tobulink</p>
+                            <ul class="hero-diagram__pipeline">
+                                <li class="hero-diagram__module">
+                                    <span class="hero-diagram__module-title">Planuok</span>
+                                    <span class="hero-diagram__module-desc">Briefas + auditorija</span>
+                                </li>
+                                <li class="hero-diagram__flow-arrow" aria-hidden="true">→</li>
+                                <li class="hero-diagram__module">
+                                    <span class="hero-diagram__module-title">Kurk</span>
+                                    <span class="hero-diagram__module-desc">Kanalų turinys</span>
+                                </li>
+                                <li class="hero-diagram__flow-arrow" aria-hidden="true">→</li>
+                                <li class="hero-diagram__module">
+                                    <span class="hero-diagram__module-title">Tikrink</span>
+                                    <span class="hero-diagram__module-desc">Prekės ženklas + kokybė</span>
+                                </li>
+                                <li class="hero-diagram__flow-arrow" aria-hidden="true">→</li>
+                                <li class="hero-diagram__module">
+                                    <span class="hero-diagram__module-title">Tobulink</span>
+                                    <span class="hero-diagram__module-desc">Atsiliepimai → perrašymas</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <figcaption class="hero-diagram__caption">Method: Plan, Create, Check, Improve — four free workflows on this page; full 10 in Pro.</figcaption>
+                    </figure>
                 </div>
-            </details>
-            <div class="header-cta">
-                <a href="#block1" class="cta-button" aria-label="Pradėti nuo pirmo prompto – pereiti prie bibliotekos">Pradėti nuo 1-o prompto</a>
-                <p class="header-cta-note"><a href="#community" class="cta-secondary" aria-label="Prisijunk prie bendruomenės – pereiti prie Telegram">Bendruomenė: Telegram</a></p>
             </div>
         </header>
 
-        <section class="upgrade-section" id="preflight" aria-labelledby="preflight-title">
-            <h2 id="preflight-title">Prieš kopijuojant (1 min)</h2>
-            <ul class="preflight-list">
-                <li>
-                    <strong>Kas yra prompt?</strong>
-                    <span>Aiški instrukcija DI įrankiui: kontekstas + tikslas + ribos + formatas.</span>
-                    <a href="#prompt-basics">Pilnas paaiškinimas</a>
-                </li>
-                <li>
-                    <strong>Kas yra Prompt Anatomy?</strong>
-                    <span>Struktūra, kuri padaro rezultatą nuoseklų ir pakartojamą.</span>
-                    <a href="#prompt-basics">Pilnas paaiškinimas</a>
-                </li>
-                <li>
-                    <strong>Kaip naudoti?</strong>
-                    <span>Planuok → Kurk → Tikrink → Tobulink.</span>
-                    <a href="#framework-schema">Schema</a>
-                </li>
-            </ul>
-            <p class="objectives-eco-hint"><a href="#block1"><strong>Praleisti → Promptas 1</strong></a></p>
+        <section class="objectives objectives--skim" id="executive-summary" aria-labelledby="executive-summary-title">
+            <h2 id="executive-summary-title" class="visually-hidden">Kaip naudoti</h2>
+            <p class="usage-strip" id="howItWorksLead">Kopijuok → įklijuok į ChatGPT arba Claude.</p>
         </section>
 
-        <section class="objectives" id="executive-summary" aria-labelledby="executive-summary-title">
-            <h2 id="executive-summary-title"><span aria-hidden="true">🧭</span> Ką gauni ir kodėl tai veikia</h2>
-            <p class="executive-summary-lead" id="objectives-title">Per ~45 min. – turinio sistema, 100 vienetų ir 30 d. planas rinkodaros vadovui.</p>
-            <div class="value-grid">
-                <article class="value-card">
-                    <h3 class="value-card-title">Kas tai yra</h3>
-                    <p class="value-card-lead"><strong>Prompt Anatomy CMO rinkinys</strong> – struktūruota promptų seka ir framework greitesniems turinio sprendimams.</p>
-                </article>
-                <article class="value-card">
-                    <h3 class="value-card-title">Ką gausi</h3>
-                    <p class="value-card-lead">30 d. planas, 1 idėja → 7 formatai, KPI ciklas: matuok → spręsk → tobulink.</p>
-                </article>
-                <article class="value-card">
-                    <h3 class="value-card-title">Kuo skiriasi</h3>
-                    <p class="value-card-lead">Ne atsitiktiniai promptai – pakartojamas operacinis ciklas su aiškiais laukais ir vertinimu.</p>
-                </article>
-            </div>
-            <p class="objectives-eco-hint"><strong>Žr. greitai:</strong> <a href="#block1">30 d. planas</a> · <a href="#block5">analizė pagal KPI</a> · <a href="#block9">temų grupė</a> · <a href="#cmo-safety">tikrinti prieš publikuojant</a> · <a href="#ecosystem-strip">ekosistema</a>.</p>
-        </section>
-
-        <!-- INSTRUCTIONS (M4: laiko signalas) -->
+        <!-- INSTRUCTIONS (optional copy tips) -->
         <section class="instructions" aria-labelledby="instructions-title">
-            <h2 class="instructions-title" id="instructions-title">
-                <span aria-hidden="true" role="img">📖</span>
-                <span>Kaip naudoti šią biblioteką</span>
-                <span class="prompt-time" role="status" aria-label="Orientacinis laikas: 3–5 min per žingsnį">~3–5 min per žingsnį</span>
-            </h2>
-            <p class="instructions-faq-hint" id="instructions-faq-hint">
-                <a href="#faq-beginner">Ar tinka pradedančiajam?</a> ·
-                <a href="#faq-all-ten">Ar būtina visi 10?</a> ·
-                <a href="#faq">Visi DUK</a>
-            </p>
-            <ol>
-                <li>Pasirink promptą ir spausk ant jo – tekstas pažymėsis</li>
-                <li>Spausk <strong>„Kopijuoti promptą“</strong> arba <code>Ctrl+C</code> / <code>Cmd+C</code></li>
-                <li>Įklijuok į ChatGPT, Claude ar kitą DI (dirbtinio intelekto) įrankį</li>
-                <li>Pakeisk <code>[auditorija]</code>, <code>[galvos skausmas]</code>, <code>[unikalus pardavimo pasiūlymas]</code>, <code>[kanalas]</code> ir kitus laukus savo duomenimis – ir gauk rezultatą</li>
-            </ol>
+            <details class="copy-tips-details" id="copy-tips">
+                <summary id="instructions-title">Kopijavimo patarimai <span class="prompt-time" role="status" aria-label="Orientacinis laikas: 3–5 min per žingsnį">~3–5 min</span></summary>
+                <ol>
+                    <li>Pasirink promptą ir spausk ant jo – tekstas pažymėsis</li>
+                    <li>Spausk <strong>„Kopijuoti promptą“</strong> arba <code>Ctrl+C</code> / <code>Cmd+C</code></li>
+                    <li>Įklijuok į ChatGPT, Claude ar kitą DI (dirbtinio intelekto) įrankį</li>
+                    <li>Pakeisk <code>[auditorija]</code>, <code>[galvos skausmas]</code>, <code>[unikalus pardavimo pasiūlymas]</code>, <code>[kanalas]</code> ir kitus laukus savo duomenimis – ir gauk rezultatą</li>
+                </ol>
+            </details>
         </section>
 
-        <section class="upgrade-section" id="framework-schema" aria-labelledby="framework-schema-title">
-            <h2 id="framework-schema-title">Schema: kaip dirbti su šia biblioteka</h2>
-            <ul class="schema-steps">
-                <li>Planuok: pasirink vieną tikslą ir vieną auditoriją.</li>
-                <li>Kurk: paleisk promptą su savo duomenimis.</li>
-                <li>Tikrink: įvertink rezultatą pagal matavimo rodiklius.</li>
-                <li>Tobulink: pakoreguok promptą ir kartok ciklą.</li>
-            </ul>
-        </section>
+        <!-- CMO_CONTEXT -->
 
         <!-- PROGRESS INDICATOR (S1) -->
         <div class="progress-wrap" id="progressIndicator" aria-live="polite" aria-atomic="true">
-            <p id="progressText">Panaudojai 0 iš 10 promptų</p>
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10" aria-label="Progresas: 0 iš 10 promptų">
+            <p id="progressText">Panaudojai 0 iš 4 workflow</p>
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="4" aria-label="Progresas: 0 iš 4 workflow">
                 <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
             </div>
         </div>
@@ -1968,40 +1785,27 @@ OUTPUT: 5 idėjos su kabliuku + CTA + KPI.</pre>
             <a href="#block1">1</a>
             <a href="#block2">2</a>
             <a href="#block3">3</a>
-            <a href="#block4">4</a>
             <a href="#block5">5</a>
-            <a href="#block6">6</a>
-            <a href="#block7">7</a>
-            <a href="#block8">8</a>
-            <a href="#block9">9</a>
-            <a href="#block10">10</a>
             <span class="progress-jump-sep" aria-hidden="true">·</span>
-            <a href="#cmo-safety" id="progressJumpSafety">Sauga</a>
+            <a href="#pro-contents" id="progressJumpPro">Pro</a>
+            <span class="progress-jump-sep" aria-hidden="true">·</span>
+            <a href="#creative-brief" id="progressJumpCreative">Brief</a>
+            <span class="progress-jump-sep" aria-hidden="true">·</span>
             <a href="#faq" id="progressJumpFaq">DUK</a>
         </nav>
-
-        <div class="cmo-provider-hub no-print" role="region" aria-labelledby="cmo-provider-hub-title">
-            <p class="cmo-provider-hub-title" id="cmo-provider-hub-title">DI įrankiai (naujame skirtuke)</p>
-            <div class="cmo-provider-row" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke">
-                <a class="cmo-provider-link" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Atidaryti ChatGPT</a>
-                <span class="cmo-provider-sep" aria-hidden="true">·</span>
-                <a class="cmo-provider-link" href="https://claude.ai" target="_blank" rel="noopener noreferrer">Atidaryti Claude</a>
-                <span class="cmo-provider-sep" aria-hidden="true">·</span>
-                <a class="cmo-provider-link" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">Atidaryti Gemini</a>
-            </div>
-        </div>
 
         <!-- PROMPT 1 -->
         <article class="prompt">
             <div class="prompt-header">
                 <div class="prompt-meta">
                     <div class="number">1</div>
-                    <div class="category">Pradžia</div>
+                    <div class="category">Planuok</div>
                     <span class="prompt-time">~5–10 min</span>
                     <span class="prompt-recommended" id="prompt1Recommended">Pradėk nuo čia</span>
                 </div>
                 <h2 class="prompt-title">30 dienų turinio sistema</h2>
                 <p class="prompt-desc">Sukurk 30 dienų turinio planą pagal 4 turinio principus</p>
+                <p class="prompt-path-hint" id="prompt1PathHint">Kopijuok Promptą 1 → įklijuok į ChatGPT arba Claude.</p>
             </div>
             <div class="prompt-body">
                 <div class="code-block" 
@@ -2017,8 +1821,7 @@ INPUT: Auditorija [ ], galvos skausmas [ ], unikalus pardavimo pasiūlymas [ ], 
 OUTPUT: Lentelė/sąrašas – 30 dienų: tema, įžanginis kabliukas, formatas, raginimas veikti, matavimo rodikliai. LT arba EN; konkretus tonas.</pre>
                 </div>
                 <div class="info-box" role="note" aria-label="Informacija: promptas 1">
-                    <div class="info-icon" aria-hidden="true">💡</div>
-                    <div class="info-content">
+<div class="info-content">
                         <strong>Branduolys:</strong>
                         <p>4 principai = balansas: autoritetas, problema, įrodymas, pasiūlymas.</p>
                     </div>
@@ -2029,8 +1832,7 @@ OUTPUT: Lentelė/sąrašas – 30 dienų: tema, įžanginis kabliukas, formatas,
                 <button class="btn" 
                         aria-label="Kopijuoti promptą 1 į darbinių atmintinę"
                         data-prompt-id="prompt1">
-                    <span aria-hidden="true">📋</span>
-                    <span>Kopijuoti promptą</span>
+<span>Kopijuoti promptą</span>
                 </button>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="1" aria-label="Pažymėti, kad atlikai šį žingsnį">
@@ -2039,20 +1841,16 @@ OUTPUT: Lentelė/sąrašas – 30 dienų: tema, įžanginis kabliukas, formatas,
             </div>
         </article>
 
-        <figure class="meme-slot meme-slot--compact" id="meme-slot-1">
-            <img src="data/meme-error-1-no-context.png" alt="Daug DI įrankių neišsprendžia chaotiškos instrukcijos" loading="lazy" decoding="async">
-        </figure>
-
         <!-- PROMPT 2 -->
         <article class="prompt">
             <div class="prompt-header">
                 <div class="prompt-meta">
                     <div class="number">2</div>
-                    <div class="category">Pradžia</div>
+                    <div class="category">Kurk</div>
                     <span class="prompt-time">~5–10 min</span>
                 </div>
                 <h2 class="prompt-title">Viena idėja → 7 formatai</h2>
-                <p class="prompt-desc">Vieną idėją paversk į 7 skirtingus formatus</p>
+                <p class="prompt-desc" id="prompt-desc-2">Iš vienos idėjos – 7 kanalų vienetai per ~5–10 min</p>
             </div>
             <div class="prompt-body">
                 <div class="code-block" 
@@ -2068,8 +1866,7 @@ INPUT: Idėja [ ]. Ta pati branduolinė žinutė; pritaikyta kanalui.
 OUTPUT: 7 blokai – LinkedIn, karuselė, 30s video, el. laiškas, titulinis ekranas, reklama, 3 įžanginiai kabliukai. LT arba EN; konkretus tonas.</pre>
                 </div>
                 <div class="info-box" role="note" aria-label="Informacija: promptas 2">
-                    <div class="info-icon" aria-hidden="true">💡</div>
-                    <div class="info-content">
+<div class="info-content">
                         <strong>Vienos idėjos daug formatų:</strong>
                         <p>1 idėja = 7 vienetų. Laikas sutaupomas, nuoseklumas išlaikomas.</p>
                     </div>
@@ -2080,8 +1877,7 @@ OUTPUT: 7 blokai – LinkedIn, karuselė, 30s video, el. laiškas, titulinis ekr
                 <button class="btn" 
                         aria-label="Kopijuoti promptą 2 į darbinių atmintinę"
                         data-prompt-id="prompt2">
-                    <span aria-hidden="true">📋</span>
-                    <span>Kopijuoti promptą</span>
+<span>Kopijuoti promptą</span>
                 </button>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="2" aria-label="Pažymėti, kad atlikai šį žingsnį">
@@ -2090,20 +1886,16 @@ OUTPUT: 7 blokai – LinkedIn, karuselė, 30s video, el. laiškas, titulinis ekr
             </div>
         </article>
 
-        <figure class="meme-slot" id="meme-slot-2">
-            <img src="data/meme-random-prompting-gambling.webp" alt="Atsitiktinis promptinimas yra lošimas, struktūruotas promptinimas yra inžinerija" loading="lazy" decoding="async">
-        </figure>
-
         <!-- PROMPT 3 -->
         <article class="prompt">
             <div class="prompt-header">
                 <div class="prompt-meta">
                     <div class="number">3</div>
-                    <div class="category">Pradžia</div>
+                    <div class="category">Tikrink</div>
                     <span class="prompt-time">~3–5 min</span>
                 </div>
                 <h2 class="prompt-title">LinkedIn Autoriteto Kūrimas</h2>
-                <p class="prompt-desc">150–200 žodžių postas su įžanginiu kabliuku, 3 punktais, pavyzdžiu ir raginimu veikti</p>
+                <p class="prompt-desc" id="prompt-desc-3">Autoriteto LinkedIn postas su įrodymais per ~3–5 min</p>
             </div>
             <div class="prompt-body">
                 <div class="code-block" 
@@ -2119,8 +1911,7 @@ INPUT: Tema [ ], pavyzdys/skaičius [ ]. 150–200 žodžių; be tuščių frazi
 OUTPUT: 1 postas – įžanginis kabliukas, 3 punktai, 1 pavyzdys, raginimas veikti. LT arba EN; įžūlus, pagrįstas.</pre>
                 </div>
                 <div class="info-box" role="note" aria-label="Informacija: promptas 3">
-                    <div class="info-icon" aria-hidden="true">💡</div>
-                    <div class="info-content">
+<div class="info-content">
                         <strong>Autoritetas:</strong>
                         <p>Įrodymai + konkretūs punktai = pasitikėjimas ir reakcija.</p>
                     </div>
@@ -2131,58 +1922,10 @@ OUTPUT: 1 postas – įžanginis kabliukas, 3 punktai, 1 pavyzdys, raginimas vei
                 <button class="btn" 
                         aria-label="Kopijuoti promptą 3 į darbinių atmintinę"
                         data-prompt-id="prompt3">
-                    <span aria-hidden="true">📋</span>
-                    <span>Kopijuoti promptą</span>
+<span>Kopijuoti promptą</span>
                 </button>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="3" aria-label="Pažymėti, kad atlikai šį žingsnį">
-                    <span>Pažymėjau kaip atlikau</span>
-                </label>
-            </div>
-        </article>
-
-        <!-- PROMPT 4 -->
-        <article class="prompt">
-            <div class="prompt-header">
-                <div class="prompt-meta">
-                    <div class="number">4</div>
-                    <div class="category">Pradžia</div>
-                    <span class="prompt-time">~3–5 min</span>
-                </div>
-                <h2 class="prompt-title">30 sek. video scenarijus</h2>
-                <p class="prompt-desc">Sukurti video – lengviau dar nebuvo!</p>
-            </div>
-            <div class="prompt-body">
-                <div class="code-block" 
-                     id="block4" 
-                     role="button"
-                     tabindex="0"
-                     data-prompt-id="prompt4"
-                     aria-label="Pasirinkti ir kopijuoti promptą 4">
-                    <pre class="code-text" id="prompt4">META: Tu esi video scenarijų autorius (Reels/TikTok/Shorts). Tikslas: 30 s scenarijus – sustabdyti žiūrovą, gauti reakciją.
-
-INPUT: Tema [ ], pavyzdys [ ]. ~30 s; įžanginis kabliukas 0–2 s – pirmos sekundės sprendžia.
-
-OUTPUT: Laiko žymės – 0–2 s įžanginis kabliukas, 3 punktai (~8–10 s kiekvienam), pavyzdys, raginimas veikti. LT arba EN; greitas, aiškus.</pre>
-                </div>
-                <div class="info-box" role="note" aria-label="Informacija: promptas 4">
-                    <div class="info-icon" aria-hidden="true">💡</div>
-                    <div class="info-content">
-                        <strong>Trumpas formatas:</strong>
-                        <p>2 sekundės = liks arba slinks toliau. Įžūgis – esmė.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="prompt-footer">
-                <p class="prompt-cta">Nukopijuok, įklijuok į DI įrankį ir pakeisk [tema], [pavyzdys] savo duomenimis.</p>
-                <button class="btn" 
-                        aria-label="Kopijuoti promptą 4 į darbinių atmintinę"
-                        data-prompt-id="prompt4">
-                    <span aria-hidden="true">📋</span>
-                    <span>Kopijuoti promptą</span>
-                </button>
-                <label class="prompt-done-wrap">
-                    <input type="checkbox" class="prompt-done" data-prompt-id="4" aria-label="Pažymėti, kad atlikai šį žingsnį">
                     <span>Pažymėjau kaip atlikau</span>
                 </label>
             </div>
@@ -2193,11 +1936,11 @@ OUTPUT: Laiko žymės – 0–2 s įžanginis kabliukas, 3 punktai (~8–10 s ki
             <div class="prompt-header">
                 <div class="prompt-meta">
                     <div class="number">5</div>
-                    <div class="category">Pradžia</div>
+                    <div class="category">Tobulink</div>
                     <span class="prompt-time">~3–5 min</span>
                 </div>
                 <h2 class="prompt-title">Kasdienė analizė (Veikla→Sprendimas)</h2>
-                <p class="prompt-desc">Iš rodiklių suprask: kas neveikia, kodėl, ką daryti</p>
+                <p class="prompt-desc" id="prompt-desc-5">Iš rodiklių — 4 veiksmai rytojui per ~3–5 min</p>
             </div>
             <div class="prompt-body">
                 <div class="code-block" 
@@ -2213,8 +1956,7 @@ INPUT: Rodikliai – skaičiai, kanalai, periodas [ ]. Kontekstas: ką bandėte,
 OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką testuoti, (4) Ką stabdyti. LT arba EN; konkretus, veiksmo orientuotas.</pre>
                 </div>
                 <div class="info-box" role="note" aria-label="Informacija: promptas 5">
-                    <div class="info-icon" aria-hidden="true">💡</div>
-                    <div class="info-content">
+<div class="info-content">
                         <strong>Uždaras ciklas:</strong>
                         <p>Rodikliai be veiksmų = stovėjimas vietoje. Duomenys → sprendimai.</p>
                     </div>
@@ -2225,8 +1967,7 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 <button class="btn" 
                         aria-label="Kopijuoti promptą 5 į darbinių atmintinę"
                         data-prompt-id="prompt5">
-                    <span aria-hidden="true">📋</span>
-                    <span>Kopijuoti promptą</span>
+<span>Kopijuoti promptą</span>
                 </button>
                 <label class="prompt-done-wrap">
                     <input type="checkbox" class="prompt-done" data-prompt-id="5" aria-label="Pažymėti, kad atlikai šį žingsnį">
@@ -2235,240 +1976,91 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
             </div>
         </article>
 
-        <!-- PROMPT 6 -->
-        <article class="prompt">
-            <div class="prompt-header">
-                <div class="prompt-meta">
-                    <div class="number">6</div>
-                    <div class="category">Įgūdžiai</div>
-                    <span class="prompt-time">~5 min</span>
-                </div>
-                <h2 class="prompt-title">Prieštaravimų apdorojimo įrankis</h2>
-                <p class="prompt-desc">Iš klientų prieštaravimų sukurk turinį, kuris juos neutralizuoja</p>
-            </div>
-            <div class="prompt-body">
-                <div class="code-block" 
-                     id="block6" 
-                     role="button"
-                     tabindex="0"
-                     data-prompt-id="prompt6"
-                     aria-label="Pasirinkti ir kopijuoti promptą 6">
-                    <pre class="code-text" id="prompt6">META: Tu esi konversijos/turinio specialistas. Tikslas: turinys, neutralizuojantis prieštaravimus – mažesnė trintis, didesnis pasitikėjimas.
+        <!-- CMO_SAFETY -->
 
-INPUT: Prieštaravimų sąrašas [ ], produktas/pasiūlymas [ ]. Kiekvienas vienetas – vienas prieštaravimas; įtikinamai.
+        <!-- CMO_CREATIVE_BRIEF -->
 
-OUTPUT: 10 vienetų – postai/el. laiškai/landing, prieštaravimas + argumentai. Trumpas aprašymas + žinutė. LT arba EN; įtikinamas, empatiškas.</pre>
-                </div>
-                <div class="info-box" role="note" aria-label="Informacija: promptas 6">
-                    <div class="info-icon" aria-hidden="true">💡</div>
-                    <div class="info-content">
-                        <strong>Konversija:</strong>
-                        <p>Realūs klausimai + atsakymai = mažesnė trintis, didesnis pasitikėjimas.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="prompt-footer">
-                <p class="prompt-cta">Įklijuok į ChatGPT arba Claude – pakeisk prieštaravimus ir kontekstą.</p>
-                <button class="btn" 
-                        aria-label="Kopijuoti promptą 6 į darbinių atmintinę"
-                        data-prompt-id="prompt6">
-                    <span aria-hidden="true">📋</span>
-                    <span>Kopijuoti promptą</span>
-                </button>
-                <label class="prompt-done-wrap">
-                    <input type="checkbox" class="prompt-done" data-prompt-id="6" aria-label="Pažymėti, kad atlikai šį žingsnį">
-                    <span>Pažymėjau kaip atlikau</span>
-                </label>
-            </div>
-        </article>
+        <!-- CMO_SCENARIOS -->
 
-        <!-- PROMPT 7 -->
-        <article class="prompt">
-            <div class="prompt-header">
-                <div class="prompt-meta">
-                    <div class="number">7</div>
-                    <div class="category">Įgūdžiai</div>
-                    <span class="prompt-time">~5–10 min</span>
-                </div>
-                <h2 class="prompt-title">Lead generator postas + DM seka</h2>
-                <p class="prompt-desc">Lead generator postas + 4 žinučių seka</p>
-            </div>
-            <div class="prompt-body">
-                <div class="code-block" 
-                     id="block7" 
-                     role="button"
-                     tabindex="0"
-                     data-prompt-id="prompt7"
-                     aria-label="Pasirinkti ir kopijuoti promptą 7">
-                    <pre class="code-text" id="prompt7">META: Tu esi lead/konversijų specialistas. Tikslas: postas + 4 žinutės tiems, kurie augina lead'us ir nori vesti iš sekėjo į klientą.
+        <section class="upgrade-section pro-contents" id="pro-contents" aria-labelledby="pro-contents-title">
+            <p class="pro-contents-eyebrow" id="pro-contents-eyebrow">Pro</p>
+            <h2 id="pro-contents-title">Dar 6 workflow Pro rinkinyje</h2>
+            <p class="pro-contents-lead" id="pro-contents-lead">Pilni promptų kūnai offline Pro rinkinyje.</p>
+            <ul class="pro-contents-list" role="list">
+                <li class="pro-contents-item" id="block4" data-teaser-prompt="4">
+                    <span class="pro-contents-job" id="pro-contents-job-4">Video</span>
+                    <span class="pro-contents-outcome" id="prompt-desc-4">30 s video su kabliuku ir CTA</span>
+                </li>
+                <li class="pro-contents-item" id="block6" data-teaser-prompt="6">
+                    <span class="pro-contents-job" id="pro-contents-job-6">Prieštaravimai</span>
+                    <span class="pro-contents-outcome" id="prompt-desc-6">10 vienetų prieštaravimams</span>
+                </li>
+                <li class="pro-contents-item" id="block7" data-teaser-prompt="7">
+                    <span class="pro-contents-job" id="pro-contents-job-7">Lead gen</span>
+                    <span class="pro-contents-outcome" id="prompt-desc-7">Lead postas + DM seka</span>
+                </li>
+                <li class="pro-contents-item" id="block8" data-teaser-prompt="8">
+                    <span class="pro-contents-job" id="pro-contents-job-8">Istorija</span>
+                    <span class="pro-contents-outcome" id="prompt-desc-8">Case study struktūra</span>
+                </li>
+                <li class="pro-contents-item" id="block9" data-teaser-prompt="9">
+                    <span class="pro-contents-job" id="pro-contents-job-9">SEO</span>
+                    <span class="pro-contents-outcome" id="prompt-desc-9">Pillar + subtemos</span>
+                </li>
+                <li class="pro-contents-item" id="block10" data-teaser-prompt="10">
+                    <span class="pro-contents-job" id="pro-contents-job-10">Valdymas</span>
+                    <span class="pro-contents-outcome" id="prompt-desc-10">Control-center planas</span>
+                </li>
+            </ul>
+            <a class="btn" id="pro-contents-cta" href="https://promptanatomy.space/en/#pdf-storefront">Žiūrėti Pro rinkinį</a>
+        </section>
 
-INPUT: Lead generator [ kas duodama, ką sprendžia ] [ ], auditorija [ ]. Postas – vienas raginimas veikti; seka: pristatyti → kvalifikacija → vertė → pasiūlymas.
-
-OUTPUT: (1) Postas: įžanginis kabliukas, nauda, raginimas veikti. (2) 4 žinutės (tekstas + raginimas veikti kiekvienai). LT arba EN; naudingas, aiškus tonas.</pre>
-                </div>
-                <div class="info-box" role="note" aria-label="Informacija: promptas 7">
-                    <div class="info-icon" aria-hidden="true">💡</div>
-                    <div class="info-content">
-                        <strong>Potencialūs klientai:</strong>
-                        <p>Seka: sekėjas → klientas. Struktūra didina konversiją.</p>
-                    </div>
-                </div>
+        <section class="upgrade-section" id="faq" aria-labelledby="faq-title">
+            <h2 id="faq-title">Dažniausi klausimai</h2>
+            <div class="faq-items faq-items--primary">
+                <details class="faq-item" id="faq-beginner">
+                    <summary>Ar tinka pradedančiajam?</summary>
+                    <p>Taip, jei pildai laukus savo situacija, ne bendrais žodžiais.</p>
+                </details>
+                <details class="faq-item" id="faq-all-ten">
+                    <summary>Ar būtina naudoti visus 10?</summary>
+                    <p>Ne, pradėk nuo 1–3 ir plėskis pagal poreikį.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Kuo tai geriau nei random promptas?</summary>
+                    <p>Čia turi nuoseklią seką, aiškų tikslą ir vertinimą.</p>
+                </details>
             </div>
-            <div class="prompt-footer">
-                <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
-                <button class="btn" 
-                        aria-label="Kopijuoti promptą 7 į darbinių atmintinę"
-                        data-prompt-id="prompt7">
-                    <span aria-hidden="true">📋</span>
-                    <span>Kopijuoti promptą</span>
-                </button>
-                <label class="prompt-done-wrap">
-                    <input type="checkbox" class="prompt-done" data-prompt-id="7" aria-label="Pažymėti, kad atlikai šį žingsnį">
-                    <span>Pažymėjau kaip atlikau</span>
-                </label>
-            </div>
-        </article>
-
-        <!-- PROMPT 8 -->
-        <article class="prompt">
-            <div class="prompt-header">
-                <div class="prompt-meta">
-                    <div class="number">8</div>
-                    <div class="category">Įgūdžiai</div>
-                    <span class="prompt-time">~5–10 min</span>
+            <details class="faq-more-details">
+                <summary>Daugiau klausimų</summary>
+                <div class="faq-items">
+                <details class="faq-item">
+                    <summary>Kiek laiko skirti kasdien?</summary>
+                    <p>20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Ar tai kursas ar įrankis?</summary>
+                    <p>Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk).</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Kam tai skirta?</summary>
+                    <p>CMO, rinkodaros vadovams, produktų/augimo komandoms ir vadovams, kuriems reikia greito, pakartojamo turinio ciklo.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Kuo skiriasi nuo promptų šablonų?</summary>
+                    <p>Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Ar tinka B2B SaaS, paslaugoms ir e. komercijai?</summary>
+                    <p>Taip. Tiesiog pakeisk auditoriją, pasiūlymą, kanalus ir metrikas – struktūra išlieka ta pati.</p>
+                </details>
                 </div>
-                <h2 class="prompt-title">Kliento istorijos struktūra</h2>
-                <p class="prompt-desc">Iš duomenų sukurk kliento istoriją</p>
-            </div>
-            <div class="prompt-body">
-                <div class="code-block" 
-                     id="block8" 
-                     role="button"
-                     tabindex="0"
-                     data-prompt-id="prompt8"
-                     aria-label="Pasirinkti ir kopijuoti promptą 8">
-                    <pre class="code-text" id="prompt8">META: Tu esi turinio/pardavimų specialistas. Tikslas: iš duomenų – struktūrizuota kliento istorija (kredibilitetas, konversija).
-
-INPUT: Klientas [ ], problema [ ], sprendimas [ ], procesas [ ], rezultatai (skaičiai/citatos) [ ]. Rezultatai – konkretūs.
-
-OUTPUT: 6 sekcijos – Problema, Sprendimas, Procesas, Rezultatas, Pagrindinės mintys, raginimas veikti. Su skaičiais kur įmanoma. LT arba EN; įtikinamas tonas.</pre>
-                </div>
-                <div class="info-box" role="note" aria-label="Informacija: promptas 8">
-                    <div class="info-icon" aria-hidden="true">💡</div>
-                    <div class="info-content">
-                        <strong>Įrodymai:</strong>
-                        <p>Skaičiai + procesas = kredibilitetas ir konversija.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="prompt-footer">
-                <p class="prompt-cta">Nukopijuok ir įklijuok – įrašyk kliento duomenis ir gauk struktūrizuotą istoriją.</p>
-                <button class="btn" 
-                        aria-label="Kopijuoti promptą 8 į darbinių atmintinę"
-                        data-prompt-id="prompt8">
-                    <span aria-hidden="true">📋</span>
-                    <span>Kopijuoti promptą</span>
-                </button>
-                <label class="prompt-done-wrap">
-                    <input type="checkbox" class="prompt-done" data-prompt-id="8" aria-label="Pažymėti, kad atlikai šį žingsnį">
-                    <span>Pažymėjau kaip atlikau</span>
-                </label>
-            </div>
-        </article>
-
-        <!-- PROMPT 9 -->
-        <article class="prompt">
-            <div class="prompt-header">
-                <div class="prompt-meta">
-                    <div class="number">9</div>
-                    <div class="category">Plėtra</div>
-                    <span class="prompt-time">~3–5 min</span>
-                </div>
-                <h2 class="prompt-title">Temų grupė</h2>
-                <p class="prompt-desc">Pagrindinė tema + 8 subtemos, vidinės nuorodos</p>
-            </div>
-            <div class="prompt-body">
-                <div class="code-block"
-                     id="block9"
-                     role="button"
-                     tabindex="0"
-                     data-prompt-id="prompt9"
-                     aria-label="Pasirinkti ir kopijuoti promptą 9">
-                    <pre class="code-text" id="prompt9">META: Tu esi SEO/turinio specialistas. Tikslas: temų struktūra (pagrindinė + 8 subtemos) autoritetui ir organiniam pasiekiamumui.
-
-INPUT: Pagrindinė tema [ ], niša/vertė [ ]. 8 subtemos, logiškai susietos; vidinės nuorodos.
-
-OUTPUT: (1) 1 pagrindinė tema – pavadinimas, aprašymas, raginimas veikti. (2) 8 subtemos – pavadinimai, ryšys su pagrindine. (3) Nuorodų logika. LT arba EN.</pre>
-                </div>
-                <div class="info-box" role="note" aria-label="Informacija: promptas 9">
-                    <div class="info-icon" aria-hidden="true">💡</div>
-                    <div class="info-content">
-                        <strong>Autoritetas:</strong>
-                        <p>Pagrindinė tema + subtemos = pasiekiamumas ir eksperto pozicija.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="prompt-footer">
-                <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
-                <button class="btn"
-                        aria-label="Kopijuoti promptą 9 į darbinių atmintinę"
-                        data-prompt-id="prompt9">
-                    <span aria-hidden="true">📋</span>
-                    <span>Kopijuoti promptą</span>
-                </button>
-                <label class="prompt-done-wrap">
-                    <input type="checkbox" class="prompt-done" data-prompt-id="9" aria-label="Pažymėti, kad atlikai šį žingsnį">
-                    <span>Pažymėjau kaip atlikau</span>
-                </label>
-            </div>
-        </article>
-
-        <!-- PROMPT 10 -->
-        <article class="prompt">
-            <div class="prompt-header">
-                <div class="prompt-meta">
-                    <div class="number">10</div>
-                    <div class="category">Viskas kartu</div>
-                    <span class="prompt-time">~5–10 min</span>
-                </div>
-                <h2 class="prompt-title">Pagrindinis promptas (valdymo centras)</h2>
-                <p class="prompt-desc">Vienas integruotas planas: turinys, vienos idėjos daug formatų, testavimas, veiksmai</p>
-            </div>
-            <div class="prompt-body">
-                <div class="code-block"
-                     id="block10"
-                     role="button"
-                     tabindex="0"
-                     data-prompt-id="prompt10"
-                     aria-label="Pasirinkti ir kopijuoti promptą 10">
-                    <pre class="code-text" id="prompt10">META: Tu esi rinkodaros strategas. Tikslas: vienas „valdymo centro" planas – turinys, 1→7 formatų, testavimas, prioritetai.
-
-INPUT: Verslas [ ], auditorija [ ], galvos skausmas [ ], unikalus pardavimo pasiūlymas [ ], tikslas [ ], kanalai [ ], duomenys (rodikliai, prieštaravimai, istorijos) [ ]. Konkretūs teiginiai, matuojamas raginimas veikti.
-
-OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei, (3) 1 idėja→7 formatų, (4) 3 hipotezės, (5) Rodiklių interpretavimas, (6) 3 veiksmai rytoj. LT arba EN; konkretus tonas.</pre>
-                </div>
-                <div class="info-box" role="note" aria-label="Informacija: promptas 10">
-                    <div class="info-icon" aria-hidden="true">💡</div>
-                    <div class="info-content">
-                        <strong>Valdymo centras:</strong>
-                        <p>Viskas vienoje vietoje: 30 d. planas, 1→7, testavimas, prioritetai.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="prompt-footer">
-                <p class="prompt-cta">Šis promptas apima viską – nukopijuok, įklijuok ir pildyk savo verslo laukus.</p>
-                <button class="btn"
-                        aria-label="Kopijuoti promptą 10 į darbinių atmintinę"
-                        data-prompt-id="prompt10">
-                    <span aria-hidden="true">📋</span>
-                    <span>Kopijuoti promptą</span>
-                </button>
-                <label class="prompt-done-wrap">
-                    <input type="checkbox" class="prompt-done" data-prompt-id="10" aria-label="Pažymėti, kad atlikai šį žingsnį">
-                    <span>Pažymėjau kaip atlikau</span>
-                </label>
-            </div>
-        </article>
+            </details>
+            <p class="faq-eco-hint">Pilnai metodikai ir vadovų kontekstui naudok <a href="#ecosystem-strip">ekosistemos skiltį</a> – ten suvestos nuorodos.</p>
+            <script type="application/ld+json">
+                {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Ar tinka pradedančiajam?","acceptedAnswer":{"@type":"Answer","text":"Taip, jei pildai laukus savo situacija, ne bendrais žodžiais."}},{"@type":"Question","name":"Ar būtina naudoti visus 10?","acceptedAnswer":{"@type":"Answer","text":"Ne, pradėk nuo 1–3 ir plėskis pagal poreikį."}},{"@type":"Question","name":"Kuo tai geriau nei random promptas?","acceptedAnswer":{"@type":"Answer","text":"Čia turi nuoseklią seką, aiškų tikslą ir vertinimą."}},{"@type":"Question","name":"Kiek laiko skirti kasdien?","acceptedAnswer":{"@type":"Answer","text":"20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“."}},{"@type":"Question","name":"Ar tai kursas ar įrankis?","acceptedAnswer":{"@type":"Answer","text":"Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk)."}},{"@type":"Question","name":"Kam tai skirta?","acceptedAnswer":{"@type":"Answer","text":"CMO, rinkodaros vadovams, produktų/augimo komandoms ir vadovams, kuriems reikia greito, pakartojamo turinio ciklo."}},{"@type":"Question","name":"Kuo skiriasi nuo promptų šablonų?","acceptedAnswer":{"@type":"Answer","text":"Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą."}},{"@type":"Question","name":"Ar tinka B2B SaaS, paslaugoms ir e. komercijai?","acceptedAnswer":{"@type":"Answer","text":"Taip. Tiesiog pakeisk auditoriją, pasiūlymą, kanalus ir metrikas – struktūra išlieka ta pati."}}]}
+            </script>
+        </section>
 
         <details class="upgrade-section prompt-basics-details" id="prompt-basics">
             <summary id="prompt-basics-summary">Promptų pagrindai (1 min)</summary>
@@ -2497,72 +2089,6 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 <p><strong>Turinio DI sistema:</strong> procesas + promptų seka, kuri paverčia „idėjas“ į planą, publikavimą ir matuojamus veiksmus.</p>
             </div>
         </details>
-
-        <!-- KAS TOLIAU? (S2) -->
-        <section class="next-steps" aria-labelledby="next-steps-title">
-            <h2 id="next-steps-title">Kas toliau?</h2>
-            <p>Geriausia eiti iš eilės nuo 1 iki 10. Paspaudę nuorodą pereisi prie atitinkamo prompto.</p>
-            <details class="next-steps-details">
-                <summary class="next-steps-summary" id="next-steps-jump">Šuolis į promptą (1–10)</summary>
-                <div class="next-steps-links">
-                    <a href="#block1">1. 30 dienų turinio sistema</a>
-                    <a href="#block2">2. Viena idėja → 7 formatai</a>
-                    <a href="#block3">3. LinkedIn Autoriteto Kūrimas</a>
-                    <a href="#block4">4. 30 sek. video scenarijus</a>
-                    <a href="#block5">5. Kasdienė analizė (Veikla→Sprendimas)</a>
-                    <a href="#block6">6. Prieštaravimų apdorojimas</a>
-                    <a href="#block7">7. Lead generator postas + DM seka</a>
-                    <a href="#block8">8. Kliento istorijos struktūra</a>
-                    <a href="#block9">9. Temų grupė</a>
-                    <a href="#block10">10. Pagrindinis promptas (valdymo centras)</a>
-                </div>
-            </details>
-        </section>
-
-        <section class="upgrade-section" id="faq" aria-labelledby="faq-title">
-            <h2 id="faq-title">Dažniausi klausimai prieš startą</h2>
-            <div class="faq-items">
-                <details class="faq-item" id="faq-beginner">
-                    <summary>Ar tinka pradedančiajam?</summary>
-                    <p>Taip, jei pildai laukus savo situacija, ne bendrais žodžiais.</p>
-                </details>
-                <details class="faq-item" id="faq-all-ten">
-                    <summary>Ar būtina naudoti visus 10?</summary>
-                    <p>Ne, pradėk nuo 1–3 ir plėskis pagal poreikį.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Kuo tai geriau nei random promptas?</summary>
-                    <p>Čia turi nuoseklią seką, aiškų tikslą ir vertinimą.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Kiek laiko skirti kasdien?</summary>
-                    <p>20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Ar tai kursas ar įrankis?</summary>
-                    <p>Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk).</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Kam tai skirta?</summary>
-                    <p>CMO, rinkodaros vadovams, produktų/augimo komandoms ir vadovams, kuriems reikia greito, pakartojamo turinio ciklo.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Kuo skiriasi nuo promptų šablonų?</summary>
-                    <p>Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Ar tinka B2B SaaS, paslaugoms ir e. komercijai?</summary>
-                    <p>Taip. Tiesiog pakeisk auditoriją, pasiūlymą, kanalus ir metrikas – struktūra išlieka ta pati.</p>
-                </details>
-            </div>
-            <p class="faq-eco-hint">Pilnai metodikai ir vadovų kontekstui naudok <a href="#ecosystem-strip">ekosistemos skiltį</a> – ten suvestos nuorodos.</p>
-            <script type="application/ld+json">
-                {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Ar tinka pradedančiajam?","acceptedAnswer":{"@type":"Answer","text":"Taip, jei pildai laukus savo situacija, ne bendrais žodžiais."}},{"@type":"Question","name":"Ar būtina naudoti visus 10?","acceptedAnswer":{"@type":"Answer","text":"Ne, pradėk nuo 1–3 ir plėskis pagal poreikį."}},{"@type":"Question","name":"Kuo tai geriau nei random promptas?","acceptedAnswer":{"@type":"Answer","text":"Čia turi nuoseklią seką, aiškų tikslą ir vertinimą."}},{"@type":"Question","name":"Kiek laiko skirti kasdien?","acceptedAnswer":{"@type":"Answer","text":"20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“."}},{"@type":"Question","name":"Ar tai kursas ar įrankis?","acceptedAnswer":{"@type":"Answer","text":"Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk)."}},{"@type":"Question","name":"Kam tai skirta?","acceptedAnswer":{"@type":"Answer","text":"CMO, rinkodaros vadovams, produktų/augimo komandoms ir vadovams, kuriems reikia greito, pakartojamo turinio ciklo."}},{"@type":"Question","name":"Kuo skiriasi nuo promptų šablonų?","acceptedAnswer":{"@type":"Answer","text":"Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą."}},{"@type":"Question","name":"Ar tinka B2B SaaS, paslaugoms ir e. komercijai?","acceptedAnswer":{"@type":"Answer","text":"Taip. Tiesiog pakeisk auditoriją, pasiūlymą, kanalus ir metrikas – struktūra išlieka ta pati."}}]}
-            </script>
-            <figure class="meme-slot" id="meme-slot-6">
-                <img src="data/meme-error-3-blame-tool.png" alt="Problema ne DI, o neaiški instrukcija" loading="lazy" decoding="async">
-            </figure>
-        </section>
 
         <section class="upgrade-section ecosystem-strip" id="ecosystem-strip" aria-labelledby="ecosystem-strip-title">
             <h2 id="ecosystem-strip-title">Prompt Anatomy ekosistema</h2>
@@ -2612,8 +2138,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
         <p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Promptas</p>
         <div class="sticky-prompt-bar-actions">
             <button type="button" class="btn sticky-prompt-bar-copy" id="stickyPromptBarCopy" aria-label="Kopijuoti dabartinį promptą">
-                <span aria-hidden="true">📋</span>
-                <span id="stickyPromptBarCopyText">Kopijuoti</span>
+<span id="stickyPromptBarCopyText">Kopijuoti</span>
             </button>
             <a href="#block2" class="sticky-prompt-bar-next" id="stickyPromptBarNext">Kitas →</a>
         </div>
@@ -2730,79 +2255,40 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 if (skip) skip.textContent = 'Skip to content';
                 var h1 = q('.header h1');
                 if (h1) h1.innerHTML = 'Content AI System<br>for Marketing Leaders';
-                var headerP = q('.header p');
-                if (headerP) {
-                    headerP.textContent =
-                        '10 CMO prompts in your browser: in ~45 minutes you get a plan and a daily content rhythm.';
-                }
-                var badgeLink = q('.header-badges a.badge');
-                if (badgeLink) { badgeLink.textContent = 'Prompt Anatomy'; setLabel(badgeLink, 'Full Prompt Anatomy – interactive training (opens in new tab)'); }
-                var badgeSpin = q('.badge-spinoff');
-                if (badgeSpin) {
-                    badgeSpin.textContent = 'Free library';
-                    setLabel(badgeSpin, '10 CMO prompts in your browser, no sign-up required');
-                }
-                var cta1 = q('.header-cta .cta-button');
-                if (cta1) {
-                    cta1.textContent = 'Start with prompt 1';
-                    setLabel(cta1, 'Start with prompt 1 – go to the library');
-                }
-                var ctaNote = q('.header-cta-note .cta-secondary');
-                if (ctaNote) {
-                    ctaNote.textContent = 'Community: Telegram';
-                    setLabel(ctaNote, 'Join the community – go to Telegram');
-                }
-                setText('#heroTrustPill1', '🔒 No data collection');
-                setText('#heroTrustPill2', '⏱ 10 prompts · ~45 min');
-                setText('#heroDemoSummary', 'Try mini-prompt (10 sec)');
-                setText('#heroDemoTitle', 'Try without signing up');
-                setText('#heroDemoCopyBtnText', 'Copy mini-prompt');
-                setLabel('#heroDemoCopyBtn', 'Copy mini-prompt to clipboard');
-                setText('#promptDemo', 'META: You are a marketing strategist.\nINPUT: Audience [ ], goal [ ].\nOUTPUT: 5 ideas with hook + CTA + KPI.');
-
-                setText('#executive-summary-title', '🧭 What you get and why it works');
-                var objLead = el('objectives-title');
-                if (objLead) objLead.textContent = 'In ~45 minutes – content system, 100 assets, and a 30-day plan for marketing leaders.';
-                var valueTitles = qa('.value-card-title');
-                var valueLeads = qa('.value-card-lead');
-                var valueTitleTexts = ['What this is', 'What you get', 'How it differs'];
-                var valueLeadTexts = [
-                    'Prompt Anatomy CMO Kit – structured prompt sequence and framework for faster content decisions.',
-                    '30-day plan, one idea → 7 formats, KPI loop: measure → decide → improve.',
-                    'Not random prompts – a repeatable operating cycle with clear fields and evaluation.'
-                ];
-                valueTitles.forEach(function(n, i) { if (valueTitleTexts[i]) n.textContent = valueTitleTexts[i]; });
-                valueLeads.forEach(function(n, i) { if (valueLeadTexts[i]) n.textContent = valueLeadTexts[i]; });
-                var objEcoHints = qa('.objectives-eco-hint');
-                if (objEcoHints.length >= 2) {
-                    objEcoHints[1].innerHTML = '<strong>See:</strong> <a href="#block1">30-day plan</a> · <a href="#block5">KPI analysis</a> · <a href="#block9">topic cluster</a> · <a href="#cmo-safety">pre-publish safety</a> · <a href="#ecosystem-strip">ecosystem</a>.';
-                }
-                setText('#preflight-title', 'Before you copy (1 min)');
-                var preflightStrong = qa('.preflight-list li strong');
-                var preflightSpan = qa('.preflight-list li span');
-                var preflightStrongTexts = ['What is a prompt?', 'What is Prompt Anatomy?', 'How to use?'];
-                var preflightSpanTexts = [
-                    'A clear instruction for an AI tool: context + goal + constraints + format.',
-                    'A structure that makes outputs consistent and repeatable.',
-                    'Plan → Create → Check → Improve.'
-                ];
-                preflightStrong.forEach(function(n, i) { if (preflightStrongTexts[i]) n.textContent = preflightStrongTexts[i]; });
-                preflightSpan.forEach(function(n, i) { if (preflightSpanTexts[i]) n.textContent = preflightSpanTexts[i]; });
-                var preflightLinks = qa('.preflight-list li a');
-                preflightLinks.forEach(function(a) {
-                    if (a.getAttribute('href') === '#framework-schema') a.textContent = 'Framework';
-                    else if (a.getAttribute('href') === '#prompt-basics') a.textContent = 'Full explanation';
+                setText('#heroLead', 'Run repeatable marketing workflows instead of starting from a blank prompt.');
+                setText('#heroProof', 'From campaign plan to quality check in one repeatable system.');
+                setText('#hero-diagram-label', 'Plan → Create → Check → Improve');
+                var diagramTitles = qa('.hero-diagram__module-title');
+                var diagramDescs = qa('.hero-diagram__module-desc');
+                ['Plan', 'Create', 'Check', 'Improve'].forEach(function(label, i) {
+                    if (diagramTitles[i]) diagramTitles[i].textContent = label;
                 });
-                var skipPreflight = q('#preflight .objectives-eco-hint a');
-                if (skipPreflight) skipPreflight.textContent = 'Skip → Prompt 1';
-                setText('#prompt-basics-summary', 'Prompt basics (1 min)');
-                var instrFaq = el('instructions-faq-hint');
-                if (instrFaq) {
-                    instrFaq.innerHTML = '<a href="#faq-beginner">Good for beginners?</a> · <a href="#faq-all-ten">Need all 10?</a> · <a href="#faq">All FAQ</a>';
+                ['Brief + audience', 'Channel-ready content', 'Brand + quality', 'Feedback → rewrite'].forEach(function(label, i) {
+                    if (diagramDescs[i]) diagramDescs[i].textContent = label;
+                });
+                var langGroup = q('.lang-switcher');
+                if (langGroup) langGroup.setAttribute('aria-label', 'Language selection');
+                var ctaBrief = el('heroCtaBrief');
+                if (ctaBrief) {
+                    ctaBrief.textContent = 'Build a creative brief';
+                    setLabel(ctaBrief, 'Build a creative brief – go to the brief builder');
                 }
+                var ctaSpine = el('heroCtaSpine');
+                if (ctaSpine) {
+                    ctaSpine.textContent = 'Start your first workflow';
+                    setLabel(ctaSpine, 'Start your first workflow – go to workflow 1');
+                }
+                setText('#heroTrustPill1', 'No signup');
+                setText('#heroTrustPill2', 'ChatGPT + Claude');
+                setText('#heroTrustPill3', '4 workflows free');
+
+                setText('#executive-summary-title', 'How to use');
+                setText('#howItWorksLead', 'Copy → paste into ChatGPT or Claude.');
+                setText('#prompt-basics-summary', 'Prompt basics (1 min)');
                 var progJump = el('progressJump');
                 if (progJump) progJump.setAttribute('aria-label', 'Quick jump between prompts');
-                setText('#progressJumpSafety', 'Safety');
+                setText('#progressJumpPro', 'Pro');
+                setText('#progressJumpCreative', 'Brief');
                 setText('#progressJumpFaq', 'FAQ');
                 setText('#stickyPromptBarCopyText', 'Copy');
                 setLabel('#stickyPromptBarCopy', 'Copy current prompt');
@@ -2810,10 +2296,22 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 var instrTitle = el('instructions-title');
                 if (instrTitle) {
                     var spanNote = instrTitle.querySelector('.prompt-time');
-                    if (spanNote) setLabel(spanNote, 'Estimated time: 3–5 min per step');
-                    var spanText = instrTitle.querySelectorAll('span')[1];
-                    if (spanText) spanText.textContent = 'How to use this library';
+                    if (spanNote) {
+                        setLabel(spanNote, 'Estimated time: 3–5 min per step');
+                        spanNote.textContent = '~3–5 min';
+                    }
+                    // summary text node before .prompt-time
+                    var firstText = null;
+                    for (var ti = 0; ti < instrTitle.childNodes.length; ti++) {
+                        if (instrTitle.childNodes[ti].nodeType === 3 && instrTitle.childNodes[ti].textContent.trim()) {
+                            firstText = instrTitle.childNodes[ti];
+                            break;
+                        }
+                    }
+                    if (firstText) firstText.textContent = 'Copy tips ';
+                    else if (!spanNote) instrTitle.textContent = 'Copy tips';
                 }
+                setText('#prompt1PathHint', 'Copy Prompt 1 → paste into ChatGPT or Claude.');
                 var instrOl = qa('.instructions ol li');
                 if (instrOl.length >= 4) {
                     instrOl[0].textContent = 'Select a prompt and click it to auto-select the text';
@@ -2825,18 +2323,14 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 setText('#what-is-prompt-title', 'What is a prompt?');
                 var promptExpl = qa('#what-is-prompt p');
                 if (promptExpl.length >= 2) {
-                    promptExpl[0].textContent = 'A prompt is a clear instruction to an AI tool: what to do, for whom, and in which format.';
-                    promptExpl[1].textContent = 'The clearer the prompt, the fewer fixes you need after the first answer.';
+                    promptExpl[0].textContent = 'A prompt is an engineered instruction — Context + Goal + Constraints + Format — not a one-line chat gamble.';
+                    promptExpl[1].textContent = 'Engineered prompts cut rework after the first answer; random prompting is gambling.';
                 }
                 setText('#what-is-prompt .mini-formula', 'Context + Goal + Constraints + Format');
-                var meme1img = document.querySelector('#meme-slot-1 img');
-                if (meme1img) meme1img.setAttribute('alt', 'More AI tools do not fix chaotic instructions');
-                var meme2img = document.querySelector('#meme-slot-2 img');
-                if (meme2img) meme2img.setAttribute('alt', 'Random prompting is gambling; structured prompting is engineering');
                 setText('#prompt-anatomy-title', 'What is Prompt Anatomy?');
                 var anatomyP = qa('#prompt-anatomy p');
                 if (anatomyP.length >= 1) {
-                    anatomyP[0].textContent = 'Prompt Anatomy is a structure that helps you write prompts with consistent and repeatable results.';
+                    anatomyP[0].textContent = 'Prompt Anatomy standardizes prompt structure so team outputs stay consistent and repeatable.';
                 }
                 var anatomyLi = qa('#prompt-anatomy .anatomy-parts li');
                 var anatomyTexts = [
@@ -2848,46 +2342,47 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     'Evaluation: how to judge response quality.'
                 ];
                 anatomyLi.forEach(function(item, i) { if (anatomyTexts[i]) item.textContent = anatomyTexts[i]; });
-                setText('#framework-schema-title', 'Framework: how to work with this library');
-                var schemaLi = qa('#framework-schema .schema-steps li');
-                var schemaTexts = [
-                    'Plan: choose one goal and one audience.',
-                    'Create: run the prompt with your real data.',
-                    'Check: evaluate output by your metrics.',
-                    'Improve: refine the prompt and repeat the cycle.'
-                ];
-                schemaLi.forEach(function(item, i) { if (schemaTexts[i]) item.textContent = schemaTexts[i]; });
                 var progressText = el('progressText');
-                if (progressText) progressText.textContent = 'You used 0 of 10 prompts';
+                if (progressText) progressText.textContent = 'You used 0 of 4 workflows';
                 var progressBar = q('.progress-bar[role="progressbar"]');
-                if (progressBar) progressBar.setAttribute('aria-label', 'Progress: 0 of 10 prompts');
-
-                var hubTitle = el('cmo-provider-hub-title');
-                if (hubTitle) hubTitle.textContent = 'AI tools (new tab)';
-                var providerGroup = q('.cmo-provider-hub .cmo-provider-row');
-                if (providerGroup) setLabel(providerGroup, 'Open third-party AI provider sites in a new tab');
-                var providerLinks = qa('.cmo-provider-hub .cmo-provider-link');
-                var providerLabels = ['Open ChatGPT', 'Open Claude', 'Open Gemini'];
-                providerLinks.forEach(function(a, i) { if (providerLabels[i]) a.textContent = providerLabels[i]; });
+                if (progressBar) progressBar.setAttribute('aria-label', 'Progress: 0 of 4 workflows');
 
                 var prompts = qa('article.prompt');
                 // EN <pre> bodies: single source data/en-prompt-bodies.json → js/en-prompt-bodies-inline.js (npm run build)
                 var enPromptPre = (typeof window.__EN_PROMPT_PRE !== 'undefined' && window.__EN_PROMPT_PRE) ? window.__EN_PROMPT_PRE : [];
                 var promptData = [
-                    { category: 'Start', title: '30-day content system', desc: 'Create a 30-day content plan using 4 content principles', infoStrong: 'Core:', infoP: '4 principles = balance: authority, problem, proof, offer.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 1', infoAria: 'Information: prompt 1', btnAria: 'Copy prompt 1 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Start', title: 'One idea → 7 formats', desc: 'Turn one idea into 7 different formats', infoStrong: 'One idea, many formats:', infoP: '1 idea = 7 units. Time saved, consistency kept.', cta: 'Paste into ChatGPT or Claude and replace placeholders with your data.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 2', infoAria: 'Information: prompt 2', btnAria: 'Copy prompt 2 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Start', title: 'LinkedIn authority building', desc: '150–200 word post with hook, 3 points, example and call to action', infoStrong: 'Authority:', infoP: 'Proof + concrete points = trust and engagement.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 3', infoAria: 'Information: prompt 3', btnAria: 'Copy prompt 3 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Start', title: '30 sec video script', desc: 'Write a 30-second video script with a clear hook and CTA', infoStrong: 'Short format:', infoP: '2 seconds = stay or scroll. The hook is key.', cta: 'Copy, paste into your AI tool, and replace [topic] and [example] with your data.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 4', infoAria: 'Information: prompt 4', btnAria: 'Copy prompt 4 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Start', title: 'Daily analysis (Action→Decision)', desc: 'Use metrics to understand what isn’t working, why, and what to do next', infoStrong: 'Closed loop:', infoP: 'Metrics without action = standing still. Data → decisions.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 5', infoAria: 'Information: prompt 5', btnAria: 'Copy prompt 5 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
+                    { category: 'Plan', title: '30-day content system', desc: 'Create a 30-day content plan using 4 content principles', infoStrong: 'Core:', infoP: '4 principles = balance: authority, problem, proof, offer.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 1', infoAria: 'Information: prompt 1', btnAria: 'Copy prompt 1 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
+                    { category: 'Create', title: 'One idea → 7 formats', desc: 'From one idea — 7 channel units in ~5–10 min', infoStrong: 'One idea, many formats:', infoP: '1 idea = 7 units. Time saved, consistency kept.', cta: 'Paste into ChatGPT or Claude and replace placeholders with your data.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 2', infoAria: 'Information: prompt 2', btnAria: 'Copy prompt 2 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
+                    { category: 'Check', title: 'LinkedIn authority building', desc: 'Authority LinkedIn post with proof in ~3–5 min', infoStrong: 'Authority:', infoP: 'Proof + concrete points = trust and engagement.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 3', infoAria: 'Information: prompt 3', btnAria: 'Copy prompt 3 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
+                    { category: 'Pro', title: '30 sec video script', desc: '30s video with hook and CTA — full prompt in the Pro kit', infoStrong: 'Short format:', infoP: '2 seconds = stay or scroll. The hook is key.', cta: 'Copy, paste into your AI tool, and replace [topic] and [example] with your data.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 4', infoAria: 'Information: prompt 4', btnAria: 'Copy prompt 4 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
+                    { category: 'Improve', title: 'Daily analysis (Action→Decision)', desc: 'From metrics — 4 actions for tomorrow in ~3–5 min', infoStrong: 'Closed loop:', infoP: 'Metrics without action = standing still. Data → decisions.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 5', infoAria: 'Information: prompt 5', btnAria: 'Copy prompt 5 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
                     { category: 'Skills', title: 'Objection handling tool', desc: 'From customer objections create content that neutralizes them', infoStrong: 'Conversion:', infoP: 'Real questions + answers = less friction, more trust.', cta: 'Paste into ChatGPT or Claude – replace objections and context.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 6', infoAria: 'Information: prompt 6', btnAria: 'Copy prompt 6 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
                     { category: 'Skills', title: 'Lead generator post + DM sequence', desc: 'Lead generator post + 4-message sequence', infoStrong: 'Leads:', infoP: 'Sequence: follower → customer. Structure increases conversion.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 7', infoAria: 'Information: prompt 7', btnAria: 'Copy prompt 7 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
                     { category: 'Skills', title: 'Customer story structure', desc: 'Turn data into a customer story', infoStrong: 'Proof:', infoP: 'Numbers + process = credibility and conversion.', cta: 'Copy and paste – enter customer data and get a structured story.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 8', infoAria: 'Information: prompt 8', btnAria: 'Copy prompt 8 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
                     { category: 'Growth', title: 'Topic cluster', desc: 'Main topic + 8 subtopics, internal links', infoStrong: 'Authority:', infoP: 'Main topic + subtopics = reach and expert position.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 9', infoAria: 'Information: prompt 9', btnAria: 'Copy prompt 9 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
                     { category: 'All together', title: 'Main prompt (control center)', desc: 'One integrated plan: content, one idea many formats, testing, actions', infoStrong: 'Control center:', infoP: 'Everything in one place: 30-day plan, 1→7, testing, priorities.', cta: 'This prompt covers everything—copy, paste, and fill in your business fields.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 10', infoAria: 'Information: prompt 10', btnAria: 'Copy prompt 10 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' }
                 ];
-                prompts.forEach(function(art, i) {
-                    if (!promptData[i]) return;
-                    var d = promptData[i];
+                setText('#pro-contents-title', 'Also in the Pro kit');
+                setText('#pro-contents-lead', 'Full prompt bodies offline in Pro.');
+                setText('#pro-contents-cta', 'See Pro kit');
+                var proCatalogEn = {
+                    4: { job: 'Video', outcome: '30s video with hook and CTA' },
+                    6: { job: 'Objections', outcome: '10 assets for objections' },
+                    7: { job: 'Lead gen', outcome: 'Lead post + DM sequence' },
+                    8: { job: 'Story', outcome: 'Case-study structure' },
+                    9: { job: 'SEO', outcome: 'Pillar + subtopics' },
+                    10: { job: 'Control', outcome: 'Control-center plan' }
+                };
+                Object.keys(proCatalogEn).forEach(function(n) {
+                    var row = proCatalogEn[n];
+                    setText('#pro-contents-job-' + n, row.job);
+                    setText('#prompt-desc-' + n, row.outcome);
+                });
+                prompts.forEach(function(art) {
+                    var numEl = art.querySelector('.number');
+                    var num = numEl ? parseInt(numEl.textContent, 10) : 0;
+                    if (!promptData[num - 1]) return;
+                    var d = promptData[num - 1];
                     var cat = art.querySelector('.category');
                     if (cat) cat.textContent = d.category;
                     var tit = art.querySelector('.prompt-title');
@@ -2907,43 +2402,55 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     var doneWrap = art.querySelector('.prompt-done-wrap span');
                     if (doneWrap) doneWrap.textContent = d.doneLabel;
                     var preEl = art.querySelector('.code-block pre');
-                    if (preEl && enPromptPre[i]) preEl.textContent = enPromptPre[i];
+                    if (preEl && enPromptPre[num - 1]) preEl.textContent = enPromptPre[num - 1];
                 });
                 setText('#prompt1Recommended', 'Start here');
 
-                var nextTitle = el('next-steps-title');
-                if (nextTitle) nextTitle.textContent = 'What next?';
-                var nextP = q('.next-steps p');
-                if (nextP) nextP.textContent = 'Best to go in order from 1 to 10. Click a link to jump to that prompt.';
-                var nextSum = el('next-steps-jump');
-                if (nextSum) nextSum.textContent = 'Jump to prompt (1–10)';
-                var nextLinks = qa('.next-steps-links a');
-                var nextTitles = ['1. 30-day content system', '2. One idea → 7 formats', '3. LinkedIn authority building', '4. 30 sec video script', '5. Daily analysis (Action→Decision)', '6. Objection handling', '7. Lead generator post + DM sequence', '8. Customer story structure', '9. Topic cluster', '10. Main prompt (control center)'];
-                nextLinks.forEach(function(a, i) { if (nextTitles[i]) a.textContent = nextTitles[i]; });
-
-                setText('#faq-title', 'Frequently asked questions before you start');
-                var faqSummaries = qa('#faq .faq-item summary');
-                var faqAnswers = qa('#faq .faq-item p');
+                setText('#faq-title', 'Frequently asked questions');
+                var faqMoreSummary = q('.faq-more-details summary');
+                if (faqMoreSummary) faqMoreSummary.textContent = 'More questions';
+                var faqSummaries = qa('#faq .faq-items--primary .faq-item summary');
+                var faqAnswers = qa('#faq .faq-items--primary .faq-item p');
                 var faqSummaryTexts = [
                     'Is this for beginners?',
                     'Do I need all 10 prompts?',
-                    'Why is this better than random prompts?',
-                    'How much time daily?'
+                    'Why is this better than random prompts?'
                 ];
                 var faqAnswerTexts = [
-                    'Yes, if you fill placeholders with your real context.',
-                    'No, start with 1–3 and expand when needed.',
-                    'You get a clear sequence, goal, and evaluation.',
-                    '20–30 minutes is enough if you run Create → Check → Improve.'
+                    'Yes, if you fill placeholders with your real context — then copy, paste, and run.',
+                    'No. Free: 4 workflows (prompts 1, 2, 3, 5) plus the creative brief builder. The Pro kit lists the rest — full META/INPUT/OUTPUT bodies offline (full 10).',
+                    'You get a repeatable Plan → Create → Check → Improve workflow with clear fields and evaluation — structured prompting, not prompt gambling.'
                 ];
                 faqSummaries.forEach(function(item, i) { if (faqSummaryTexts[i]) item.textContent = faqSummaryTexts[i]; });
                 faqAnswers.forEach(function(item, i) { if (faqAnswerTexts[i]) item.textContent = faqAnswerTexts[i]; });
+                var faqMoreSummaries = qa('.faq-more-details .faq-item summary');
+                var faqMoreAnswers = qa('.faq-more-details .faq-item p');
+                var faqMoreSummaryTexts = [
+                    'How much time daily?',
+                    'What is the creative brief builder?',
+                    'Is this a course or a tool?',
+                    'Why use this instead of more AI tools?',
+                    'How do you protect brand voice before publishing?',
+                    'Who is this for?',
+                    'How is this different from prompt templates?',
+                    'Does this work for B2B SaaS, services, and ecommerce?'
+                ];
+                var faqMoreAnswerTexts = [
+                    '20–30 minutes is enough if you run Create → Check → Improve.',
+                    'A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT, Ideogram, Midjourney, or similar. No account. It demonstrates the same tool-building idea Pro teaches for teams.',
+                    'A copy-paste Content AI System you can use immediately — not a long course. Free spine + brief in the browser; depth offline in the kits.',
+                    'It is a portable prompt system you run on ChatGPT or Claude — not another SaaS seat. Structured workflows replace random chats and reduce tool sprawl.',
+                    'Set session context and non-negotiable rules, then run the pre-publish safety reviewer (#cmo-safety) to check facts, tone, legal/trust risk, and CTA ownership before you ship.',
+                    'CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence.',
+                    'You get a sequence, clear fields, evaluation, and a KPI loop — not a one-off output.',
+                    'Yes. Swap the audience, offer, channels, and metrics — the structure stays the same.'
+                ];
+                faqMoreSummaries.forEach(function(item, i) { if (faqMoreSummaryTexts[i]) item.textContent = faqMoreSummaryTexts[i]; });
+                faqMoreAnswers.forEach(function(item, i) { if (faqMoreAnswerTexts[i]) item.textContent = faqMoreAnswerTexts[i]; });
                 var faqEco = q('.faq-eco-hint');
                 if (faqEco) {
                     faqEco.innerHTML = 'For full methodology and executive context, use the <a href="#ecosystem-strip">ecosystem section</a> – all links in one place.';
                 }
-                var meme6img = document.querySelector('#meme-slot-6 img');
-                if (meme6img) meme6img.setAttribute('alt', 'The issue is the instruction, not the AI');
 
                 var commTitle = el('community-title');
                 if (commTitle) commTitle.innerHTML = 'Want more?<br>Join our US-focused Telegram group.';
@@ -2969,7 +2476,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 var footP = qa('.footer p');
                 if (footP.length >= 1) footP[0].textContent = 'Remember to replace [audience], [pain point], [unique selling proposition], [channel] and other placeholders with your data';
                 if (footP.length >= 2) {
-                    footP[1].innerHTML = 'Spin-off No. 2 (Prompt Anatomy). Full training, methodology, and brand hub: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>. Last updated: 2026-04-30.';
+                    footP[1].innerHTML = 'Part of Prompt Anatomy · Training &amp; checkout → <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>';
                 }
                 var tags = qa('.footer .tag');
                 var tagTexts = ['Marketing', '10 prompts', 'Action focus', 'Leads and metrics'];
@@ -3305,11 +2812,14 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 } catch (e) { /* ignore */ }
             }
 
+            var SPINE_PROMPT_IDS = [1, 2, 3, 5];
+            var SPINE_PROMPT_TOTAL = SPINE_PROMPT_IDS.length;
+
             function getPromptDoneCount() {
                 var count = 0;
                 try {
-                    for (var i = 1; i <= 10; i++) {
-                        if (localStorage.getItem(PROMPT_DONE_KEY_PREFIX + i) === 'true') count++;
+                    for (var s = 0; s < SPINE_PROMPT_IDS.length; s++) {
+                        if (localStorage.getItem(PROMPT_DONE_KEY_PREFIX + SPINE_PROMPT_IDS[s]) === 'true') count++;
                     }
                 } catch (e) { /* ignore */ }
                 return count;
@@ -3320,11 +2830,12 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 var textEl = document.getElementById('progressText');
                 var fillEl = document.getElementById('progressBarFill');
                 var barEl = document.querySelector('.progress-bar[role="progressbar"]');
-                if (textEl) textEl.textContent = count === 10 ? uiText('Puiku – panaudojai visus 10.', 'Great – you used all 10.') : uiText('Panaudojai ' + count + ' iš 10 promptų.', 'You used ' + count + ' of 10 prompts.');
-                if (fillEl) fillEl.style.width = (count / 10 * 100) + '%';
+                if (textEl) textEl.textContent = count === SPINE_PROMPT_TOTAL ? uiText('Puiku – panaudojai visus 4 workflow.', 'Great – you used all 4 workflows.') : uiText('Panaudojai ' + count + ' iš 4 workflow.', 'You used ' + count + ' of 4 workflows.');
+                if (fillEl) fillEl.style.width = (count / SPINE_PROMPT_TOTAL * 100) + '%';
                 if (barEl) {
                     barEl.setAttribute('aria-valuenow', count);
-                    barEl.setAttribute('aria-label', uiText('Progresas: ' + count + ' iš 10 promptų', 'Progress: ' + count + ' of 10 prompts'));
+                    barEl.setAttribute('aria-valuemax', String(SPINE_PROMPT_TOTAL));
+                    barEl.setAttribute('aria-label', uiText('Progresas: ' + count + ' iš 4 workflow', 'Progress: ' + count + ' of 4 workflows'));
                 }
             }
 
@@ -3354,11 +2865,14 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     'Replace: [business], [audience], [goals], [channels].'
                 ];
                 var hints = locale === 'en' ? hintsEn : hintsLt;
-                document.querySelectorAll('article.prompt').forEach(function(art, i) {
+                document.querySelectorAll('article.prompt').forEach(function(art) {
                     var body = art.querySelector('.prompt-body');
                     if (!body) return;
                     var codeBlock = body.querySelector('.code-block');
                     if (!codeBlock) return;
+                    var numEl = art.querySelector('.number');
+                    var num = numEl ? parseInt(numEl.textContent, 10) : 0;
+                    var hintIdx = num > 0 ? num - 1 : -1;
 
                     var hint = body.querySelector('.edit-hint');
                     if (!hint) {
@@ -3366,7 +2880,7 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                         hint.className = 'edit-hint';
                         body.insertBefore(hint, codeBlock);
                     }
-                    hint.textContent = hints[i] || uiText('Pakeisk [ ] laukus savo duomenimis.', 'Replace [ ] placeholders with your data.');
+                    hint.textContent = (hintIdx >= 0 && hints[hintIdx]) || uiText('Pakeisk [ ] laukus savo duomenimis.', 'Replace [ ] placeholders with your data.');
                 });
             }
 
@@ -3397,20 +2911,28 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 ];
                 var tags = locale === 'en' ? tagsEn : tagsLt;
 
-                document.querySelectorAll('article.prompt').forEach(function(art, i) {
+                document.querySelectorAll('article.prompt').forEach(function(art) {
                     var header = art.querySelector('.prompt-header');
                     if (!header) return;
                     var meta = header.querySelector('.prompt-meta');
                     if (!meta) return;
+                    var numEl = art.querySelector('.number');
+                    var num = numEl ? parseInt(numEl.textContent, 10) : 0;
+                    var tagIdx = num > 0 ? num - 1 : -1;
 
                     var tagWrap = header.querySelector('.prompt-tags');
                     if (!tagWrap) {
                         tagWrap = document.createElement('div');
                         tagWrap.className = 'prompt-tags';
-                        header.insertBefore(tagWrap, meta.nextSibling);
+                        var afterMeta = meta.nextSibling;
+                        if (afterMeta && afterMeta.parentNode === header) {
+                            header.insertBefore(tagWrap, afterMeta);
+                        } else {
+                            header.appendChild(tagWrap);
+                        }
                     }
 
-                    var list = tags[i] || [];
+                    var list = tagIdx >= 0 ? (tags[tagIdx] || []) : [];
                     tagWrap.innerHTML = '';
                     list.slice(0, 2).forEach(function(t) {
                         if (!t) return;
@@ -3468,6 +2990,81 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                 renderEditHints();
                 renderPromptTags();
 
+                (function initPdfPreviewLightbox() {
+                    var thumbs = document.querySelectorAll('.pdf-card-preview-thumb');
+                    if (!thumbs.length) return;
+                    var overlay = document.createElement('div');
+                    overlay.className = 'pdf-preview-lightbox';
+                    overlay.hidden = true;
+                    overlay.setAttribute('role', 'dialog');
+                    overlay.setAttribute('aria-modal', 'true');
+                    overlay.setAttribute('aria-label', 'PDF preview');
+                    overlay.innerHTML =
+                        '<div class="pdf-preview-lightbox__dialog">' +
+                        '<button type="button" class="pdf-preview-lightbox__close">Close preview</button>' +
+                        '<img class="pdf-preview-lightbox__img" alt="" decoding="async">' +
+                        '</div>';
+                    document.body.appendChild(overlay);
+                    var imgEl = overlay.querySelector('.pdf-preview-lightbox__img');
+                    var closeBtn = overlay.querySelector('.pdf-preview-lightbox__close');
+                    var lastFocus = null;
+
+                    function closeLightbox() {
+                        overlay.hidden = true;
+                        document.body.style.overflow = '';
+                        if (lastFocus && lastFocus.focus) lastFocus.focus();
+                    }
+
+                    function openLightbox(thumb) {
+                        lastFocus = document.activeElement;
+                        imgEl.src = thumb.currentSrc || thumb.src;
+                        imgEl.alt = thumb.alt || 'PDF preview';
+                        overlay.hidden = false;
+                        document.body.style.overflow = 'hidden';
+                        closeBtn.focus();
+                    }
+
+                    thumbs.forEach(function (thumb) {
+                        thumb.setAttribute('tabindex', '0');
+                        thumb.setAttribute('role', 'button');
+                        thumb.addEventListener('click', function () { openLightbox(thumb); });
+                        thumb.addEventListener('keydown', function (e) {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                openLightbox(thumb);
+                            }
+                        });
+                    });
+                    closeBtn.addEventListener('click', closeLightbox);
+                    overlay.addEventListener('click', function (e) {
+                        if (e.target === overlay) closeLightbox();
+                    });
+                    document.addEventListener('keydown', function (e) {
+                        if (e.key === 'Escape' && !overlay.hidden) closeLightbox();
+                    });
+                })();
+
+                (function initPromptCollapse() {
+                    function openFromHash() {
+                        var hash = window.location.hash;
+                        if (!hash || !/^#block(10|[2-9])$/.test(hash)) return;
+                        var num = hash.replace('#block', '');
+                        var details = document.querySelector('.prompt-details[data-prompt="' + num + '"]');
+                        if (!details) return;
+                        details.open = true;
+                        var article = details.closest('article.prompt');
+                        if (article) {
+                            article.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+                        }
+                    }
+                    if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', openFromHash);
+                    } else {
+                        openFromHash();
+                    }
+                    window.addEventListener('hashchange', openFromHash);
+                })();
+
                 (function initStickyPromptBar() {
                     var bar = document.getElementById('stickyPromptBar');
                     var label = document.getElementById('stickyPromptBarLabel');
@@ -3478,9 +3075,10 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
 
                     var currentPromptId = 'prompt1';
                     var promptBlocks = [];
-                    document.querySelectorAll('article.prompt .code-block[id^="block"]').forEach(function(cb) {
-                        var pre = cb.querySelector('pre');
-                        if (pre && pre.id) {
+                    document.querySelectorAll('article.prompt').forEach(function(art) {
+                        var pre = art.querySelector('pre.code-text');
+                        var cb = art.querySelector('.code-block[id^="block"]');
+                        if (pre && pre.id && cb && cb.id) {
                             promptBlocks.push({ blockId: cb.id, promptId: pre.id });
                         }
                     });
@@ -3517,14 +3115,13 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     var blockObs = new IntersectionObserver(function(entries) {
                         entries.forEach(function(entry) {
                             if (!entry.isIntersecting) return;
-                            var pre = entry.target.querySelector('pre');
+                            var pre = entry.target.querySelector('pre.code-text');
                             if (pre && pre.id) syncBarForPrompt(pre.id);
                         });
                     }, { root: null, rootMargin: '-40% 0px -45% 0px', threshold: 0 });
 
-                    promptBlocks.forEach(function(p) {
-                        var el = document.getElementById(p.blockId);
-                        if (el) blockObs.observe(el);
+                    document.querySelectorAll('article.prompt').forEach(function(art) {
+                        blockObs.observe(art);
                     });
 
                     var passedFirst = false;
@@ -3539,6 +3136,12 @@ OUTPUT: 6 blokai – (1) 30 d. struktūra, (2) 5 turinio vienetai šiai savaitei
                     }, { passive: true });
 
                     copyBtn.addEventListener('click', function() {
+                        var pre = document.getElementById(currentPromptId);
+                        var art = pre && pre.closest('article.prompt');
+                        var details = art && art.querySelector('.prompt-details');
+                        if (details && !details.open) {
+                            details.open = true;
+                        }
                         var btn = document.querySelector('.prompt-footer .btn[data-prompt-id="' + currentPromptId + '"]');
                         if (btn) btn.click();
                     });

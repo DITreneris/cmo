@@ -70,6 +70,81 @@ function assertOgImageContracts(pageHtml, expectedOgImageUrl) {
   );
 }
 
+const FREE_SPINE_IDS = [1, 2, 3, 5];
+const FREE_TEASER_IDS = [4, 6, 7, 8, 9, 10];
+
+function assertFreeSpineAndTeasers(pageHtml) {
+  const detailsCount = (pageHtml.match(/class="[^"]*\bprompt-details\b[^"]*"/g) || []).length;
+  const collapsibleCount = (pageHtml.match(/class="[^"]*\bprompt--collapsible\b[^"]*"/g) || []).length;
+  const teaserCount = (pageHtml.match(/data-teaser-prompt="/g) || []).length;
+  const fauxTeaser = pageHtml.includes('prompt--teaser');
+  const spineOk = FREE_SPINE_IDS.every((n) => pageHtml.includes('id="prompt' + n + '"'));
+  const teasersOk = FREE_TEASER_IDS.every(
+    (n) =>
+      pageHtml.includes('data-teaser-prompt="' + n + '"') &&
+      !pageHtml.includes('id="prompt' + n + '"')
+  );
+  return (
+    detailsCount === 0 &&
+    collapsibleCount === 0 &&
+    teaserCount === 6 &&
+    !fauxTeaser &&
+    pageHtml.includes('id="pro-contents"') &&
+    spineOk &&
+    teasersOk &&
+    pageHtml.includes('openFromHash')
+  );
+}
+
+/** Free-value order: context → progress → block5 → safety → brief → scenarios → catalog 4. */
+function assertSpineFirstOrder(pageHtml, briefMarker) {
+  let ctx = pageHtml.indexOf('id="cmo-context"');
+  if (ctx === -1) ctx = pageHtml.indexOf('<!-- CMO_CONTEXT -->');
+  const progress = pageHtml.indexOf('id="progressIndicator"');
+  const block5 = pageHtml.indexOf('id="block5"');
+  let safety = pageHtml.indexOf('id="cmo-safety"');
+  if (safety === -1) safety = pageHtml.indexOf('<!-- CMO_SAFETY -->');
+  const brief = pageHtml.indexOf(briefMarker);
+  let scenarios = pageHtml.indexOf('id="cmo-scenarios"');
+  if (scenarios === -1) scenarios = pageHtml.indexOf('<!-- CMO_SCENARIOS -->');
+  const teaser4 = pageHtml.indexOf('data-teaser-prompt="4"');
+  const faq = pageHtml.indexOf('id="faq"');
+  const basics = pageHtml.indexOf('id="prompt-basics"');
+  return (
+    ctx !== -1 &&
+    progress !== -1 &&
+    block5 !== -1 &&
+    safety !== -1 &&
+    brief !== -1 &&
+    scenarios !== -1 &&
+    teaser4 !== -1 &&
+    faq !== -1 &&
+    basics !== -1 &&
+    ctx < progress &&
+    progress < block5 &&
+    block5 < safety &&
+    safety < brief &&
+    brief < scenarios &&
+    scenarios < teaser4 &&
+    teaser4 < faq &&
+    faq < basics
+  );
+}
+
+function assertSpinePrimaryHero(pageHtml) {
+  const spinePrimary =
+    /<a[^>]*class="cta-button"[^>]*id="heroCtaSpine"/i.test(pageHtml) ||
+    /<a[^>]*id="heroCtaSpine"[^>]*class="cta-button"/i.test(pageHtml);
+  const spineNotOutline = !/id="heroCtaSpine"[^>]*cta-button-outline/i.test(pageHtml) &&
+    !/cta-button-outline[^>]*id="heroCtaSpine"/i.test(pageHtml);
+  const briefSecondary =
+    /id="heroCtaBrief"[^>]*cta-text-link/i.test(pageHtml) ||
+    /cta-text-link[^>]*id="heroCtaBrief"/i.test(pageHtml) ||
+    /id="heroCtaBrief"[^>]*cta-button-outline/i.test(pageHtml) ||
+    /cta-button-outline[^>]*id="heroCtaBrief"/i.test(pageHtml);
+  return spinePrimary && spineNotOutline && briefSecondary;
+}
+
 function run() {
   let passed = 0;
   let failed = 0;
@@ -80,9 +155,16 @@ function run() {
     process.exit(1);
   }
 
-  // --- 10 promptų ---
-  for (let i = 1; i <= 10; i++) {
-    if (assert(html.includes(`id="prompt${i}"`), `Prompt ${i} ID (prompt${i}) egzistuoja`)) passed++;
+  // --- Free spine interactive + teaser anchors ---
+  for (const i of FREE_SPINE_IDS) {
+    if (assert(html.includes(`id="prompt${i}"`), `Spine prompt ${i} ID (prompt${i}) egzistuoja`)) passed++;
+    else failed++;
+  }
+  for (const i of FREE_TEASER_IDS) {
+    if (assert(
+      html.includes(`data-teaser-prompt="${i}"`) && !html.includes(`id="prompt${i}"`),
+      `Teaser ${i}: data-teaser-prompt, be #prompt${i}`
+    )) passed++;
     else failed++;
   }
   for (let i = 1; i <= 10; i++) {
@@ -90,19 +172,19 @@ function run() {
     else failed++;
   }
 
-  // --- Kopijuoti mygtukai (10) ---
-  const copyButtons = (html.match(/Kopijuoti promptą/g) || []).length;
-  if (assert(copyButtons >= 10, `Kopijuoti promptą mygtukų: ${copyButtons} (>= 10)`)) passed++;
+  // --- Kopijuoti mygtukai (spine 4) ---
+  const copyButtons = (html.match(/<span>Kopijuoti promptą<\/span>/g) || []).length;
+  if (assert(copyButtons === 4, `Kopijuoti promptą mygtukų: ${copyButtons} (spine = 4)`)) passed++;
   else failed++;
 
-  // --- Code-block (10) ---
+  // --- Code-block (spine) ---
   const codeBlocks = (html.match(/class="[^"]*code-block[^"]*"/g) || []).length;
-  if (assert(codeBlocks >= 10, `Code-block elementų: ${codeBlocks} (>= 10)`)) passed++;
+  if (assert(codeBlocks === 4, `Code-block elementų: ${codeBlocks} (spine = 4)`)) passed++;
   else failed++;
 
-  // --- Pažymėjau kaip atlikau (10 checkbox) ---
-  const checkboxes = (html.match(/class="[^"]*prompt-done[^"]*"/g) || []).length;
-  if (assert(checkboxes >= 10, `Prompt-done checkbox: ${checkboxes} (>= 10)`)) passed++;
+  // --- Pažymėjau kaip atlikau (spine checkbox) ---
+  const checkboxes = (html.match(/class="prompt-done"/g) || []).length;
+  if (assert(checkboxes === 4, `Prompt-done checkbox: ${checkboxes} (spine = 4)`)) passed++;
   else failed++;
 
   // --- Prieinamumas / semantika ---
@@ -115,22 +197,36 @@ function run() {
   if (assert(
     html.includes('id="what-is-prompt"') &&
     html.includes('id="prompt-anatomy"') &&
-    html.includes('id="framework-schema"') &&
     html.includes('id="faq"'),
-    'Upgrade sekcijos (what-is-prompt, prompt-anatomy, framework-schema, faq) egzistuoja'
+    'Upgrade sekcijos (what-is-prompt, prompt-anatomy, faq) egzistuoja'
   )) passed++;
   else failed++;
   if (assert(
-    html.includes('id="meme-slot-1"') &&
-    html.includes('id="meme-slot-2"') &&
-    html.includes('id="meme-slot-6"') &&
+    !html.includes('id="meme-slot-1"') &&
+    !html.includes('id="meme-slot-2"') &&
     !html.includes('id="meme-slot-3"') &&
     !html.includes('id="meme-slot-4"') &&
-    !html.includes('id="meme-slot-5"'),
-    'Meme slotai (1, 2, 6) – 3 pattern break'
+    !html.includes('id="meme-slot-5"') &&
+    !html.includes('id="meme-slot-6"') &&
+    !html.includes('class="meme-slot'),
+    'Meme slotai pašalinti iš gyvos puslapio'
   )) passed++;
   else failed++;
   if (assert(html.includes('id="prompt-basics"') && html.includes('id="progressJump"') && html.includes('id="stickyPromptBar"'), 'UX: prompt-basics, progress-jump, sticky bar')) passed++;
+  else failed++;
+  if (assert(assertFreeSpineAndTeasers(html), 'Free spine 1/2/3/5 + #pro-contents catalog 4/6–10 (index.html)')) passed++;
+  else failed++;
+  if (assert(
+    html.includes('id="heroCtaBrief"') &&
+    html.includes('id="heroCtaSpine"') &&
+    html.includes('<!-- CMO_CREATIVE_BRIEF -->') &&
+    html.includes('<!-- CMO_SAFETY -->') &&
+    html.includes('<!-- CMO_SCENARIOS -->') &&
+    assertSpinePrimaryHero(html) &&
+    assertSpineFirstOrder(html, '<!-- CMO_CREATIVE_BRIEF -->') &&
+    html.includes('aria-valuemax="4"'),
+    'Spine-first hero + free-value order + progress max 4'
+  )) passed++;
   else failed++;
   if (assert(html.includes('id="toast"') && html.includes('role="status"'), 'Toast pranešimas')) passed++;
   else failed++;
@@ -174,6 +270,15 @@ function run() {
   const enHtml = readFile(EN_INDEX_PATH);
   if (assert(enHtml !== null && enHtml.includes('lang="en"'), 'en/index.html egzistuoja ir turi lang="en"')) passed++;
   else failed++;
+  if (ltHtml && assert(assertFreeSpineAndTeasers(ltHtml), 'Free spine + teasers (lt/)')) passed++;
+  else failed++;
+  if (enHtml && assert(assertFreeSpineAndTeasers(enHtml), 'Free spine + teasers (en/)')) passed++;
+  else failed++;
+  if (
+    enHtml &&
+    assert(enHtml.includes('id="prompt5"') && enHtml.includes('data-teaser-prompt="4"'), 'en/: spine prompt 5 + teaser 4')
+  ) passed++;
+  else failed++;
   if (ltHtml && assert(ltHtml.includes('rel="canonical"') && ltHtml.includes('hreflang="lt"'), 'lt/index.html turi canonical ir hreflang')) passed++;
   else failed++;
   if (enHtml && assert(enHtml.includes('rel="canonical"') && enHtml.includes('hreflang="en"'), 'en/index.html turi canonical ir hreflang')) passed++;
@@ -203,6 +308,34 @@ function run() {
   if (ltHtml && assert(assertOgImageContracts(ltHtml, PROD_OG_IMAGE_URL), `lt/index.html naudoja OG paveikslą ${PROD_OG_IMAGE_URL} (su width/height/alt)`)) passed++;
   else failed++;
   if (enHtml && assert(assertOgImageContracts(enHtml, PROD_OG_IMAGE_URL), `en/index.html naudoja OG paveikslą ${PROD_OG_IMAGE_URL} (su width/height/alt)`)) passed++;
+  else failed++;
+
+  const brandSeoPath = path.join(__dirname, '..', 'config', 'brand-seo.json');
+  let brandSeo = null;
+  try {
+    brandSeo = JSON.parse(fs.readFileSync(brandSeoPath, 'utf8'));
+  } catch (_) {
+    brandSeo = null;
+  }
+  const legacyOgAltSnippet = '10 copy-paste prompts (45 min)';
+  if (assert(brandSeo !== null && brandSeo.title && brandSeo.ogImageAlt, 'config/brand-seo.json egzistuoja')) passed++;
+  else failed++;
+  if (enHtml && assert(
+    enHtml.includes('href="../site.webmanifest"') &&
+    enHtml.includes('href="../favicon-32x32.png"'),
+    'en/index.html – icon pack ir webmanifest'
+  )) passed++;
+  else failed++;
+  if (enHtml && brandSeo && assert(
+    enHtml.includes(brandSeo.ogImageAlt) &&
+    !enHtml.includes(legacyOgAltSnippet),
+    'en/index.html – brand SEO alt (be MVP CMO Kit / 45 min slogan)'
+  )) passed++;
+  else failed++;
+  if (enHtml && brandSeo && assert(
+    enHtml.includes('<title>' + brandSeo.title + '</title>'),
+    'en/index.html – brand SEO title iš config/brand-seo.json'
+  )) passed++;
   else failed++;
 
   // --- Privacy parity + SEO ---
@@ -275,13 +408,11 @@ function run() {
   // --- EN puslapis: regresija – matomas turinys be LT likučių (build + EN_REPLACEMENTS) ---
   if (enHtml) {
     if (assert(
-      !enHtml.includes('Pagrindinė tema + subtemos = pasiekiamumas'),
-      'en/index.html: prompt 9 info be LT pastraipos'
-    )) passed++;
-    else failed++;
-    if (assert(
-      enHtml.includes('Main topic + subtopics = reach and expert position'),
-      'en/index.html: prompt 9 info EN pastraipa'
+      enHtml.includes('data-teaser-prompt="9"') &&
+      enHtml.includes('id="pro-contents"') &&
+      enHtml.includes('Pillar + subtopics') &&
+      enHtml.includes('Full prompt bodies offline in Pro'),
+      'en/index.html: prompt 9 yra Pro catalog EN'
     )) passed++;
     else failed++;
     if (assert(
@@ -292,23 +423,90 @@ function run() {
     if (assert(
       enHtml.includes('What is a prompt?') &&
       enHtml.includes('What is Prompt Anatomy?') &&
-      enHtml.includes('Framework: how to work with this library'),
+      enHtml.includes('Plan → Create → Check → Improve'),
       'en/index.html: upgrade aiškinamieji blokai EN kalba'
     )) passed++;
     else failed++;
     const enMemeSlotCount = (enHtml.match(/id="meme-slot-\d+"/g) || []).length;
     const ltMemeSlotCount = ltHtml ? (ltHtml.match(/id="meme-slot-\d+"/g) || []).length : 0;
     if (assert(
-      enHtml.includes('Frequently asked questions before you start') &&
-      enMemeSlotCount === 3 &&
-      ltMemeSlotCount === 3 &&
+      enHtml.includes('Frequently asked questions') &&
+      !enHtml.includes('Frequently asked questions before you start') &&
+      enMemeSlotCount === 0 &&
+      ltMemeSlotCount === 0 &&
       !enHtml.includes('meme-lesson') &&
       !enHtml.includes('meme-caption') &&
       ltHtml &&
       !ltHtml.includes('meme-lesson') &&
       !ltHtml.includes('meme-caption'),
-      `lt/en index.html: 3 švarūs meme slotai be matomo heading/caption (LT: ${ltMemeSlotCount}, EN: ${enMemeSlotCount})`
+      `lt/en index.html: 0 meme slotų (LT: ${ltMemeSlotCount}, EN: ${enMemeSlotCount})`
     )) passed++;
+    else failed++;
+    if (assert(
+      enHtml.includes('id="heroCtaBrief"') &&
+      enHtml.includes('Build a creative brief') &&
+      enHtml.includes('Start your first workflow') &&
+      !enHtml.includes('Start with Prompt 1') &&
+      enHtml.includes('id="heroTrustPill1"') &&
+      enHtml.includes('No signup') &&
+      enHtml.includes('ChatGPT + Claude') &&
+      enHtml.includes('4 workflows free') &&
+      enHtml.includes('id="heroProof"') &&
+      enHtml.includes('From campaign plan to quality check') &&
+      enHtml.includes('hero-diagram') &&
+      enHtml.includes('Brief + audience') &&
+      !enHtml.includes('hero-diagram__outputs') &&
+      !enHtml.includes('cycle-stepper') &&
+      !enHtml.includes('cmo-provider-hub') &&
+      !enHtml.includes('id="framework-schema"') &&
+      !enHtml.includes('id="progressJumpSafety"') &&
+      enHtml.includes('id="progressJumpCreative"') &&
+      enHtml.includes('Copy → paste into ChatGPT or Claude') &&
+      !enHtml.includes('id="howItWorksCta"') &&
+      enHtml.includes('You used 0 of 4 workflows') &&
+      assertSpinePrimaryHero(enHtml) &&
+      assertSpineFirstOrder(enHtml, 'id="creative-brief"') &&
+      enHtml.includes('id="pro-contents"') &&
+      !enHtml.includes('prompt--teaser') &&
+      enHtml.indexOf('id="cmo-safety"') < enHtml.indexOf('id="creative-brief"') &&
+      enHtml.indexOf('id="pdf-storefront"') < enHtml.indexOf('id="faq"') &&
+      !/Iš |Autoriteto/.test(enHtml),
+      'en/index.html: spine-first + safety→brief→catalog→storefront→FAQ + progress of 4'
+    )) passed++;
+    else failed++;
+    if (assert(
+      /href="#pro-contents"\s+id="progressJumpPro"/.test(enHtml) ||
+        /id="progressJumpPro"[^>]*href="#pro-contents"/.test(enHtml),
+      'en/index.html: progressJumpPro uses relative #pro-contents'
+    )) passed++;
+    else failed++;
+    if (assert(
+      ltHtml &&
+      !ltHtml.includes('id="heroCtaBrief"') &&
+      ltHtml.includes('id="heroCtaSpine"') &&
+      !ltHtml.includes('id="creative-brief"'),
+      'lt/index.html: be hero brief CTA ir #creative-brief; spine CTA lieka'
+    )) passed++;
+    else failed++;
+
+    // --- Creative brief builder (EN-only free tool; mirror OK) ---
+    const creativeBriefCount = (enHtml.match(/id="creative-brief"/g) || []).length;
+    if (assert(creativeBriefCount === 1, `en/index.html: tiksliai 1 #creative-brief (rasta: ${creativeBriefCount})`)) passed++;
+    else failed++;
+    if (assert(
+      enHtml.includes('id="cbOutput"') &&
+      enHtml.includes('id="cbQuality"') &&
+      enHtml.includes('data-cb-preset="ecommerce"') &&
+      enHtml.includes('id="progressJumpCreative"') &&
+      enHtml.includes('id="cb-builder"') &&
+      enHtml.includes('Open brief builder') &&
+      (enHtml.includes('js/creative-brief.js') || enHtml.includes('../js/creative-brief.js')) &&
+      !enHtml.includes('midjourney.com') &&
+      !enHtml.includes('leonardo.ai'),
+      'en/index.html: creative brief collapsed builder + ChatGPT/Ideogram tools only'
+    )) passed++;
+    else failed++;
+    if (assert(!ltHtml.includes('id="creative-brief"'), 'lt/index.html: NE-turi #creative-brief')) passed++;
     else failed++;
 
     // --- v1: sister-site adoption (context block + rules + expected output) ---
@@ -326,10 +524,10 @@ function run() {
     )) passed++;
     else failed++;
     const expectedCount = (enHtml.match(/class="prompt-expected"/g) || []).length;
-    if (assert(expectedCount === 10, `en/index.html: tiksliai 10 .prompt-expected blokų (rasta: ${expectedCount})`)) passed++;
+    if (assert(expectedCount === 4, `en/index.html: tiksliai 4 .prompt-expected blokai (spine) (rasta: ${expectedCount})`)) passed++;
     else failed++;
     let allExpectedHaveBullets = true;
-    for (let i = 1; i <= 10; i++) {
+    for (const i of FREE_SPINE_IDS) {
       const re = new RegExp(`id="expected${i}"[\\s\\S]*?</ul>`);
       const m = enHtml.match(re);
       const liCount = m ? (m[0].match(/<li/g) || []).length : 0;
@@ -338,7 +536,7 @@ function run() {
         break;
       }
     }
-    if (assert(allExpectedHaveBullets, 'en/index.html: kiekvienas .prompt-expected turi >=2 bullet (be antraštės)')) passed++;
+    if (assert(allExpectedHaveBullets, 'en/index.html: kiekvienas spine .prompt-expected turi >=2 bullet (be antraštės)')) passed++;
     else failed++;
     if (assert(enHtml.includes('RULES (non-negotiable)'), 'en/index.html: injected script turi "RULES (non-negotiable)" stringą')) passed++;
     else failed++;
@@ -360,7 +558,7 @@ function run() {
 
     const pkgVer = readPackageVersion();
     if (pkgVer && assert(
-      enHtml.includes('data-version="' + pkgVer + '"') && enHtml.includes('Prompt Anatomy CMO Kit v' + pkgVer),
+      enHtml.includes('data-version="' + pkgVer + '"') && enHtml.includes('Content AI System v' + pkgVer),
       'en/index.html: footer versijos žyma sutampa su package.json'
     )) passed++;
     else failed++;
@@ -369,8 +567,23 @@ function run() {
       'en/index.html: kryžminė nuoroda į Leader rinkinį'
     )) passed++;
     else failed++;
-    const enGemini = (enHtml.match(/gemini\.google\.com/g) || []).length;
-    if (assert(enGemini >= 1, `en/index.html: Gemini provider nuoroda (bendras hub, rasta: ${enGemini})`)) passed++;
+    if (assert(
+      enHtml.includes('Part of Prompt Anatomy') &&
+        enHtml.includes('utm_source=space') &&
+        enHtml.includes('utm_medium=entity_footer'),
+      'en/index.html: QW1b entity footer + UTM space'
+    )) passed++;
+    else failed++;
+    if (assert(
+      !enHtml.includes('Spin-off No. 2'),
+      'en/index.html: nėra Spin-off No. 2 (entity footer kanonas)'
+    )) passed++;
+    else failed++;
+    if (assert(
+      !enHtml.includes('cmo-provider-hub') &&
+      !enHtml.includes('gemini.google.com'),
+      'en/index.html: provider hub pašalintas (path cut)'
+    )) passed++;
     else failed++;
 
     // --- v2.1 LT: parity su EN kontekstu, tikėtinu atsakymu, safety, scenarios ---
@@ -394,7 +607,7 @@ function run() {
       if (assert(ltHtml.includes('Pasirink scenarijų'), 'lt/index.html: scenarijų antraštė LT')) passed++;
       else failed++;
       if (pkgVer && assert(
-        ltHtml.includes('data-version="' + pkgVer + '"') && ltHtml.includes('Prompt Anatomy CMO rinkinys v' + pkgVer),
+        ltHtml.includes('data-version="' + pkgVer + '"') && ltHtml.includes('Turinio DI sistema v' + pkgVer),
         'lt/index.html: footer versijos žyma sutampa su package.json'
       )) passed++;
       else failed++;
@@ -403,8 +616,11 @@ function run() {
         'lt/index.html: kryžminė nuoroda į Leader rinkinį'
       )) passed++;
       else failed++;
-      const ltGemini = (ltHtml.match(/gemini\.google\.com/g) || []).length;
-      if (assert(ltGemini >= 1, `lt/index.html: Gemini provider nuoroda (bendras hub, rasta: ${ltGemini})`)) passed++;
+      if (assert(
+        !ltHtml.includes('cmo-provider-hub') &&
+        !ltHtml.includes('gemini.google.com'),
+        'lt/index.html: provider hub pašalintas (path cut)'
+      )) passed++;
       else failed++;
     }
   }
@@ -422,13 +638,253 @@ function run() {
   ];
   if (assert(robotsTxt !== null && robotsTxt.includes(`Sitemap: ${expectedSitemapUrl}`), 'robots.txt rodo teisingą sitemap URL')) passed++;
   else failed++;
+  if (robotsTxt) {
+    if (assert(robotsTxt.includes('User-agent: GPTBot'), 'robots.txt: GPTBot policy')) passed++;
+    else failed++;
+    if (assert(robotsTxt.includes('User-agent: OAI-SearchBot'), 'robots.txt: OAI-SearchBot allow')) passed++;
+    else failed++;
+    if (assert(robotsTxt.includes('Disallow: /api/'), 'robots.txt: /api/ disallow')) passed++;
+    else failed++;
+  }
   if (assert(sitemapXml !== null, 'sitemap.xml egzistuoja')) passed++;
   else failed++;
   if (sitemapXml) {
+    if (assert(sitemapXml.includes('xmlns:image='), 'sitemap.xml: image namespace')) passed++;
+    else failed++;
+    if (assert(sitemapXml.includes('<lastmod>'), 'sitemap.xml: lastmod entries')) passed++;
+    else failed++;
+    if (assert(sitemapXml.includes('/terms.html'), 'sitemap.xml: terms.html URL')) passed++;
+    else failed++;
     for (const loc of expectedSitemapLocs) {
       if (assert(sitemapXml.includes(`<loc>${loc}</loc>`), `sitemap.xml turi URL: ${loc}`)) passed++;
       else failed++;
     }
+  }
+
+  // --- v1.6.0: paid PDF storefront (EN-only, primary host) ---
+  const SUCCESS_PATH = path.join(__dirname, '..', 'success.html');
+  const TERMS_PATH = path.join(__dirname, '..', 'terms.html');
+  const COMING_SOON_PATH = path.join(__dirname, '..', 'coming-soon.html');
+  const SOT_PATH = path.join(__dirname, '..', 'config', 'sot.json');
+
+  const enHtmlForCommerce = readFile(EN_INDEX_PATH);
+  const ltHtmlForCommerce = readFile(LT_INDEX_PATH);
+  const sotRaw = readFile(SOT_PATH);
+  let sot = null;
+  try { sot = sotRaw ? JSON.parse(sotRaw) : null; } catch (_) { sot = null; }
+
+  if (assert(sot !== null, 'config/sot.json: yra ir parseable JSON')) passed++;
+  else failed++;
+  if (sot) {
+    if (assert(sot.commerce && sot.commerce.scope === 'en-only', 'sot.json: commerce.scope === "en-only"')) passed++;
+    else failed++;
+    if (assert(Array.isArray(sot.commerce.products) && sot.commerce.products.length === 3, 'sot.json: products = 3 (starter + pro + bundle)')) passed++;
+    else failed++;
+    const starter = sot.commerce.products && sot.commerce.products.find((p) => p.id === 'starter');
+    const pro = sot.commerce.products && sot.commerce.products.find((p) => p.id === 'pro');
+    const bundle = sot.commerce.products && sot.commerce.products.find((p) => p.id === 'bundle');
+    if (assert(starter && Number(starter.priceUsd) === 3.99 && Number(starter.priceCents) === 399, 'sot.json: starter price 3.99 / 399 cents')) passed++;
+    else failed++;
+    if (assert(pro && Number(pro.priceUsd) === 8.99 && Number(pro.priceCents) === 899, 'sot.json: pro price 8.99 / 899 cents')) passed++;
+    else failed++;
+    if (assert(bundle && Number(bundle.priceUsd) === 10.99 && Number(bundle.priceCents) === 1099, 'sot.json: bundle price 10.99 / 1099 cents')) passed++;
+    else failed++;
+    if (assert(starter && starter.pages === 14 && pro && pro.pages === 30, 'sot.json: starter 14 pages, pro 30 pages')) passed++;
+    else failed++;
+    if (assert(sot.commerce.comparisonTable && Array.isArray(sot.commerce.comparisonTable.rows), 'sot.json: comparisonTable.rows')) passed++;
+    else failed++;
+    if (assert(typeof sot.commerce.allowPlaceholderCheckout === 'boolean', 'sot.json: allowPlaceholderCheckout is boolean')) passed++;
+    else failed++;
+    if (assert(typeof sot.commerce.placeholderHref === 'string' && sot.commerce.placeholderHref.length > 0, 'sot.json: placeholderHref set')) passed++;
+    else failed++;
+    if (assert(sot.site && sot.site.host === 'promptanatomy.space', 'sot.json: primary host is promptanatomy.space')) passed++;
+    else failed++;
+    if (assert(sot.site && sot.site.mirror && sot.site.mirror.renderPaidStorefront === false, 'sot.json: mirror.renderPaidStorefront === false')) passed++;
+    else failed++;
+  }
+
+  if (enHtmlForCommerce) {
+    if (assert(enHtmlForCommerce.includes('id="pdf-storefront"'), 'en/index.html: yra #pdf-storefront')) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('$3.99'), 'en/index.html: storefront rodo $3.99')) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('$8.99'), 'en/index.html: storefront rodo $8.99')) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('$10.99'), 'en/index.html: storefront rodo $10.99')) passed++;
+    else failed++;
+    if (assert(
+      !enHtmlForCommerce.includes('pdf-comparison-table') &&
+      !enHtmlForCommerce.includes('pdf-storefront-compare'),
+      'en/index.html: comparison table not rendered (path cut)'
+    )) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('class="pdf-card"'), 'en/index.html: bent viena .pdf-card')) passed++;
+    else failed++;
+    if (assert(
+      enHtmlForCommerce.includes('id="pdf-card-starter"') &&
+        enHtmlForCommerce.includes('id="pdf-card-pro"') &&
+        enHtmlForCommerce.includes('id="pdf-card-bundle"'),
+      'en/index.html: trys kortelės (starter + pro + bundle)'
+    )) passed++;
+    else failed++;
+    const allowPlaceholder = sot && sot.commerce ? sot.commerce.allowPlaceholderCheckout : null;
+    const liveStarter = sot && sot.commerce && sot.commerce.stripePaymentLinks ? String(sot.commerce.stripePaymentLinks.starter || '') : '';
+    const livePro = sot && sot.commerce && sot.commerce.stripePaymentLinks ? String(sot.commerce.stripePaymentLinks.pro || '') : '';
+    const liveBundle = sot && sot.commerce && sot.commerce.stripePaymentLinks ? String(sot.commerce.stripePaymentLinks.bundle || '') : '';
+    if (
+      allowPlaceholder === true &&
+      (!/^https:\/\/buy\.stripe\.com\//.test(liveStarter) ||
+        !/^https:\/\/buy\.stripe\.com\//.test(livePro) ||
+        !/^https:\/\/buy\.stripe\.com\//.test(liveBundle))
+    ) {
+      if (assert(enHtmlForCommerce.includes('href="/coming-soon.html"'), 'en/index.html: placeholder režimas - CTA rodo į /coming-soon.html')) passed++;
+      else failed++;
+      if (assert(!enHtmlForCommerce.includes('https://buy.stripe.com/'), 'en/index.html: placeholder režimas - JOKIŲ buy.stripe.com nuorodų storefronte')) passed++;
+      else failed++;
+    } else {
+      if (assert(/href="https:\/\/buy\.stripe\.com\/[^"]+"/.test(enHtmlForCommerce), 'en/index.html: live režimas - storefront turi buy.stripe.com nuorodas')) passed++;
+      else failed++;
+      const stripeLinks = enHtmlForCommerce.match(/https:\/\/buy\.stripe\.com\/[^"]+/g) || [];
+      if (assert(stripeLinks.length >= 3, 'en/index.html: live režimas - 3 Stripe Payment Links (starter + pro + bundle)')) passed++;
+      else failed++;
+    }
+    if (assert(enHtmlForCommerce.includes('class="no-print"') || enHtmlForCommerce.includes('pdf-storefront no-print'), 'en/index.html: storefront turi no-print klasę')) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('cmo-starter-cover.png'), 'en/index.html: Starter cover PNG (WYSIWYG)')) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('cmo-pro-cover.png'), 'en/index.html: Pro cover PNG (WYSIWYG)')) passed++;
+    else failed++;
+    if (assert(
+      !enHtmlForCommerce.includes('cmo-starter-cover.svg'),
+      'en/index.html: Starter nebe naudoja cover SVG'
+    )) passed++;
+    else failed++;
+    if (assert(
+      (function () {
+        const proBlock = enHtmlForCommerce.match(/id="pdf-card-pro"[\s\S]*?id="pdf-card-bundle"/);
+        return proBlock && proBlock[0].includes('cmo-pro-cover.png') && !proBlock[0].includes('cmo-pro-cover.svg');
+      })(),
+      'en/index.html: Pro kortelė naudoja cover PNG, ne SVG'
+    )) passed++;
+    else failed++;
+    if (assert(
+      !/alt="[^"]*cover, \$/.test(enHtmlForCommerce),
+      'en/index.html: cover alt neturi kainos'
+    )) passed++;
+    else failed++;
+  }
+
+  if (ltHtmlForCommerce) {
+    if (assert(!ltHtmlForCommerce.includes('id="pdf-storefront"'), 'lt/index.html: NE-turi #pdf-storefront (commerce yra EN-only)')) passed++;
+    else failed++;
+    if (assert(!ltHtmlForCommerce.includes('$3.99') && !ltHtmlForCommerce.includes('$8.99') && !ltHtmlForCommerce.includes('$10.99'), 'lt/index.html: NE-rodo commerce kainų')) passed++;
+    else failed++;
+    if (assert(!/buy\.stripe\.com/.test(ltHtmlForCommerce), 'lt/index.html: NE-turi buy.stripe.com nuorodų')) passed++;
+    else failed++;
+  }
+
+  const successHtml = readFile(SUCCESS_PATH);
+  if (assert(successHtml !== null, 'success.html: failas egzistuoja')) passed++;
+  else failed++;
+  if (successHtml) {
+    if (assert(/<meta name="robots" content="noindex/.test(successHtml), 'success.html: noindex robots meta')) passed++;
+    else failed++;
+    if (assert(successHtml.includes('/api/download-link'), 'success.html: kviečia /api/download-link endpoint\u0105')) passed++;
+    else failed++;
+    if (assert(successHtml.includes('aria-live'), 'success.html: aria-live region polling statusui')) passed++;
+    else failed++;
+    if (assert(successHtml.includes('session_id'), 'success.html: skaito session_id iš URL')) passed++;
+    else failed++;
+  }
+
+  const termsHtml = readFile(TERMS_PATH);
+  if (assert(termsHtml !== null, 'terms.html: failas egzistuoja')) passed++;
+  else failed++;
+  if (termsHtml) {
+    if (assert(termsHtml.includes('id="paid-pdf-license"'), 'terms.html: yra #paid-pdf-license sekcija')) passed++;
+    else failed++;
+    if (assert(termsHtml.includes('14-day'), 'terms.html: paminėtas 14-day refund')) passed++;
+    else failed++;
+    if (assert(termsHtml.includes('promptanatomy.space'), 'terms.html: rodomas tikrasis host (promptanatomy.space)')) passed++;
+    else failed++;
+    if (assert(termsHtml.includes('$3.99') && termsHtml.includes('$8.99'), 'terms.html: produktų kainos $3.99 / $8.99')) passed++;
+    else failed++;
+  }
+
+  const comingSoonHtml = readFile(COMING_SOON_PATH);
+  if (assert(comingSoonHtml !== null, 'coming-soon.html: failas egzistuoja')) passed++;
+  else failed++;
+  if (comingSoonHtml) {
+    if (assert(/<meta name="robots" content="noindex/.test(comingSoonHtml), 'coming-soon.html: noindex robots meta')) passed++;
+    else failed++;
+    if (assert(comingSoonHtml.includes('$3.99') && comingSoonHtml.includes('$8.99'), 'coming-soon.html: rodo $3.99 / $8.99 kainas')) passed++;
+    else failed++;
+    if (assert(comingSoonHtml.includes('mailto:info@promptanatomy.app'), 'coming-soon.html: notify-me CTA per mailto')) passed++;
+    else failed++;
+  }
+
+  const enPrivacyForCommerce = readFile(EN_PRIVACY_PATH);
+  if (enPrivacyForCommerce) {
+    if (assert(enPrivacyForCommerce.includes('id="paid-pdf-data"'), 'en/privacy.html: yra #paid-pdf-data sekcija (paid PDF processors)')) passed++;
+    else failed++;
+    if (assert(enPrivacyForCommerce.includes('Stripe') && enPrivacyForCommerce.includes('Resend') && enPrivacyForCommerce.includes('Upstash') && enPrivacyForCommerce.includes('Vercel Blob'), 'en/privacy.html: Stripe / Resend / Upstash / Vercel Blob procesoriai išvardinti')) passed++;
+    else failed++;
+  }
+  const ltPrivacyForCommerce = readFile(LT_PRIVACY_PATH);
+  if (ltPrivacyForCommerce) {
+    if (assert(!/Stripe|Resend|Upstash|Vercel Blob/i.test(ltPrivacyForCommerce), 'lt/privatumas.html: NE-mini Stripe/Resend/Upstash/Vercel Blob (LT lieka nepaliesta)')) passed++;
+    else failed++;
+  }
+
+  // --- GEO surfaces (llms, IndexNow, manifest, 404) ---
+  const INDEXNOW_KEY = 'a9f3c2e1b8d7a6f5e4c3b2a1f0e9d8c7';
+  const llmsTxt = readFile(path.join(__dirname, '..', 'llms.txt'));
+  const llmsFullTxt = readFile(path.join(__dirname, '..', 'llms-full.txt'));
+  const indexNowTxt = readFile(path.join(__dirname, '..', INDEXNOW_KEY + '.txt'));
+  const manifestJson = readFile(path.join(__dirname, '..', 'manifest.webmanifest'));
+  const notFoundHtml = readFile(path.join(__dirname, '..', '404.html'));
+
+  if (assert(llmsTxt !== null && llmsTxt.includes('Plan → Create → Check → Improve'), 'llms.txt: cycle summary')) passed++;
+  else failed++;
+  if (assert(llmsTxt !== null && llmsTxt.includes('#cmo-safety') && llmsTxt.includes('#pdf-storefront'), 'llms.txt: hash hubs #cmo-safety + #pdf-storefront')) passed++;
+  else failed++;
+  if (assert(llmsFullTxt !== null && llmsFullTxt.includes('10 prompts'), 'llms-full.txt: prompt digest')) passed++;
+  else failed++;
+  if (assert(indexNowTxt !== null && indexNowTxt.trim() === INDEXNOW_KEY, 'IndexNow key file hosted')) passed++;
+  else failed++;
+  if (assert(manifestJson !== null && manifestJson.includes('"start_url": "/en/"'), 'manifest.webmanifest: start_url /en/')) passed++;
+  else failed++;
+  if (assert(notFoundHtml !== null && notFoundHtml.includes('noindex,follow'), '404.html: noindex,follow')) passed++;
+  else failed++;
+
+  if (enHtmlForCommerce) {
+    if (assert(enHtmlForCommerce.includes('"@graph"'), 'en/index.html: JSON-LD @graph')) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('"@type":"Product"'), 'en/index.html: Product schema')) passed++;
+    else failed++;
+    if (assert(!enHtmlForCommerce.includes('aggregateRating'), 'en/index.html: no fake aggregateRating')) passed++;
+    else failed++;
+  }
+
+  if (sot && sot.brand) {
+    if (assert(sot.brand.publicName === 'Prompt Anatomy', 'sot.json: brand.publicName')) passed++;
+    else failed++;
+    if (assert(Array.isArray(sot.frontFaq) && sot.frontFaq.length >= 8, 'sot.json: frontFaq >= 8 for GEO JTBD')) passed++;
+    else failed++;
+  }
+
+  if (enHtmlForCommerce) {
+    if (assert(enHtmlForCommerce.includes('id="heroCtaSpine"'), 'en/index.html: #heroCtaSpine primary path')) passed++;
+    else failed++;
+    if (assert(
+      !/4 core interactive prompts \(1,\s*2,\s*3,\s*4,\s*5/.test(enHtmlForCommerce) &&
+      !/free interactive (prompts )?10/i.test(enHtmlForCommerce) &&
+      !/10 core interactive/i.test(enHtmlForCommerce),
+      'en/index.html: does not claim free interactive 10'
+    )) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('id="faq-tool-sprawl"') && enHtmlForCommerce.includes('id="faq-brand-voice"'), 'en/index.html: JTBD FAQ ids')) passed++;
+    else failed++;
   }
 
   console.log('\n---');

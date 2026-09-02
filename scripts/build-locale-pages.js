@@ -9,6 +9,8 @@
 
 const fs = require('fs');
 const path = require('path');
+const { readBrandSeo } = require('./load-brand-config');
+const { writeGeoSurfaces } = require('./geo-surfaces');
 
 const ROOT = path.join(__dirname, '..');
 const INDEX_PATH = path.join(ROOT, 'index.html');
@@ -43,6 +45,7 @@ const EN_PROMPT_EXPECTED_PATH = path.join(DATA_DIR, 'en-prompt-expected.json');
 const EN_SCENARIOS_PATH = path.join(DATA_DIR, 'en-scenarios.json');
 const LT_PROMPT_EXPECTED_PATH = path.join(DATA_DIR, 'lt-prompt-expected.json');
 const LT_SCENARIOS_PATH = path.join(DATA_DIR, 'lt-scenarios.json');
+const COLLAPSIBLE_SUMMARIES_PATH = path.join(DATA_DIR, 'cmo-collapsible-summaries.json');
 const PACKAGE_JSON_PATH = path.join(ROOT, 'package.json');
 const JS_DIR = path.join(ROOT, 'js');
 const EN_PROMPT_INLINE_JS_PATH = path.join(JS_DIR, 'en-prompt-bodies-inline.js');
@@ -160,18 +163,76 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
-/** LT <pre> inner text from root index.html, prompt1..prompt10 (order). */
+function loadCollapsibleSummaries() {
+  const raw = fs.readFileSync(COLLAPSIBLE_SUMMARIES_PATH, 'utf8');
+  const data = JSON.parse(raw);
+  for (const locale of ['lt', 'en']) {
+    if (!data[locale] || typeof data[locale] !== 'object') {
+      throw new Error(`cmo-collapsible-summaries.json: missing "${locale}" object`);
+    }
+    for (let n = 4; n <= 10; n++) {
+      const key = String(n);
+      if (!data[locale][key] || !String(data[locale][key]).trim()) {
+        throw new Error(`cmo-collapsible-summaries.json: missing ${locale}.${key}`);
+      }
+    }
+  }
+  return data;
+}
+
+loadCollapsibleSummaries(); // keep JSON SSOT validated (Phase A free page has 0 collapsibles)
+/** Free interactive spine on the page (Pro data SSOT still has all 10). */
+const FREE_SPINE_IDS = [1, 2, 3, 5];
+const FREE_TEASER_IDS = [4, 6, 7, 8, 9, 10];
+
+/** Phase A: no collapsible prompt cards; Pro catalog uses data-teaser-prompt rows. */
+function applyCollapsibleSummaries(html) {
+  return html;
+}
+
+function assertCollapsiblePromptContract(html, label) {
+  const detailsCount = (html.match(/class="[^"]*\bprompt-details\b[^"]*"/g) || []).length;
+  if (detailsCount !== 0) {
+    throw new Error(`${label}: expected 0 .prompt-details, found ${detailsCount}`);
+  }
+  const collapsibleCount = (html.match(/class="[^"]*\bprompt--collapsible\b[^"]*"/g) || []).length;
+  if (collapsibleCount !== 0) {
+    throw new Error(`${label}: expected 0 .prompt--collapsible, found ${collapsibleCount}`);
+  }
+  for (const n of FREE_SPINE_IDS) {
+    if (!html.includes('id="prompt' + n + '"')) {
+      throw new Error(`${label}: missing free spine <pre id="prompt${n}">`);
+    }
+  }
+  if (!html.includes('id="pro-contents"')) {
+    throw new Error(`${label}: missing #pro-contents catalog`);
+  }
+  if (html.includes('prompt--teaser')) {
+    throw new Error(`${label}: faux .prompt--teaser cards are not allowed (use #pro-contents)`);
+  }
+  for (const n of FREE_TEASER_IDS) {
+    if (!html.includes('data-teaser-prompt="' + n + '"')) {
+      throw new Error(`${label}: missing catalog data-teaser-prompt="${n}"`);
+    }
+    if (html.includes('id="prompt' + n + '"')) {
+      throw new Error(`${label}: Pro catalog prompt ${n} must not expose interactive #prompt${n}`);
+    }
+  }
+  if (!html.includes('openFromHash')) {
+    throw new Error(`${label}: missing openFromHash (collapsible hash deep-link)`);
+  }
+}
+
+/** LT <pre> inner text from free spine prompts (ids 1,2,3,5) for EN string replace pairs. */
 function extractLtPreBodiesFromHtml(html) {
-  const out = [];
-  for (let i = 1; i <= 10; i++) {
+  return FREE_SPINE_IDS.map((i) => {
     const re = new RegExp(`<pre class="code-text" id="prompt${i}">([\\s\\S]*?)</pre>`, '');
     const m = html.match(re);
     if (!m) {
       throw new Error(`extractLtPreBodiesFromHtml: missing <pre id="prompt${i}">`);
     }
-    out.push(m[1].replace(/\r\n/g, '\n').replace(/\r/g, '\n').trimEnd());
-  }
-  return out;
+    return { id: i, lt: m[1].replace(/\r\n/g, '\n').replace(/\r/g, '\n').trimEnd() };
+  });
 }
 
 function writeEnPromptInlineJs(enBodies) {
@@ -192,12 +253,15 @@ const PKG_VERSION = readPackageVersion();
 
 function injectEnPreBodies(html) {
   let out = html;
-  for (let i = 1; i <= 10; i++) {
+  for (const i of FREE_SPINE_IDS) {
     const body = EN_PROMPT_BODIES[i - 1];
     if (typeof body !== 'string') {
       throw new Error('Missing EN prompt body at index ' + (i - 1));
     }
     const re = new RegExp(`(<pre class="code-text" id="prompt${i}">)([\\s\\S]*?)(</pre>)`, '');
+    if (!re.test(out)) {
+      throw new Error('injectEnPreBodies: missing <pre id="prompt' + i + '">');
+    }
     out = out.replace(re, `$1${body}$3`);
   }
   return out;
@@ -206,9 +270,9 @@ function injectEnPreBodies(html) {
 const EN_CONTEXT_BLOCK_HTML =
   '<section class="cmo-context" id="cmo-context" aria-labelledby="cmo-context-title">\n' +
   '            <h2 id="cmo-context-title" class="cmo-context-title">Marketing context (one block, every copy)</h2>\n' +
-  '            <p class="cmo-context-intro">Optional: you can start with empty fields. If you fill once, these five values plus the rules below are auto-prepended every time you click <strong>Copy prompt</strong>. Stored only in this browser session.</p>\n' +
+  '            <p class="cmo-context-intro">Optional. Fills prepend to every Copy. Session-only.</p>\n' +
   '            <details class="cmo-context-details" id="cmo-context-details">\n' +
-  '                <summary>Optional: marketing context (improves every copy)</summary>\n' +
+  '                <summary>Set marketing context</summary>\n' +
   '            <div class="cmo-context-form" id="cmoContextForm">\n' +
   '                <fieldset class="cmo-context-fields">\n' +
   '                    <legend class="cmo-context-legend">Marketing context fields</legend>\n' +
@@ -218,7 +282,7 @@ const EN_CONTEXT_BLOCK_HTML =
   '                    </div>\n' +
   '                    <div class="cmo-context-row">\n' +
   '                        <label for="cmoCtxOffer">Offer / USP</label>\n' +
-  '                        <input type="text" id="cmoCtxOffer" name="offer" maxlength="160" placeholder="e.g. AI content system that ships 100 assets in 30 days">\n' +
+  '                        <input type="text" id="cmoCtxOffer" name="offer" maxlength="160" placeholder="e.g. weekly LinkedIn + email cadence for B2B leads">\n' +
   '                    </div>\n' +
   '                    <div class="cmo-context-row">\n' +
   '                        <label for="cmoCtxChannels">Channels</label>\n' +
@@ -246,25 +310,24 @@ const EN_CONTEXT_BLOCK_HTML =
   '                    <li>Output must be usable: sections, owner where relevant, next action with deadline.</li>\n' +
   '                </ul>\n' +
   '            </div>\n' +
-  '            </details>\n' +
-  '        </section>\n\n' +
-  '        <!-- PROMPT 1 -->';
+            '            </details>\n' +
+  '        </section>\n\n';
 
 function injectEnContextBlock(html) {
-  const anchor = '<!-- PROMPT 1 -->';
+  const anchor = '<!-- CMO_CONTEXT -->';
   if (html.indexOf(anchor) === -1) {
-    throw new Error('injectEnContextBlock: anchor "<!-- PROMPT 1 -->" not found');
+    throw new Error('injectEnContextBlock: anchor "<!-- CMO_CONTEXT -->" not found');
   }
   return html.replace(anchor, EN_CONTEXT_BLOCK_HTML);
 }
 
 function injectEnExpectedBullets(html) {
   let out = html;
-  for (let i = 1; i <= 10; i++) {
+  for (const i of FREE_SPINE_IDS) {
     const bullets = EN_PROMPT_EXPECTED[i - 1]
       .map((b) => '                        <li>' + escapeHtml(b) + '</li>')
       .join('\n');
-    const openAttr = i === 1 ? ' open' : '';
+    const openAttr = '';
     const block =
       '\n                <details class="faq-item prompt-expected-details"' + openAttr + ' id="expected-details-' + i + '">\n' +
       '                    <summary>Expected output</summary>\n' +
@@ -407,7 +470,8 @@ function patchEnCopyPromptHook(html) {
   return html.split(from).join(to);
 }
 
-const TRUST_BLOCK_ANCHOR = '        <!-- KAS TOLIAU? (S2) -->';
+const SAFETY_ANCHOR = '        <!-- CMO_SAFETY -->';
+const SCENARIOS_ANCHOR = '        <!-- CMO_SCENARIOS -->';
 
 const EN_SAFETY_REVIEWER_TEXT =
   'Act as a marketing risk reviewer. Review this AI-generated content before I publish it: [TEXT].\n' +
@@ -542,8 +606,10 @@ function buildSafetySection(locale) {
   const title = locale === 'en' ? 'Pre-publish safety' : 'Tikrinti prieš publikuojant';
   const intro =
     locale === 'en'
-      ? 'Run this reviewer prompt before you publish AI-assisted marketing. Copy includes your session context and rules when set.'
+      ? 'Run a risk review before you publish.'
       : 'Paleisk šį recenzento promptą prieš publikuodamas rinkodaros turinį, sukurtą su DI. Kopijuojant įtraukiamas sesijos kontekstas ir taisyklės, jei nustatyta.';
+  const detailsSummary =
+    locale === 'en' ? 'Open safety checks' : reviewerSummary;
   const checksTitle = locale === 'en' ? 'Quick checks' : 'Greita kontrolė';
   const checks =
     locale === 'en'
@@ -552,6 +618,49 @@ function buildSafetySection(locale) {
   const checksLis = checks.map(function (c) {
     return '                    <li>' + escapeHtml(c) + '</li>';
   }).join('\n');
+  // EN: one collapsed details for prompt + checks. LT freeze: keep prior nested shape (reviewer details only).
+  if (locale === 'en') {
+    return (
+      '        <section class="cmo-safety" id="cmo-safety" aria-labelledby="cmo-safety-title">\n' +
+      '            <h2 id="cmo-safety-title" class="cmo-safety-title">' +
+      escapeHtml(title) +
+      '</h2>\n' +
+      '            <p class="cmo-safety-intro">' +
+      escapeHtml(intro) +
+      '</p>\n' +
+      '            <details class="faq-item cmo-safety-reviewer-details" id="cmo-safety-details">\n' +
+      '                <summary>' +
+      escapeHtml(detailsSummary) +
+      '</summary>\n' +
+      '            <div class="cmo-safety-copy">\n' +
+      '                <div class="code-block cmo-safety-pre-wrap" role="region" aria-label="' +
+      escapeHtml(copyLabel) +
+      '">\n' +
+      '                    <pre class="code-text" id="cmo-safety-reviewer-prompt">' +
+      escapeHtml(reviewerText) +
+      '</pre>\n' +
+      '                </div>\n' +
+      '                <button type="button" class="btn" data-prompt-id="cmo-safety-reviewer-prompt" aria-label="' +
+      escapeHtml(copyLabel) +
+      '">\n' +
+      '                    <span>' +
+      escapeHtml(copyLabel) +
+      '</span>\n' +
+      '                </button>\n' +
+      '            </div>\n' +
+      '            <div class="cmo-safety-checks">\n' +
+      '                <p class="cmo-safety-checks-title">' +
+      escapeHtml(checksTitle) +
+      '</p>\n' +
+      '                <ul role="list">\n' +
+      checksLis +
+      '\n' +
+      '                </ul>\n' +
+      '            </div>\n' +
+      '            </details>\n' +
+      '        </section>\n\n'
+    );
+  }
   return (
     '        <section class="cmo-safety" id="cmo-safety" aria-labelledby="cmo-safety-title">\n' +
     '            <h2 id="cmo-safety-title" class="cmo-safety-title">' +
@@ -595,12 +704,18 @@ function buildSafetySection(locale) {
   );
 }
 
-function injectTrustBlocksBeforeNextSteps(html, locale) {
-  if (html.indexOf(TRUST_BLOCK_ANCHOR) === -1) {
-    throw new Error('injectTrustBlocksBeforeNextSteps: anchor not found');
+function injectSafetySection(html, locale) {
+  if (html.indexOf(SAFETY_ANCHOR) === -1) {
+    throw new Error('injectSafetySection: anchor <!-- CMO_SAFETY --> not found');
   }
-  const block = buildScenarioStripSection(locale) + buildSafetySection(locale) + TRUST_BLOCK_ANCHOR;
-  return html.replace(TRUST_BLOCK_ANCHOR, block);
+  return html.replace(SAFETY_ANCHOR, buildSafetySection(locale));
+}
+
+function injectScenariosSection(html, locale) {
+  if (html.indexOf(SCENARIOS_ANCHOR) === -1) {
+    throw new Error('injectScenariosSection: anchor <!-- CMO_SCENARIOS --> not found');
+  }
+  return html.replace(SCENARIOS_ANCHOR, buildScenarioStripSection(locale));
 }
 
 const LT_CONTEXT_BLOCK_HTML =
@@ -646,21 +761,20 @@ const LT_CONTEXT_BLOCK_HTML =
   '                    <li>Išvestis turi būti naudojama: skyriai, savininkas kur tinkama, kitas veiksmas su terminu.</li>\n' +
   '                </ul>\n' +
   '            </div>\n' +
-  '            </details>\n' +
-  '        </section>\n\n' +
-  '        <!-- PROMPT 1 -->';
+            '            </details>\n' +
+  '        </section>\n\n';
 
 function injectLtContextBlock(html) {
-  const anchor = '<!-- PROMPT 1 -->';
+  const anchor = '<!-- CMO_CONTEXT -->';
   if (html.indexOf(anchor) === -1) {
-    throw new Error('injectLtContextBlock: anchor "<!-- PROMPT 1 -->" not found');
+    throw new Error('injectLtContextBlock: anchor "<!-- CMO_CONTEXT -->" not found');
   }
   return html.replace(anchor, LT_CONTEXT_BLOCK_HTML);
 }
 
 function injectLtExpectedBullets(html) {
   let out = html;
-  for (let i = 1; i <= 10; i++) {
+  for (const i of FREE_SPINE_IDS) {
     const bullets = LT_PROMPT_EXPECTED[i - 1]
       .map((b) => '                        <li>' + escapeHtml(b) + '</li>')
       .join('\n');
@@ -689,7 +803,7 @@ function injectLtExpectedBullets(html) {
   return out;
 }
 
-/** Single provider row lives in root index.html (cmo-provider-hub); do not inject per prompt. */
+/** Provider hub removed from free path (path cut); do not inject per-prompt provider rows. */
 function injectProviderRows(html) {
   return html;
 }
@@ -706,8 +820,8 @@ function injectFooterSuite(html, locale) {
         '" target="_blank" rel="noopener noreferrer">Atidaryti Prompt Anatomy Leader</a>';
   const badge =
     locale === 'en'
-      ? 'Prompt Anatomy CMO Kit v' + PKG_VERSION
-      : 'Prompt Anatomy CMO rinkinys v' + PKG_VERSION;
+      ? 'Content AI System v' + PKG_VERSION
+      : 'Turinio DI sistema v' + PKG_VERSION;
   const insert =
     '            <div class="cmo-footer-meta print-muted">\n' +
     '                <p class="cmo-footer-crosslink">' +
@@ -723,6 +837,647 @@ function injectFooterSuite(html, locale) {
     throw new Error('injectFooterSuite: footer not found');
   }
   return html.replace('<footer class="footer">', '<footer class="footer">\n' + insert);
+}
+
+/* ----------------------------------------------------------------------- */
+/* EN-only paid PDF storefront (#pdf-storefront).                           */
+/*                                                                          */
+/* Read from config/sot.json. Injected only when locale === 'en' and        */
+/* MIRROR_NOTE !== '1'. The mirror (GitHub Pages) build sets MIRROR_NOTE=1  */
+/* in .github/workflows/deploy.yml so the section is omitted there because  */
+/* checkout/webhook/downloads only exist on promptanatomy.space.            */
+/* ----------------------------------------------------------------------- */
+const SOT_PATH = path.join(ROOT, 'config', 'sot.json');
+const MIRROR_NOTE = process.env.MIRROR_NOTE === '1';
+/** Set during main() for EN JSON-LD @graph injection */
+let geoJsonLdInject = null;
+
+function loadSot() {
+  if (!fs.existsSync(SOT_PATH)) {
+    throw new Error('config/sot.json missing - cannot build paid storefront');
+  }
+  const raw = fs.readFileSync(SOT_PATH, 'utf8');
+  const sot = JSON.parse(raw);
+  if (!sot || !sot.commerce || !Array.isArray(sot.commerce.products)) {
+    throw new Error('config/sot.json: commerce.products must be a non-empty array');
+  }
+  if (sot.commerce.products.length !== 3) {
+    throw new Error('config/sot.json: commerce.products must contain exactly 3 entries (starter, pro, bundle)');
+  }
+  for (const p of sot.commerce.products) {
+    const need = ['id', 'name', 'subtitle', 'priceUsd', 'pages', 'format', 'bullets'];
+    for (const k of need) {
+      if (p[k] === undefined || p[k] === null) {
+        throw new Error('config/sot.json product[' + p.id + '] missing key: ' + k);
+      }
+    }
+    if (!p.coverPng && !p.coverSvg) {
+      throw new Error('config/sot.json product[' + p.id + '] missing coverPng or coverSvg');
+    }
+  }
+  return sot;
+}
+
+function assertRequireStripeLinks(sot) {
+  if (process.env.REQUIRE_STRIPE_LINKS !== '1') return;
+  if (sot.commerce.allowPlaceholderCheckout === true) {
+    throw new Error(
+      'REQUIRE_STRIPE_LINKS=1: set commerce.allowPlaceholderCheckout to false before production deploy'
+    );
+  }
+  for (const id of ['starter', 'pro', 'bundle']) {
+    const link =
+      sot.commerce.stripePaymentLinks && sot.commerce.stripePaymentLinks[id]
+        ? String(sot.commerce.stripePaymentLinks[id]).trim()
+        : '';
+    if (!/^https:\/\/buy\.stripe\.com\//.test(link)) {
+      throw new Error('REQUIRE_STRIPE_LINKS=1: missing live Payment Link for ' + id);
+    }
+  }
+}
+
+function resolveCheckoutHref(sot, productId) {
+  const allowPlaceholder = sot.commerce.allowPlaceholderCheckout === true;
+  const liveLink =
+    sot.commerce.stripePaymentLinks &&
+    typeof sot.commerce.stripePaymentLinks[productId] === 'string'
+      ? sot.commerce.stripePaymentLinks[productId].trim()
+      : '';
+  if (liveLink && /^https:\/\/buy\.stripe\.com\//.test(liveLink)) {
+    return { href: liveLink, isPlaceholder: false };
+  }
+  if (allowPlaceholder) {
+    const placeholder =
+      typeof sot.commerce.placeholderHref === 'string' && sot.commerce.placeholderHref.trim()
+        ? sot.commerce.placeholderHref.trim()
+        : '/coming-soon.html';
+    return { href: placeholder, isPlaceholder: true };
+  }
+  throw new Error(
+    'sot.commerce.stripePaymentLinks.' +
+      productId +
+      ' is empty and allowPlaceholderCheckout is false. Either set the live Payment Link or enable placeholder mode.'
+  );
+}
+
+function buildPdfCard(sot, product) {
+  const route = resolveCheckoutHref(sot, product.id);
+  const priceText = '$' + Number(product.priceUsd).toFixed(2);
+  const compareText =
+    product.compareAtUsd != null
+      ? '<span class="pdf-card-was">was $' + Number(product.compareAtUsd).toFixed(2) + '</span>'
+      : '';
+  const bullets = product.bullets
+    .map((b) => '                    <li>' + escapeHtml(b) + '</li>')
+    .join('\n');
+  const placeholderBadge = route.isPlaceholder
+    ? '\n                <p class="pdf-card-coming" role="note">Live checkout opens soon. Add your email and we will notify you.</p>'
+    : '';
+  const ctaLabel = route.isPlaceholder ? 'Notify me when available' : 'Buy on Stripe (' + priceText + ')';
+  const coverSrc = '../' + (product.coverPng || product.coverSvg);
+  const recommendedBadge =
+    product.recommended === true
+      ? '\n                <p class="pdf-card-badge" role="note">Best for teams</p>'
+      : '';
+  const tierBadge = product.tierTag
+    ? '\n                    <p class="pdf-card-tier" role="note">' + escapeHtml(product.tierTag) + '</p>'
+    : '';
+  const previewPngs = Array.isArray(product.previewPngs) ? product.previewPngs : [];
+  const previewFigures =
+    previewPngs.length > 0
+      ? '\n                <figure class="pdf-card-previews" aria-label="Watermarked preview pages">\n' +
+        previewPngs
+          .map(function (src, idx) {
+            return (
+              '                    <img src="../' +
+              escapeHtml(src) +
+              '" alt="' +
+              escapeHtml(product.name + ' preview page ' + (idx + 1) + ' (watermarked)') +
+              '" loading="lazy" decoding="async" width="72" height="93" class="pdf-card-preview-thumb">'
+            );
+          })
+          .join('\n') +
+        '\n                </figure>'
+      : '';
+  return (
+    '            <article class="pdf-card" id="pdf-card-' +
+    escapeHtml(product.id) +
+    '" aria-labelledby="pdf-card-title-' +
+    escapeHtml(product.id) +
+    '">\n' +
+    '                <figure class="pdf-card-cover">\n' +
+    '                    <img src="' +
+    coverSrc +
+    '" alt="' +
+    escapeHtml(product.name + ' cover, ' + product.pages + ' pages, English') +
+    '" loading="lazy" decoding="async" width="220" height="285">\n' +
+    '                </figure>\n' +
+    previewFigures +
+    '                <div class="pdf-card-body">\n' +
+    recommendedBadge +
+    tierBadge +
+    '                    <h3 id="pdf-card-title-' +
+    escapeHtml(product.id) +
+    '" class="pdf-card-title">' +
+    escapeHtml(product.name) +
+    '</h3>\n' +
+    '                    <p class="pdf-card-subtitle">' +
+    escapeHtml(product.subtitle) +
+    '</p>\n' +
+    '                    <p class="pdf-card-price"><span class="pdf-card-amount">' +
+    escapeHtml(priceText) +
+    '</span> ' +
+    compareText +
+    '</p>\n' +
+    '                    <ul class="pdf-card-bullets" role="list">\n' +
+    bullets +
+    '\n' +
+    '                    </ul>\n' +
+    '                    <p class="pdf-card-meta">' +
+    escapeHtml(product.pages + ' pages \u00b7 ' + product.format) +
+    '</p>' +
+    placeholderBadge +
+    '\n' +
+    '                    <a class="btn pdf-card-cta" href="' +
+    escapeHtml(route.href) +
+    '"' +
+    (route.isPlaceholder ? '' : ' target="_blank" rel="noopener noreferrer"') +
+    ' data-product-id="' +
+    escapeHtml(product.id) +
+    '" data-placeholder="' +
+    (route.isPlaceholder ? 'true' : 'false') +
+    '" aria-label="' +
+    escapeHtml(ctaLabel + ' - ' + product.name) +
+    '">' +
+    escapeHtml(ctaLabel) +
+    '</a>\n' +
+    '                </div>\n' +
+    '            </article>\n'
+  );
+}
+
+function buildPdfStorefrontSection(sot) {
+  const cards = sot.commerce.products.map((p) => buildPdfCard(sot, p)).join('');
+  // Path cut: comparison table not rendered (SOT comparisonTable kept for later).
+  const head = sot.commerce.storefrontHead || {};
+  const eyebrow = escapeHtml(head.eyebrow || 'Printable kits');
+  const title = escapeHtml(head.title || 'Take the kit offline');
+  const lead = escapeHtml(
+    head.lead ||
+      'Printable PDFs for marketing leaders. Same prompts as the free library, formatted for offline planning.'
+  );
+  const outcomeLine = head.outcomeLine
+    ? '                <p class="pdf-storefront-outcome">' + escapeHtml(head.outcomeLine) + '</p>\n'
+    : '';
+  const buyerFaq = Array.isArray(sot.buyerFaq)
+    ? sot.buyerFaq
+        .map(
+          (item) =>
+            '                <details class="faq-item">\n' +
+            '                    <summary>' +
+            escapeHtml(item.q) +
+            '</summary>\n' +
+            '                    <p>' +
+            escapeHtml(item.a) +
+            '</p>\n' +
+            '                </details>'
+        )
+        .join('\n')
+    : '';
+  const delivery = escapeHtml(
+    sot.commerce.deliveryPromise || 'Email delivery within 5 minutes.'
+  );
+  const faqDetails = buyerFaq
+    ? '            <details class="pdf-storefront-details">\n' +
+      '                <summary class="pdf-storefront-details-summary">Buyer FAQ &amp; delivery details</summary>\n' +
+      '                <p class="pdf-storefront-delivery"><strong>Delivery:</strong> ' +
+      delivery +
+      '</p>\n' +
+      '            <div class="pdf-storefront-faq" aria-labelledby="pdf-storefront-faq-title">\n' +
+      '                <h3 id="pdf-storefront-faq-title" class="pdf-storefront-faq-title">Buyer FAQ</h3>\n' +
+      buyerFaq +
+      '\n' +
+      '            </div>\n' +
+      '            </details>\n'
+    : '';
+
+  return (
+    '        <section class="upgrade-section pdf-storefront no-print" id="pdf-storefront" aria-labelledby="pdf-storefront-title">\n' +
+    '            <div class="pdf-storefront-teaser">\n' +
+    '                <p class="pdf-storefront-eyebrow">' +
+    eyebrow +
+    '</p>\n' +
+    '                <h2 id="pdf-storefront-title">' +
+    title +
+    '</h2>\n' +
+    '                <p class="pdf-storefront-lead">' +
+    lead +
+    '</p>\n' +
+    outcomeLine +
+    '                <p class="pdf-storefront-delivery"><strong>Delivery:</strong> ' +
+    delivery +
+    '</p>\n' +
+    '            </div>\n' +
+    '            <div class="pdf-storefront-grid" role="list">\n' +
+    cards +
+    '            </div>\n' +
+    faqDetails +
+    '            <p class="pdf-storefront-trust">Secure checkout via Stripe. Receipts and downloads delivered by email. <a href="../terms.html#paid-pdf-license">Team license</a> \u00b7 <a href="../en/privacy.html">Privacy</a>.</p>\n' +
+    '        </section>\n\n'
+  );
+}
+
+function injectPdfStorefront(html, locale) {
+  if (locale !== 'en') return html;
+  if (MIRROR_NOTE) {
+    console.log('[build] MIRROR_NOTE=1 - skipping #pdf-storefront on EN build (mirror target)');
+    return html;
+  }
+  const sot = loadSot();
+  if (sot.commerce.scope !== 'en-only') {
+    throw new Error('config/sot.json: commerce.scope must be "en-only" for this repo');
+  }
+  const anchor = '<section class="upgrade-section" id="faq"';
+  if (html.indexOf(anchor) === -1) {
+    throw new Error('injectPdfStorefront: anchor for #faq not found');
+  }
+  const block = buildPdfStorefrontSection(sot);
+  return html.replace(anchor, block + '        ' + anchor);
+}
+
+/* EN-only free Creative brief builder (#creative-brief). Ships on mirror too. */
+function buildCreativeBriefSelect(id, fieldKey, label, options, firstEmptyLabel) {
+  const opts = [
+    '                        <option value="">' + escapeHtml(firstEmptyLabel) + '</option>'
+  ].concat(
+    options.map(function (opt) {
+      return '                        <option value="' + escapeHtml(opt) + '">' + escapeHtml(opt) + '</option>';
+    })
+  );
+  /* name uses cb- prefix to avoid form-dup-name vs #cmo-context fields */
+  const nameAttr = 'cb-' + fieldKey;
+  return (
+    '                    <div class="cb-field">\n' +
+    '                        <label for="' +
+    id +
+    '">' +
+    escapeHtml(label) +
+    '</label>\n' +
+    '                        <select id="' +
+    id +
+    '" name="' +
+    nameAttr +
+    '" data-cb-field="' +
+    fieldKey +
+    '">\n' +
+    opts.join('\n') +
+    '\n                        </select>\n' +
+    '                    </div>\n'
+  );
+}
+
+function buildCreativeBriefTextField(id, fieldKey, label, placeholder, multiline) {
+  const nameAttr = 'cb-' + fieldKey;
+  const tag = multiline
+    ? '                        <textarea id="' +
+      id +
+      '" name="' +
+      nameAttr +
+      '" data-cb-field="' +
+      fieldKey +
+      '" rows="2" maxlength="280" placeholder="' +
+      escapeHtml(placeholder) +
+      '"></textarea>\n'
+    : '                        <input type="text" id="' +
+      id +
+      '" name="' +
+      nameAttr +
+      '" data-cb-field="' +
+      fieldKey +
+      '" maxlength="160" placeholder="' +
+      escapeHtml(placeholder) +
+      '">\n';
+  return (
+    '                    <div class="cb-field">\n' +
+    '                        <label for="' +
+    id +
+    '">' +
+    escapeHtml(label) +
+    '</label>\n' +
+    tag +
+    '                    </div>\n'
+  );
+}
+
+function buildCreativeBriefSection(sot, options) {
+  const opts = options && typeof options === 'object' ? options : {};
+  const isMirror = !!opts.mirror;
+  const copy =
+    sot.copy && sot.copy.creativeBrief && typeof sot.copy.creativeBrief === 'object'
+      ? sot.copy.creativeBrief
+      : {};
+  const title = typeof copy.title === 'string' ? copy.title : 'Creative brief builder';
+  const lead =
+    typeof copy.lead === 'string'
+      ? copy.lead
+      : 'Turn a short marketing brief into an image-ready prompt.';
+  const presetsLabel = typeof copy.presetsLabel === 'string' ? copy.presetsLabel : 'Quick starts';
+  const sampleLabel = typeof copy.sampleLabel === 'string' ? copy.sampleLabel : 'Try sample';
+  const stepsContext = typeof copy.stepsContext === 'string' ? copy.stepsContext : 'Context';
+  const stepsVisual = typeof copy.stepsVisual === 'string' ? copy.stepsVisual : 'Visual';
+  const stepsText = typeof copy.stepsText === 'string' ? copy.stepsText : 'Text';
+  const qualityLabel = typeof copy.qualityLabel === 'string' ? copy.qualityLabel : 'Brief readiness';
+  const outputLabel = typeof copy.outputLabel === 'string' ? copy.outputLabel : 'Generated image prompt';
+  const copyLabel = typeof copy.copyLabel === 'string' ? copy.copyLabel : 'Copy prompt';
+  const toolsTitle = typeof copy.toolsTitle === 'string' ? copy.toolsTitle : 'Open an image tool';
+  const toolsDesc =
+    typeof copy.toolsDesc === 'string' ? copy.toolsDesc : 'Opens in a new tab and copies your prompt.';
+  const emptyPlaceholder =
+    typeof copy.emptyPlaceholder === 'string'
+      ? copy.emptyPlaceholder
+      : 'Start with a subject or load a preset — your image prompt builds here.';
+  const tipsTitle = typeof copy.tipsTitle === 'string' ? copy.tipsTitle : 'Expert tips';
+  const proTeaser =
+    typeof copy.proTeaser === 'string'
+      ? copy.proTeaser
+      : 'Want the method to build more tools like this for your team? See Pro below.';
+  const tips = Array.isArray(copy.tips) ? copy.tips : [];
+  const tools =
+    sot.creativeBrief && Array.isArray(sot.creativeBrief.tools) ? sot.creativeBrief.tools : [];
+
+  const tipItems = tips
+    .slice(0, 3)
+    .map(function (tip) {
+      const t = tip && typeof tip.title === 'string' ? tip.title : '';
+      const b = tip && typeof tip.body === 'string' ? tip.body : '';
+      return (
+        '                    <li><strong>' + escapeHtml(t) + ':</strong> ' + escapeHtml(b) + '</li>\n'
+      );
+    })
+    .join('');
+
+  // Path cut: keep ChatGPT + Ideogram only (no tool-catalog wall).
+  const slimTools = tools.filter(function (tool) {
+    const url = tool && typeof tool.url === 'string' ? tool.url : '';
+    return /chatgpt\.com/i.test(url) || /ideogram\.ai/i.test(url);
+  }).slice(0, 2);
+  const toolCards = slimTools
+    .map(function (tool) {
+      const name = tool && typeof tool.name === 'string' ? tool.name : '';
+      const url = tool && typeof tool.url === 'string' ? tool.url : '';
+      const desc = tool && typeof tool.description === 'string' ? tool.description : '';
+      if (!name || !url) return '';
+      return (
+        '                <button type="button" class="cb-tool-btn" data-cb-tool-url="' +
+        escapeHtml(url) +
+        '" aria-label="Copy prompt and open ' +
+        escapeHtml(name) +
+        '">\n' +
+        '                    <span class="cb-tool-name">' +
+        escapeHtml(name) +
+        '</span>\n' +
+        '                    <span class="cb-tool-desc">' +
+        escapeHtml(desc) +
+        '</span>\n' +
+        '                </button>\n'
+      );
+    })
+    .join('');
+
+  return (
+    '<section class="upgrade-section creative-brief no-print" id="creative-brief" aria-labelledby="cb-title">\n' +
+    '            <p class="cb-eyebrow">Free browser builder</p>\n' +
+    '            <h2 id="cb-title">' +
+    escapeHtml(title) +
+    '</h2>\n' +
+    '            <p class="cb-lead">' +
+    escapeHtml(lead) +
+    '</p>\n' +
+    '            <details class="cb-builder-details" id="cb-builder">\n' +
+    '                <summary id="cb-builder-summary">Open brief builder</summary>\n' +
+    '            <div class="cb-presets" role="group" aria-label="' +
+    escapeHtml(presetsLabel) +
+    '">\n' +
+    '                <span class="cb-presets-label">' +
+    escapeHtml(presetsLabel) +
+    '</span>\n' +
+    '                <button type="button" class="btn cb-preset-btn" data-cb-preset="ecommerce">Ecommerce</button>\n' +
+    '                <button type="button" class="btn cb-preset-btn" data-cb-preset="brand">Brand</button>\n' +
+    '                <button type="button" class="btn cb-preset-btn" data-cb-preset="social">Social</button>\n' +
+    '                <button type="button" class="btn cb-preset-btn cb-sample-btn" id="cbSampleBtn">' +
+    escapeHtml(sampleLabel) +
+    '</button>\n' +
+    '            </div>\n' +
+    '            <div class="cb-steps" role="group" aria-label="Brief steps">\n' +
+    '                <button type="button" class="cb-step is-active" data-cb-step="1" aria-pressed="true">1. ' +
+    escapeHtml(stepsContext) +
+    '</button>\n' +
+    '                <button type="button" class="cb-step" data-cb-step="2" aria-pressed="false">2. ' +
+    escapeHtml(stepsVisual) +
+    '</button>\n' +
+    '                <button type="button" class="cb-step" data-cb-step="3" aria-pressed="false">3. ' +
+    escapeHtml(stepsText) +
+    '</button>\n' +
+    '            </div>\n' +
+    '            <div class="cb-layout">\n' +
+    '                <div class="cb-form" id="cbForm">\n' +
+    '                    <fieldset class="cb-panel" data-cb-panel="1" id="cbPanelContext">\n' +
+    '                        <legend class="cb-legend">Context</legend>\n' +
+    buildCreativeBriefSelect(
+      'cbCampaignGoal',
+      'campaignGoal',
+      'Campaign goal',
+      ['Awareness', 'Engagement', 'Conversion'],
+      'Select goal'
+    ) +
+    buildCreativeBriefTextField('cbAudience', 'audience', 'Audience', 'e.g. US B2B marketing leaders') +
+    buildCreativeBriefSelect(
+      'cbPlatform',
+      'platform',
+      'Platform',
+      ['Instagram', 'LinkedIn', 'Facebook', 'Web banner', 'Outdoor advertising (Print)'],
+      'Select platform'
+    ) +
+    buildCreativeBriefSelect(
+      'cbTone',
+      'tone',
+      'Tone',
+      ['Premium (Luxurious)', 'Bold (Daring)', 'Minimalist', 'Playful', 'Expert'],
+      'Select tone'
+    ) +
+    '                    </fieldset>\n' +
+    '                    <fieldset class="cb-panel" data-cb-panel="2" id="cbPanelVisual" hidden>\n' +
+    '                        <legend class="cb-legend">Visual</legend>\n' +
+    buildCreativeBriefTextField(
+      'cbObject',
+      'object',
+      'Subject / object',
+      'e.g. Leather handbag on light stone',
+      true
+    ) +
+    buildCreativeBriefSelect(
+      'cbStyle',
+      'style',
+      'Style',
+      [
+        'Realistic photo',
+        '3D render (Studio)',
+        'Cinematic style',
+        'Fashion magazine style',
+        'Minimalist illustration'
+      ],
+      'Select style'
+    ) +
+    buildCreativeBriefSelect(
+      'cbLighting',
+      'lighting',
+      'Lighting',
+      ['Cinematic lighting', 'Soft daylight', 'Golden Hour', 'Studio lighting', 'Neon lighting'],
+      'Select lighting'
+    ) +
+    buildCreativeBriefSelect(
+      'cbCamera',
+      'camera',
+      'Camera',
+      ['Close-up', 'Eye level', 'Top-down (Flatlay)', 'Wide angle', 'Low angle (Hero shot)'],
+      'Select camera'
+    ) +
+    buildCreativeBriefSelect(
+      'cbAspect',
+      'aspectRatio',
+      'Aspect ratio',
+      ['1:1', '16:9', '9:16'],
+      'Select ratio'
+    ) +
+    buildCreativeBriefTextField('cbColor', 'color', 'Color palette', 'e.g. Warm golden tones') +
+    '                    </fieldset>\n' +
+    '                    <fieldset class="cb-panel" data-cb-panel="3" id="cbPanelText" hidden>\n' +
+    '                        <legend class="cb-legend">Text on image</legend>\n' +
+    buildCreativeBriefTextField('cbHeadline', 'headline', 'Headline', 'Optional headline on the image') +
+    buildCreativeBriefTextField('cbCta', 'cta', 'Call to action', 'Optional CTA') +
+    '                    </fieldset>\n' +
+    '                </div>\n' +
+    '                <div class="cb-output-wrap">\n' +
+    '                    <div class="cb-quality" id="cbQuality" aria-live="polite">\n' +
+    '                        <span class="cb-quality-label">' +
+    escapeHtml(qualityLabel) +
+    '</span>\n' +
+    '                        <span class="cb-quality-badge" id="cbQualityBadge" data-level="weak">0/9 — weak</span>\n' +
+    '                        <p class="cb-quality-hint" id="cbQualityHint">Add a subject to start.</p>\n' +
+    '                    </div>\n' +
+    '                    <label class="cb-output-label" for="cbOutput">' +
+    escapeHtml(outputLabel) +
+    '</label>\n' +
+    '                    <textarea id="cbOutput" class="cb-output" rows="8" placeholder="' +
+    escapeHtml(emptyPlaceholder) +
+    '" aria-label="' +
+    escapeHtml(outputLabel) +
+    ' — you can edit"></textarea>\n' +
+    '                    <div class="cb-output-actions">\n' +
+    '                        <button type="button" class="btn btn-primary" id="cbCopyBtn" disabled>' +
+    escapeHtml(copyLabel) +
+    '</button>\n' +
+    '                        <span class="cb-char-count" id="cbCharCount" aria-live="polite">0 characters</span>\n' +
+    '                    </div>\n' +
+    '                    <div class="cb-tools" aria-labelledby="cb-tools-title">\n' +
+    '                        <h3 id="cb-tools-title" class="cb-tools-title">' +
+    escapeHtml(toolsTitle) +
+    '</h3>\n' +
+    '                        <p class="cb-tools-desc">' +
+    escapeHtml(toolsDesc) +
+    '</p>\n' +
+    '                        <div class="cb-tool-grid" role="group" aria-label="Image generation tools">\n' +
+    toolCards +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                </div>\n' +
+    '            </div>\n' +
+    '            <details class="cb-tips" id="cbTips">\n' +
+    '                <summary>' +
+    escapeHtml(tipsTitle) +
+    '</summary>\n' +
+    '                <ul>\n' +
+    tipItems +
+    '                </ul>\n' +
+    '            </details>\n' +
+    '            </details>\n' +
+    '            <p class="cb-pro-teaser">' +
+    escapeHtml(proTeaser) +
+    (isMirror
+      ? ' <a href="https://promptanatomy.space/en/#pdf-storefront">CMO AI Content System kits</a></p>\n'
+      : ' <a href="#pdf-storefront">CMO AI Content System kits</a></p>\n') +
+    '            <script src="js/creative-brief.js" defer></script>\n' +
+    '        </section>\n\n'
+  );
+}
+
+function injectCreativeBrief(html, locale) {
+  const anchor = '<!-- CMO_CREATIVE_BRIEF -->';
+  if (html.indexOf(anchor) === -1) {
+    throw new Error('injectCreativeBrief: anchor "<!-- CMO_CREATIVE_BRIEF -->" not found');
+  }
+  if (locale !== 'en') {
+    return html
+      .replace(anchor, '')
+      .replace(
+        /\s*<a href="#creative-brief"[^>]*id="heroCtaBrief"[^>]*>[\s\S]*?<\/a>\s*/,
+        '\n'
+      )
+      .replace(
+        /\s*<span class="progress-jump-sep"[^>]*>·<\/span>\s*<a href="#creative-brief"[^>]*id="progressJumpCreative"[^>]*>[\s\S]*?<\/a>/,
+        ''
+      )
+      .replace(
+        'href="#pro-contents" id="progressJumpPro"',
+        'href="https://promptanatomy.space/en/#pdf-storefront" id="progressJumpPro"'
+      );
+  }
+  const sot = loadSot();
+  let out = html.replace(anchor, buildCreativeBriefSection(sot, { mirror: !!MIRROR_NOTE }));
+  // Spine-first: ensure primary/secondary CTA classes after EN text replacements.
+  out = out
+    .replace(
+      /<a href="#block1"[^>]*id="heroCtaSpine"[^>]*>/i,
+      '<a href="#block1" class="cta-button" id="heroCtaSpine" aria-label="Start your first workflow – go to workflow 1">'
+    )
+    .replace(
+      /<a href="#creative-brief"[^>]*id="heroCtaBrief"[^>]*>/i,
+      '<a href="#creative-brief" class="cta-text-link" id="heroCtaBrief" aria-label="Build a creative brief – go to the brief builder">'
+    );
+  const courseFaq =
+    '<details class="faq-item">\n' +
+    '                    <summary>Is this a course or a tool?</summary>';
+  if (out.indexOf(courseFaq) !== -1 && out.indexOf('id="faq-creative-brief"') === -1) {
+    out = out.replace(
+      courseFaq,
+      '<details class="faq-item" id="faq-creative-brief">\n' +
+        '                    <summary>What is the creative brief builder?</summary>\n' +
+        '                    <p>A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT or Ideogram. No account. It demonstrates the same tool-building idea Pro teaches for teams.</p>\n' +
+        '                </details>\n' +
+        '                ' +
+        courseFaq
+    );
+  }
+  if (out.indexOf('id="faq-tool-sprawl"') === -1) {
+    const whoFaq =
+      '<details class="faq-item">\n' +
+      '                    <summary>Who is this for?</summary>';
+    const jtbdFaqs =
+      '<details class="faq-item" id="faq-tool-sprawl">\n' +
+      '                    <summary>Why use this instead of more AI tools?</summary>\n' +
+      '                    <p>It is a portable prompt system you run on ChatGPT or Claude — not another SaaS seat. Structured workflows replace random chats and reduce tool sprawl.</p>\n' +
+      '                </details>\n' +
+      '                <details class="faq-item" id="faq-brand-voice">\n' +
+      '                    <summary>How do you protect brand voice before publishing?</summary>\n' +
+      '                    <p>Set session context and non-negotiable rules, then run the pre-publish safety reviewer (<a href="#cmo-safety">#cmo-safety</a>) to check facts, tone, legal/trust risk, and CTA ownership before you ship.</p>\n' +
+      '                </details>\n' +
+      '                ' +
+      whoFaq;
+    if (out.indexOf(whoFaq) !== -1) {
+      out = out.replace(whoFaq, jtbdFaqs);
+    }
+  }
+  return out;
 }
 
 function buildScenariosTabScript(locale) {
@@ -942,11 +1697,11 @@ function insertSeo(html, locale) {
   const canonical = makeAbsoluteUrl(canonicalPath);
   /** USA CMO audience: all locales share English SEO (title, description, OG/Twitter). */
   const ogLocale = 'en_US';
-  const title = 'Prompt Anatomy CMO Kit: 10 copy‑paste prompts (45 min)';
-  const description =
-    'Prompt Anatomy CMO Kit: 10 prompts to build a 30‑day plan, repurpose 1→7 formats, and run a KPI loop. Copy, paste, run. No sign‑up.';
+  const brandSeo = readBrandSeo();
+  const title = brandSeo.title;
+  const description = brandSeo.description;
   const ogImageUrl = makeAbsoluteUrl('/og.png');
-  const ogImageAlt = 'Prompt Anatomy CMO Kit: 10 copy-paste prompts (45 min) – preview image';
+  const ogImageAlt = brandSeo.ogImageAlt;
   const insert = [
     `<link rel="canonical" href="${canonical}">`,
     `<link rel="alternate" hreflang="lt" href="${ltUrl}">`,
@@ -984,10 +1739,16 @@ function insertSeo(html, locale) {
 function fixAssetPaths(html) {
   return html
     .replace(/href="favicon\.svg"/g, 'href="../favicon.svg"')
+    .replace(/href="favicon-32x32\.png"/g, 'href="../favicon-32x32.png"')
+    .replace(/href="favicon-16x16\.png"/g, 'href="../favicon-16x16.png"')
+    .replace(/href="apple-touch-icon\.png"/g, 'href="../apple-touch-icon.png"')
+    .replace(/href="site\.webmanifest"/g, 'href="../site.webmanifest"')
     .replace(/href="privatumas\.html"/g, 'href="../privatumas.html"')
     .replace(/href="styles\//g, 'href="../styles/')
     .replace(/src="js\//g, 'src="../js/')
-    .replace(/src="data\//g, 'src="../data/');
+    .replace(/src="data\//g, 'src="../data/')
+    .replace(/src="assets\//g, 'src="../assets/')
+    .replace(/src="favicon\.svg"/g, 'src="../favicon.svg"');
 }
 
 function assertLocaleStructure(html, locale) {
@@ -1011,16 +1772,10 @@ function assertLocaleStructure(html, locale) {
 const EN_REPLACEMENTS_PREFIX = [
   // Skip & meta
   ['Pereiti prie turinio', 'Skip to content'],
-  // Hero
-  ['aria-label="Pilna Promptų anatomija – interaktyvus mokymas (atidaroma naujame lange)"', 'aria-label="Full Prompt Anatomy – interactive training (opens in new tab)"'],
-  [
-    '<span class="badge badge-spinoff" role="status" aria-label="10 CMO promptų biblioteka naršyklėje, be registracijos">Nemokama biblioteka</span>',
-    '<span class="badge badge-spinoff" role="status" aria-label="10 CMO prompts in your browser, no sign-up required">Free library</span>'
-  ],
   // Footer product link (before generic "Promptų anatomija" so full paragraph matches)
   [
     '<p class="footer-product-link">Spin-off Nr. 2 (Prompt Anatomy). Pilnas mokymas, metodika ir brand centras: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>. Paskutinis atnaujinimas: 2026-04-30.</p>',
-    '<p class="footer-product-link">Spin-off No. 2 (Prompt Anatomy). Full training, methodology, and brand hub: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>. Last updated: 2026-04-30.</p>'
+    '<p class="footer-product-link">Part of Prompt Anatomy · Training &amp; checkout → <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a></p>'
   ],
   ['<span id="footer-email-label">El. paštas:</span>', '<span id="footer-email-label">Email:</span>'],
   ['<span id="footer-address-label">Pašto adresas:</span>', '<span id="footer-address-label">Mailing address:</span>'],
@@ -1029,100 +1784,80 @@ const EN_REPLACEMENTS_PREFIX = [
   ['Promptų anatomija', 'Prompt Anatomy'],
   ['Turinio DI sistema<br>rinkodaros vadovams', 'Content AI System<br>for Marketing Leaders'],
   [
-    '10 CMO promptų naršyklėje: per ~45 min. susiformuos planas ir kasdienis turinio ciklas.',
-    '10 CMO prompts in your browser: in ~45 minutes you get a plan and a daily content rhythm.'
+    '<p class="header-lead" id="heroLead">Kartok rinkodaros workflow vietoj tuščio prompto kiekvieną kartą.</p>',
+    '<p class="header-lead" id="heroLead">Run repeatable marketing workflows instead of starting from a blank prompt.</p>'
   ],
   [
-    '<li class="trust-pill" id="heroTrustPill1"><span aria-hidden="true">🔒</span> Be duomenų rinkimo</li>',
-    '<li class="trust-pill" id="heroTrustPill1"><span aria-hidden="true">🔒</span> No data collection</li>'
+    '<p class="header-proof" id="heroProof">Nuo kampanijos plano iki kokybės patikros – viena kartojama sistema.</p>',
+    '<p class="header-proof" id="heroProof">From campaign plan to quality check in one repeatable system.</p>'
+  ],
+  ['id="hero-diagram-label">Planuok → Kurk → Tikrink → Tobulink</', 'id="hero-diagram-label">Plan → Create → Check → Improve</'],
+  ['<span class="hero-diagram__module-title">Planuok</span>', '<span class="hero-diagram__module-title">Plan</span>'],
+  ['<span class="hero-diagram__module-title">Kurk</span>', '<span class="hero-diagram__module-title">Create</span>'],
+  ['<span class="hero-diagram__module-title">Tikrink</span>', '<span class="hero-diagram__module-title">Check</span>'],
+  ['<span class="hero-diagram__module-title">Tobulink</span>', '<span class="hero-diagram__module-title">Improve</span>'],
+  ['<span class="hero-diagram__module-desc">Briefas + auditorija</span>', '<span class="hero-diagram__module-desc">Brief + audience</span>'],
+  ['<span class="hero-diagram__module-desc">Kanalų turinys</span>', '<span class="hero-diagram__module-desc">Channel-ready content</span>'],
+  ['<span class="hero-diagram__module-desc">Prekės ženklas + kokybė</span>', '<span class="hero-diagram__module-desc">Brand + quality</span>'],
+  ['<span class="hero-diagram__module-desc">Atsiliepimai → perrašymas</span>', '<span class="hero-diagram__module-desc">Feedback → rewrite</span>'],
+  [
+    '<li class="trust-pill" id="heroTrustPill1">Be paskyros</li>',
+    '<li class="trust-pill" id="heroTrustPill1">No signup</li>'
   ],
   [
-    '<li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">⏱</span> 10 promptų · ~45 min</li>',
-    '<li class="trust-pill" id="heroTrustPill2"><span aria-hidden="true">⏱</span> 10 prompts · ~45 min</li>'
+    '<li class="trust-pill" id="heroTrustPill2">ChatGPT ir Claude</li>',
+    '<li class="trust-pill" id="heroTrustPill2">ChatGPT + Claude</li>'
   ],
-  ['<summary id="heroDemoSummary">Išbandyk mini-promptą (10 s)</summary>', '<summary id="heroDemoSummary">Try mini-prompt (10 sec)</summary>'],
+  [
+    '<li class="trust-pill" id="heroTrustPill3">4 workflow nemokamai</li>',
+    '<li class="trust-pill" id="heroTrustPill3">4 workflows free</li>'
+  ],
+  [
+    'class="cta-text-link" id="heroCtaBrief" aria-label="Kurti kūrybinį briefą – pereiti prie brief builder"',
+    'class="cta-text-link" id="heroCtaBrief" aria-label="Build a creative brief – go to the brief builder"'
+  ],
+  ['Kurti kūrybinį briefą', 'Build a creative brief'],
+  [
+    'aria-label="Pradėti pirmą workflow – pereiti prie workflow 1"',
+    'aria-label="Start your first workflow – go to workflow 1"'
+  ],
+  ['Pradėti pirmą workflow', 'Start your first workflow'],
   ['<span class="prompt-recommended" id="prompt1Recommended">Pradėk nuo čia</span>', '<span class="prompt-recommended" id="prompt1Recommended">Start here</span>'],
-  ['aria-label="Pradėti nuo pirmo prompto – pereiti prie bibliotekos"', 'aria-label="Start with prompt 1 – go to the library"'],
-  ['Pradėti nuo 1-o prompto', 'Start with prompt 1'],
   [
-    '<p class="header-cta-note"><a href="#community" class="cta-secondary" aria-label="Prisijunk prie bendruomenės – pereiti prie Telegram">Bendruomenė: Telegram</a></p>',
-    '<p class="header-cta-note"><a href="#community" class="cta-secondary" aria-label="Join the community – go to Telegram">Community: Telegram</a></p>'
+    '<p class="prompt-path-hint" id="prompt1PathHint">Kopijuok Promptą 1 → įklijuok į ChatGPT arba Claude.</p>',
+    '<p class="prompt-path-hint" id="prompt1PathHint">Copy Prompt 1 → paste into ChatGPT or Claude.</p>'
   ],
-  ['<span id="heroDemoTitle">Išbandyk be registracijos</span>', '<span id="heroDemoTitle">Try without signing up</span>'],
-  ['aria-label="Nukopijuoti mini-promptą į darbinių atmintinę"', 'aria-label="Copy mini-prompt to clipboard"'],
-  ['<span id="heroDemoCopyBtnText">Nukopijuoti mini-promptą</span>', '<span id="heroDemoCopyBtnText">Copy mini-prompt</span>'],
+  // Usage strip (executive-summary)
   [
-    `<pre id="promptDemo">META: Tu esi rinkodaros strategas.
-INPUT: Auditorija [ ], tikslas [ ].
-OUTPUT: 5 idėjos su kabliuku + CTA + KPI.</pre>`,
-    `<pre id="promptDemo">META: You are a marketing strategist.
-INPUT: Audience [ ], goal [ ].
-OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
+    '<h2 id="executive-summary-title" class="visually-hidden">Kaip naudoti</h2>',
+    '<h2 id="executive-summary-title" class="visually-hidden">How to use</h2>'
   ],
-  // Executive summary (value grid)
-  ['<span aria-hidden="true">🧭</span> Ką gauni ir kodėl tai veikia', '<span aria-hidden="true">🧭</span> What you get and why it works'],
   [
-    '<p class="executive-summary-lead" id="objectives-title">Per ~45 min. – turinio sistema, 100 vienetų ir 30 d. planas rinkodaros vadovui.</p>',
-    '<p class="executive-summary-lead" id="objectives-title">In ~45 minutes – content system, 100 assets, and a 30-day plan for marketing leaders.</p>'
+    '<p class="usage-strip" id="howItWorksLead">Kopijuok → įklijuok į ChatGPT arba Claude.</p>',
+    '<p class="usage-strip" id="howItWorksLead">Copy → paste into ChatGPT or Claude.</p>'
   ],
-  ['<h3 class="value-card-title">Kas tai yra</h3>', '<h3 class="value-card-title">What this is</h3>'],
-  [
-    '<p class="value-card-lead"><strong>Prompt Anatomy CMO rinkinys</strong> – struktūruota promptų seka ir framework greitesniems turinio sprendimams.</p>',
-    '<p class="value-card-lead"><strong>Prompt Anatomy CMO Kit</strong> – structured prompt sequence and framework for faster content decisions.</p>'
-  ],
-  ['<h3 class="value-card-title">Ką gausi</h3>', '<h3 class="value-card-title">What you get</h3>'],
-  [
-    '<p class="value-card-lead">30 d. planas, 1 idėja → 7 formatai, KPI ciklas: matuok → spręsk → tobulink.</p>',
-    '<p class="value-card-lead">30-day plan, one idea → 7 formats, KPI loop: measure → decide → improve.</p>'
-  ],
-  ['<h3 class="value-card-title">Kuo skiriasi</h3>', '<h3 class="value-card-title">How it differs</h3>'],
-  [
-    '<p class="value-card-lead">Ne atsitiktiniai promptai – pakartojamas operacinis ciklas su aiškiais laukais ir vertinimu.</p>',
-    '<p class="value-card-lead">Not random prompts – a repeatable operating cycle with clear fields and evaluation.</p>'
-  ],
-  ['<a href="#faq-beginner">Ar tinka pradedančiajam?</a>', '<a href="#faq-beginner">Good for beginners?</a>'],
-  ['<a href="#faq-all-ten">Ar būtina visi 10?</a>', '<a href="#faq-all-ten">Need all 10?</a>'],
-  ['<a href="#faq">Visi DUK</a>', '<a href="#faq">All FAQ</a>'],
   ['<summary id="prompt-basics-summary">Promptų pagrindai (1 min)</summary>', '<summary id="prompt-basics-summary">Prompt basics (1 min)</summary>'],
   ['aria-label="Greita navigacija per promptus"', 'aria-label="Quick jump between prompts"'],
-  ['<a href="#cmo-safety" id="progressJumpSafety">Sauga</a>', '<a href="#cmo-safety" id="progressJumpSafety">Safety</a>'],
   ['<a href="#faq" id="progressJumpFaq">DUK</a>', '<a href="#faq" id="progressJumpFaq">FAQ</a>'],
   ['<p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Promptas</p>', '<p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Prompt</p>'],
   ['<span id="stickyPromptBarCopyText">Kopijuoti</span>', '<span id="stickyPromptBarCopyText">Copy</span>'],
   ['aria-label="Kopijuoti dabartinį promptą"', 'aria-label="Copy current prompt"'],
   ['<a href="#block2" class="sticky-prompt-bar-next" id="stickyPromptBarNext">Kitas →</a>', '<a href="#block2" class="sticky-prompt-bar-next" id="stickyPromptBarNext">Next →</a>'],
-  [
-    '<p class="objectives-eco-hint"><strong>Žr. greitai:</strong> <a href="#block1">30 d. planas</a> · <a href="#block5">analizė pagal KPI</a> · <a href="#block9">temų grupė</a> · <a href="#cmo-safety">tikrinti prieš publikuojant</a> · <a href="#ecosystem-strip">ekosistema</a>.</p>',
-    '<p class="objectives-eco-hint"><strong>See:</strong> <a href="#block1">30-day plan</a> · <a href="#block5">KPI analysis</a> · <a href="#block9">topic cluster</a> · <a href="#cmo-safety">pre-publish safety</a> · <a href="#ecosystem-strip">ecosystem</a>.</p>'
-  ],
-  // Instructions
-  ['Kaip naudoti šią biblioteką', 'How to use this library'],
+  // Copy tips
+  ['Kopijavimo patarimai', 'Copy tips'],
   ['aria-label="Orientacinis laikas: 3–5 min per žingsnį"', 'aria-label="Estimated time: 3–5 min per step"'],
   ['Pasirink promptą ir spausk ant jo – tekstas pažymėsis', 'Select a prompt and click it to auto-select the text'],
   // Use same quote chars as in index.html: „ (U+201E) and " (U+201C) so replacement matches
   ['Spausk <strong>„Kopijuoti promptą\u201C</strong> arba <code>Ctrl+C</code> / <code>Cmd+C</code>', 'Click <strong>"Copy prompt"</strong> or <code>Ctrl+C</code> / <code>Cmd+C</code>'],
-  ['~3–5 min per žingsnį', '~3–5 min per step'],
-  ["content: '💡 Spausk čia ir nukopijuok';", "content: '💡 Click to select and copy';"],
+  ['~3–5 min', '~3–5 min'],
   ['Įklijuok į ChatGPT, Claude ar kitą DI (dirbtinio intelekto) įrankį', 'Paste into ChatGPT, Claude or another AI tool'],
   ['Pakeisk <code>[auditorija]</code>, <code>[galvos skausmas]</code>, <code>[unikalus pardavimo pasiūlymas]</code>, <code>[kanalas]</code> ir kitus laukus savo duomenimis – ir gauk rezultatą', 'Replace <code>[audience]</code>, <code>[pain point]</code>, <code>[unique selling proposition]</code>, <code>[channel]</code>, and any city or budget placeholders with your real data'],
-  // Preflight strip (under hero)
-  ['Prieš kopijuojant (1 min)', 'Before you copy (1 min)'],
-  ['<strong>Kas yra prompt?</strong>', '<strong>What is a prompt?</strong>'],
-  ['<strong>Kas yra Prompt Anatomy?</strong>', '<strong>What is Prompt Anatomy?</strong>'],
-  ['<strong>Kaip naudoti?</strong>', '<strong>How to use?</strong>'],
-  ['Aiški instrukcija DI įrankiui: kontekstas + tikslas + ribos + formatas.', 'A clear instruction for an AI tool: context + goal + constraints + format.'],
-  ['Struktūra, kuri padaro rezultatą nuoseklų ir pakartojamą.', 'A structure that makes outputs consistent and repeatable.'],
-  ['<span>Planuok → Kurk → Tikrink → Tobulink.</span>', '<span>Plan → Create → Check → Improve.</span>'],
-  ['Pilnas paaiškinimas', 'Full explanation'],
-  ['<a href="#framework-schema">Schema</a>', '<a href="#framework-schema">Framework</a>'],
-  ['<p class="objectives-eco-hint"><a href="#block1"><strong>Praleisti → Promptas 1</strong></a></p>', '<p class="objectives-eco-hint"><a href="#block1"><strong>Skip → Prompt 1</strong></a></p>'],
-  // Upgrade layer: explain blocks (after preflight <strong> replacements)
   ['<h2 id="what-is-prompt-title">Kas yra prompt?</h2>', '<h2 id="what-is-prompt-title">What is a prompt?</h2>'],
-  ['Promptas yra aiški instrukcija DI įrankiui: ką daryti, kam daryti ir kokiu formatu grąžinti rezultatą.', 'A prompt is a clear instruction to an AI tool: what to do, for whom, and in which format.'],
-  ['Kuo promptas tikslesnis, tuo mažiau taisymų po pirmo atsakymo.', 'The clearer the prompt, the fewer fixes you need after the first answer.'],
+  ['Promptas yra aiški instrukcija DI įrankiui: ką daryti, kam daryti ir kokiu formatu grąžinti rezultatą.', 'A prompt is an engineered instruction — Context + Goal + Constraints + Format — not a one-line chat gamble.'],
+  ['Kuo promptas tikslesnis, tuo mažiau taisymų po pirmo atsakymo.', 'Engineered prompts cut rework after the first answer; random prompting is gambling.'],
   ['Kontekstas + Tikslas + Ribos + Formatas', 'Context + Goal + Constraints + Format'],
   ['Kas yra Prompt Anatomy?', 'What is Prompt Anatomy?'],
-  ['Prompt Anatomy yra struktūra, kuri padeda rašyti promptus taip, kad rezultatas būtų nuoseklus ir pakartojamas.', 'Prompt Anatomy is a structure that helps you write prompts with consistent and repeatable results.'],
+  ['Prompt Anatomy yra struktūra, kuri padeda rašyti promptus taip, kad rezultatas būtų nuoseklus ir pakartojamas.', 'Prompt Anatomy standardizes prompt structure so team outputs stay consistent and repeatable.'],
   // Definitions (tiny GEO/AI module)
   ['Sąvokos (1 min)', 'Definitions (1 min)'],
   [
@@ -1143,11 +1878,6 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
   ['Ribos: tonas, ilgis, kas neleidžiama.', 'Constraints: tone, length, what is not allowed.'],
   ['Formatas: kaip turi atrodyti atsakymas.', 'Format: how the response must look.'],
   ['Vertinimas: pagal ką spręsti ar atsakymas geras.', 'Evaluation: how to judge response quality.'],
-  ['Schema: kaip dirbti su šia biblioteka', 'Framework: how to work with this library'],
-  ['Planuok: pasirink vieną tikslą ir vieną auditoriją.', 'Plan: choose one goal and one audience.'],
-  ['Kurk: paleisk promptą su savo duomenimis.', 'Create: run the prompt with your real data.'],
-  ['Tikrink: įvertink rezultatą pagal matavimo rodiklius.', 'Check: evaluate output by your metrics.'],
-  ['Tobulink: pakoreguok promptą ir kartok ciklą.', 'Improve: refine the prompt and repeat the cycle.'],
   [
     'alt="Daug DI įrankių neišsprendžia chaotiškos instrukcijos"',
     'alt="More AI tools do not fix chaotic instructions"'
@@ -1156,45 +1886,55 @@ OUTPUT: 5 ideas with hook + CTA + KPI.</pre>`
     'alt="Atsitiktinis promptinimas yra lošimas, struktūruotas promptinimas yra inžinerija"',
     'alt="Random prompting is gambling; structured prompting is engineering"'
   ],
-  [
-    'alt="Atrodai valdantis procesą, bet rezultatas nestabilus be struktūros"',
-    'alt="You look in control, but your output is unstable without structure"'
-  ],
-  [
-    'alt="Komanda jau naudoja DI, bet vadovas atsilieka, jei nesupranta sistemos"',
-    'alt="Your team is already using AI; leaders fall behind when they do not understand the system"'
-  ],
-  [
-    'alt="Chaotiškas prašymas vs aiški promptų struktūra"',
-    'alt="Chaotic request vs clear prompt structure"'
-  ],
-  [
-    'alt="Problema ne DI, o neaiški instrukcija"',
-    'alt="The issue is the instruction, not the AI"'
-  ],
+  ['<summary>Daugiau klausimų</summary>', '<summary>More questions</summary>'],
   [
     '{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Ar tinka pradedančiajam?","acceptedAnswer":{"@type":"Answer","text":"Taip, jei pildai laukus savo situacija, ne bendrais žodžiais."}},{"@type":"Question","name":"Ar būtina naudoti visus 10?","acceptedAnswer":{"@type":"Answer","text":"Ne, pradėk nuo 1–3 ir plėskis pagal poreikį."}},{"@type":"Question","name":"Kuo tai geriau nei random promptas?","acceptedAnswer":{"@type":"Answer","text":"Čia turi nuoseklią seką, aiškų tikslą ir vertinimą."}},{"@type":"Question","name":"Kiek laiko skirti kasdien?","acceptedAnswer":{"@type":"Answer","text":"20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“."}},{"@type":"Question","name":"Ar tai kursas ar įrankis?","acceptedAnswer":{"@type":"Answer","text":"Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk)."}},{"@type":"Question","name":"Kam tai skirta?","acceptedAnswer":{"@type":"Answer","text":"CMO, rinkodaros vadovams, produktų/augimo komandoms ir vadovams, kuriems reikia greito, pakartojamo turinio ciklo."}},{"@type":"Question","name":"Kuo skiriasi nuo promptų šablonų?","acceptedAnswer":{"@type":"Answer","text":"Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą."}},{"@type":"Question","name":"Ar tinka B2B SaaS, paslaugoms ir e. komercijai?","acceptedAnswer":{"@type":"Answer","text":"Taip. Tiesiog pakeisk auditoriją, pasiūlymą, kanalus ir metrikas – struktūra išlieka ta pati."}}]}',
-    '{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this for beginners?","acceptedAnswer":{"@type":"Answer","text":"Yes, if you fill placeholders with your real context."}},{"@type":"Question","name":"Do I need all 10 prompts?","acceptedAnswer":{"@type":"Answer","text":"No, start with 1–3 and expand when needed."}},{"@type":"Question","name":"Why is this better than random prompts?","acceptedAnswer":{"@type":"Answer","text":"You get a clear sequence, goal, and evaluation."}},{"@type":"Question","name":"How much time daily?","acceptedAnswer":{"@type":"Answer","text":"20–30 minutes is enough if you run Create → Check → Improve."}},{"@type":"Question","name":"Is this a course or a tool?","acceptedAnswer":{"@type":"Answer","text":"It’s an interactive prompt library + framework. You can use it immediately (copy → paste → run)."}},{"@type":"Question","name":"Who is this for?","acceptedAnswer":{"@type":"Answer","text":"CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence."}},{"@type":"Question","name":"How is this different from prompt templates?","acceptedAnswer":{"@type":"Answer","text":"You get a sequence, clear fields, evaluation, and a KPI loop — not a one-off output."}},{"@type":"Question","name":"Does this work for B2B SaaS, services, and ecommerce?","acceptedAnswer":{"@type":"Answer","text":"Yes. Swap the audience, offer, channels, and metrics — the structure stays the same."}}]}'
+    '{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this for beginners?","acceptedAnswer":{"@type":"Answer","text":"Yes, if you fill placeholders with your real context — then copy, paste, and run."}},{"@type":"Question","name":"Do I need all 10 prompts?","acceptedAnswer":{"@type":"Answer","text":"No. Free: 4 workflows (prompts 1, 2, 3, 5) plus the creative brief builder. The Pro kit lists the rest — full META/INPUT/OUTPUT bodies offline (full 10)."}},{"@type":"Question","name":"Why is this better than random prompts?","acceptedAnswer":{"@type":"Answer","text":"You get a repeatable Plan → Create → Check → Improve workflow with clear fields and evaluation — structured prompting, not prompt gambling."}},{"@type":"Question","name":"How much time daily?","acceptedAnswer":{"@type":"Answer","text":"20–30 minutes is enough if you run Create → Check → Improve."}},{"@type":"Question","name":"Is this a course or a tool?","acceptedAnswer":{"@type":"Answer","text":"A copy-paste Content AI System you can use immediately — not a long course. Free spine + brief in the browser; depth offline in the kits."}},{"@type":"Question","name":"Who is this for?","acceptedAnswer":{"@type":"Answer","text":"CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence."}},{"@type":"Question","name":"How is this different from prompt templates?","acceptedAnswer":{"@type":"Answer","text":"You get a sequence, clear fields, evaluation, and a KPI loop — not a one-off output."}},{"@type":"Question","name":"Does this work for B2B SaaS, services, and ecommerce?","acceptedAnswer":{"@type":"Answer","text":"Yes. Swap the audience, offer, channels, and metrics — the structure stays the same."}}]}'
   ],
   // Progress
-  ['Panaudojai 0 iš 10 promptų', 'You used 0 of 10 prompts'],
-  ['aria-label="Progresas: 0 iš 10 promptų"', 'aria-label="Progress: 0 of 10 prompts"'],
+  ['Panaudojai 0 iš 4 workflow', 'You used 0 of 4 workflows'],
+  ['aria-label="Progresas: 0 iš 4 workflow"', 'aria-label="Progress: 0 of 4 workflows"'],
+  ['Žiūrėti Pro rinkinį', 'See Pro kit'],
+  ['<h2 id="pro-contents-title">Dar 6 workflow Pro rinkinyje</h2>', '<h2 id="pro-contents-title">Also in the Pro kit</h2>'],
   [
-    '<p class="cmo-provider-hub-title" id="cmo-provider-hub-title">DI įrankiai (naujame skirtuke)</p>',
-    '<p class="cmo-provider-hub-title" id="cmo-provider-hub-title">AI tools (new tab)</p>'
+    '<p class="pro-contents-lead" id="pro-contents-lead">Pilni promptų kūnai offline Pro rinkinyje.</p>',
+    '<p class="pro-contents-lead" id="pro-contents-lead">Full prompt bodies offline in Pro.</p>'
+  ],
+  ['id="pro-contents-job-4">Video</', 'id="pro-contents-job-4">Video</'],
+  ['id="pro-contents-job-6">Prieštaravimai</', 'id="pro-contents-job-6">Objections</'],
+  ['id="pro-contents-job-7">Lead gen</', 'id="pro-contents-job-7">Lead gen</'],
+  ['id="pro-contents-job-8">Istorija</', 'id="pro-contents-job-8">Story</'],
+  ['id="pro-contents-job-9">SEO</', 'id="pro-contents-job-9">SEO</'],
+  ['id="pro-contents-job-10">Valdymas</', 'id="pro-contents-job-10">Control</'],
+  [
+    'id="prompt-desc-4">30 s video su kabliuku ir CTA</',
+    'id="prompt-desc-4">30s video with hook and CTA</'
   ],
   [
-    '<div class="cmo-provider-row" role="group" aria-label="Atidaryti trečiųjų šalių DI puslapius naujame skirtuke">',
-    '<div class="cmo-provider-row" role="group" aria-label="Open third-party AI provider sites in a new tab">'
+    'id="prompt-desc-6">10 vienetų prieštaravimams</',
+    'id="prompt-desc-6">10 assets for objections</'
   ],
-  ['Atidaryti ChatGPT', 'Open ChatGPT'],
-  ['Atidaryti Claude', 'Open Claude'],
-  ['Atidaryti Gemini', 'Open Gemini']
+  [
+    'id="prompt-desc-7">Lead postas + DM seka</',
+    'id="prompt-desc-7">Lead post + DM sequence</'
+  ],
+  [
+    'id="prompt-desc-8">Case study struktūra</',
+    'id="prompt-desc-8">Case-study structure</'
+  ],
+  [
+    'id="prompt-desc-9">Pillar + subtemos</',
+    'id="prompt-desc-9">Pillar + subtopics</'
+  ],
+  [
+    'id="prompt-desc-10">Control-center planas</',
+    'id="prompt-desc-10">Control-center plan</'
+  ],
 ];
 
 const EN_REPLACEMENTS_SUFFIX = [
-  // Prompt 1
-  ['<div class="category">Pradžia</div>', '<div class="category">Start</div>'],
+  // Prompt 1 (Plan)
+  ['<div class="category">Planuok</div>', '<div class="category">Plan</div>'],
   ['<h2 class="prompt-title">30 dienų turinio sistema</h2>', '<h2 class="prompt-title">30-day content system</h2>'],
   ['<p class="prompt-desc">Sukurk 30 dienų turinio planą pagal 4 turinio principus</p>', '<p class="prompt-desc">Create a 30-day content plan using 4 content principles</p>'],
   ['aria-label="Pasirinkti ir kopijuoti promptą 1"', 'aria-label="Select and copy prompt 1"'],
@@ -1209,125 +1949,66 @@ const EN_REPLACEMENTS_SUFFIX = [
   ['<span>Kopijuoti promptą</span>', '<span>Copy prompt</span>'],
   ['aria-label="Pažymėti, kad atlikai šį žingsnį"', 'aria-label="Mark as done"'],
   ['<span>Pažymėjau kaip atlikau</span>', '<span>Mark as done</span>'],
-  // Prompt 2
+  // Prompt 2 (Create)
+  ['<div class="category">Kurk</div>', '<div class="category">Create</div>'],
   ['<h2 class="prompt-title">Viena idėja → 7 formatai</h2>', '<h2 class="prompt-title">One idea → 7 formats</h2>'],
-  ['<p class="prompt-desc">Vieną idėją paversk į 7 skirtingus formatus</p>', '<p class="prompt-desc">Turn one idea into 7 different formats</p>'],
+  [
+    '<p class="prompt-desc" id="prompt-desc-2">Iš vienos idėjos – 7 kanalų vienetai per ~5–10 min</p>',
+    '<p class="prompt-desc" id="prompt-desc-2">From one idea — 7 channel units in ~5–10 min</p>'
+  ],
   ['aria-label="Pasirinkti ir kopijuoti promptą 2"', 'aria-label="Select and copy prompt 2"'],
   ['aria-label="Informacija: promptas 2"', 'aria-label="Information: prompt 2"'],
   ['<strong>Vienos idėjos daug formatų:</strong>', '<strong>One idea, many formats:</strong>'],
   ['<p>1 idėja = 7 vienetų. Laikas sutaupomas, nuoseklumas išlaikomas.</p>', '<p>1 idea = 7 units. Time saved, consistency kept.</p>'],
   ['Įklijuok į ChatGPT arba Claude ir pakeisk laukus savo duomenimis.', 'Paste into ChatGPT or Claude and replace placeholders with your data.'],
   ['aria-label="Kopijuoti promptą 2 į darbinių atmintinę"', 'aria-label="Copy prompt 2 to clipboard"'],
-  // Prompt 3
+  // Prompt 3 (Check)
+  ['<div class="category">Tikrink</div>', '<div class="category">Check</div>'],
   ['<h2 class="prompt-title">LinkedIn Autoriteto Kūrimas</h2>', '<h2 class="prompt-title">LinkedIn authority building</h2>'],
-  ['<p class="prompt-desc">150–200 žodžių postas su įžanginiu kabliuku, 3 punktais, pavyzdžiu ir raginimu veikti</p>', '<p class="prompt-desc">150–200 word post with hook, 3 points, example and call to action</p>'],
+  [
+    '<p class="prompt-desc" id="prompt-desc-3">Autoriteto LinkedIn postas su įrodymais per ~3–5 min</p>',
+    '<p class="prompt-desc" id="prompt-desc-3">Authority LinkedIn post with proof in ~3–5 min</p>'
+  ],
   ['aria-label="Pasirinkti ir kopijuoti promptą 3"', 'aria-label="Select and copy prompt 3"'],
   ['aria-label="Informacija: promptas 3"', 'aria-label="Information: prompt 3"'],
   ['<strong>Autoritetas:</strong>', '<strong>Authority:</strong>'],
   ['<p>Įrodymai + konkretūs punktai = pasitikėjimas ir reakcija.</p>', '<p>Proof + concrete points = trust and engagement.</p>'],
   ['aria-label="Kopijuoti promptą 3 į darbinių atmintinę"', 'aria-label="Copy prompt 3 to clipboard"'],
-  // Prompt 4
-  ['<h2 class="prompt-title">30 sek. video scenarijus</h2>', '<h2 class="prompt-title">30 sec video script</h2>'],
-  ['<p class="prompt-desc">Sukurti video – lengviau dar nebuvo!</p>', '<p class="prompt-desc">Write a 30-second video script with a clear hook and CTA</p>'],
-  ['aria-label="Pasirinkti ir kopijuoti promptą 4"', 'aria-label="Select and copy prompt 4"'],
-  ['aria-label="Informacija: promptas 4"', 'aria-label="Information: prompt 4"'],
-  ['<strong>Trumpas formatas:</strong>', '<strong>Short format:</strong>'],
-  ['<p>2 sekundės = liks arba slinks toliau. Įžūgis – esmė.</p>', '<p>2 seconds = stay or scroll. The hook is key.</p>'],
-  [
-    'Nukopijuok, įklijuok į DI įrankį ir pakeisk [tema], [pavyzdys] savo duomenimis.',
-    'Copy, paste into your AI tool, and replace [topic] and [example] with your data.'
-  ],
-  ['aria-label="Kopijuoti promptą 4 į darbinių atmintinę"', 'aria-label="Copy prompt 4 to clipboard"'],
-  // Prompt 5
+  // Prompt 5 (Improve)
+  ['<div class="category">Tobulink</div>', '<div class="category">Improve</div>'],
   ['<h2 class="prompt-title">Kasdienė analizė (Veikla→Sprendimas)</h2>', '<h2 class="prompt-title">Daily analysis (Action→Decision)</h2>'],
   [
-    '<p class="prompt-desc">Iš rodiklių suprask: kas neveikia, kodėl, ką daryti</p>',
-    '<p class="prompt-desc">Use metrics to understand what isn’t working, why, and what to do next</p>'
+    '<p class="prompt-desc" id="prompt-desc-5">Iš rodiklių — 4 veiksmai rytojui per ~3–5 min</p>',
+    '<p class="prompt-desc" id="prompt-desc-5">From metrics — 4 actions for tomorrow in ~3–5 min</p>'
   ],
   ['aria-label="Pasirinkti ir kopijuoti promptą 5"', 'aria-label="Select and copy prompt 5"'],
   ['aria-label="Informacija: promptas 5"', 'aria-label="Information: prompt 5"'],
   ['<strong>Uždaras ciklas:</strong>', '<strong>Closed loop:</strong>'],
   ['<p>Rodikliai be veiksmų = stovėjimas vietoje. Duomenys → sprendimai.</p>', '<p>Metrics without action = standing still. Data → decisions.</p>'],
   ['aria-label="Kopijuoti promptą 5 į darbinių atmintinę"', 'aria-label="Copy prompt 5 to clipboard"'],
-  // Prompt 6
-  ['<div class="category">Įgūdžiai</div>', '<div class="category">Skills</div>'],
-  ['<h2 class="prompt-title">Prieštaravimų apdorojimo įrankis</h2>', '<h2 class="prompt-title">Objection handling tool</h2>'],
-  ['<p class="prompt-desc">Iš klientų prieštaravimų sukurk turinį, kuris juos neutralizuoja</p>', '<p class="prompt-desc">Turn customer objections into content that neutralizes them</p>'],
-  ['aria-label="Pasirinkti ir kopijuoti promptą 6"', 'aria-label="Select and copy prompt 6"'],
-  ['aria-label="Informacija: promptas 6"', 'aria-label="Information: prompt 6"'],
-  ['<strong>Konversija:</strong>', '<strong>Conversion:</strong>'],
-  ['<p>Realūs klausimai + atsakymai = mažesnė trintis, didesnis pasitikėjimas.</p>', '<p>Real questions + answers = less friction, more trust.</p>'],
-  ['Įklijuok į ChatGPT arba Claude – pakeisk prieštaravimus ir kontekstą.', 'Paste into ChatGPT or Claude – replace objections and context.'],
-  ['aria-label="Kopijuoti promptą 6 į darbinių atmintinę"', 'aria-label="Copy prompt 6 to clipboard"'],
-  // Prompt 7
-  ['<h2 class="prompt-title">Lead generator postas + DM seka</h2>', '<h2 class="prompt-title">Lead generator post + DM sequence</h2>'],
-  ['<p class="prompt-desc">Lead generator postas + 4 žinučių seka</p>', '<p class="prompt-desc">Lead generator post + 4-message sequence</p>'],
-  ['aria-label="Pasirinkti ir kopijuoti promptą 7"', 'aria-label="Select and copy prompt 7"'],
-  ['aria-label="Informacija: promptas 7"', 'aria-label="Information: prompt 7"'],
-  ['<strong>Potencialūs klientai:</strong>', '<strong>Leads:</strong>'],
-  ['<p>Seka: sekėjas → klientas. Struktūra didina konversiją.</p>', '<p>Sequence: follower → customer. Structure increases conversion.</p>'],
-  ['aria-label="Kopijuoti promptą 7 į darbinių atmintinę"', 'aria-label="Copy prompt 7 to clipboard"'],
-  // Prompt 8
-  ['<h2 class="prompt-title">Kliento istorijos struktūra</h2>', '<h2 class="prompt-title">Customer story structure</h2>'],
-  ['<p class="prompt-desc">Iš duomenų sukurk kliento istoriją</p>', '<p class="prompt-desc">Turn data into a customer story</p>'],
-  ['aria-label="Pasirinkti ir kopijuoti promptą 8"', 'aria-label="Select and copy prompt 8"'],
-  ['aria-label="Informacija: promptas 8"', 'aria-label="Information: prompt 8"'],
-  ['<strong>Įrodymai:</strong>', '<strong>Proof:</strong>'],
-  ['<p>Skaičiai + procesas = kredibilitetas ir konversija.</p>', '<p>Numbers + process = credibility and conversion.</p>'],
-  ['Nukopijuok ir įklijuok – įrašyk kliento duomenis ir gauk struktūrizuotą istoriją.', 'Copy and paste – enter customer data and get a structured story.'],
-  ['aria-label="Kopijuoti promptą 8 į darbinių atmintinę"', 'aria-label="Copy prompt 8 to clipboard"'],
-  // Prompt 9
-  ['<div class="category">Plėtra</div>', '<div class="category">Growth</div>'],
-  ['<h2 class="prompt-title">Temų grupė</h2>', '<h2 class="prompt-title">Topic cluster</h2>'],
-  ['<p class="prompt-desc">Pagrindinė tema + 8 subtemos, vidinės nuorodos</p>', '<p class="prompt-desc">Main topic + 8 subtopics, internal links</p>'],
-  ['aria-label="Pasirinkti ir kopijuoti promptą 9"', 'aria-label="Select and copy prompt 9"'],
-  ['aria-label="Informacija: promptas 9"', 'aria-label="Information: prompt 9"'],
-  ['<p>Pagrindinė tema + subtemos = pasiekiamumas ir eksperto pozicija.</p>', '<p>Main topic + subtopics = reach and expert position.</p>'],
-  ['aria-label="Kopijuoti promptą 9 į darbinių atmintinę"', 'aria-label="Copy prompt 9 to clipboard"'],
-  // Prompt 10
-  ['<div class="category">Viskas kartu</div>', '<div class="category">All together</div>'],
-  ['<h2 class="prompt-title">Pagrindinis promptas (valdymo centras)</h2>', '<h2 class="prompt-title">Main prompt (control center)</h2>'],
-  ['<p class="prompt-desc">Vienas integruotas planas: turinys, vienos idėjos daug formatų, testavimas, veiksmai</p>', '<p class="prompt-desc">One integrated plan: content, one idea many formats, testing, actions</p>'],
-  ['aria-label="Pasirinkti ir kopijuoti promptą 10"', 'aria-label="Select and copy prompt 10"'],
-  ['aria-label="Informacija: promptas 10"', 'aria-label="Information: prompt 10"'],
-  ['<strong>Valdymo centras:</strong>', '<strong>Control center:</strong>'],
-  ['<p>Viskas vienoje vietoje: 30 d. planas, 1→7, testavimas, prioritetai.</p>', '<p>Everything in one place: 30-day plan, 1→7, testing, priorities.</p>'],
-  [
-    'Šis promptas apima viską – nukopijuok, įklijuok ir pildyk savo verslo laukus.',
-    'This prompt covers everything—copy, paste, and fill in your business fields.'
-  ],
-  ['aria-label="Kopijuoti promptą 10 į darbinių atmintinę"', 'aria-label="Copy prompt 10 to clipboard"'],
-  // Next steps
-  ['<h2 id="next-steps-title">Kas toliau?</h2>', '<h2 id="next-steps-title">What next?</h2>'],
-  ['Geriausia eiti iš eilės nuo 1 iki 10. Paspaudę nuorodą pereisi prie atitinkamo prompto.', 'Best to go in order from 1 to 10. Click a link to jump to that prompt.'],
-  [
-    '<summary class="next-steps-summary" id="next-steps-jump">Šuolis į promptą (1–10)</summary>',
-    '<summary class="next-steps-summary" id="next-steps-jump">Jump to prompt (1–10)</summary>'
-  ],
-  ['<a href="#block1">1. 30 dienų turinio sistema</a>', '<a href="#block1">1. 30-day content system</a>'],
-  ['<a href="#block2">2. Viena idėja → 7 formatai</a>', '<a href="#block2">2. One idea → 7 formats</a>'],
-  ['<a href="#block3">3. LinkedIn Autoriteto Kūrimas</a>', '<a href="#block3">3. LinkedIn authority building</a>'],
-  ['<a href="#block4">4. 30 sek. video scenarijus</a>', '<a href="#block4">4. 30 sec video script</a>'],
-  ['<a href="#block5">5. Kasdienė analizė (Veikla→Sprendimas)</a>', '<a href="#block5">5. Daily analysis (Action→Decision)</a>'],
-  ['<a href="#block6">6. Prieštaravimų apdorojimas</a>', '<a href="#block6">6. Objection handling</a>'],
-  ['<a href="#block7">7. Lead generator postas + DM seka</a>', '<a href="#block7">7. Lead generator post + DM sequence</a>'],
-  ['<a href="#block8">8. Kliento istorijos struktūra</a>', '<a href="#block8">8. Customer story structure</a>'],
-  ['<a href="#block9">9. Temų grupė</a>', '<a href="#block9">9. Topic cluster</a>'],
-  ['<a href="#block10">10. Pagrindinis promptas (valdymo centras)</a>', '<a href="#block10">10. Main prompt (control center)</a>'],
-  // FAQ + meme slot
-  ['Dažniausi klausimai prieš startą', 'Frequently asked questions before you start'],
+  // FAQ
+  ['Dažniausi klausimai', 'Frequently asked questions'],
   ['<summary>Ar tinka pradedančiajam?</summary>', '<summary>Is this for beginners?</summary>'],
-  ['<p>Taip, jei pildai laukus savo situacija, ne bendrais žodžiais.</p>', '<p>Yes, if you fill placeholders with your real context.</p>'],
+  [
+    '<p>Taip, jei pildai laukus savo situacija, ne bendrais žodžiais.</p>',
+    '<p>Yes, if you fill placeholders with your real context — then copy, paste, and run.</p>'
+  ],
   ['<summary>Ar būtina naudoti visus 10?</summary>', '<summary>Do I need all 10 prompts?</summary>'],
-  ['<p>Ne, pradėk nuo 1–3 ir plėskis pagal poreikį.</p>', '<p>No, start with 1–3 and expand when needed.</p>'],
+  [
+    '<p>Ne, pradėk nuo 1–3 ir plėskis pagal poreikį.</p>',
+    '<p>No. Free: 4 workflows (prompts 1, 2, 3, 5) plus the creative brief builder. The Pro kit lists the rest — full META/INPUT/OUTPUT bodies offline (full 10).</p>'
+  ],
   ['<summary>Kuo tai geriau nei random promptas?</summary>', '<summary>Why is this better than random prompts?</summary>'],
-  ['<p>Čia turi nuoseklią seką, aiškų tikslą ir vertinimą.</p>', '<p>You get a clear sequence, goal, and evaluation.</p>'],
+  [
+    '<p>Čia turi nuoseklią seką, aiškų tikslą ir vertinimą.</p>',
+    '<p>You get a repeatable Plan → Create → Check → Improve workflow with clear fields and evaluation — structured prompting, not prompt gambling.</p>'
+  ],
   ['<summary>Kiek laiko skirti kasdien?</summary>', '<summary>How much time daily?</summary>'],
   ['<p>20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“.</p>', '<p>20–30 minutes is enough if you run Create → Check → Improve.</p>'],
   ['<summary>Ar tai kursas ar įrankis?</summary>', '<summary>Is this a course or a tool?</summary>'],
   [
     '<p>Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk).</p>',
-    '<p>It’s an interactive prompt library + framework. You can use it immediately (copy → paste → run).</p>'
+    '<p>A copy-paste Content AI System you can use immediately — not a long course. Free spine + brief in the browser; depth offline in the kits.</p>'
   ],
   ['<summary>Kam tai skirta?</summary>', '<summary>Who is this for?</summary>'],
   [
@@ -1402,10 +2083,10 @@ const EN_REPLACEMENTS_SUFFIX = [
 
 function buildMetaReplacementsFromIndex(html) {
   const ltBodies = extractLtPreBodiesFromHtml(html);
-  return ltBodies.map((lt, i) => {
-    const en = EN_PROMPT_BODIES[i];
+  return ltBodies.map(({ id, lt }) => {
+    const en = EN_PROMPT_BODIES[id - 1];
     if (typeof en !== 'string') {
-      throw new Error('Missing EN prompt body at index ' + i);
+      throw new Error('Missing EN prompt body at index ' + (id - 1));
     }
     return [lt, en];
   });
@@ -1444,9 +2125,14 @@ function assertEnLocaleAdditions(html) {
   if (html.indexOf('id="cmo-context"') === -1) {
     throw new Error('EN locale: missing #cmo-context section');
   }
-  for (let i = 1; i <= 10; i++) {
+  for (const i of FREE_SPINE_IDS) {
     if (html.indexOf('id="expected' + i + '"') === -1) {
-      throw new Error('EN locale: missing prompt-expected slot for prompt ' + i);
+      throw new Error('EN locale: missing prompt-expected slot for spine prompt ' + i);
+    }
+  }
+  for (const i of FREE_TEASER_IDS) {
+    if (html.indexOf('id="expected' + i + '"') !== -1) {
+      throw new Error('EN locale: teaser prompt ' + i + ' must not have expected output');
     }
   }
   if (html.indexOf('RULES (non-negotiable)') === -1) {
@@ -1464,15 +2150,54 @@ function assertEnLocaleAdditions(html) {
   if (html.indexOf('cmo-safety-reviewer-prompt') === -1) {
     throw new Error('EN locale: missing safety reviewer prompt block');
   }
+  if (html.indexOf('id="creative-brief"') === -1) {
+    throw new Error('EN locale: missing #creative-brief section');
+  }
+  if (html.indexOf('id="cbOutput"') === -1) {
+    throw new Error('EN locale: missing #cbOutput in creative brief');
+  }
+  if (html.indexOf('data-cb-preset') === -1) {
+    throw new Error('EN locale: missing creative brief presets');
+  }
+  if (html.indexOf('id="cbQuality"') === -1) {
+    throw new Error('EN locale: missing creative brief quality meter');
+  }
+  if (html.indexOf('js/creative-brief.js') === -1 && html.indexOf('../js/creative-brief.js') === -1) {
+    throw new Error('EN locale: missing creative-brief.js script');
+  }
+  if (html.indexOf('id="progressJumpCreative"') === -1) {
+    throw new Error('EN locale: missing #progressJumpCreative link');
+  }
+  if (MIRROR_NOTE) {
+    if (html.indexOf('id="pdf-storefront"') !== -1) {
+      throw new Error('EN locale (mirror build): #pdf-storefront must be omitted when MIRROR_NOTE=1');
+    }
+  } else {
+    if (html.indexOf('id="pdf-storefront"') === -1) {
+      throw new Error('EN locale: missing #pdf-storefront section');
+    }
+    if (html.indexOf('$3.99') === -1 || html.indexOf('$8.99') === -1 || html.indexOf('$10.99') === -1) {
+      throw new Error('EN locale: storefront must reference $3.99, $8.99, and $10.99 prices');
+    }
+    if (html.indexOf('pdf-comparison-table') !== -1) {
+      throw new Error('EN locale: storefront must not render comparison table (path cut)');
+    }
+    if (html.indexOf('id="cb-builder"') === -1) {
+      throw new Error('EN locale: missing collapsed #cb-builder details');
+    }
+    if (html.indexOf('class="pdf-card"') === -1) {
+      throw new Error('EN locale: storefront must contain at least one .pdf-card');
+    }
+  }
 }
 
 function assertLtLocaleAdditions(html) {
   if (html.indexOf('id="cmo-context"') === -1) {
     throw new Error('LT locale: missing #cmo-context section');
   }
-  for (let i = 1; i <= 10; i++) {
+  for (const i of FREE_SPINE_IDS) {
     if (html.indexOf('id="expected' + i + '"') === -1) {
-      throw new Error('LT locale: missing prompt-expected slot for prompt ' + i);
+      throw new Error('LT locale: missing prompt-expected slot for spine prompt ' + i);
     }
   }
   if (html.indexOf('TAISYKLĖS (privalomos)') === -1) {
@@ -1487,6 +2212,15 @@ function assertLtLocaleAdditions(html) {
   if (html.indexOf('id="cmo-safety"') === -1) {
     throw new Error('LT locale: missing #cmo-safety section');
   }
+  if (html.indexOf('id="pdf-storefront"') !== -1) {
+    throw new Error('LT locale: #pdf-storefront must NEVER appear on LT pages (commerce is EN-only)');
+  }
+  if (html.indexOf('id="creative-brief"') !== -1) {
+    throw new Error('LT locale: #creative-brief must NEVER appear on LT pages (EN-only free builder)');
+  }
+  if (html.indexOf('CMO_CREATIVE_BRIEF') !== -1) {
+    throw new Error('LT locale: creative brief anchor must be removed');
+  }
 }
 
 function buildLocale(locale) {
@@ -1494,24 +2228,34 @@ function buildLocale(locale) {
   html = html.replace(/<html lang="lt">/, '<html lang="' + locale + '">');
   if (locale === 'en') {
     html = applyEnReplacements(html);
+    html = applyCollapsibleSummaries(html);
     html = injectEnPreBodies(html);
     html = injectEnContextBlock(html);
     html = injectEnExpectedBullets(html);
     html = injectProviderRows(html);
-    html = injectTrustBlocksBeforeNextSteps(html, 'en');
+    html = injectSafetySection(html, 'en');
+    html = injectCreativeBrief(html, 'en');
+    html = injectScenariosSection(html, 'en');
+    html = injectPdfStorefront(html, 'en');
     html = patchEnCopyPromptHook(html);
     html = injectEnContextScript(html);
     html = injectScenariosTabScript(html, 'en');
   } else if (locale === 'lt') {
+    html = applyCollapsibleSummaries(html);
     html = injectLtContextBlock(html);
     html = injectLtExpectedBullets(html);
     html = injectProviderRows(html);
-    html = injectTrustBlocksBeforeNextSteps(html, 'lt');
+    html = injectSafetySection(html, 'lt');
+    html = injectCreativeBrief(html, 'lt');
+    html = injectScenariosSection(html, 'lt');
     html = patchLtCopyPromptHook(html);
     html = injectLtContextScript(html);
     html = injectScenariosTabScript(html, 'lt');
   }
   html = insertSeo(html, locale);
+  if (locale === 'en' && geoJsonLdInject) {
+    html = geoJsonLdInject(html);
+  }
   html = fixAssetPaths(html);
   html = injectFooterSuite(html, locale);
   if (locale === 'en') {
@@ -1520,6 +2264,7 @@ function buildLocale(locale) {
   if (locale === 'lt') {
     assertLtLocaleAdditions(html);
   }
+  assertCollapsiblePromptContract(html, locale + ' locale');
   return html;
 }
 
@@ -1557,17 +2302,29 @@ function assertPrivacySeo() {
 }
 
 function main() {
+  const sot = loadSot();
+  assertRequireStripeLinks(sot);
   writeEnPromptInlineJs(EN_PROMPT_BODIES);
+  const geo = writeGeoSurfaces({
+    root: ROOT,
+    siteOrigin: SITE_ORIGIN,
+    sot: sot,
+    promptBodies: EN_PROMPT_BODIES
+  });
+  geoJsonLdInject = geo.injectEnJsonLdGraph;
   ensureDir(path.join(ROOT, 'lt'));
   ensureDir(path.join(ROOT, 'en'));
   const ltHtml = buildLocale('lt');
   const enHtml = buildLocale('en');
+  geoJsonLdInject = null;
   assertLocaleStructure(ltHtml, 'lt');
   assertLocaleStructure(enHtml, 'en');
   fs.writeFileSync(path.join(ROOT, 'lt', 'index.html'), ltHtml, 'utf8');
   fs.writeFileSync(path.join(ROOT, 'en', 'index.html'), enHtml, 'utf8');
   assertPrivacySeo();
-  console.log('Built lt/index.html, en/index.html, js/en-prompt-bodies-inline.js (+ privacy SEO checks)');
+  console.log(
+    'Built lt/index.html, en/index.html, js/en-prompt-bodies-inline.js, GEO surfaces (+ privacy SEO checks)'
+  );
 }
 
 main();

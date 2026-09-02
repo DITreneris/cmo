@@ -127,13 +127,30 @@ function main() {
   // PDF cover thumbnails + watermarked previews (storefront artwork, never the PDFs themselves)
   if (existsRel('assets/pdf-covers')) copyDir('assets/pdf-covers');
 
-  // SEO/robots + Google Search Console HTML verification
+  // SEO/robots + Google Search Console HTML verification + GEO surfaces
   if (existsRel('robots.txt')) copyFile('robots.txt');
   if (existsRel('sitemap.xml')) copyFile('sitemap.xml');
+  if (existsRel('llms.txt')) copyFile('llms.txt');
+  if (existsRel('llms-full.txt')) copyFile('llms-full.txt');
+  if (existsRel('404.html')) copyFile('404.html');
+  if (existsRel('manifest.webmanifest')) copyFile('manifest.webmanifest');
+  if (existsRel('a9f3c2e1b8d7a6f5e4c3b2a1f0e9d8c7.txt')) {
+    copyFile('a9f3c2e1b8d7a6f5e4c3b2a1f0e9d8c7.txt');
+  }
   if (existsRel('google7305663b2567346e.html')) copyFile('google7305663b2567346e.html');
 
   // Icons & previews
   if (existsRel('favicon.svg')) copyFile('favicon.svg');
+  for (const icon of [
+    'favicon-16x16.png',
+    'favicon-32x32.png',
+    'apple-touch-icon.png',
+    'android-chrome-192x192.png',
+    'android-chrome-512x512.png',
+    'site.webmanifest'
+  ]) {
+    if (existsRel(icon)) copyFile(icon);
+  }
   if (existsRel('og.png')) copyFile('og.png');
 
   // GitHub Pages helper; harmless on Vercel

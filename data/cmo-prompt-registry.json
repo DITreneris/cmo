@@ -1,0 +1,197 @@
+{
+  "version": "1.1",
+  "contentOs": ["Plan", "Create", "Check", "Improve"],
+  "freeInteractive": ["1", "2", "3", "5"],
+  "prompts": [
+    {
+      "id": "1",
+      "slug": "30-day-content-system",
+      "title": "30-day content system",
+      "phase": "Plan",
+      "tags": ["Plan", "Monthly"],
+      "timeMin": 8,
+      "scenarioIds": [],
+      "starterPage": 8,
+      "proPage": 7
+    },
+    {
+      "id": "2",
+      "slug": "one-idea-seven-formats",
+      "title": "One idea → 7 formats",
+      "phase": "Create",
+      "tags": ["Create", "Repurpose", "Weekly"],
+      "timeMin": 6,
+      "scenarioIds": [],
+      "starterPage": 8,
+      "proPage": 8
+    },
+    {
+      "id": "3",
+      "slug": "linkedin-authority-post",
+      "title": "LinkedIn authority post",
+      "phase": "Create",
+      "tags": ["Create", "Trust"],
+      "timeMin": 4,
+      "scenarioIds": [],
+      "starterPage": 8,
+      "proPage": 9
+    },
+    {
+      "id": "4",
+      "slug": "30-second-video-script",
+      "title": "30-second video script",
+      "phase": "Create",
+      "tags": ["Create", "Video"],
+      "timeMin": 4,
+      "scenarioIds": [],
+      "starterPage": 8,
+      "proPage": 10
+    },
+    {
+      "id": "5",
+      "slug": "daily-analysis-action-decision",
+      "title": "Daily analysis (Action→Decision)",
+      "phase": "Improve",
+      "tags": ["Improve", "Weekly"],
+      "timeMin": 8,
+      "scenarioIds": ["weekly-review"],
+      "starterPage": 8,
+      "proPage": 11
+    },
+    {
+      "id": "6",
+      "slug": "objection-handling",
+      "title": "Objection handling",
+      "phase": "Create",
+      "tags": ["Convert", "Sales"],
+      "timeMin": 6,
+      "scenarioIds": [],
+      "starterPage": 9,
+      "proPage": 12
+    },
+    {
+      "id": "7",
+      "slug": "lead-magnet-dm-sequence",
+      "title": "Lead magnet + DM sequence",
+      "phase": "Create",
+      "tags": ["Convert", "Demand gen"],
+      "timeMin": 8,
+      "scenarioIds": ["campaign-launch"],
+      "starterPage": 9,
+      "proPage": 13
+    },
+    {
+      "id": "8",
+      "slug": "customer-story",
+      "title": "Customer story",
+      "phase": "Create",
+      "tags": ["Prove", "Case study"],
+      "timeMin": 10,
+      "scenarioIds": [],
+      "starterPage": 9,
+      "proPage": 14
+    },
+    {
+      "id": "9",
+      "slug": "topic-cluster-seo",
+      "title": "Topic cluster (SEO)",
+      "phase": "Plan",
+      "tags": ["Plan", "SEO", "Quarterly"],
+      "timeMin": 10,
+      "scenarioIds": [],
+      "starterPage": 9,
+      "proPage": 15
+    },
+    {
+      "id": "10",
+      "slug": "master-prompt-control-center",
+      "title": "Master prompt (control center)",
+      "phase": "Plan",
+      "tags": ["Plan", "Control", "Quarterly"],
+      "timeMin": 12,
+      "scenarioIds": [],
+      "starterPage": 9,
+      "proPage": 16
+    }
+  ],
+  "scenarios": [
+    { "id": "weekly-review", "label": "Weekly review", "startPromptId": "5", "proPage": 18 },
+    { "id": "campaign-launch", "label": "Campaign launch brief", "startPromptId": "7", "proPage": 19 },
+    { "id": "stakeholder-update", "label": "Stakeholder update", "startPromptId": "5", "proPage": 20 }
+  ],
+  "paths": [
+    {
+      "pain": "No weekly cadence",
+      "startPromptId": "1",
+      "then": ["5", "10"],
+      "starterPages": "7, 10",
+      "note": "Plan Monday, Improve Friday"
+    },
+    {
+      "pain": "Launching a campaign",
+      "startPromptId": "7",
+      "then": ["4", "6"],
+      "starterPages": "9, 11",
+      "note": "Demand gen + pre-publish pass"
+    },
+    {
+      "pain": "Need proof for sales",
+      "startPromptId": "8",
+      "then": ["3", "6"],
+      "starterPages": "9, 8",
+      "note": "Customer story + authority post"
+    },
+    {
+      "pain": "Board or exec update",
+      "startPromptId": "5",
+      "then": ["10"],
+      "starterPages": "5, 9",
+      "note": "Use Pro scenario play on page 20"
+    }
+  ],
+  "starterToc": [
+    { "page": 1, "title": "Cover" },
+    { "page": 2, "title": "Contents & start here" },
+    { "page": 3, "title": "How to use this kit" },
+    { "page": 4, "title": "Content OS in one page" },
+    { "page": 5, "title": "Worked example (weekly review)" },
+    { "page": 6, "title": "The prompt formula" },
+    { "page": 7, "title": "10 prompts at a glance" },
+    { "page": 8, "title": "Prompts 1–5 mini" },
+    { "page": 9, "title": "Prompts 6–10 mini" },
+    { "page": 10, "title": "Weekly rhythm" },
+    { "page": 11, "title": "Verify before you ship" },
+    { "page": 12, "title": "Glossary" },
+    { "page": 13, "title": "Use this tomorrow morning" },
+    { "page": 14, "title": "License, disclaimer, contact" }
+  ],
+  "proToc": [
+    { "page": 1, "title": "Cover" },
+    { "page": 2, "title": "Contents" },
+    { "page": 3, "title": "Executive overview" },
+    { "page": 4, "title": "How to use this kit" },
+    { "page": 5, "title": "Worked example (LinkedIn authority)" },
+    { "page": 6, "title": "Marketing context block" },
+    { "page": 7, "title": "Prompt 1 — 30-day content system" },
+    { "page": 8, "title": "Prompt 2 — One idea → 7 formats" },
+    { "page": 9, "title": "Prompt 3 — LinkedIn authority post" },
+    { "page": 10, "title": "Prompt 4 — 30-second video script" },
+    { "page": 11, "title": "Prompt 5 — Daily analysis" },
+    { "page": 12, "title": "Prompt 6 — Objection handling" },
+    { "page": 13, "title": "Prompt 7 — Lead magnet + DM" },
+    { "page": 14, "title": "Prompt 8 — Customer story" },
+    { "page": 15, "title": "Prompt 9 — Topic cluster (SEO)" },
+    { "page": 16, "title": "Prompt 10 — Master prompt" },
+    { "page": 17, "title": "Expected outputs reference" },
+    { "page": 18, "title": "Scenario — Weekly review" },
+    { "page": 19, "title": "Scenario — Campaign launch" },
+    { "page": 20, "title": "Scenario — Stakeholder update" },
+    { "page": 21, "title": "Pre-publish safety reviewer" },
+    { "page": 22, "title": "Week-1 quickstart" },
+    { "page": 23, "title": "30-day deep dive" },
+    { "page": 24, "title": "90-minute team workshop" },
+    { "page": 25, "title": "Quality rubric" },
+    { "page": 26, "title": "Composite case studies" },
+    { "page": 27, "title": "License and sources" }
+  ]
+}

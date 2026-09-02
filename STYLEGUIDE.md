@@ -1,85 +1,116 @@
 # DI Promptų Biblioteka – stiliaus gidas (Spin-off Nr. 2)
 
-**Versija:** 1.2  
-**Data:** 2026-02-19  
-**Kalba:** LT
+**Versija:** 1.6  
+**Data:** 2026-08-11  
+**Kalba:** LT  
+**Kryptis:** Product Operator (light SaaS shell; Fraunces **only** hero H1; Source Sans 3 product UI; JetBrains Mono prompts)
 
-Šis dokumentas aprašo spalvų gamą, tipografiją ir komponentų stilius projekte – Spin-off Nr. 2 (Rinkodaros vadovo AI operacinė sistema). Oranžinė pagrindinė paletė pasirinkta dėl aukštesnio CTA.
+Spin-off Nr. 2 (Rinkodaros vadovo turinio DI sistema) naudoja **Prompt Anatomy** brandą iš mother repo [DITreneris/promptanatomy](https://github.com/DITreneris/promptanatomy). Spalvų kanonas: auksas + ink (+ teal kaip antrinis). Sinchronizacija: [docs/BRAND_SYNC.md](docs/BRAND_SYNC.md). Hero diagramos gramatika adaptuota iš sister [DITreneris/blog](https://github.com/DITreneris/blog) (ne Inter, ne dark full-bleed hub).
 
 ---
 
-## 1. Spalvų paletė
+## 0. DS 1.6 – Product Operator
 
-### 1.1 Pagrindinės spalvos
+### 0.1 Principai
 
-| Kintamasis | Hex | Paskirtis | WCAG pastaba |
-|------------|-----|-----------|--------------|
-| `--bg` | `#F7F8FA` | Puslapio fonas | Tekstas `--text` ant jo atitinka AA |
-| `--text` | `#1A202C` | Pagrindinis tekstas, antraštės | Kontrastas ant `--bg` > 4.5:1 |
-| `--text-light` | `#4A5568` | Antrinis tekstas, meta | Kontrastas ant `--bg` > 4.5:1 |
-| `--white` | `#FFFFFF` | Kortelių fonas, mygtukų tekstas | Naudoti ant tamsių fonų (ant oranžinės CTA atitinka AA) |
+- **Viena gramatika:** light SaaS shell + serif tik hero H1 + navy product diagram (ne ebook cover).
+- Tipografija: Fraunces = marketing H1; visa produkto UI = Source Sans 3. Inter nenaudojamas.
+- Trys paviršiai: `page` | `panel` | `accent` – ne kiekviena sekcija = kortelė; open lieka open.
+- Hero = full-bleed light plokštuma; pirmas viewport = brand + H1 + viena eilutė + spine-first CTA + **workflow diagram**.
+- Gold ≈ **5%**: primary CTA, selected/focus, tiny highlights – ne kiekvienas border/link/chip.
+- Elevations: **0** (border only) + **1** (subtle); optional stronger shadow tik `.hero-diagram`.
+- Radii: **8 / 12 / 16** only; pill tik status labels.
+- Skaitomumas: body 17px, prose `max-width: 70ch`.
+- Anti-patternai: emoji chrome, trust pills as chrome, `border: 3px`, blanket `font-weight: 800`, Inter-as-display, card-every-section, serif on builder/prompt/instructions, gold-everywhere, dual CSS for same component.
 
-### 1.2 Akcentai (brand) – oranžinė CTA paletė
+### 0.2 Tipų poros
 
-| Kintamasis | Hex | Paskirtis | Naudojimas |
-|------------|-----|-----------|------------|
-| `--accent-primary` | `#c75515` | Pagrindinė oranžinė (WCAG2AA 4.5:1, mažesnė saturation) | CTA mygtukai, hero, progreso juosta |
-| `--accent-primary-hover` | `#b54f14` | Tamsesnė oranžinė | Hover būsena CTA |
-| `--accent-gold` | `#c75515` | Sutapatintas su primary oranžine | Badge, focus ring, paryškinti elementai |
-| `--accent-gold-dark` | `#b54f14` | Sutapatintas su accent-primary-hover | Hover, numerio badge |
-| `--accent-dark` | `#3C485A` | Antrinis akcentas (tamsiai pilka) | Outline mygtukai, borders, antraštės |
-| `--accent-dark-hover` | `#2D3848` | Hover būsena | Antrinių mygtukų hover |
+| Rolė | Šeima | Token |
+|------|--------|--------|
+| Display (**hero H1 only**; optional storefront/FAQ marketing H2) | Fraunces | `--font-display` |
+| UI / body / section titles / builder / prompts chrome | Source Sans 3 | `--font-ui` |
+| Code / prompts `<pre>` | JetBrains Mono | `--font-mono` |
 
-**Kontrastas:** Ant oranžinės (`--accent-primary`, `--cta-bg`) naudoti **baltą tekstą** (`--white`) – atitinka WCAG AA. Ant `--accent-dark` – **baltas tekstas** (`--white`).
+Skalė: caption 12 → small 14 → body 17 → bodyLg 18 → title 1.35rem → display `clamp(...)`.
 
-### 1.3 Tertiarinė (bibliotekos identitetas)
+### 0.3 Paviršiai
+
+| Klasė / map | Naudojimas |
+|-------------|------------|
+| `surface-page` / open | how-it-works (`#executive-summary`), instructions (if kept slim), FAQ, ecosystem, footer, community |
+| `surface-panel` | `.prompt`, progress, storefront, system-map |
+| `surface-accent` | `#cmo-context`, `#creative-brief`, `#cmo-safety`, `#cmo-scenarios` (gold left edge **sparingly**) |
+
+### 0.4 Pre-spine IA (EN) + glossary
+
+**Glossary:** Prompt Anatomy = brand; Content AI System = product; **workflow** = free spine unit (1/2/3/5); **prompt** = copyable body; **brief** = secondary tool; **Pro kit** = full 10 offline.
+
+1. Hero: logo + compact lang; H1 once; `#heroProof`; trust chips (No signup · ChatGPT + Claude · 4 workflows free); primary `#heroCtaSpine` **Start your first workflow**; `#heroCtaBrief` **text link**; `.hero-diagram` (pipeline modules + caption only — no outputs row / tagline)  
+2. `#executive-summary` — quiet usage sentence only (no second start CTA)  
+3. Optional copy tips (`#instructions` details)  
+4. `#cmo-context` (collapsed)  
+5. Progress of 4 workflows + jump (1·2·3·5 · Pro · Brief · FAQ; no provider hub)  
+6. Spine prompts 1→2→3→5  
+7. `#cmo-safety` → `#creative-brief` → `#cmo-scenarios`  
+8. `#pro-contents` catalog → storefront → FAQ → `#prompt-basics` → rest 
+
+Spine-first: primary `#heroCtaSpine` → `#block1`. Do not lengthen path to first Copy. No top status pills.
+
+---
+
+## 1. Spalvų paletė (brand)
+
+### 1.1 Brand (mother-aligned)
 
 | Kintamasis | Hex | Paskirtis |
 |------------|-----|-----------|
-| `--tertiary` | `#0D9488` | Teal – kategorijos, „Kas toliau?“ blokas, info box |
-| `--tertiary-dark` | `#0a5c54` | Tamsesnė teal – info-box strong, kategorija |
-| `--tertiary-hover` | `#0f766e` | Hover būsena – next-steps nuorodos |
-| `--tertiary-light` | `#CCFBF1` | Šviesus teal fonas |
+| `--color-brand-primary` | `#CFA73A` | Primary CTA, selected, focus, progress fill |
+| `--color-brand-primary-hover` | `#E8B93C` | Hover |
+| `--color-brand-primary-pressed` | `#B8922F` | Pressed |
+| `--color-brand-dark` | `#0B1320` | Ink – antraštės, diagram card, outline |
+| `--color-brand-tertiary` | `#2E9E7E` | Ekosistemos teal (not prompt category shout) |
+| `--color-brand-tertiary-light` | `#CCFBF1` | Šviesus teal fonas |
 
-### 1.4 Semantinės ir pagalbinės
+Legacy alias – **ne naudoti oranžinės `#c75515`**.
+
+### 1.2 Paviršiai ir tekstas
+
+| Kintamasis | Hex | Paskirtis |
+|------------|-----|-----------|
+| `--color-surface-page` | `#F8FAFC` | Puslapio fonas |
+| `--color-text-primary` | `#0F172A` | Pagrindinis tekstas |
+| `--color-text-secondary` | `#475569` | Antrinis tekstas |
+| `--color-border-default` | `#E2E8F0` | Rėmeliai |
+
+### 1.3 Semantinės
 
 | Kintamasis | Naudojimas |
 |------------|------------|
-| `--cta-bg` | `#c75515` – pagrindinis CTA fonas (hero mygtukas, „Kopijuoti promptą“); WCAG2AA 4.5:1 |
-| `--cta-hover` | Sutapatintas su `--accent-primary-hover` (#b54f14) – CTA hover |
-| `--blue` | Sutapatintas su `--accent-dark` (3C485A) – objektų rėmeliai, antraštės |
-| `--blue-light` | `#E8ECF0` – šviesus fonas gradientuose |
-| `--orange` | `#c75515` – pagrindinė oranžinė (suderinta su CTA, WCAG2AA) |
-| `--orange-light` | `#FFF7ED` – šviesus oranžinės atspalvis (instrukcijos, progreso wrap, code-block hover) |
-| `--green` | `#38A169` – sėkmės būsena (toast, checkbox, „Nukopijuota“) |
-| `--green-dark` | `#2F855A` – btn.success hover |
-| `--error` | `#E53E3E` – klaidos (form-input.error, form-error) |
-| `--bg-subtle` | `#F7FAFC` – prompt-footer fonas |
-| `--border` | `#CBD5E0` – rėmeliai, atskyrimai |
-| `--community-cta-green` | `#0E7A33` – bendruomenės CTA (hierarchija – atskirti nuo pagrindinio oranžinio) |
-| `--community-cta-green-hover` | `#0B6B2D` – hover būsena |
+| `--color-semantic-success` | Sėkmė (toast, checkbox) |
+| `--color-semantic-error` | Klaidos |
+| `--community-cta-green` | Telegram CTA |
+
+**PDF spausdiniam:** footer navy `#0F2A44` – tik PDF, ne web UI.
 
 ---
 
-## 2. Hero ir gradientai
+## 2. Hero ir diagram
 
-- **Hero (header):** Vertikalus gradientas (180deg): tamsesnis viršuje, šviesesnis apačioje – mažesnė saturation.  
-  - `--hero-gradient-start: #a85c32`, `--hero-gradient-mid: #c46d3d`, `--hero-gradient-end: #dc8f5e`.
-  - **Overlay:** 8% tamsesnis sluoksnis (`rgba(0,0,0,0.08)`) – tekstas aiškesnis.
-- **CTA:** `--cta-bg: #c75515` (oranžinė) – pagrindinis veiksmas; hover `--accent-primary-hover` (#b54f14). Baltas tekstas ant oranžinės atitinka WCAG2AA 4.5:1.
-- **Prompt kortelės header:** `linear-gradient(to right, var(--blue-light), var(--orange-light))`, apatinis border: `--accent-dark`.
+- **Hero fonas:** `--hero-bg` – šviesus gradientas; **full-bleed** (ne kortelė).
+- **CTA:** `--cta-bg` gold gradient; ink text; `--shadow-cta` restrained.
+- **CTA kontraktas:** primary `#heroCtaSpine` → `#block1` (EN: **Start your first workflow**); secondary `#heroCtaBrief` text link. Brief is never primary.
+- **Vizualas:** `.hero-diagram` – navy card ~38rem, Plan → Create → Check → Improve modules with product descs + figcaption only (no outputs row / tagline / cycle-stepper duplicate). Accessible label visually hidden; **not** PDF cover; no H1 restatement inside the card.
+- Eyebrow ≠ subhead (no duplicate message). Trust = three muted chips (`#heroTrustPill1/2/3`); Pro/offline lives in FAQ/storefront, not hero. Lang switcher is utility (no gold active state).
 
 ---
 
 ## 3. Tipografija
 
-- **Šeima:** `'Inter', -apple-system, sans-serif`
-- **Kodas:** `'JetBrains Mono', monospace`
-- **Pagrindinis teksto dydis:** 18px (body), 16–19px sekcijose
-- **Antraštės:** 22–52px, svoris 700–800 (priklausomai nuo lygio)
-- **Hierarchija:** h1 (hero) 52px/800, h2 (sekcijos) 22–32px/800, meta tekstas 13–15px/700
-- **Letter-spacing:** hero h1 `-0.01em` (ne per suspausta), badge (caps) `0.1em` (daugiau oro)
-- **En-dash:** skaičiuose be tarpų (pvz. 30–50%); subtekste su tarpais („…šablonais – rezultatai…“)
+- **Display:** Fraunces 500–700 – **hero H1 only** (optional marketing H2 on storefront/FAQ).  
+- **UI/body:** Source Sans 3 400–700 – section titles, builder, prompt titles, instructions.  
+- **Kodas:** JetBrains Mono 500–600  
+- **Body:** 17px, line-height ≥ 1.5  
+- **Prose measure:** `--measure-prose` (70ch)
 
 ---
 
@@ -87,94 +118,109 @@
 
 ### 4.1 Mygtukai
 
-- **Pagrindinis (CTA):** `background: var(--cta-bg)` (oranžinė), `color: white`, `border-radius: 12px`, hover – `--cta-hover`, `translateY(-1px)`, focus-visible – `outline 3px` (hero baltas, kitur `--accent-gold`), `outline-offset: 2px`.
-- **Sėkmės būsena:** `background: var(--green)` (pvz. „Nukopijuota“).
-- **Antrinis (nuorodos „Kas toliau?“):** `background: var(--tertiary)`, hover `var(--tertiary-hover)`, focus-visible – oranžinio ringas.
+- **Primary CTA:** `var(--cta-bg)`, `border-radius: 12px` (`--radius-md`).
+- **Secondary:** outline ink.
+- Brief presets: **neutral** chips; selected = gold.
 
-### 4.2 Badge ir žymos
+### 4.2 Badge / chips
 
-- **Hero badge:** pusiau skaidrus baltas fonas, baltas tekstas.
-- **Kategorija (prompt kortelėje):** `background: var(--tertiary-light)`, `color/border: var(--tertiary)`.
-- **Numeris (prompt kortelėje):** `background: var(--accent-gold)`, `color: var(--white)` (baltas tekstas ant oranžinės – WCAG AA).
+- One chip system for prompt meta: number, category, time, status.
+- No competing teal 2px borders + peach pills + gold glow numbers.
 
-### 4.3 Progreso juosta
+### 4.3 Progress
 
-- **Track:** `background: var(--border)`.
-- **Užpildas:** `background: var(--accent-gold)`.
-- **Wrap:** `background: var(--orange-light)`, `border: 2px solid var(--accent-gold)`.
+- Fill: brand primary; `aria-valuemax="4"` (spine only).
+- Cycle is communicated by hero diagram + how-it-works; no redundant loud stepper chrome.
 
-### 4.4 Code block (promptų laukas)
+### 4.4 Code block
 
-- **Border:** `var(--accent-dark)`.
-- **Hover:** `background: var(--orange-light)`, `border-color: var(--accent-gold)`.
-- **Focus-visible:** `outline 3px var(--accent-gold)`.
-- **„Spausk čia ir nukopijuok“ etiketė:** `background: var(--accent-dark)`, baltas tekstas.
+- Border 1px; focus brand primary.
 
-### 4.5 Info box
+### 4.5 Icons
 
-- **Fonas:** `var(--tertiary-light)`, **border ir antraštė:** `var(--tertiary)`.
+- Line icons ~18–20px, stroke 1.5–1.75, ink/slate; gold only active. **No emoji chrome.**
 
-### 4.6 Instrukcijų blokas
+### 4.6 Border-radius
 
-- **Fonas:** `var(--orange-light)`, **border:** `var(--accent-gold)`, numeracija ir code – aukso atspalviai, antraštė – `var(--accent-dark)`.
+- `--radius-sm` 8px – chips/small controls  
+- `--radius-md` 12px – buttons/inputs  
+- `--radius-lg` 16px – cards/panels  
+- `--radius-xl` aliases to 16px (no 20px panel radius)  
+- `--radius-pill` – status only  
 
-### 4.7 Bendruomenė (community) CTA
+### 4.7 Shadows
 
-- **Hierarchija:** vienas pagrindinis CTA (Telegram), antrinis – outline („Promptų anatomija“). Jokio glow – tik subtilus šešėlis.
-- **Pagrindinis CTA (`.community-cta-primary`):** vienas brand green – `--community-cta-green: #0E7A33`, hover `--community-cta-green-hover: #0B6B2D`. Šešėlis: `0 6px 16px rgba(0,0,0,0.12)` (be glow). `border-radius: 12px`, font 18px / 600. Hover: `translateY(-1px)`. Focus-visible – `outline 3px var(--accent-gold)`, `outline-offset: 2px`.
-- **Antrinis CTA (`.community-cta-secondary`):** outline stilius – `border: 2px solid var(--accent-dark)`, permatomas fonas, `margin-top: 16px`. Hover – šviesus fonas (`--blue-light`).
-- **Kortelė:** `border: 1px solid var(--border)`, `border-radius: 16px`, šviesus šešėlis. Vertikalūs tarpai: h2 → 16px → subtext → 24px → primary CTA → 16px → secondary link.
-- **Antraštė:** dvi eilutės („Nori daugiau?“ / „Prisijunk prie Telegram grupės.“) – mažesnis skaitymo tankis.
+- Elevation 0: border, no shadow  
+- Elevation 1: `0 8px 24px rgba(15, 23, 42, 0.06)`  
+- `--shadow-hero-diagram`: stronger, diagram only  
+- CTA: ink-tinted, restrained  
 
-### 4.8 Border-radius skalė
+### 4.8 Motion budget (max 2–3)
 
-- **20px:** hero (header), prompt kortelė (`.prompt`), modal, footer – dideli blokai.
-- **16px:** objectives, instructions, next-steps, community – sekcijų kortelės.
-- **12px:** mygtukai (CTA, .btn), code-block, progress-wrap, toast, next-steps nuorodos, community CTA.
-- **8px:** badge, kategorija (`.category`), progress-bar.
-- **6px:** code-block hint, prompt-time, progress-bar vidus; **4px:** progress-bar track.
-- **50%:** apvalūs elementai (modal-close, toast icon).
+- Progress fill, brief step current, CTA hover – `prefers-reduced-motion` gated.
+
+### 4.9 Shell
+
+- Content shell ≈ `max-width: 1120px`; consistent inline padding; controlled density (not luxury empty).
 
 ---
 
 ## 5. Prieinamumas (a11y)
 
-- Visi interaktyvūs elementai turi **focus-visible** būseną (3px outline, dažniausiai `--accent-gold` arba `--accent-dark`).
-- **Kontrastas:** Tekstas ant fonų atitinka WCAG AA (normalus tekstas ≥ 4.5:1).
-- **Redukuotas judesys:** `@media (prefers-reduced-motion: reduce)` – animacijos ir perėjimai sumažinami iki 0.01ms.
-- Skip link, ARIA atributai ir semantinė struktūra išlaikomi pagal projekto taisykles.
+- **focus-visible** su brand primary arba ink.  
+- **prefers-reduced-motion** – utilities + components.  
+- Skip link, ARIA – [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md).  
+- Diagram: `figure` + accessible name/description.
 
 ---
 
 ## 6. Failų nuorodos
 
-- Spalvos ir komponentai implementuoti: [index.html](index.html) (CSS bloke, `:root` ir atitinkamos klasės).
-- Planas: žr. planą „Promptų Anatomija spin-off UI/UX“ (spalvų gama, vizualika, prioritetai).
+- **Tokenai:** [styles/design-tokens.json](styles/design-tokens.json) → [styles/tokens.css](styles/tokens.css)  
+- **Komponentai:** [styles/components.css](styles/components.css) (DS 1.6 authoritative; no dual prompt chrome in `index.html`)  
+- **Struktūra:** [index.html](index.html)  
+- **SEO / OG:** [config/brand-seo.json](config/brand-seo.json)  
+- **Sister diagram reference:** [DITreneris/blog](https://github.com/DITreneris/blog) `hero_architecture_diagram.html`  
 
 ---
 
-## 7. Design system architektūra (v2)
+## 7. Design system architektūra
 
-- **Vienas tokenų šaltinis:** [styles/design-tokens.json](styles/design-tokens.json)
-- **CSS sluoksniai:**
-  - [styles/tokens.css](styles/tokens.css) – custom properties (semantiniai + scale tokenai)
-  - [styles/components.css](styles/components.css) – komponentų bazė (`.btn`, `.prompt`, `.progress-wrap`, CTA)
-  - [styles/utilities.css](styles/utilities.css) – focus ring utility, reduced motion ir cross-component taisyklės
-- **Build lokalėms:** [scripts/build-locale-pages.js](scripts/build-locale-pages.js) perrašo `styles/` kelius į `../styles/` generuojant `lt/index.html` ir `en/index.html`.
+- Vienas tokenų šaltinis + CSS sluoksniai: tokens → components → utilities  
+- Build: [scripts/build-locale-pages.js](scripts/build-locale-pages.js)  
 
-## 8. Komponentų būsenų matrica (minimumas)
+---
 
-- **Interactive elementai (`.btn`, `.cta-button`, `.community-cta-*`):** `default`, `hover`, `focus-visible`, `success` (kur taikoma)
-- **Code block (`.code-block`):** `default`, `hover`, `focus-visible`, `selected`
-- **Progress (`.progress-wrap`, `.progress-bar-fill`):** `default`, dinamika per JS (`width`, `aria-valuenow`)
-- **A11y minimumas:** skip-link, focus-visible, reduced-motion, aria-label ant interaktyvių valdiklių
+## 8. Komponentų būsenų matrica
+
+- Interactive: `default`, `hover`, `focus-visible`, `success`  
+- Code block: `default`, `hover`, `focus-visible`, `selected`  
+- Progress: JS + `aria-valuenow`  
+
+---
 
 ## 9. Kokybės vartai
 
-- `npm run test:design-system` – tikrina CSS sluoksnių importus, tokenų grupes ir esminius selektorius.
-- `npm run test:a11y:smoke` – tikrina skip-link/focus-visible/reduced-motion/aria-label bazinius kriterijus LT/EN/root puslapiuose.
-- Pilnas vartas prieš merge: `npm test`.
+- `npm run test:design-system` – tokens, fonts, JSON↔CSS, no 3px prompt borders, no emoji chrome in components  
+- `npm run test:a11y:smoke`  
+- Pilnas: `npm test`  
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-04-29
+## 10. Brand sync
+
+- Mother colors/favicon: [docs/BRAND_SYNC.md](docs/BRAND_SYNC.md)  
+- Blog: diagram **grammar** only; type stack stays Source Sans 3 (not blog Inter).  
+
+---
+
+## 11. Versijų istorija
+
+- **1.3** – gold/ink token pass, Inter, card stack  
+- **1.4** – subtract chrome, type/space tokens  
+- **1.5** – Editorial Operator (serif on section titles; PDF cover hero)  
+- **1.6** – Product Operator: serif=hero H1; hero workflow diagram; gold/shadow/radius restraint; dual CSS kill; compact how-it-works  
+
+---
+
+*Atnaujinta 2026-08-11 – DS 1.6 Product Operator.*

@@ -5,12 +5,16 @@
   "description": "DI Promptų Biblioteka – statinė HTML platforma + EN paid PDF fulfillment (CMO Kit)",
   "scripts": {
     "generate:og": "node scripts/generate-og.js",
-    "build": "node scripts/generate-og.js && node scripts/build-locale-pages.js && node scripts/vercel-export-public.js",
-    "test": "npm run build && node tests/structure.test.js && node tests/design-system-smoke.test.js && node tests/a11y-smoke.test.js && node tests/fulfillment-config.test.js && npm run lint:html && npm run lint:js",
+    "icons:export": "node scripts/export-favicons.js",
+    "build": "node scripts/export-favicons.js && node scripts/generate-og.js && node scripts/build-locale-pages.js && node scripts/vercel-export-public.js",
+    "test": "npm run build && node tests/structure.test.js && node tests/cmo-prompt-registry.test.js && node tests/design-system-smoke.test.js && node tests/a11y-smoke.test.js && node tests/fulfillment-config.test.js && npm run lint:html && npm run lint:js",
     "test:structure": "node tests/structure.test.js",
     "test:design-system": "node tests/design-system-smoke.test.js",
     "test:a11y:smoke": "node tests/a11y-smoke.test.js",
     "test:fulfillment-config": "node tests/fulfillment-config.test.js",
+    "test:smoke": "start-server-and-test \"npx serve public -l 3000\" http://127.0.0.1:3000/ \"npx playwright test tests/e2e/smoke.spec.js\"",
+    "test:e2e": "start-server-and-test \"npx serve public -l 3000\" http://127.0.0.1:3000/ \"npx playwright test tests/e2e/\"",
+    "test:a11y": "start-server-and-test \"npx serve public -l 3000\" http://127.0.0.1:3000/ \"npx pa11y http://127.0.0.1:3000/en/ --config .pa11yrc.json && npx pa11y http://127.0.0.1:3000/success.html?session_id=cs_test_FAKE --config .pa11yrc.json && npx pa11y http://127.0.0.1:3000/terms.html --config .pa11yrc.json\"",
     "lint:html": "npx html-validate index.html lt/index.html lt/privatumas.html en/index.html en/privacy.html success.html terms.html coming-soon.html",
     "lint:js": "npx eslint . --ext .js",
     "pdf:export": "node scripts/export-pdfs.js",
@@ -18,7 +22,9 @@
     "pdf:export-md": "node scripts/export-pro-prompts-md.js",
     "pdf:previews": "node scripts/export-pdf-previews.js",
     "pdf:upload-blob": "node scripts/upload-pdfs-to-blob.js",
-    "check:fulfillment": "node scripts/check-fulfillment-env.js"
+    "check:fulfillment": "node scripts/check-fulfillment-env.js",
+    "seo:indexnow": "node scripts/indexnow-ping.js",
+    "seo:indexnow:diff": "node scripts/indexnow-ping.js --since-head"
   },
   "pa11y": {
     "chromeLaunchConfig": {
@@ -30,12 +36,14 @@
     }
   },
   "devDependencies": {
+    "@playwright/test": "^1.53.2",
     "eslint": "^8.57.0",
     "html-validate": "^10.13.1",
     "pa11y": "^6.2.3",
     "serve": "^14.2.1",
-    "wait-on": "^8.0.1",
-    "sharp": "^0.34.2"
+    "sharp": "^0.34.2",
+    "start-server-and-test": "^2.0.11",
+    "wait-on": "^8.0.1"
   },
   "dependencies": {
     "@upstash/redis": "^1.38.0",
