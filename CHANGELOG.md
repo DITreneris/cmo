@@ -4,6 +4,19 @@ Visi reikšmingi projekto pakeitimai dokumentuojami šiame faile.
 
 Formatas pagal [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), versijavimas – [Semantic Versioning](https://semver.org/).
 
+## [1.9.0] - 2026-05-31
+
+### Prideta
+
+- **[Commerce] R1 fulfillment stack (Ambition A):** Stripe Payment Links → webhook → Resend → Blob download. [`api/_lib/fulfillment.js`](api/_lib/fulfillment.js), [`api/stripe-webhook.js`](api/stripe-webhook.js), [`api/download-link.js`](api/download-link.js), [`api/download.js`](api/download.js), [`api/fulfillment-health.js`](api/fulfillment-health.js), [`api/fulfillment-followup.js`](api/fulfillment-followup.js). SOT live links in [`config/sot.json`](config/sot.json) (`allowPlaceholderCheckout: false`). PDF sources + covers. Post-purchase [`success.html`](success.html), [`terms.html`](terms.html), [`coming-soon.html`](coming-soon.html). Ops: [`MUST_TODO_STRIPE.md`](MUST_TODO_STRIPE.md). Tests: [`tests/fulfillment-config.test.js`](tests/fulfillment-config.test.js).
+- **Do not Production-deploy this PR alone.** EN storefront HTML + path cut ship in the follow-up conversion PR.
+
+### Pakeista
+
+- **[Commerce] SKUs:** Starter $3.99 (14 p.) · Pro $8.99 (30 p.) · Complete Kit $10.99. EN-only, `promptanatomy.space` only.
+
+---
+
 ## [1.5.0] - 2026-05-15
 
 ### Prideta

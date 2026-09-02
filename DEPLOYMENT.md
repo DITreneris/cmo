@@ -13,7 +13,7 @@
 
 Abu taikiniai dirba kartu: kodas / testai / canonical / hreflang **default**'ai derinami su primary; mirror aktyvuojamas per env override.
 
-**SEO šaltinis tiesai:** primary (`promptanatomy.space`) – canonical/hreflang/sitemap'e. Mirror egzistuoja kaip backup ir backward-compat (senos nuorodos į `/cmo` srautai).
+**SEO šaltinis tiesai:** primary (`promptanatomy.space`) – canonical/hreflang/sitemap'e; **kanoninis locale – `/en/`** (`hreflang x-default`). `/lt/` lieka deploy'e kaip užšaldyta tester snapshot (žr. [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md) §0). Mirror egzistuoja kaip backup ir backward-compat (senos nuorodos į `/cmo` srautai).
 
 ---
 
@@ -81,6 +81,71 @@ env:
 
 **Pastaba:** Jei norima, kad mirror'o HTML turėtų canonical/hreflang `https://ditreneris.github.io/cmo/...`, šios env reikšmes pakeisti į `BASE_PATH: '/cmo'` ir `SITE_ORIGIN: 'https://ditreneris.github.io'`. Dabartinė konfigūracija duoda primary canonical net ant mirror, kas SEO atžvilgiu nukreipia kreditą į `promptanatomy.space` – tai sąmoningas sprendimas. Mirror naudojamas kaip backup.
 
+**Mokama PDF tarpinė ant mirror:** [.github/workflows/deploy.yml](.github/workflows/deploy.yml) deploy job nustato `MIRROR_NOTE: '1'`. Tai išjungia EN `#pdf-storefront` injekciją – mirror NEturi paid PDF storefronto, neturi Stripe nuorodų, neturi `/api/*` route'ų. Pirkėjai, atvykę į `ditreneris.github.io/cmo`, mato laisvą biblioteką, bet pirkimui keliami į `https://promptanatomy.space`. Žr. §2.5 žemiau.
+
+---
+
+## 2.5. Paid PDF fulfillment (EN-only, tik primary)
+
+**Apimtis:** Mokama PDF tarpinė (CMO Kit Starter $3.99 / Pro $8.99) gyvena tik `https://promptanatomy.space` (Vercel). Niekada GitHub Pages mirror'e. Niekada LT pusėje.
+
+### Vercel Production env matrica
+
+Visi nustatomi per Vercel dashboard → Project → Settings → Environment Variables → **Production**:
+
+| Env raktas | Reikšmė | Šaltinis |
+|------------|---------|----------|
+| `STRIPE_SECRET_KEY` | `sk_live_...` | Stripe → Developers → API keys |
+| `STRIPE_WEBHOOK_SECRET` | `whsec_...` | Stripe → Developers → Webhooks → endpoint signing secret |
+| `STRIPE_PRICE_CMO_STARTER_PDF` | `price_...` (Starter Payment Link price id) | Stripe → Products → Starter |
+| `STRIPE_PRICE_CMO_PRO_PDF` | `price_...` (Pro Payment Link price id) | Stripe → Products → Pro |
+| `STRIPE_PRICE_CMO_BUNDLE_PDF` | `price_...` (Complete Kit bundle price id) | Stripe → Products → Bundle |
+| `UPSTASH_REDIS_REST_URL` | `https://...upstash.io` | Vercel → Storage → Upstash Redis → `KV_REST_API_URL` |
+| `UPSTASH_REDIS_REST_TOKEN` | `...` | Vercel → Storage → Upstash Redis → `KV_REST_API_TOKEN` |
+| `DOWNLOAD_TOKEN_SECRET` | 32+ atsitiktinių baitų base64 | `node -e "console.log(require('crypto').randomBytes(48).toString('base64'))"` |
+| `RESEND_API_KEY` | `re_...` | Resend dashboard → API Keys |
+| `FULFILLMENT_FROM_EMAIL` | `info@promptanatomy.app` | Verified Resend domain |
+| `BLOB_READ_WRITE_TOKEN` | `vercel_blob_rw_...` | Vercel → Storage → Blob → tokens |
+| `PDF_CMO_STARTER_SOURCE_URL` | `https://...vercel-storage.com/paid-pdfs/cmo-starter-...pdf` | `npm run pdf:upload-blob` output |
+| `PDF_CMO_PRO_SOURCE_URL` | `https://...vercel-storage.com/paid-pdfs/cmo-pro-...pdf` | `npm run pdf:upload-blob` output |
+| `SITE_URL` | `https://promptanatomy.space` | Konstanta |
+
+Opcionalūs (default'ai veikia):
+
+| Env raktas | Default | Paskirtis |
+|------------|---------|-----------|
+| `DOWNLOAD_TOKEN_TTL_SECONDS` | `604800` (7 d.) | El. pašto download link galiojimas |
+| `IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS` | `900` (15 min.) | success.html in-page link galiojimas |
+| `FULFILLMENT_STATE_TTL_SECONDS` | `7776000` (90 d.) | Redis fulfillment būsenos retencija |
+
+### Pre-launch sekvencija
+
+1. **Sukurti turinį:** `npm install` → `npx playwright install chromium` → `npm run pdf:export` (gauname `api/_private/pdfs/cmo-starter.pdf` **14 p.** ir `cmo-pro.pdf` **30 p.**, page-count gate praeina).
+2. **Įkelti į privatų storage:** `npm run pdf:upload-blob` → įkelia abu į Vercel Blob privačiai → terminale parodo dvi `PDF_CMO_*_SOURCE_URL` eilutes paste'inti į Vercel env.
+3. **Stripe Live:** Stripe dashboard → Products → sukurti *CMO AI Content System · Starter* ($3.99) ir *CMO AI Content System · Pro* ($8.99). Kiekvienam – sukurti **Payment Link** su sėkmės URL `https://promptanatomy.space/success.html?session_id={CHECKOUT_SESSION_ID}` ir produkto metadata `product=starter` arba `product=pro`. Įdėti `price_id` reikšmes į `STRIPE_PRICE_CMO_*` env.
+4. **Webhook:** Stripe dashboard → Developers → Webhooks → Add endpoint: `https://promptanatomy.space/api/stripe-webhook`, įvykiai `checkout.session.completed`, `checkout.session.async_payment_succeeded`. Signing secret į `STRIPE_WEBHOOK_SECRET`.
+5. **Atnaujinti SOT:** [`config/sot.json`](config/sot.json) `commerce.allowPlaceholderCheckout` → `false`; `commerce.stripePaymentLinks.starter`, `.pro` ir `.bundle` → įklijuoti `https://buy.stripe.com/...` URL'us. Commit + push.
+6. **Production build gate (po go-live):** [`vercel.json`](vercel.json) `buildCommand` → `REQUIRE_STRIPE_LINKS=1 npm test` (žr. [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md)).
+7. **Sveikatos patikra:** `GET https://promptanatomy.space/api/fulfillment-health` → `{ ok: true, redis: "PONG", missing: [] }`.
+8. **Test-mode drill:** Stripe Test mode + test Payment Links (Starter, Pro, Bundle) → patikrinti, kad email atvyksta per 5 min., download link veikia, success.html polling pereina į ready būseną.
+9. **Live drill:** Real card $3.99 pirkimas → tas pats checklistas. Po sėkmės – išleisti viešai.
+
+Pilnas checklist: [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md).
+
+### Lokalus pre-flight
+
+```bash
+npm install
+npm run check:fulfillment   # patikrina visus env, ping'ina Redis, validuoja Stripe key
+TEST_SEND=1 TEST_FULFILLMENT_EMAIL=you@example.com npm run check:fulfillment   # papildomai – išsiunčia tikrą Resend laišką
+```
+
+### Saugumas
+
+- **Privatūs PDF niekada `public/`:** [`scripts/vercel-export-public.js`](scripts/vercel-export-public.js) `assertNoPaidPdfsLeaked()` blokuoja deploy, jei rastų `.pdf` po `public/` arba `api/_private/` dirbinį.
+- **Webhook signature:** [`api/stripe-webhook.js`](api/stripe-webhook.js) `bodyParser: false` – raw body Stripe parašui. Vercel headers vietos `Cache-Control: no-store` ant `/api/*` ir `/success.html`.
+- **Pasirašytos URL:** HMAC SHA256 + Redis token metaduomenys; default 7 d. el. paštas / 15 min. in-page polling.
+
 ---
 
 ## 3. Lokalus QA prieš deploy
@@ -125,6 +190,13 @@ CI automatiškai atlieka tuos pačius pa11y patikrinimus per [.github/workflows/
 | **CI workflow failed (pa11y)** | Lokaliai: `npx serve -s . -l 3000` + `npx pa11y http://localhost:3000/lt/ --standard WCAG2AA`. |
 | **pa11y: No usable sandbox** (CI) | `.pa11yrc.json` turi `--no-sandbox` Chrome args. Jei vis tiek krenta – patikrinti workflow. |
 | **Mirror rodo seną canonical** | Patikrinti [.github/workflows/deploy.yml](.github/workflows/deploy.yml) `env` (`BASE_PATH`, `SITE_ORIGIN`). Žr. §2 pastabą. |
+| **Mirror rodo `#pdf-storefront` (turi nerodyti)** | [.github/workflows/deploy.yml](.github/workflows/deploy.yml) deploy job env turi `MIRROR_NOTE: '1'`. Žr. §2 mirror politikos pastabą. |
+| **`/api/fulfillment-health` rodo `missing: [...]`** | Trūksta env Vercel Production. Žr. §2.5 matricą. |
+| **Stripe webhook 400 „No signatures found matching"** | [`api/stripe-webhook.js`](api/stripe-webhook.js) `bodyParser: false` privalo veikti. Patikrinti `STRIPE_WEBHOOK_SECRET` (Stripe → Webhooks → endpoint signing secret, tas pats kaip Production env). |
+| **Pirkėjas nemato laiško per 5 min.** | Vercel Logs → `api/stripe-webhook` paskutinis 200? Resend dashboard → Logs (atmestas?) → spam check. Pakartoti per `node -e "require('./api/_lib/fulfillment').getDownloadUrlBySessionId('cs_...')"`. |
+| **`success.html` užstringa „preparing your link"** | F12 Network → `/api/download-link` 202 lūkuriavimas yra normalus iki 30 attempt; po jų – „taking longer than expected". Patikrinti webhook logą ir Redis `fulfillment:cs_*` raktą. |
+| **`pdf:export` page-count mismatch (12 / 24)** | `docs/pdf-source/cmo-*.html` HTML'as overflow'ina Letter puslapį. Pataisyti CSS arba sumažinti turinį, paleisti pakartotinai. |
+| **`vercel-export-public.js` „Refusing to publish: PDF found"** | Privatus PDF pateko į `public/`. Pašalinti, paleisti `npm run build` iš naujo. Žr. [`scripts/vercel-export-public.js`](scripts/vercel-export-public.js) `assertNoPaidPdfsLeaked()`. |
 
 ---
 

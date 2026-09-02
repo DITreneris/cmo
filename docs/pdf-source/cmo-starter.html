@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CMO AI Content System — Starter — promptanatomy.space</title>
+<style>
+  @page { size: Letter; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: #1c2b3a;
+    background: #ffffff;
+    line-height: 1.45;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .pdf-page {
+    width: 8.5in;
+    height: 11in;
+    padding: 0.7in 0.75in 0.95in 0.75in;
+    position: relative;
+    page-break-after: always;
+    overflow: hidden;
+  }
+  .pdf-page:last-child { page-break-after: auto; }
+  .pg-footer {
+    position: absolute;
+    left: 0.75in;
+    right: 0.75in;
+    bottom: 0.45in;
+    font-size: 9pt;
+    color: #6b7a8c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e6ecf2;
+    padding-top: 8px;
+  }
+  .pg-footer .brand { font-weight: 600; color: #0F2A44; }
+  .pg-footer .url { color: #2F6FED; }
+  h1 { font-size: 24pt; margin: 0 0 8pt; color: #0F2A44; line-height: 1.15; }
+  h2 { font-size: 16pt; margin: 0 0 8pt; color: #0F2A44; line-height: 1.2; }
+  h3 { font-size: 12pt; margin: 14pt 0 6pt; color: #0F2A44; }
+  p, li { font-size: 10.5pt; }
+  .lead { font-size: 12pt; color: #1c2b3a; margin-bottom: 14pt; }
+  .eyebrow { font-size: 9pt; text-transform: uppercase; letter-spacing: 0.06em; color: #2F6FED; font-weight: 700; margin: 0 0 6pt; }
+  .chip { display: inline-block; background: #F4F7FB; color: #0F2A44; border: 1px solid #E6ECF2; border-radius: 999px; padding: 3px 10px; font-size: 9pt; margin-right: 6px; }
+  .panel { background: #F4F7FB; border: 1px solid #E6ECF2; border-radius: 8px; padding: 14px 16px; margin: 10px 0; }
+  .panel--accent { background: #FFF8E1; border-color: #F5C518; }
+  .panel--blue { background: #EEF4FE; border-color: #BBD2FA; }
+  table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 8px 0; }
+  th, td { border: 1px solid #E6ECF2; padding: 6px 8px; text-align: left; vertical-align: top; }
+  th { background: #F4F7FB; color: #0F2A44; font-weight: 700; }
+  ul, ol { margin: 6px 0 6px 22px; padding: 0; }
+  li { margin: 3px 0; }
+  pre.prompt {
+    font-family: "JetBrains Mono", "Consolas", "Courier New", monospace;
+    background: #0F2A44;
+    color: #e8eef6;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 9pt;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    margin: 8px 0;
+  }
+  .cover { background: linear-gradient(135deg, #0F2A44 0%, #1F3A5C 55%, #2F6FED 100%); color: #fff; padding: 1.2in 0.9in; height: 100%; display: flex; flex-direction: column; }
+  .cover h1 { color: #fff; font-size: 40pt; line-height: 1.05; margin: 0 0 14pt; font-weight: 800; }
+  .cover .sub { font-size: 16pt; color: #ffffff; margin: 0 0 12pt; max-width: 6.5in; font-weight: 600; line-height: 1.3; }
+  .cover .audience { font-size: 11pt; color: #cfe1ff; margin: 0 0 24pt; max-width: 6in; line-height: 1.45; }
+  .cover .meta { margin-top: auto; font-size: 10.5pt; color: #cfe1ff; }
+  .cover .badge {
+    display: inline-block;
+    background: #F5C518;
+    color: #0F2A44;
+    font-weight: 800;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-bottom: 18pt;
+    font-size: 11pt;
+    letter-spacing: 0.04em;
+  }
+  .cols-2 { display: flex; gap: 14px; }
+  .cols-2 > * { flex: 1; }
+  .step-row { display: flex; gap: 10px; margin: 10px 0; }
+  .step-row .num {
+    flex: 0 0 28px; height: 28px; border-radius: 50%;
+    background: #2F6FED; color: #fff; font-weight: 700; text-align: center; line-height: 28px;
+    font-size: 11pt;
+  }
+  .step-row .body { flex: 1; }
+  .kicker { font-weight: 700; color: #0F2A44; }
+  .small { font-size: 9pt; color: #6b7a8c; }
+  .checklist li { list-style: none; position: relative; padding-left: 22px; }
+  .checklist li::before { content: ""; position: absolute; left: 0; top: 4px; width: 12px; height: 12px; border: 1.5px solid #2F6FED; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 — COVER -->
+<section class="pdf-page" style="padding: 0;">
+  <div class="cover">
+    <span class="badge">CMO AI CONTENT SYSTEM</span>
+    <h1>Starter &middot; Use</h1>
+    <p class="sub">Week-1 AI cadence for marketing teams.</p>
+    <p class="audience">For CMOs and marketing leads who want 10 prompts and a repeatable weekly rhythm.</p>
+    <div class="meta">
+      <p style="margin: 0;">By Prompt Anatomy &middot; promptanatomy.space</p>
+      <p style="margin: 4px 0 0;">14 pages &middot; PDF &middot; Version 1.1 &middot; May 2026 &middot; English (US)</p>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 2 — CONTENTS & START HERE -->
+<section class="pdf-page">
+  <p class="eyebrow">Navigate</p>
+  <h1>Contents</h1>
+  <p class="lead">14 pages. Skim this table, then jump to the page that matches your job today.</p>
+
+  <table>
+    <thead><tr><th style="width: 10%;">Pg</th><th>Section</th></tr></thead>
+    <tbody>
+      <tr><td>3</td><td>How to use this kit</td></tr>
+      <tr><td>4</td><td>Content OS in one page</td></tr>
+      <tr><td>5</td><td>Worked example — weekly review</td></tr>
+      <tr><td>6</td><td>The prompt formula</td></tr>
+      <tr><td>7</td><td>10 prompts at a glance</td></tr>
+      <tr><td>8–9</td><td>Prompt minis (1–10)</td></tr>
+      <tr><td>10</td><td>Weekly rhythm</td></tr>
+      <tr><td>11</td><td>Verify before you ship</td></tr>
+      <tr><td>12</td><td>Glossary</td></tr>
+      <tr><td>13</td><td>Use this tomorrow morning</td></tr>
+      <tr><td>14</td><td>License, disclaimer, contact</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Start here if…</h3>
+  <table>
+    <thead><tr><th style="width: 38%;">Your pain</th><th style="width: 18%;">Start</th><th>Then</th></tr></thead>
+    <tbody>
+      <tr><td>No weekly cadence</td><td>Prompt 1 (p. 8)</td><td>Prompt 5 Friday → Prompt 10 monthly</td></tr>
+      <tr><td>Launching a campaign</td><td>Prompt 7 (p. 9)</td><td>Pre-publish pass (p. 11)</td></tr>
+      <tr><td>Need proof for sales</td><td>Prompt 8 (p. 9)</td><td>Prompt 3 authority post (p. 8)</td></tr>
+      <tr><td>First time with AI prompts</td><td>Worked example (p. 5)</td><td>Formula (p. 6) → rhythm (p. 10)</td></tr>
+    </tbody>
+  </table>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 2</span></div>
+</section>
+
+<!-- PAGE 3 — HOW TO USE -->
+<section class="pdf-page">
+  <p class="eyebrow">Read this first</p>
+  <h1>How to use this kit</h1>
+  <p class="lead">Read in 10 minutes. Use the same day. Every page does one job — copy the prompt, fill the brackets, run it, then verify before you ship.</p>
+
+  <h3>The teacher-in-the-loop rule for marketing</h3>
+  <p>AI drafts. You decide. Treat every output as a first draft that needs a fact check, a brand pass, and a publish gate. AI cannot tell you what is true about your customers, your numbers, or your market — only you can.</p>
+
+  <h3>What you will get from this Starter</h3>
+  <ul>
+    <li><span class="kicker">A 4-step content OS</span> — Plan, Create, Check, Improve.</li>
+    <li><span class="kicker">A prompt formula</span> — META / INPUT / OUTPUT, the same shape every time.</li>
+    <li><span class="kicker">Ten ready prompts</span> covering planning, distribution, conversion, and analysis.</li>
+    <li><span class="kicker">A weekly rhythm</span> — 20–30 minutes a day, repeatable.</li>
+    <li><span class="kicker">A pre-publish safety pass</span> — five checks before anything ships.</li>
+  </ul>
+
+  <div class="panel panel--accent">
+    <p style="margin:0;"><span class="kicker">Privacy reminder.</span> Public AI tools (ChatGPT, Claude, Gemini) are not approved data systems. Don’t paste customer PII, internal financials, or anything under NDA. Use general non-identifying context only. See your privacy policy at <strong>promptanatomy.space/en/privacy.html</strong>.</p>
+  </div>
+
+  <p class="small" style="margin-top: 14pt;">If you want the live, interactive version of this kit — with one-click copy and progress tracking — open <strong>promptanatomy.space/en/</strong>. The Pro edition (30 pages) extends this Starter with full prompt bodies, expected outputs, scenario plays, a team rollout plan, and a Build section for designing your own reusable workflows.</p>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 3</span></div>
+</section>
+
+<!-- PAGE 4 — CONTENT OS ONE-PAGER -->
+<section class="pdf-page">
+  <p class="eyebrow">The framework</p>
+  <h1>Content OS in one page</h1>
+  <p class="lead">Plan. Create. Check. Improve. The same loop every week — at any team size.</p>
+
+  <table>
+    <thead><tr><th style="width: 18%;">Step</th><th style="width: 32%;">What it produces</th><th>Key questions</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="kicker">1. Plan</span></td>
+        <td>30-day plan, weekly themes, one core idea per cycle.</td>
+        <td>Who is the audience? What is the offer? What KPI matters this month?</td>
+      </tr>
+      <tr>
+        <td><span class="kicker">2. Create</span></td>
+        <td>One idea expanded into 7 formats; prompts 1–4, 7–9.</td>
+        <td>What channel? What hook? What proof point can we cite?</td>
+      </tr>
+      <tr>
+        <td><span class="kicker">3. Check</span></td>
+        <td>Pre-publish safety pass; objections covered; numbers verified.</td>
+        <td>Can we substantiate every claim? Brand-safe? Legally OK?</td>
+      </tr>
+      <tr>
+        <td><span class="kicker">4. Improve</span></td>
+        <td>Daily analysis (Action → Decision); 3 prioritized next steps.</td>
+        <td>What underperformed? What is the cheapest test to learn?</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>One block, every prompt: the marketing context</h3>
+  <p>Before any prompt, fill these five fields once and reuse them. This is the single biggest leverage in the kit.</p>
+  <div class="panel">
+    <ul style="margin: 0;">
+      <li><span class="kicker">Audience</span> — who, role, pain, market.</li>
+      <li><span class="kicker">Offer</span> — what you sell and the outcome it produces.</li>
+      <li><span class="kicker">Channels</span> — primary + secondary, with constraints.</li>
+      <li><span class="kicker">Goal</span> — KPI and target window (e.g. CPL by Friday).</li>
+      <li><span class="kicker">Constraint</span> — brand voice, legal, time, budget.</li>
+    </ul>
+  </div>
+  <p class="small">Save this block in a shared doc. Paste it on top of any prompt as <strong>CONTEXT:</strong> followed by the prompt body.</p>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 4</span></div>
+</section>
+
+<!-- PAGE 5 — WORKED EXAMPLE -->
+<section class="pdf-page">
+  <p class="eyebrow">See it once</p>
+  <h1>Worked example — weekly review</h1>
+  <p class="lead">Anonymized B2B SaaS team. Context → Prompt 5 → score → one pre-publish check.</p>
+
+  <h3>Step 1 — Context block (filled)</h3>
+  <pre class="prompt">CONTEXT:
+- Audience: VP Marketing, US B2B SaaS ($8–25M ARR), struggles with CPL rising on LinkedIn
+- Offer: Attribution dashboard — cut wasted ad spend by 15% in 90 days
+- Channels: LinkedIn ads + email nurture; LinkedIn posts 3×/week max
+- Goal: Reduce CPL from $142 to $115 by June 30
+- Constraint: No customer names; cite only public case metrics [VERIFY]</pre>
+
+  <h3>Step 2 — Run Prompt 5 (Action → Decision)</h3>
+  <p class="small">Paste context above, then the Prompt 5 mini from page 8 with last week’s CTR, CPL, and conversion by channel.</p>
+
+  <h3>Step 3 — Expected output (score against this)</h3>
+  <ul>
+    <li>One underperformer named with $ or % impact (e.g. LinkedIn carousel CPL +28% WoW).</li>
+    <li>Hypothesis separated from facts; one test for next week with owner + deadline.</li>
+    <li>One channel or asset to pause until the test completes.</li>
+  </ul>
+
+  <h3>Step 4 — Pre-publish check</h3>
+  <div class="panel panel--accent">
+    <p style="margin:0;"><span class="kicker">Fail — revise.</span> Output claimed “industry benchmark CPL is $89” with no source. Removed stat; kept directional “CPL above our target.” <span class="kicker">Pass</span> after edit — ready for internal Slack, not public post.</p>
+  </div>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 5</span></div>
+</section>
+
+<!-- PAGE 6 — PROMPT FORMULA -->
+<section class="pdf-page">
+  <p class="eyebrow">Core skill</p>
+  <h1>The prompt formula</h1>
+  <p class="lead">META / INPUT / OUTPUT. Use it every time. Three fields, one reliable shape.</p>
+
+  <table>
+    <thead><tr><th style="width: 18%;">Field</th><th>What to include</th></tr></thead>
+    <tbody>
+      <tr><td><span class="kicker">META</span></td><td>Who the AI is acting as + the goal in one sentence. Example: <em>“You are a US market content strategist. Goal: build a 30-day plan using 4 pillars.”</em></td></tr>
+      <tr><td><span class="kicker">INPUT</span></td><td>Concrete data and bracketed placeholders. Audience, offer, channels, KPIs, target city, budget bands.</td></tr>
+      <tr><td><span class="kicker">OUTPUT</span></td><td>Exact shape you want — sections, length, table, bullets, tone. Add a verification flag for any unsupported claim.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Bad vs good</h3>
+  <div class="cols-2">
+    <div class="panel">
+      <p class="kicker" style="margin-top:0;">Bad</p>
+      <pre class="prompt" style="background:#3a4a5d;">Write a 30-day content plan for our SaaS.</pre>
+    </div>
+    <div class="panel">
+      <p class="kicker" style="margin-top:0;">Good</p>
+      <pre class="prompt">META: You are a US market content strategist. Goal: 30-day plan using 4 pillars (Authority, Problem, Proof, Offer).
+INPUT: Audience [VP RevOps, US B2B SaaS], pain [revenue forecast accuracy], USP [closed-loop attribution], channel [LinkedIn + email], target city [Austin].
+OUTPUT: 30-day table — topic, hook, format, CTA, KPI, expected outcome. Tone: practical for US B2B.</pre>
+    </div>
+  </div>
+
+  <h3>Prompt safety checklist</h3>
+  <ul class="checklist">
+    <li>I named the role (META).</li>
+    <li>I added bracketed inputs the AI can fill.</li>
+    <li>I described the OUTPUT shape (table, bullets, sections).</li>
+    <li>I asked for a verification flag on any unsupported claim.</li>
+    <li>I did not paste customer PII or internal financials.</li>
+  </ul>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 6</span></div>
+</section>
+
+<!-- PAGE 7 — 10 PROMPTS AT A GLANCE -->
+<section class="pdf-page">
+  <p class="eyebrow">Reference</p>
+  <h1>10 prompts at a glance</h1>
+  <p class="lead">Pick the prompt that matches your job this hour. Each one runs on the same META/INPUT/OUTPUT shape.</p>
+
+  <table>
+    <thead><tr><th style="width: 5%;">#</th><th style="width: 24%;">Prompt</th><th style="width: 14%;">Use it for</th><th>Output you get</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><span class="kicker">30-day content system</span></td><td>Monthly plan</td><td>Calendar table by topic, hook, format, CTA, KPI</td></tr>
+      <tr><td>2</td><td><span class="kicker">One idea → 7 formats</span></td><td>Repurposing</td><td>LinkedIn, carousel, video, email, landing, ad, hooks</td></tr>
+      <tr><td>3</td><td><span class="kicker">LinkedIn authority post</span></td><td>Trust building</td><td>150–200-word post: hook, 3 points, example, CTA</td></tr>
+      <tr><td>4</td><td><span class="kicker">30-second video script</span></td><td>Short-form video</td><td>Timestamped script with hook, beats, proof, CTA</td></tr>
+      <tr><td>5</td><td><span class="kicker">Daily analysis (Action→Decision)</span></td><td>Weekly review</td><td>What is failing, why, next test, what to pause</td></tr>
+      <tr><td>6</td><td><span class="kicker">Objection handling</span></td><td>Sales-marketing alignment</td><td>10 content units, one per top objection</td></tr>
+      <tr><td>7</td><td><span class="kicker">Lead magnet + DM sequence</span></td><td>Demand generation</td><td>1 post + 4 DMs (opener → qualify → value → offer)</td></tr>
+      <tr><td>8</td><td><span class="kicker">Customer story</span></td><td>Case studies</td><td>6 sections: Problem, Solution, Process, Results, Takeaway, CTA</td></tr>
+      <tr><td>9</td><td><span class="kicker">Topic cluster (SEO)</span></td><td>Organic growth</td><td>1 pillar + 8 subtopics + internal link map</td></tr>
+      <tr><td>10</td><td><span class="kicker">Master prompt (control center)</span></td><td>All together</td><td>30-day plan + weekly assets + 7 formats + tests + KPI guide + actions</td></tr>
+    </tbody>
+  </table>
+
+  <p class="small" style="margin-top: 14pt;">Pages 8 and 9 give you a half-page mini for each prompt. The Pro edition (30 pages) ships the full META/INPUT/OUTPUT body for every prompt.</p>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 7</span></div>
+</section>
+
+<!-- PAGE 8 — PROMPTS 1-5 MINI -->
+<section class="pdf-page">
+  <p class="eyebrow">Prompts 1–5</p>
+  <h1>Plan, create, distribute</h1>
+
+  <h3>1. 30-day content system</h3>
+  <p><span class="kicker">When:</span> Start of month. <span class="kicker">Time:</span> 8 min. <span class="kicker">Inputs:</span> audience, pain, USP, channel, target city. <span class="kicker">Output:</span> 30-day calendar table mapped to 4 pillars (Authority, Problem, Proof, Offer).</p>
+
+  <h3>2. One idea → 7 formats</h3>
+  <p><span class="kicker">When:</span> You have one strong idea. <span class="kicker">Time:</span> 6 min. <span class="kicker">Inputs:</span> core idea, audience, offer, channel priorities. <span class="kicker">Output:</span> LinkedIn post, carousel, 30-sec video, email, landing hero, ad copy, 3 hooks.</p>
+
+  <h3>3. LinkedIn authority post</h3>
+  <p><span class="kicker">When:</span> Weekly trust building. <span class="kicker">Time:</span> 4 min. <span class="kicker">Inputs:</span> topic, proof point, optional market context. <span class="kicker">Output:</span> 150–200-word post — hook, 3 points, one concrete example, CTA. Verification flag for every claim.</p>
+
+  <h3>4. 30-second video script</h3>
+  <p><span class="kicker">When:</span> Reels / TikTok / Shorts. <span class="kicker">Time:</span> 4 min. <span class="kicker">Inputs:</span> topic, example, audience. <span class="kicker">Output:</span> Timestamped script — 0–2s hook, 3 beats, proof, CTA, plus one A/B alternate hook.</p>
+
+  <h3>5. Daily analysis (Action → Decision)</h3>
+  <p><span class="kicker">When:</span> Friday wrap-up. <span class="kicker">Time:</span> 8 min. <span class="kicker">Inputs:</span> CTR, CAC, CPL, conversion rate, channels, period, goals. <span class="kicker">Output:</span> Underperforming items, hypotheses, next test (this week), what to pause — with owners and decision deadline.</p>
+
+  <div class="panel panel--blue">
+    <p style="margin: 0;"><span class="kicker">Tip.</span> Run prompts 1, 2, and 5 weekly. Rotate 3, 4 by content type. The point isn’t volume — it is a repeatable shape your team can ship under pressure.</p>
+  </div>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 8</span></div>
+</section>
+
+<!-- PAGE 9 — PROMPTS 6-10 MINI -->
+<section class="pdf-page">
+  <p class="eyebrow">Prompts 6–10</p>
+  <h1>Convert, prove, and operate</h1>
+
+  <h3>6. Objection handling</h3>
+  <p><span class="kicker">When:</span> Sales says “buyers keep saying X.” <span class="kicker">Time:</span> 6 min. <span class="kicker">Inputs:</span> top objections, product/offer, audience. <span class="kicker">Output:</span> 10 pieces — one per objection — with reframing angle, proof, CTA, channel.</p>
+
+  <h3>7. Lead magnet + DM sequence</h3>
+  <p><span class="kicker">When:</span> New campaign launch. <span class="kicker">Time:</span> 8 min. <span class="kicker">Inputs:</span> magnet (what it gives + what it solves), audience, offer. <span class="kicker">Output:</span> 1 lead-magnet post + 4 DMs (opener → qualify → value → offer) with a clear next step in every message.</p>
+
+  <h3>8. Customer story</h3>
+  <p><span class="kicker">When:</span> A customer just got a result. <span class="kicker">Time:</span> 10 min. <span class="kicker">Inputs:</span> customer, problem, solution, process, numeric results, optional market. <span class="kicker">Output:</span> 6 sections — Problem, Solution, Process, Results, Key takeaway, CTA — with a quote slot to verify.</p>
+
+  <h3>9. Topic cluster (SEO)</h3>
+  <p><span class="kicker">When:</span> Quarterly content planning. <span class="kicker">Time:</span> 10 min. <span class="kicker">Inputs:</span> pillar topic, niche, offer, audience. <span class="kicker">Output:</span> 1 pillar outline + 8 subtopics tagged by intent + internal link map.</p>
+
+  <h3>10. Master prompt (control center)</h3>
+  <p><span class="kicker">When:</span> Quarterly reset. <span class="kicker">Time:</span> 12 min. <span class="kicker">Inputs:</span> business, audience, pain, USP, revenue goal, channels, data. <span class="kicker">Output:</span> 6 blocks — 30-day plan, this week’s assets, one idea → 7 formats, 3 test hypotheses, KPI reading guide, 3 actions for tomorrow ranked by priority.</p>
+
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 9</span></div>
+</section>
+
+<!-- PAGE 10 — WEEKLY RHYTHM -->
+<section class="pdf-page">
+  <p class="eyebrow">Operating cadence</p>
+  <h1>Weekly rhythm — 20 to 30 minutes a day</h1>
+  <p class="lead">A simple cadence beats heroic sprints. Five short blocks a week, repeatable.</p>
+
+  <table>
+    <thead><tr><th style="width: 14%;">Day</th><th style="width: 22%;">Block</th><th>What you run</th></tr></thead>
+    <tbody>
+      <tr><td>Mon</td><td><span class="kicker">Plan</span></td><td>Prompt 10 (control center) → narrow to this week’s 3 actions and the primary KPI.</td></tr>
+      <tr><td>Tue</td><td><span class="kicker">Create core</span></td><td>Prompt 1 update → Prompt 3 (LinkedIn authority) using a fresh proof point.</td></tr>
+      <tr><td>Wed</td><td><span class="kicker">Repurpose</span></td><td>Prompt 2 (one idea → 7 formats) + Prompt 4 (30-sec video) for the same idea.</td></tr>
+      <tr><td>Thu</td><td><span class="kicker">Convert</span></td><td>Prompt 6 (objection handling) or Prompt 7 (lead magnet + DM sequence).</td></tr>
+      <tr><td>Fri</td><td><span class="kicker">Improve</span></td><td>Prompt 5 (Action → Decision) → write next week’s one primary KPI in the channel.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>One-hour starter pack (if you only have today)</h3>
+  <ol>
+    <li>15 min — fill the 5-field marketing context block once.</li>
+    <li>15 min — run Prompt 1 (30-day system).</li>
+    <li>15 min — run Prompt 3 (LinkedIn authority) with one verifiable proof point.</li>
+    <li>15 min — run Prompt 5 (Action → Decision) on last week’s numbers.</li>
+  </ol>
+
+  <div class="panel panel--accent">
+    <p style="margin: 0;"><span class="kicker">If a week is on fire</span>, only do Plan + Improve (Mon + Fri). Skip the middle. The loop survives.</p>
+  </div>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 10</span></div>
+</section>
+
+<!-- PAGE 11 — VERIFY BEFORE PUBLISH -->
+<section class="pdf-page">
+  <p class="eyebrow">Pre-publish safety</p>
+  <h1>Verify before you ship</h1>
+  <p class="lead">Print this page. Tape it next to your editor. Run every AI draft through these checks before it leaves your laptop.</p>
+
+  <h3>The 5-point pre-publish pass</h3>
+  <ol>
+    <li><span class="kicker">Substantiated.</span> Every number, name, date, and quote has a source you can name. Replace anything you cannot verify with “directionally” or remove it.</li>
+    <li><span class="kicker">On-brand.</span> Voice, claims, and tone match your guidelines. No accidental superlatives (“#1”, “guaranteed”, “best-in-class”) without proof.</li>
+    <li><span class="kicker">Legally clean.</span> No customer PII, no NDA content, no competitive comparisons that imply harm. Disclose endorsements.</li>
+    <li><span class="kicker">Reader-aware.</span> Reads in the audience’s context — role, market, week. Avoids inside-baseball jargon.</li>
+    <li><span class="kicker">Owned.</span> A human (you) approved it. Initials in the doc. Date stamped.</li>
+  </ol>
+
+  <h3>Red flags — revise or discard</h3>
+  <ul>
+    <li>Confident-sounding statistics or studies you cannot locate.</li>
+    <li>“Customer X grew 5×” without a name, source, and consent.</li>
+    <li>Generic examples with no audience-specific texture.</li>
+    <li>Output that contradicts your privacy or pricing pages.</li>
+    <li>Headlines that promise outcomes you cannot substantiate.</li>
+  </ul>
+
+  <div class="panel">
+    <p style="margin:0;"><span class="kicker">If something is wrong:</span> 1) tell the AI exactly what is wrong and ask for a revision; 2) recheck against the 5 points; 3) if two revisions don’t fix it, write that part yourself.</p>
+  </div>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 11</span></div>
+</section>
+
+<!-- PAGE 12 — GLOSSARY -->
+<section class="pdf-page">
+  <p class="eyebrow">Reference</p>
+  <h1>Plain-English glossary</h1>
+  <p class="lead">Shared vocabulary for the whole marketing team — useful when handing prompts to a peer who isn’t in your weekly stand-up.</p>
+
+  <table>
+    <thead><tr><th style="width: 30%;">Term</th><th>Plain definition</th></tr></thead>
+    <tbody>
+      <tr><td>Audience</td><td>Specific role + market + pain (not “SMBs”).</td></tr>
+      <tr><td>Pillar</td><td>A theme that anchors a month of content (Authority, Problem, Proof, Offer).</td></tr>
+      <tr><td>USP (unique selling proposition)</td><td>The one outcome only you produce, in one sentence.</td></tr>
+      <tr><td>CTA (call to action)</td><td>The next step you want the reader to take. Verb + outcome.</td></tr>
+      <tr><td>KPI</td><td>The single metric that proves the action worked this period.</td></tr>
+      <tr><td>Hook</td><td>The first 2–3 seconds (or one line) that decides whether the post is read or scrolled past.</td></tr>
+      <tr><td>Repurpose</td><td>One idea, many formats — same point, channel-fit phrasing.</td></tr>
+      <tr><td>Topic cluster</td><td>One pillar page + several subtopic pages linked together for SEO.</td></tr>
+      <tr><td>Hallucination</td><td>When AI invents a fact, source, or quote that looks real but isn’t.</td></tr>
+      <tr><td>Verification flag</td><td>A line in the AI output marking what to double-check before publishing.</td></tr>
+      <tr><td>Action → Decision</td><td>The Friday loop: action data → why → next test → what to pause.</td></tr>
+      <tr><td>Master prompt</td><td>Prompt 10 — the control center that ties Plan / Create / Check / Improve together.</td></tr>
+    </tbody>
+  </table>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 12</span></div>
+</section>
+
+<!-- PAGE 13 — USE TOMORROW -->
+<section class="pdf-page">
+  <p class="eyebrow">5-step routine</p>
+  <h1>Use this tomorrow morning</h1>
+  <p class="lead">A repeatable routine you can run before your first stand-up — every time you draft with AI.</p>
+
+  <div class="step-row"><div class="num">1</div><div class="body"><span class="kicker">Define</span> — pick the job: plan, create, repurpose, convert, analyze. Write the objective in one sentence.</div></div>
+  <div class="step-row"><div class="num">2</div><div class="body"><span class="kicker">Prompt</span> — paste the marketing context block on top, then the META / INPUT / OUTPUT shape.</div></div>
+  <div class="step-row"><div class="num">3</div><div class="body"><span class="kicker">Verify</span> — run the 5-point pre-publish pass. Solve, look up, edit.</div></div>
+  <div class="step-row"><div class="num">4</div><div class="body"><span class="kicker">Adapt</span> — add your brand voice, examples, and timing. Cut filler that didn’t earn its space.</div></div>
+  <div class="step-row"><div class="num">5</div><div class="body"><span class="kicker">Ship</span> — publish, log the KPI, ask the AI to suggest one tweak for next time.</div></div>
+
+  <h3>Tomorrow morning template</h3>
+  <pre class="prompt">Today I will use AI to: [pick one job from prompts 1–10]
+The objective is: [one sentence]
+Audience and offer: [from the 5-field context block]
+Output format: [shape and length]
+Quality check: [what I will verify before publishing]</pre>
+
+  <h3>10 takeaways to pin on the wall</h3>
+  <ol style="columns: 2; column-gap: 22px;">
+    <li>AI is a draft assistant, not a strategist.</li>
+    <li>Better context = better output.</li>
+    <li>Write the META role, not just the task.</li>
+    <li>One objective, one primary KPI.</li>
+    <li>Repurpose before you create from scratch.</li>
+    <li>Verify every number, name, and date.</li>
+    <li>Ship the smallest test that reduces uncertainty.</li>
+    <li>Honest copy beats clever copy in B2B.</li>
+    <li>Plan + Improve are the loops you cannot skip.</li>
+    <li>Your judgment is the final check.</li>
+  </ol>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 13</span></div>
+</section>
+
+<!-- PAGE 14 — APPENDIX / DISCLAIMER -->
+<section class="pdf-page">
+  <p class="eyebrow">Appendix</p>
+  <h1>License, disclaimer, contact</h1>
+
+  <h3>Team license</h3>
+  <p>This Starter is licensed for use within your own brand’s marketing team. Share the file with your immediate marketing team (CMO + 1–4 directs, or one in-house team at one company). Do not redistribute the full PDF as-is. Print individual pages, prompts, and checklists for your own team’s working sessions. Full license: <strong>promptanatomy.space/terms.html#paid-pdf-license</strong>.</p>
+
+  <h3>14-day refund</h3>
+  <p>If this kit is not useful in the first 14 days, reply to your Stripe receipt or email <strong>info@promptanatomy.app</strong> for a no-questions refund. We approve the refund through Stripe and revoke the download link. No survey, no follow-up.</p>
+
+  <h3>Source notes</h3>
+  <p>This kit synthesises practical patterns from the free Classroom-of-CMO prompt library at <strong>promptanatomy.space/en/</strong>, the Prompt Anatomy methodology at <strong>promptanatomy.app</strong>, and pilot feedback from US B2B marketing teams. We adapt, we do not copy. Always cite original sources where required for professional use.</p>
+
+  <h3>Disclaimer</h3>
+  <p>This guide is for marketing planning. Outputs you generate from these prompts may be inaccurate, incomplete, biased, or out of date. You must verify every output before publishing or pitching. Nothing in this guide is legal, tax, or compliance advice. Check your local regulations and your company’s policies before use.</p>
+
+  <h3>Next step — go from Use to Build</h3>
+  <p>Starter helps you use the system. The <strong>CMO AI Content System · Pro ($8.99, 30 pages)</strong> helps you build it: the full META/INPUT/OUTPUT body for every prompt, expected outputs you can score against, three scenario plays (weekly review, campaign launch, stakeholder update), the pre-publish risk-reviewer prompt, a 90-minute team workshop, a quality rubric, and a Build section for designing your own reusable prompt systems, workflow templates, and custom tools. Get it at <strong>promptanatomy.space/en/#pdf-storefront</strong>.</p>
+
+  <p class="small" style="margin-top: 18pt;">© 2026 Tomas Staniulis. Marketing material. All rights reserved. Questions, resends, refunds: <strong>info@promptanatomy.app</strong>.</p>
+  <div class="pg-footer"><span class="brand">CMO AI Content System · Starter</span><span class="url">promptanatomy.space</span><span>Page 14</span></div>
+</section>
+
+</body>
+</html>

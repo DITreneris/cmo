@@ -1,4 +1,5 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
       "source": "/",
@@ -8,5 +9,21 @@
     },
     { "source": "/", "destination": "/en/", "permanent": false },
     { "source": "/index.html", "destination": "/en/", "permanent": false }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "no-store, max-age=0" }]
+    },
+    {
+      "source": "/success.html",
+      "headers": [{ "key": "Cache-Control", "value": "no-store, max-age=0" }]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/fulfillment-followup",
+      "schedule": "0 14 * * *"
+    }
   ]
 }

@@ -1,0 +1,265 @@
+{
+  "$schema": "./sot.schema.json",
+  "version": "1.7.1",
+  "brand": {
+    "publicName": "Prompt Anatomy",
+    "slogan": "Content AI System for marketing leaders",
+    "logoUrl": "https://promptanatomy.space/og.png",
+    "knowsAbout": [
+      "content marketing",
+      "AI prompts",
+      "CMO workflows",
+      "marketing content systems",
+      "AI marketing workflows",
+      "structured prompt engineering",
+      "brand voice guardrails",
+      "pre-publish content review",
+      "CMO content systems"
+    ],
+    "socialProfiles": {
+      "telegram": "https://t.me/prompt_anatomy",
+      "linkedin": "https://www.linkedin.com/in/tomas-staniulis/",
+      "x": "https://x.com/prompt_anatomy"
+    },
+    "operatorLinkedin": "https://www.linkedin.com/in/tomas-staniulis/",
+    "operatorTwitter": "https://x.com/prompt_anatomy"
+  },
+  "geo": {
+    "priceValidUntil": "2027-12-31"
+  },
+  "copy": {
+    "creativeBrief": {
+      "title": "Creative brief builder",
+      "lead": "Fill the brief → get an image-ready prompt. Browser-only. Copy, paste, run. No account.",
+      "presetsLabel": "Quick starts",
+      "sampleLabel": "Try sample",
+      "stepsContext": "Context",
+      "stepsVisual": "Visual",
+      "stepsText": "Text",
+      "qualityLabel": "Brief readiness",
+      "outputLabel": "Generated image prompt",
+      "copyLabel": "Copy prompt",
+      "copiedLabel": "Copied",
+      "toolsTitle": "Open an image tool",
+      "toolsDesc": "Opens in a new tab and copies your prompt.",
+      "emptyPlaceholder": "Start with a subject or load a preset — your image prompt builds here.",
+      "tipsTitle": "Expert tips",
+      "tips": [
+        {
+          "title": "Be specific about the subject",
+          "body": "Name the product, surface, and setting. Vague briefs produce generic stock looks."
+        },
+        {
+          "title": "Lock style and light",
+          "body": "Pick one style and one lighting cue so the model does not invent a new look each run."
+        },
+        {
+          "title": "Leave space for type",
+          "body": "If you add a headline or CTA, ask for clean negative space so text stays readable."
+        }
+      ],
+      "proTeaser": "Want the method to build more tools like this for your team? See Pro below."
+    }
+  },
+  "creativeBrief": {
+    "tools": [
+      {
+        "name": "ChatGPT (GPT Image)",
+        "url": "https://chatgpt.com/",
+        "description": "Text-to-image in chat — fast marketing drafts."
+      },
+      {
+        "name": "Ideogram",
+        "url": "https://ideogram.ai/",
+        "description": "Strong text in images — ads, LinkedIn, posters."
+      }
+    ]
+  },
+  "frontFaq": [
+    {
+      "q": "Is this for beginners?",
+      "a": "Yes, if you fill placeholders with your real context — then copy, paste, and run."
+    },
+    {
+      "q": "Do I need all 10 prompts?",
+      "a": "No. Free: 4 workflows (prompts 1, 2, 3, 5) plus the creative brief builder. Pro teasers cover the rest — full META/INPUT/OUTPUT bodies ship in the Pro kit (full 10 offline)."
+    },
+    {
+      "q": "Why is this better than random prompts?",
+      "a": "You get a repeatable Plan → Create → Check → Improve workflow with clear fields and evaluation — structured prompting, not prompt gambling."
+    },
+    {
+      "q": "How much time daily?",
+      "a": "20–30 minutes is enough if you run Create → Check → Improve."
+    },
+    {
+      "q": "What is the creative brief builder?",
+      "a": "A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT, Ideogram, Midjourney, or similar. No account. It demonstrates the same tool-building idea Pro teaches for teams."
+    },
+    {
+      "q": "Is this a course or a tool?",
+      "a": "A copy-paste Content AI System you can use immediately — not a long course. Free spine + brief in the browser; depth offline in the kits."
+    },
+    {
+      "q": "Why use this instead of more AI tools?",
+      "a": "It is a portable prompt system you run on ChatGPT or Claude — not another SaaS seat. Structured workflows replace random chats and reduce tool sprawl."
+    },
+    {
+      "q": "How do you protect brand voice before publishing?",
+      "a": "Set session context and non-negotiable rules, then run the pre-publish safety reviewer (#cmo-safety) to check facts, tone, legal/trust risk, and CTA ownership before you ship."
+    },
+    {
+      "q": "Who is this for?",
+      "a": "CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence."
+    },
+    {
+      "q": "Does this work for B2B SaaS, services, and ecommerce?",
+      "a": "Yes. Swap the audience, offer, channels, and metrics — the structure stays the same."
+    }
+  ],
+  "site": {
+    "host": "promptanatomy.space",
+    "siteUrl": "https://promptanatomy.space",
+    "primary": "vercel",
+    "mirror": {
+      "host": "ditreneris.github.io/cmo",
+      "renderPaidStorefront": false,
+      "policy": "Free content only. The #pdf-storefront block is omitted on the mirror because checkout, webhook, and downloads only run on promptanatomy.space."
+    }
+  },
+  "commerce": {
+    "scope": "en-only",
+    "allowPlaceholderCheckout": false,
+    "placeholderHref": "/coming-soon.html",
+    "deliveryPromise": "Email delivery within 5 minutes. If your link does not arrive in 5 minutes, email info@promptanatomy.app and we will resend immediately.",
+    "storefrontHead": {
+      "eyebrow": "Offline system kits",
+      "title": "Install your marketing content operating system — offline",
+      "lead": "Same Plan → Create → Check → Improve system as the free spine — PDF for print, workshops, and team rollout. Not a live app."
+    },
+    "comparisonTable": {
+      "columns": ["free", "starter", "pro"],
+      "rows": [
+        { "feature": "4 core interactive prompts + progress", "free": true, "starter": false, "pro": false },
+        { "feature": "Browser creative brief builder", "free": true, "starter": false, "pro": false },
+        { "feature": "Printable PDF", "free": false, "starter": true, "pro": true },
+        { "feature": "TOC + worked example + week-1 quickstart", "free": false, "starter": true, "pro": true },
+        { "feature": "10 prompt minis at a glance", "free": false, "starter": true, "pro": true },
+        { "feature": "Full META / INPUT / OUTPUT prompt bodies (all 10)", "free": false, "starter": false, "pro": true },
+        { "feature": "Expected outputs + scenario plays", "free": false, "starter": false, "pro": true },
+        { "feature": "Build reusable workflow templates", "free": false, "starter": false, "pro": true },
+        { "feature": "Team workshop + quality rubric", "free": false, "starter": false, "pro": true },
+        { "feature": "Markdown companion (copy-paste)", "free": false, "starter": false, "pro": true }
+      ]
+    },
+    "stripePaymentLinks": {
+      "starter": "https://buy.stripe.com/28E14namg9Vj5lycKcfjG0b",
+      "pro": "https://buy.stripe.com/9B68wPamgc3rbJW11ufjG0c",
+      "bundle": "https://buy.stripe.com/eVqcN58e82sRdS4cKcfjG0d"
+    },
+    "products": [
+      {
+        "id": "starter",
+        "publicId": "cmo-starter",
+        "name": "CMO AI Content System · Starter",
+        "tierTag": "Use",
+        "tierPromise": "Ready-made workflows for week 1",
+        "subtitle": "14-page kit — use the system, week-1 cadence in 30 minutes",
+        "priceUsd": 3.99,
+        "priceCents": 399,
+        "compareAtUsd": 7.99,
+        "pages": 14,
+        "format": "PDF (Letter, English)",
+        "downloadFileName": "cmo-prompt-kit-starter.pdf",
+        "coverPng": "assets/pdf-covers/cmo-starter-cover.png",
+        "previewPngs": [
+          "assets/pdf-covers/cmo-starter-preview-1.png",
+          "assets/pdf-covers/cmo-starter-preview-2.png",
+          "assets/pdf-covers/cmo-starter-preview-3.png"
+        ],
+        "bullets": [
+          "14-page PDF: week-1 cadence + worked weekly review",
+          "10 prompt minis + pre-publish safety pass",
+          "Team license for one in-house marketing team"
+        ]
+      },
+      {
+        "id": "pro",
+        "publicId": "cmo-pro",
+        "name": "CMO AI Content System · Pro",
+        "tierTag": "Build",
+        "tierPromise": "Build your own reusable AI tools",
+        "subtitle": "30-page operational PDF — build reusable workflows for teams",
+        "priceUsd": 8.99,
+        "priceCents": 899,
+        "compareAtUsd": 17.99,
+        "pages": 30,
+        "format": "PDF + Markdown companion",
+        "recommended": true,
+        "downloadFileName": "cmo-prompt-kit-pro.pdf",
+        "coverPng": "assets/pdf-covers/cmo-pro-cover.png",
+        "previewPngs": [
+          "assets/pdf-covers/cmo-pro-preview-1.png",
+          "assets/pdf-covers/cmo-pro-preview-2.png",
+          "assets/pdf-covers/cmo-pro-preview-3.png"
+        ],
+        "bullets": [
+          "Full 10 prompts with META / INPUT / OUTPUT bodies",
+          "Build reusable prompt systems and workflow templates",
+          "Workshop + quality rubric + Markdown companion"
+        ]
+      },
+      {
+        "id": "bundle",
+        "publicId": "cmo-bundle",
+        "name": "CMO AI Content System · Complete Kit",
+        "tierTag": "Install",
+        "tierPromise": "Install the full content operating system",
+        "subtitle": "Starter (Use) + Pro (Build) — both PDFs, one checkout",
+        "priceUsd": 10.99,
+        "priceCents": 1099,
+        "compareAtUsd": 19.99,
+        "pages": 44,
+        "format": "2 PDFs (Starter 14p + Pro 30p)",
+        "downloadFileName": "cmo-prompt-kit-bundle",
+        "coverPng": "assets/pdf-covers/cmo-bundle-cover.png",
+        "previewPngs": [
+          "assets/pdf-covers/cmo-starter-preview-2.png",
+          "assets/pdf-covers/cmo-pro-preview-2.png",
+          "assets/pdf-covers/cmo-pro-preview-3.png"
+        ],
+        "bullets": [
+          "Starter + Pro PDFs in one checkout",
+          "Pro Markdown companion included",
+          "Team license for one in-house marketing team"
+        ]
+      }
+    ]
+  },
+  "buyerFaq": [
+    {
+      "q": "How and when do I get my PDF?",
+      "a": "Pay through Stripe. Within 5 minutes you receive an email from info@promptanatomy.app with signed download link(s). Bundle buyers receive separate links for Starter and Pro. If email does not arrive, contact us and we will resend."
+    },
+    {
+      "q": "What does the team license cover?",
+      "a": "One in-house marketing team at one company. CMO + 1–4 directs, or one CMO equivalent. Print and share within that team. No agency, multi-brand, or training-resale rights without a separate license."
+    },
+    {
+      "q": "Can I get a refund?",
+      "a": "Yes. 14-day no-questions refund. Reply to your Stripe receipt or email info@promptanatomy.app. We approve through Stripe and revoke the download link."
+    },
+    {
+      "q": "How is this different from the free library?",
+      "a": "The free library lets you use the system in your browser, including the Creative brief builder for image-ready prompts. The kits add depth and team assets: offline and printable, with worked examples, full prompt bodies (Pro), scenario plays, a safety reviewer, a 90-minute workshop, and — in Pro — a method for building your own reusable workflows and tools. You buy the system depth and the team license, not just a PDF."
+    },
+    {
+      "q": "Is the PDF a live app?",
+      "a": "No. PDF is the delivery format for the content operating system — offline, printable, workshop-ready. There is no login or hosted dashboard."
+    },
+    {
+      "q": "Will my data be sold or shared?",
+      "a": "No. Stripe processes payment and Resend delivers the email — we store no marketing list and do not add you to one. Post-purchase tips are transactional only. See our privacy page."
+    }
+  ]
+}
