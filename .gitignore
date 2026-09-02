@@ -39,3 +39,14 @@ build/
 public/
 *.min.js
 *.min.css
+
+# Paid PDF artefacts (NEVER commit paid PDF binaries)
+api/_private/
+assets/paid-pdfs/
+docs/pdf-source/*.pdf
+!assets/pdf-covers/
+
+# Playwright artefacts
+test-results/
+playwright-report/
+playwright/.cache/

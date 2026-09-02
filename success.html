@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="canonical" href="https://promptanatomy.space/success.html">
+    <meta name="description" content="Thank you for buying the Prompt Anatomy CMO Kit. Your download link is on its way.">
+    <title>Thank you - Prompt Anatomy CMO Kit</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #F5F7FA; color: #1A202C; line-height: 1.6; padding: 24px; }
+        main { max-width: 640px; margin: 0 auto; background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 32px; box-shadow: 0 6px 24px rgba(15, 42, 68, 0.08); }
+        h1 { font-size: 1.75rem; margin-bottom: 0.75rem; color: #0F2A44; }
+        p { margin-bottom: 0.75rem; }
+        a { color: #2B6CB0; }
+        .lede { font-size: 1.05rem; }
+        .status {
+            display: flex; gap: 12px; align-items: center;
+            margin: 1.25rem 0; padding: 14px 16px; border-radius: 10px;
+            background: #EEF4FE; border: 1px solid #BBD2FA; color: #0F2A44;
+        }
+        .status[data-state="ready"] { background: #E7F6EC; border-color: #9CCDA7; }
+        .status[data-state="error"] { background: #FDEDED; border-color: #F2B8B5; color: #842029; }
+        .spinner { width: 18px; height: 18px; border-radius: 50%; border: 3px solid #BBD2FA; border-top-color: #2F6FED; animation: spin 0.9s linear infinite; flex-shrink: 0; }
+        .status[data-state="ready"] .spinner,
+        .status[data-state="error"] .spinner { display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+        .download-btn {
+            display: inline-block; padding: 12px 22px; background: #2F6FED; color: #fff;
+            border-radius: 8px; font-weight: 700; text-decoration: none; margin: 0.75rem 0;
+        }
+        .download-btn:focus-visible { outline: 3px solid #0F2A44; outline-offset: 2px; }
+        .small { font-size: 0.9rem; color: #4A5568; }
+        .home {
+            display: inline-block; margin-top: 1rem; padding: 10px 18px;
+            border: 1px solid #2B6CB0; color: #2B6CB0; border-radius: 8px;
+            text-decoration: none; font-weight: 600;
+        }
+        .home:hover { background: #EBF4FF; }
+    </style>
+</head>
+<body>
+    <main aria-labelledby="success-title">
+        <h1 id="success-title">Thank you for your purchase.</h1>
+        <p class="lede">Your receipt is on the way from Stripe and your download link will arrive shortly from <strong>info@promptanatomy.app</strong>.</p>
+
+        <div class="status" id="status" role="status" aria-live="polite" data-state="pending">
+            <span class="spinner" aria-hidden="true"></span>
+            <span id="status-text">Preparing your download link...</span>
+        </div>
+
+        <div id="download-area" hidden>
+            <a id="download-btn" class="download-btn" href="#" rel="nofollow">Download your PDF</a>
+            <p class="small">This link is valid for 24 hours and is single-use. Save the file to your device once you open it.</p>
+        </div>
+
+        <p class="small" id="email-note">We also email the same link. If it does not arrive within 5 minutes, check spam, then email <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a> from the address you used to buy and we will resend immediately.</p>
+
+        <p><a class="home" href="/en/">Back to the library</a></p>
+    </main>
+
+    <script>
+        (function () {
+            'use strict';
+            var statusEl = document.getElementById('status');
+            var statusText = document.getElementById('status-text');
+            var downloadArea = document.getElementById('download-area');
+            var downloadBtn = document.getElementById('download-btn');
+
+            var params = new URLSearchParams(window.location.search);
+            var sessionId = params.get('session_id');
+
+            function setState(state, text) {
+                statusEl.setAttribute('data-state', state);
+                statusText.textContent = text;
+            }
+
+            if (!sessionId) {
+                setState(
+                    'error',
+                    'No session id in the URL. Check your email for the download link, or contact info@promptanatomy.app.'
+                );
+                return;
+            }
+
+            var attempts = 0;
+            var MAX_ATTEMPTS = 30;
+            var INITIAL_DELAY_MS = 1500;
+
+            function poll(delay) {
+                attempts++;
+                setTimeout(function () {
+                    fetch('/api/download-link?session_id=' + encodeURIComponent(sessionId), {
+                        method: 'GET',
+                        headers: { Accept: 'application/json' },
+                        credentials: 'omit'
+                    })
+                        .then(function (resp) {
+                            if (resp.status === 200) {
+                                return resp.json().then(function (json) {
+                                    if (json && json.url) {
+                                        downloadBtn.href = json.url;
+                                        downloadArea.hidden = false;
+                                        setState('ready', 'Your download is ready.');
+                                    } else {
+                                        setState(
+                                            'error',
+                                            'Unexpected response. Check your email or contact info@promptanatomy.app.'
+                                        );
+                                    }
+                                });
+                            }
+                            if (resp.status === 202) {
+                                if (attempts < MAX_ATTEMPTS) {
+                                    setState('pending', 'Still preparing your link... (attempt ' + attempts + ')');
+                                    poll(Math.min(2500, INITIAL_DELAY_MS + attempts * 200));
+                                } else {
+                                    setState(
+                                        'error',
+                                        'Taking longer than expected. The email will arrive shortly. If it does not, contact info@promptanatomy.app.'
+                                    );
+                                }
+                                return null;
+                            }
+                            if (resp.status === 404) {
+                                if (attempts < 6) {
+                                    poll(2000);
+                                } else {
+                                    setState(
+                                        'error',
+                                        'Session not recognized. Check your email for the download link, or contact info@promptanatomy.app.'
+                                    );
+                                }
+                                return null;
+                            }
+                            setState(
+                                'error',
+                                'Unexpected error. Check your email for the download link, or contact info@promptanatomy.app.'
+                            );
+                            return null;
+                        })
+                        .catch(function () {
+                            if (attempts < MAX_ATTEMPTS) {
+                                poll(2500);
+                            } else {
+                                setState(
+                                    'error',
+                                    'Network error. Check your email for the download link, or contact info@promptanatomy.app.'
+                                );
+                            }
+                        });
+                }, delay);
+            }
+
+            poll(INITIAL_DELAY_MS);
+        })();
+    </script>
+</body>
+</html>

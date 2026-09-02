@@ -1,17 +1,24 @@
 {
   "name": "di-promptu-biblioteka",
-  "version": "1.5.0",
+  "version": "1.9.0",
   "private": true,
-  "description": "DI Promptų Biblioteka – statinė HTML platforma",
+  "description": "DI Promptų Biblioteka – statinė HTML platforma + EN paid PDF fulfillment (CMO Kit)",
   "scripts": {
     "generate:og": "node scripts/generate-og.js",
     "build": "node scripts/generate-og.js && node scripts/build-locale-pages.js && node scripts/vercel-export-public.js",
-    "test": "npm run build && node tests/structure.test.js && node tests/design-system-smoke.test.js && node tests/a11y-smoke.test.js && npm run lint:html && npm run lint:js",
+    "test": "npm run build && node tests/structure.test.js && node tests/design-system-smoke.test.js && node tests/a11y-smoke.test.js && node tests/fulfillment-config.test.js && npm run lint:html && npm run lint:js",
     "test:structure": "node tests/structure.test.js",
     "test:design-system": "node tests/design-system-smoke.test.js",
     "test:a11y:smoke": "node tests/a11y-smoke.test.js",
-    "lint:html": "npx html-validate index.html lt/index.html lt/privatumas.html en/index.html en/privacy.html",
-    "lint:js": "npx eslint . --ext .js"
+    "test:fulfillment-config": "node tests/fulfillment-config.test.js",
+    "lint:html": "npx html-validate index.html lt/index.html lt/privatumas.html en/index.html en/privacy.html success.html terms.html coming-soon.html",
+    "lint:js": "npx eslint . --ext .js",
+    "pdf:export": "node scripts/export-pdfs.js",
+    "pdf:covers": "node scripts/export-pdf-covers.js",
+    "pdf:export-md": "node scripts/export-pro-prompts-md.js",
+    "pdf:previews": "node scripts/export-pdf-previews.js",
+    "pdf:upload-blob": "node scripts/upload-pdfs-to-blob.js",
+    "check:fulfillment": "node scripts/check-fulfillment-env.js"
   },
   "pa11y": {
     "chromeLaunchConfig": {
@@ -31,6 +38,10 @@
     "sharp": "^0.34.2"
   },
   "dependencies": {
-    "@vercel/analytics": "^2.0.1"
+    "@upstash/redis": "^1.38.0",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/blob": "^2.3.3",
+    "resend": "^6.12.3",
+    "stripe": "^22.1.1"
   }
 }
