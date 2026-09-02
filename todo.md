@@ -16,7 +16,7 @@ Short boxes only; details live in MUST_TODO_STRIPE.
 - [ ] [Vercel Production env](MUST_TODO_STRIPE.md#vercel-production-env) — all keys from `.env.example`; Redeploy
 - [ ] [QA prieš release](MUST_TODO_STRIPE.md#qa-prieš-release) — `npm run check:fulfillment`; `GET /api/fulfillment-health` → `{ ok: true, missing: [] }`
 - [ ] Live purchase drill — Starter $3.99 → email ≤5 min → download; then Pro + Bundle; `success.html` poll
-- [ ] Commit + push → Vercel redeploy (after SOT/env complete); production build gate `REQUIRE_STRIPE_LINKS=1 npm test` per [vercel.json](vercel.json)
+- [ ] Commit + push → Vercel redeploy (after SOT/env complete); production build gate `REQUIRE_STRIPE_LINKS=1 npm run build` per [vercel.json](vercel.json)
 
 **R1 exit:** fulfillment health green + live Starter (then Pro/Bundle) proven. Then unlock R2.
 

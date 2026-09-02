@@ -125,7 +125,7 @@ Opcionalūs (default'ai veikia):
 3. **Stripe Live:** Stripe dashboard → Products → sukurti *CMO AI Content System · Starter* ($3.99) ir *CMO AI Content System · Pro* ($8.99). Kiekvienam – sukurti **Payment Link** su sėkmės URL `https://promptanatomy.space/success.html?session_id={CHECKOUT_SESSION_ID}` ir produkto metadata `product=starter` arba `product=pro`. Įdėti `price_id` reikšmes į `STRIPE_PRICE_CMO_*` env.
 4. **Webhook:** Stripe dashboard → Developers → Webhooks → Add endpoint: `https://promptanatomy.space/api/stripe-webhook`, įvykiai `checkout.session.completed`, `checkout.session.async_payment_succeeded`. Signing secret į `STRIPE_WEBHOOK_SECRET`.
 5. **Atnaujinti SOT:** [`config/sot.json`](config/sot.json) `commerce.allowPlaceholderCheckout` → `false`; `commerce.stripePaymentLinks.starter`, `.pro` ir `.bundle` → įklijuoti `https://buy.stripe.com/...` URL'us. Commit + push.
-6. **Production build gate (po go-live):** [`vercel.json`](vercel.json) `buildCommand` → `REQUIRE_STRIPE_LINKS=1 npm test` (žr. [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md)).
+6. **Production build gate (po go-live):** [`vercel.json`](vercel.json) `buildCommand` → `REQUIRE_STRIPE_LINKS=1 npm run build` (žr. [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md)). `npm test` lieka CI, ne Vercel.
 7. **Sveikatos patikra:** `GET https://promptanatomy.space/api/fulfillment-health` → `{ ok: true, redis: "PONG", missing: [] }`.
 8. **Test-mode drill:** Stripe Test mode + test Payment Links (Starter, Pro, Bundle) → patikrinti, kad email atvyksta per 5 min., download link veikia, success.html polling pereina į ready būseną.
 9. **Live drill:** Real card $3.99 pirkimas → tas pats checklistas. Po sėkmės – išleisti viešai.
