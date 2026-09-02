@@ -97,10 +97,10 @@ Po env: **Redeploy** Production.
 **Production build gate (po go-live):** [`vercel.json`](vercel.json) → `buildCommand`:
 
 ```bash
-REQUIRE_STRIPE_LINKS=1 npm test
+REQUIRE_STRIPE_LINKS=1 npm run build
 ```
 
-(Arba Vercel → Settings → Build → tas pats.)
+Stripe links vis dar tikrinami `build-locale-pages.js`. Pilnas `npm test` lieka GitHub CI — ant Vercel jis tempia Playwright/Puppeteer ir pakabina deploy.
 
 ---
 

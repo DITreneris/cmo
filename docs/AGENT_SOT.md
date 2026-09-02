@@ -56,7 +56,7 @@ npm test        # build + structure + registry + smoke + lint
 
 `npm test` is the merge gate. Optional: `npm run test:e2e`, `npm run check:fulfillment`.
 
-**Production build gate (after Stripe go-live):** Vercel Build Command → `REQUIRE_STRIPE_LINKS=1 npm test`.
+**Production build gate (after Stripe go-live):** Vercel Build Command → `REQUIRE_STRIPE_LINKS=1 npm run build` (Stripe links asserted in the locale build). Full `npm test` stays on GitHub CI.
 
 ---
 
