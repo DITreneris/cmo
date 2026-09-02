@@ -1,18 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://promptanatomy.space/</loc>
-  </url>
-  <url>
-    <loc>https://promptanatomy.space/lt/</loc>
+    <lastmod>2026-05-17</lastmod>
   </url>
   <url>
     <loc>https://promptanatomy.space/en/</loc>
-  </url>
-  <url>
-    <loc>https://promptanatomy.space/lt/privatumas.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <image:image>
+      <image:loc>https://promptanatomy.space/og.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://promptanatomy.space/assets/pdf-covers/cmo-starter-cover.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://promptanatomy.space/assets/pdf-covers/cmo-pro-cover.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://promptanatomy.space/assets/pdf-covers/cmo-bundle-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://promptanatomy.space/en/privacy.html</loc>
+    <lastmod>2026-05-17</lastmod>
+  </url>
+  <url>
+    <loc>https://promptanatomy.space/lt/</loc>
+    <lastmod>2026-09-02</lastmod>
+  </url>
+  <url>
+    <loc>https://promptanatomy.space/lt/privatumas.html</loc>
+    <lastmod>2026-05-17</lastmod>
+  </url>
+  <url>
+    <loc>https://promptanatomy.space/terms.html</loc>
+    <lastmod>2026-09-02</lastmod>
   </url>
 </urlset>

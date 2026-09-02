@@ -48,13 +48,22 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - run: npm ci
-      - name: Build locale pages (lt/en) with production SEO URLs
+      - name: Build locale pages (lt/en) for the GitHub Pages mirror
+        # MIRROR_NOTE=1 omits the EN paid-PDF storefront (#pdf-storefront)
+        # from this build. Paid checkout, webhook, and downloads only run on
+        # promptanatomy.space (Vercel) - never on the GitHub Pages mirror.
+        # Buyers always go to https://promptanatomy.space for purchases.
         run: npm run build
         env:
           BASE_PATH: ''
           SITE_ORIGIN: 'https://promptanatomy.space'
+          MIRROR_NOTE: '1'
       - uses: actions/upload-pages-artifact@v4
         with:
           path: .
       - id: deploy
         uses: actions/deploy-pages@v5
+      - name: IndexNow ping (non-blocking)
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        run: npm run seo:indexnow:diff

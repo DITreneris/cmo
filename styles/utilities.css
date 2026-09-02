@@ -31,7 +31,9 @@
   .cta-button-outline,
   .community-cta-primary,
   .community-cta-secondary,
-  .prompt {
+  .prompt,
+  .progress-bar-fill,
+  .cb-step {
     transition-duration: 0.01ms !important;
   }
 }

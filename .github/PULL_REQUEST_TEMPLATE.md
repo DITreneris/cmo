@@ -15,7 +15,9 @@
 - [ ] `[Fix]` – klaidos taisymas
 - [ ] `[Docs]` – dokumentacijos pakeitimai
 - [ ] `[Refactor]` – kodo refactoring
+- [ ] `[Commerce]` – mokama PDF tarpinė (EN-only)
 - [ ] `[Chore]` – build, config
+- [ ] Locale: pakeitimai tik EN kanonui (LT nekeista / snapshot refresh scope)
 
 ## Kaip testuota
 
@@ -32,6 +34,7 @@
 
 - [ ] Dokumentacija atnaujinta pagal pakeitimus (žr. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md))
 - [ ] Jei release – CHANGELOG.md ir package.json versija (SemVer)
+- [ ] Locale politika: EN kanonas; LT diff tik jei sąmoningas snapshot refresh ([MULTILINGUAL_STRUCTURE.md §0](docs/MULTILINGUAL_STRUCTURE.md))
 
 ---
 

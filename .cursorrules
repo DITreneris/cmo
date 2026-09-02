@@ -2,19 +2,23 @@
 
 ## Projekto apžvalga
 
-**DI Promptų Biblioteka** – statinė HTML platforma rinkodaros vadovams (10 CMO promptų, LT šaltinis `index.html`, build į `/lt/` ir `/en/`).
+**DI Promptų Biblioteka** – statinė HTML platforma rinkodaros vadovams. **Kanonas: `/en/`**. Free EN: **creative brief builder** + **4 core interactive prompts** (1, 2, 3, 5); teasers 4/6–10 → Pro; full 10 lieka Pro/PDF. Root `index.html` – legacy struktūrinis build šaltinis; **`/lt/` užšaldyta testeriams**. Detaliau: [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md) §0, [AGENTS.md](AGENTS.md) §0.1.
 
-**Forma / duomenų rinkimas:** **NĖRA**. Produktas veikia tik kaip biblioteka – kopijavimas + progresas localStorage. Jokios `<form>`, jokio Google Apps Script, jokio backend.
+**Lead-gen / serverių duomenų rinkimas:** **NĖRA**. Jokio Google Apps Script, jokio form POST, jokio PII backend'o leadams.
+
+**Client-side interaktyvūs builderiai:** leidžiami EN kanone (`#cmo-context`, `#creative-brief`) – tik `localStorage` / `sessionStorage` + clipboard. Jokio serverio siuntimo. Ne SaaS (be login / dashboard). **0 meme slotų** gyvoje UI.
 
 **Agentams ir žmonėms (skaitymo seka):**
 
 1. [docs/INDEX.md](docs/INDEX.md) – navigacija pagal rolę ir užduotį
-2. [AGENTS.md](AGENTS.md) – agentų rolės, workflow, commit prefiksai
-3. [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – kas fiksuota vs keičiamas turinys (kontraktas, sutampantis su `tests/structure.test.js`)
-4. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) – dokumentų inventorius ir atsakomybės
-5. [CHANGELOG.md](CHANGELOG.md) – versijų istorija
+2. [AGENTS.md](AGENTS.md) – agentų rolės, workflow, free-surface + JTBD/GEO lessons (§10)
+3. [docs/AGENT_SOT.md](docs/AGENT_SOT.md) – ops keliai (build, GEO hash hubs, commerce); [docs/PRODUCT-POSITIONING.md](docs/PRODUCT-POSITIONING.md) §4 JTBD language
+4. [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – DOM/JS kontraktas (`tests/structure.test.js`)
+5. [STYLEGUIDE.md](STYLEGUIDE.md) – dizaino sistema **1.6** (Product Operator; Fraunces hero H1 only)
+6. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) – dokumentų inventorius
+7. [CHANGELOG.md](CHANGELOG.md) – versijų istorija
 
-**Cursor Agent Skills** (globalūs, ne šiame repo) – jei naudojami, papildo šias taisykles; merge vis tiek turi atitikti `npm test` ir Legacy.
+**Cursor Agent Skills:** repo-local skills **nėra**; globalūs skills (jei naudojami) papildo, bet merge **privalo** praeiti `npm test` + Legacy.
 
 ---
 
@@ -50,7 +54,7 @@
 
 - Minimizuoti DOM manipuliacijas, naudoti batch updates.
 - **Debounce** input operacijoms (žr. `CONFIG.DEBOUNCE_DELAY`).
-- CSS kintamieji (`:root`, `styles/tokens.css`) – vienas dizaino šaltinis.
+- CSS: `design-tokens.json` → `tokens.css` → `components.css` → `utilities.css` ([STYLEGUIDE.md](STYLEGUIDE.md) **1.6** Product Operator).
 - `async/await` vietoj callback'ų.
 
 ### Accessibility (WCAG 2 AA – privaloma)
@@ -61,7 +65,7 @@
 - **`prefers-reduced-motion`** palaikomas.
 - **Kontrastingumas** ≥ 4.5:1.
 - **Skip link** į `#main-content`.
-- Patikra per CI: `pa11y` į `/lt/`, `/en/`, privacy puslapius.
+- Patikra per CI: `pa11y` į `/lt/`, `/en/`, privacy puslapius. **Rankinis release QA – `/en/`** (LT – CI smoke tik).
 
 ### Browser compatibility
 
@@ -83,7 +87,7 @@
 ### Standartai
 
 - Visi failai turi aiškią paskirtį (žr. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) inventorių).
-- Kodo komentarai – **lietuvių** kalba (projektas LT šaltinis).
+- Kodo komentarai – **lietuvių** kalba (repo dokumentacija LT; **produkto kanonas EN**).
 - Funkcijoms – JSDoc komentarai su parametrais ir return tipais.
 
 ### Atnaujinimas
@@ -97,7 +101,14 @@
 
 ## Agentų sistema
 
-### Rolės
+### Locale (nuo 2026-05-31)
+
+- **Kanonas:** `/en/` – visi turinio, UX, Commerce ir release pakeitimai.
+- **LT freeze:** `/lt/` – tester snapshot; **neredaguoti** `lt/`, `data/lt-*.json` PR'e, nebent Orchestrator nurodo „LT snapshot refresh“.
+- **Nereikalauti** LT/EN pariteto; EN pakeitimai nebackport'inami į LT automatiškai.
+- Žr. [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md) §0, [AGENTS.md](AGENTS.md) §0.
+
+---
 
 - **Content** – promptai, tekstai, aprašymai.
 - **Curriculum** – turinio struktūra, seka, mokymosi logika.
@@ -123,8 +134,9 @@
 
 ### CSS
 
-- **CSS kintamieji** (`:root`) – `styles/tokens.css`.
-- Sluoksniai: `tokens.css` → `components.css` → `utilities.css`.
+- **CSS:** `styles/design-tokens.json` + `tokens.css` (vienas šaltinis; smoke assert).
+- Sluoksniai: `tokens.css` → `components.css` (DS 1.6 hero/surfaces) → `utilities.css`.
+- Tipografija: Fraunces (display) + Source Sans 3 (UI) + JetBrains Mono — ne Inter-as-display.
 - BEM arba panaši metodologija.
 - Responsive mobile-first.
 - `prefers-reduced-motion`.
@@ -191,6 +203,7 @@ Detalesnis aprašymas, jei reikia (iki 72 simbolių per eilutę)
 
 Prieš commit / PR:
 
+- [ ] Ar pakeitimai atitinka locale politiką (EN kanonas; LT nekeista be scope)?
 - [ ] Ar pakeitimai atitinka [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) (ID, JS API, struktūra)?
 - [ ] Ar `npm test` praeina?
 - [ ] Ar yra error handling kritinėse vietose?
@@ -205,12 +218,15 @@ Prieš commit / PR:
 ## Pagalba
 
 1. [docs/INDEX.md](docs/INDEX.md) – kur rasti, ką skaityti.
-2. [AGENTS.md](AGENTS.md) – agentų rolės.
-3. [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – kontraktas.
-4. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) – dokumentų valdymas.
+2. [AGENTS.md](AGENTS.md) – agentų rolės + lessons §10 (JTBD/GEO 11–13; no repo-local skills).
+3. [docs/AGENT_SOT.md](docs/AGENT_SOT.md) – ops SOT.
+4. [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – kontraktas.
+5. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) – dokumentų valdymas.
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-05-15
-**Projekto kalba:** Lietuvių (LT šaltinis; EN per build)
+**Paskutinis atnaujinimas:** 2026-08-11  
+**Produkto kanonas:** `/en/` (EN) — spine-first (1/2/3/5) then `#creative-brief` then teasers; Pro owns full 10  
+**Dizaino sistema:** STYLEGUIDE **1.6** Product Operator  
+**Build šaltinis:** root `index.html` (legacy struktūra) → `lt/` (užšaldyta) + `en/` (kanonas)  
 **Projekto tipas:** Statinis HTML, CSS sluoksniai, inline JS `index.html`, locale build (`scripts/build-locale-pages.js`)

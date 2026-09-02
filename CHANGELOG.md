@@ -4,16 +4,135 @@ Visi reikšmingi projekto pakeitimai dokumentuojami šiame faile.
 
 Formatas pagal [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), versijavimas – [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Prideta
+- **[Docs/Orchestrator] Product roadmap A→E→light B→C:** [roadmap.md](roadmap.md) R1–R4; [todo.md](todo.md) active R1 tracker → [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md); [AGENTS.md](AGENTS.md) v1.5.3 (§0.2, §10.14); AGENT_SOT / INDEX / DOCUMENTATION / OFFER / PRODUCT-POSITIONING / CREATIVE_BRIEF aligned. Parked: F (SaaS), D (vertical kits), G (mother brand).
+- **[UI] Creative brief builder (`#creative-brief`):** EN-only free browser tool (after spine, before teasers) — A/E/C brief → live image prompt, presets, quality meter, copy + open image tools. SOT: `copy.creativeBrief` + `creativeBrief.tools`. Logic: [`js/creative-brief.js`](js/creative-brief.js). Docs: [`docs/CREATIVE_BRIEF_BUILDER.md`](docs/CREATIVE_BRIEF_BUILDER.md). Ships on GitHub Pages mirror; absent on `/lt/`. E2E: [`tests/e2e/creative-brief.spec.js`](tests/e2e/creative-brief.spec.js).
+
+### Pakeista
+- **[QA] Pre-launch claim + QA checklist sync:** `#cmoCtxOffer` placeholder no longer says „100 assets in 30 days“; README lead matches free surface (4 workflows + brief); [STYLEGUIDE.md](STYLEGUIDE.md) §0.4 and [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md) UX checklist match path cut (no outputs row / cycle-stepper / comparison table).
+- **[UI/Curriculum] EN path cut (Ambition A / R1 conversion):** Cut pre-spine chrome (cycle-stepper, provider hub, `#framework-schema`, hero outputs/tagline); jump = 1·2·3·5 · Pro · Brief · FAQ; short closed `#cmo-context` + thin `#cmo-safety`; creative brief = teaser + closed `#cb-builder` (ChatGPT + Ideogram only); storefront keeps 3 cards, **no** comparison table; trimmed SOT lead/bullets. LEGACY / AGENTS / OFFER / CREATIVE_BRIEF / STYLEGUIDE / structure + e2e updated.
+- **[UI/Curriculum] Pro contents catalog + free-value reorder (Ambition A):** Replaced 6× `.prompt--teaser` cards with one `#pro-contents` outcome list; order is spine → `#cmo-safety` → EN `#creative-brief` → `#cmo-scenarios` → catalog → `#pdf-storefront` → FAQ → `#prompt-basics`. Build anchors `<!-- CMO_SAFETY -->` / `<!-- CMO_SCENARIOS -->`; `#progressJumpPro` → `#pro-contents`. LEGACY / OFFER / AGENTS / CREATIVE_BRIEF / STYLEGUIDE / structure tests updated.
+- **[UI] Hero v02 (Ambition A conversion surface):** Larger `.hero-diagram` + product module descs + outputs row; EN primary CTA **Start your first workflow** → `#block1` (spine-first kept); three trust chips; `#heroProof`; quiet usage strip (no second CTA); demoted lang switcher. Tracker: [todo.md](todo.md) R1-support. Docs: STYLEGUIDE §0.4 / §2, LEGACY, OFFER §1.0.
+- **[Content/UI] EN IA glossary:** Locked Prompt Anatomy / Content AI System / workflow / prompt / brief / Pro kit; hero drops status pills + eyebrow; tier line; `#heroCtaBrief` text link; slim diagram; usage sentence replaces Pick/Copy/Run ritual; progress „of 4 workflows“ (fix of-10 init). Docs: OFFER-ARCHITECTURE §1.0, STYLEGUIDE §0.4, LEGACY.
+- **[UI] Design system 1.5 → 1.6 (Product Operator):** Fraunces **hero H1 only**; Source Sans 3 for product UI; hero PDF cover → navy Plan→Create→Check→Improve diagram (blog grammar); gold/shadow/radius restraint; dual prompt-chrome kill; compact `#executive-summary` how-it-works; brief presets neutral until selected. [`STYLEGUIDE.md`](STYLEGUIDE.md) **1.6**; LEGACY / BRAND_SYNC / AGENTS v1.5.2.
+- **[Docs/Orchestrator] Agents v1.5.1:** [AGENTS.md](AGENTS.md) lessons §10.11–13 (JTBD ≠ rename, GEO on one URL, FAQ triple sync); Content/QA roles + commit prefiksai; [AGENT_SOT.md](docs/AGENT_SOT.md) / [INDEX.md](docs/INDEX.md) / [DOCUMENTATION.md](docs/DOCUMENTATION.md) — no new repo-local Cursor skills.
+- **[Content/UI] Report A+B messaging + on-page GEO:** EN JTBD language (structured workflows vs prompt gambling, prompts-over-LLM, brand voice / pre-publish) in [`config/brand-seo.json`](config/brand-seo.json), [`config/sot.json`](config/sot.json) (`frontFaq`×10, `knowsAbout`, storefront head, bullets, buyer FAQ “PDF ≠ live app”), EN replacements + `applyStaticLocaleText`, safety intro. [`scripts/geo-surfaces.js`](scripts/geo-surfaces.js): `llms.txt` **On this page** hash hubs (`#block1`, `#creative-brief`, `#cmo-safety`, `#faq`, `#pdf-storefront`, `#prompt-basics`). No new routes; Content AI System name kept. Docs: PRODUCT-POSITIONING §4, AGENT_SOT, OFFER-ARCHITECTURE.
+- **[UI] Design system 1.3 → 1.5 (Editorial Operator):** Fraunces + Source Sans 3 + JetBrains Mono; body 17px / prose 70ch; ink-tinted CTA shadows; full-bleed hero with brand mark + Pro cover visual; trust as muted text (IDs kept); surface-page/panel/accent; open non-interactive sections; Plan→Create→Check→Improve stepper; prompt path hint; creative-brief lead tightened; hero/prompt chrome authoritative in [`styles/components.css`](styles/components.css); [`STYLEGUIDE.md`](STYLEGUIDE.md) **1.5**; design-system smoke asserts font tokens + JSON↔CSS sync + no Inter/3px/emoji chrome.
+- **[Docs] DS 1.5 alignment:** README, LEGACY, TESTAVIMAS, BRAND_SYNC, DOCUMENTATION, INDEX, AGENT_SOT, AGENTS, `.cursorrules` – Inter/trust-pills/card-stack references removed; STYLEGUIDE 1.5 + hero/cycle/path-hint kontraktai.
+- **[UI] Hero badge:** EN `.badge-spinoff` **Free library** → **4 core workflows** (honest free surface; not full 10).
+- **[UI] Frontpage copy trim (~50w):** Removed hero-echo `#objectives-title` lead and „How it differs“ value card from `#executive-summary`; value grid summary → 2 points. EN `#heroCtaSpine` → **Start with Prompt 1** (aligns with 30-day Prompt 1). Prompt 1 `#expected-details-1` closed by default (shorter path to Copy).
+- **[UI/Curriculum] Spine-first journey (P0–P1):** Hero primary `#heroCtaSpine` → `#block1`; secondary `#heroCtaBrief`. Contiguous spine **1→2→3→5**, then `#creative-brief`, then teasers **4, 6–10**. EN prompt-desc 2/3/5 locale bleed fixed; claims aligned to free surface; spine categories Plan/Create/Check/Improve; FAQ title shortened; `#progressJumpPro` relative `#pdf-card-pro`. LEGACY / AGENTS v1.5 / AGENT_SOT / CREATIVE_BRIEF / OFFER funnel updated.
+- **[Docs] Lessons + QA sync:** [AGENTS.md](AGENTS.md) §10 expanded (distance-to-Copy, no mid-spine teaser, EN build pairs, one primary path); pedagogy journey, INDEX, TESTAVIMAS, PRODUCT-POSITIONING, DOCUMENTATION, `.cursorrules` — spine-first. No new repo-local Cursor skills (lesson 6).
+- **[UI] Phase B frontpage:** Meme slotai pašalinti iš gyvos UI; `#creative-brief` perkeltas po `#cmo-context` (prieš progress); hero dual CTA; promptai 1–3 atviri / 4–10 collapsible (superseded by Phase A / spine-first below).
+- **[UI]/Curriculum] Phase A tool-first spine:** Free interactive prompts **1, 2, 3, 5** + creative brief; teasers **4, 6–10** → Pro; progress „of 4“ (superseded by spine-first: brief after spine, hero spine primary).
+- **[Docs] Agents sync:** [AGENTS.md](AGENTS.md) v1.5 (§0.1 spine-first, §10 lessons), [docs/AGENT_SOT.md](docs/AGENT_SOT.md), [docs/INDEX.md](docs/INDEX.md), [.cursorrules](.cursorrules).
+
 ## [1.9.0] - 2026-05-31
 
 ### Prideta
 
-- **[Commerce] R1 fulfillment stack (Ambition A):** Stripe Payment Links → webhook → Resend → Blob download. [`api/_lib/fulfillment.js`](api/_lib/fulfillment.js), [`api/stripe-webhook.js`](api/stripe-webhook.js), [`api/download-link.js`](api/download-link.js), [`api/download.js`](api/download.js), [`api/fulfillment-health.js`](api/fulfillment-health.js), [`api/fulfillment-followup.js`](api/fulfillment-followup.js). SOT live links in [`config/sot.json`](config/sot.json) (`allowPlaceholderCheckout: false`). PDF sources + covers. Post-purchase [`success.html`](success.html), [`terms.html`](terms.html), [`coming-soon.html`](coming-soon.html). Ops: [`MUST_TODO_STRIPE.md`](MUST_TODO_STRIPE.md). Tests: [`tests/fulfillment-config.test.js`](tests/fulfillment-config.test.js).
-- **Do not Production-deploy this PR alone.** EN storefront HTML + path cut ship in the follow-up conversion PR.
+- **[Orchestrator] CMO Infrastructure Phases 1–4:** Stripe go-live checklist ([`MUST_TODO_STRIPE.md`](MUST_TODO_STRIPE.md)), production `REQUIRE_STRIPE_LINKS=1` build gate ([`vercel.json`](vercel.json) `buildCommand`), Vercel security headers + CSP Report-Only. GEO emitters ([`scripts/geo-surfaces.js`](scripts/geo-surfaces.js)): per-AI-bot `robots.txt`, `sitemap.xml` (image + lastmod), `llms.txt` / `llms-full.txt`, IndexNow key, `404.html`, `manifest.webmanifest`, EN JSON-LD `@graph` (Product + FAQ). Ops docs: [`docs/AGENT_SOT.md`](docs/AGENT_SOT.md), [`docs/security.md`](docs/security.md), [`docs/language-guidelines-en-lt.md`](docs/language-guidelines-en-lt.md). IndexNow post-deploy ([`scripts/indexnow-ping.js`](scripts/indexnow-ping.js)). PDF preview lightbox on storefront. Template migration backlog ([`docs/TEMPLATE_MIGRATION_BACKLOG.md`](docs/TEMPLATE_MIGRATION_BACKLOG.md)).
+- **[Commerce] SOT brand + frontFaq** laukai GEO schemai ([`config/sot.json`](config/sot.json)).
 
 ### Pakeista
 
-- **[Commerce] SKUs:** Starter $3.99 (14 p.) · Pro $8.99 (30 p.) · Complete Kit $10.99. EN-only, `promptanatomy.space` only.
+- **[Commerce] Live checkout (Phase 1b):** `config/sot.json` — `allowPlaceholderCheckout: false`; live Stripe Payment Links Starter / Pro / Complete Kit ant `/en/` storefront.
+- **[QA]** Structure tests + e2e: bundle Payment Link branch, GEO surface asserts (168+). `check:fulfillment` — privalomas `STRIPE_PRICE_CMO_BUNDLE_PDF`.
+
+## [1.8.0] - 2026-05-31
+
+### Pakeista
+
+- **[Commerce] CMO AI Content System repozicija (v2):** Mokami produktai perpozicionuoti iš „CMO Prompt Kit" į **CMO AI Content System** su Use · Build · Install pakopų laiptais. Public pavadinimai: *Starter (Use)*, *Pro (Build)*, *Complete Kit (Install)*. SOT (`config/sot.json`) gauna `tierTag` / `tierPromise`, naują storefront antraštę („Offline system kits"), palyginimo eilutę „Build reusable workflow templates", ir reframe'intą Buyer FAQ. Vidiniai ID, Stripe metadata, blob keliai ir kainos (`$3.99 / $8.99 / $10.99`) nepakeisti. [`config/sot.json`](config/sot.json), [`config/brand-seo.json`](config/brand-seo.json), [`api/_lib/fulfillment.js`](api/_lib/fulfillment.js), [`terms.html`](terms.html), [`coming-soon.html`](coming-soon.html).
+- **[Content] Pro PDF 27 → 30 p.:** Pridėtos 3 „Build" pakopos puslapiai – reusable prompt sistemų dizainas, workflow šablonų biblioteka, ir worked custom-tool pavyzdys ([`docs/pdf-source/cmo-pro.html`](docs/pdf-source/cmo-pro.html)). Export gate atnaujintas į 14 / 30 ([`scripts/export-pdfs.js`](scripts/export-pdfs.js)). Cover ir footer'iai – nauja pavadinimų sistema.
+- **[UI] Storefront UX:** Produktų kortelės + palyginimo lentelė dabar matomos be `<details>` (anksčiau paslėptos); Use/Build/Install pakopų pill'ai (`.pdf-card-tier`); Buyer FAQ lieka `<details>`. [`scripts/build-locale-pages.js`](scripts/build-locale-pages.js), [`styles/components.css`](styles/components.css). EN LT leak ištaisytas („Pilnas paaiškinimas" → „Full explanation").
+
+### Prideta
+
+- **[Commerce] Bundle cover art:** [`docs/pdf-source/cmo-bundle.html`](docs/pdf-source/cmo-bundle.html) (stacked Use/Build/Install, dual-tone gradientas) → `cmo-bundle-cover.png`; [`scripts/export-pdf-covers.js`](scripts/export-pdf-covers.js) ir [`scripts/export-pdf-previews.js`](scripts/export-pdf-previews.js) išplėsti. SOT bundle naudoja `coverPng` (nebe `coverSvg`).
+- **[Orchestrator] Pozicionavimo dokumentai:** [`docs/PRODUCT-POSITIONING.md`](docs/PRODUCT-POSITIONING.md) (Use · Build · Install laiptai, ką teigiame / ko ne, pavadinimų nuoroda) ir [`docs/OFFER-ARCHITECTURE.md`](docs/OFFER-ARCHITECTURE.md) (free vs paid matrica, funnel, copy cascade, regeneration komandos).
+
+## [1.7.2] - 2026-05-31
+
+### Pakeista
+
+- **[UI] Brand sync su mother repo ([DITreneris/promptanatomy](https://github.com/DITreneris/promptanatomy)):** Derivative `favicon.svg` (ink `#0B1320` + gold žymė), PNG icon pack (`npm run icons:export`), `site.webmanifest`; SEO/OG copy per [`config/brand-seo.json`](config/brand-seo.json) – „Content AI for Marketing Leaders“ (ne MVP „CMO Kit / 10 prompts (45 min)“); [`scripts/generate-og.js`](scripts/generate-og.js) naudoja brand tokenus; [`STYLEGUIDE.md`](STYLEGUIDE.md) atnaujintas (gold/ink). Dokumentacija: [`docs/BRAND_SYNC.md`](docs/BRAND_SYNC.md).
+
+### Prideta
+
+- **[UI]** [`config/brand-seo.json`](config/brand-seo.json), [`scripts/load-brand-config.js`](scripts/load-brand-config.js), [`scripts/export-favicons.js`](scripts/export-favicons.js), `npm run icons:export`.
+
+### Pakeista (anksčiau Unreleased)
+
+- **[Orchestrator] Locale politika:** **EN (`/en/`) – kanoninė versija** (turinys, UX, Commerce, SEO `x-default`, release QA). **`/lt/` užšaldyta** – tik tester snapshot; build/CI lieka, bet LT turinio sinchronizacija nebereikalaujama. Atnaujinta: [`docs/MULTILINGUAL_STRUCTURE.md`](docs/MULTILINGUAL_STRUCTURE.md) §0, [`AGENTS.md`](AGENTS.md), [`.cursorrules`](.cursorrules), [`docs/INDEX.md`](docs/INDEX.md), [`docs/DOCUMENTATION.md`](docs/DOCUMENTATION.md), [`docs/LEGACY_GOLDEN_STANDARD.md`](docs/LEGACY_GOLDEN_STANDARD.md) §0, [`README.md`](README.md), [`docs/TESTAVIMAS.md`](docs/TESTAVIMAS.md).
+
+## [1.7.1] - 2026-05-31
+
+### Pakeista
+
+- **[UI] Frontpage UX compression (all phases):** Sujungtas `#preflight` + `#executive-summary` į vieną `#executive-summary.objectives--skim` (`.preflight-list` + `<details class="value-grid-details">`); `#framework-schema` perkeltas į `<details>` viduje `#instructions`; `#cmo-context` build inject **prieš** `#progressIndicator`; pašalinti `#next-steps`, hero mini-prompt demo, hero Telegram antrinis CTA; FAQ – 3 matomi + `<details class="faq-more-details">`; meme `meme-slot-6` pašalintas (liko 2); EN `#pdf-storefront` – teaser + `<details class="pdf-storefront-details">`; scenarios/safety inject anchor `<!-- CMO_TRUST_BLOCKS -->`. CSS: [`styles/components.css`](styles/components.css). E2E: [`tests/e2e/checkout.spec.js`](tests/e2e/checkout.spec.js) atidaro storefront details.
+
+### Prideta
+
+- **[UI] PDF cover pipeline (Starter + Pro):** `scripts/export-pdf-covers.js`, `npm run pdf:covers` — Playwright WYSIWYG PNG from PDF page 1; [`todo.md`](todo.md) tracks scope.
+
+### Pakeista (anksčiau Unreleased)
+
+- **[UI] Storefront covers:** Starter + Pro use `coverPng` from [`config/sot.json`](config/sot.json); no price on cover art; alt text without price ([`scripts/build-locale-pages.js`](scripts/build-locale-pages.js)).
+- **[UI] Cover pages:** Redesigned page 1 in [`docs/pdf-source/cmo-starter.html`](docs/pdf-source/cmo-starter.html) and [`cmo-pro.html`](docs/pdf-source/cmo-pro.html).
+- **[UI] Preview thumbs:** [`scripts/export-pdf-previews.js`](scripts/export-pdf-previews.js) exports interior pages 2–4 (not cover duplicate).
+
+## [1.7.0] - 2026-05-31
+
+### Prideta
+
+- **[Content] CMO PDF v1.1:** Starter 14 p. (TOC, worked example); Pro 27 p. (TOC, worked example, week-1 quickstart) – [`docs/pdf-source/`](docs/pdf-source/).
+- **[Curriculum] Prompt taxonomy registry** – [`data/cmo-prompt-registry.json`](data/cmo-prompt-registry.json) + [`tests/cmo-prompt-registry.test.js`](tests/cmo-prompt-registry.test.js).
+- **[Commerce] Bundle SKU** ($10.99), Pro Markdown companion, storefront comparison table, preview thumbnails, outcome-led copy – [`config/sot.json`](config/sot.json), [`scripts/build-locale-pages.js`](scripts/build-locale-pages.js).
+- **[Commerce] Starter follow-up emails** (Day 3 / Day 7, feature-flagged) – [`api/fulfillment-followup.js`](api/fulfillment-followup.js), Vercel Cron.
+- **[QA] PDF a11y checklist** – [`docs/PDF_A11Y_CHECKLIST.md`](docs/PDF_A11Y_CHECKLIST.md).
+
+### Pakeista
+
+- **[Commerce] Fulfillment** palaiko bundle (du PDF linkai) ir optional `.md` – [`api/_lib/fulfillment.js`](api/_lib/fulfillment.js).
+- **[Commerce] Export gate** 14 / 27 pages – [`scripts/export-pdfs.js`](scripts/export-pdfs.js).
+- **Dokumentacija:** [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) §7.2 (3 SKU, page counts).
+
+---
+
+## [1.6.0] - 2026-05-17
+
+### Prideta
+
+- **Mokama CMO PDF tarpinė (EN-only, tik `promptanatomy.space`):** Du atsisiunčiami PDF produktai – *CMO Prompt Kit · Starter* ($3.99, 12 p.) ir *CMO Prompt Kit · Pro* ($8.99, 24 p.). Originalūs HTML šaltiniai – [`docs/pdf-source/cmo-starter.html`](docs/pdf-source/cmo-starter.html), [`docs/pdf-source/cmo-pro.html`](docs/pdf-source/cmo-pro.html). Komandos licencija + 14 d. grąžinimo politika.
+- **Fulfillment stack (Vercel serverless):** [`api/_lib/fulfillment.js`](api/_lib/fulfillment.js), [`api/stripe-webhook.js`](api/stripe-webhook.js), [`api/download-link.js`](api/download-link.js), [`api/download.js`](api/download.js), [`api/fulfillment-health.js`](api/fulfillment-health.js). Stripe Payment Links → webhook → Upstash Redis state → Resend email su pasirašyta nuoroda → Vercel Blob privatus PDF saugojimas. Dvi TTL: 7 d. (el. paštas) / 15 min. (success page in-page link).
+- **EN-only `#pdf-storefront` blokas** `en/index.html` (po `#faq`, prieš `#ecosystem-strip`): 2 produktai, $3.99 / $8.99, kortelės + Buyer FAQ + 14-day refund. LT (`lt/index.html`) lieka NEPALIESTA – jokio storefronto, jokių kainų, jokių Stripe nuorodų.
+- **Storefront pagalbiniai puslapiai:** [`success.html`](success.html) (polling UX su `aria-live`, `noindex`), [`terms.html#paid-pdf-license`](terms.html) (komandos licencija + 14 d. refund), [`coming-soon.html`](coming-soon.html) (placeholder režimo CTA tikslas).
+- **Konfigūracija `config/sot.json`:** Single source of truth – produktai, kainos, Stripe Payment Link slots, `allowPlaceholderCheckout`, `placeholderHref`, mirror policy (`renderPaidStorefront: false`), Buyer FAQ.
+- **Build / export skriptai:** `scripts/export-pdfs.js` (Playwright Letter + page-count gate 12/24), `scripts/export-pdf-previews.js` (3-puslapių PNG preview su watermark), `scripts/upload-pdfs-to-blob.js` (Vercel Blob privatus įkėlimas), `scripts/check-fulfillment-env.js` (env probe + Stripe key drill + Redis ping + opcionaliai Resend send drill).
+- **Cover thumbnails:** [`assets/pdf-covers/cmo-starter-cover.svg`](assets/pdf-covers/cmo-starter-cover.svg), [`assets/pdf-covers/cmo-pro-cover.svg`](assets/pdf-covers/cmo-pro-cover.svg).
+- **GitHub Pages mirror politika:** `.github/workflows/deploy.yml` nustato `MIRROR_NOTE=1` build žingsniui – `#pdf-storefront` IŠVIS NERENDERIUOJAMAS GitHub Pages versijoje. Pirkėjai visada keliami į `https://promptanatomy.space`.
+- **EN privacy update:** [`en/privacy.html#paid-pdf-data`](en/privacy.html) – Stripe / Resend / Upstash / Vercel Blob procesoriai išvardinti, ne marketingo sąrašas. `lt/privatumas.html` LIEKA NEPALIESTA.
+- **Vercel headers:** `vercel.json` – `Cache-Control: no-store, max-age=0` `/api/*` ir `/success.html` (jokios CDN cache aukos pasirašytoms URL).
+- **Testai:** `tests/structure.test.js` praplėstas (134 teiginiai – EN storefront $3.99/$8.99 ir placeholder href, LT žiūrintį „nieko paid“ kontroliuoja, success/terms/coming-soon esinis); `tests/fulfillment-config.test.js` (43 teiginiai – PRODUCTS map, FULFILLMENT_REQUIRED_ENV, getSiteUrl fallback, /api raw-body, SOT consistency); `tests/e2e/smoke.spec.js`, `tests/e2e/checkout.spec.js`, `playwright.config.js`. Naujos npm komandos: `pdf:export`, `pdf:previews`, `pdf:upload-blob`, `check:fulfillment`, `test:fulfillment-config`, `test:smoke`, `test:e2e`, `test:a11y`.
+- **Dependencies:** `stripe`, `@upstash/redis`, `@vercel/blob`, `resend` (runtime); `@playwright/test`, `start-server-and-test` (dev).
+
+### Pakeista
+
+- **`scripts/build-locale-pages.js`:** Naujas EN-only `#pdf-storefront` injektorius, skaitantis SOT; `MIRROR_NOTE=1` praleidžia bloką (mirror build); `assertEnLocaleAdditions` reikalauja `#pdf-storefront`, `$3.99`, `$8.99`, `.pdf-card` (kai NE-mirror); `assertLtLocaleAdditions` reikalauja, kad `#pdf-storefront` NEBŪTŲ LT pusėje.
+- **`scripts/vercel-export-public.js`:** Kopijuoja `success.html`, `terms.html`, `coming-soon.html`, `assets/pdf-covers/`. Pridėtas `assertNoPaidPdfsLeaked()` – atsisako publikuoti, jei `api/_private/`, `paid-pdfs/` arba bet koks `.pdf` patenka į `public/`.
+- **`styles/components.css`:** `.pdf-storefront`, `.pdf-card`, `.pdf-card-cover`, `.pdf-card-bullets`, `.pdf-card-cta`, `.pdf-storefront-faq`. `no-print` paslepia naršyklės Print režime.
+- **`package.json`:** Versija `1.6.0`. `lint:html` apima `success.html`, `terms.html`, `coming-soon.html`. `npm test` papildomai paleidžia `tests/fulfillment-config.test.js`.
+- **`.gitignore`:** `api/_private/`, `assets/paid-pdfs/`, `docs/pdf-source/*.pdf`, `test-results/`, `playwright-report/`, `playwright/.cache/`. Aiškiai NE-ignoruoja `assets/pdf-covers/`.
+
+### Saugumas
+
+- **Privatūs PDF:** Niekada negulimi į `public/`, niekada `git`-uojami. `assertNoPaidPdfsLeaked()` `vercel-export-public.js` blokuoja netyčinius leakus.
+- **Webhook signature:** `bodyParser: false` `api/stripe-webhook.js` – raw body Stripe parašui patikrinti.
+- **Pasirašytos atsisiuntimo URL:** HMAC SHA256 + Redis `download-token:jti` metaduomenys; default 7 d. el. pašto link / 15 min. in-page polling link.
+- **Atskira EN scope:** Visa komercija – tik `en/index.html`, tik `promptanatomy.space`. LT (`lt/index.html`) ir GitHub Pages mirror neturi nei storefront, nei API.
 
 ---
 

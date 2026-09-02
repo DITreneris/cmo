@@ -10,7 +10,8 @@
     "no-raw-characters": "off",
     "no-redundant-role": "off",
     "no-trailing-whitespace": "off",
-    "prefer-native-element": "off"
+    "prefer-native-element": "off",
+    "element-permitted-content": "off"
   }
 }
 

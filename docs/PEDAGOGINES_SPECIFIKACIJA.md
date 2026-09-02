@@ -17,9 +17,10 @@
 
 ## 2. Auditorija
 
-- **Pagrindinė:** Rinkodaros praktikai – įskaitant **pradedančiuosius** (nauji AI įrankiams, norintys turinio sistemos).
+- **Pagrindinė:** Rinkodaros praktikai (EN kanonas – tarptautinė auditorija).
 - **Antrinė:** Patyrę rinkodaros specialistai, ieškantys paruoštų promptų šablonų.
-- Kalba: **lietuvių** (vartotojui matomas tekstas); promptų `<pre>` gali būti LT arba EN pagal užsakovo poreikį.
+- **LT `/lt/`:** Užšaldyta vidinė snapshot versija testeriams – ne aktyvus turinio vystymas.
+- Kalba: **anglų** vartotojui matomam produkto tekstui (kanonas `/en/`); promptų `<pre>` – EN per `data/en-prompt-bodies.json`. LT lieka build artefakte, ne roadmap.
 
 ---
 
@@ -27,7 +28,7 @@
 
 | Kriterijus | Reikalavimas |
 |------------|--------------|
-| **Kreipinys** | Tu-forma: tavo, tau, tu, atlikai, naudojai, gausi, galėsi. |
+| **Kreipinys** | Tu-forma (LT docs / vidinis): tavo, tau, tu… **EN kanonas (`/en/`):** „you“ – tiesioginis, palaikantis tonas. |
 | **Sakiniai** | Trumpi, lakoniški; vengti ilgų, sudėtingų periodų. |
 | **Tonas** | Motyvacinė, palaikanti – skatina veikti, bet be patetikos. |
 | **Terminologija** | Vartotojui matomas tekstas (antraštės, aprašymai, objectives, instrukcijos, info-boksai) – lietuviškai arba su trumpu paaiškinimu vietoje. Promptų `<pre>` viduje terminus galima palikti, jei glosarėje arba info-bokse paaiškinta. |
@@ -66,10 +67,12 @@
 
 ## 5. Vartotojo kelionė (žingsniai)
 
-1. **Atėjimas** → Hero („ką gausi per 45 min“) → „Ką realiai gausi“ (konkretūs naudos punktai).
-2. **Instrukcijos** – ~3–5 min per žingsnį; žodynėlis (unikalus pardavimo pasiūlymas, raginimas veikti, matavimo rodikliai ir kt. pagal poreikį). Aiškus pirmas žingsnis: „Pasirink pirmą promptą ir nukopijuok.“
-3. **Progresas** (0/10) → eina per promptus 1–10. Kiekvienas: aiški antraštė, paprastas aprašymas, promptas (kopijuoti), info-boksas („kodėl tai naudinga“), vienas CTA + „Pažymėjau kaip atlikau“.
-4. **Kas toliau?** – nuorodos į promptus; bendruomenė; footer su priminimu pakeisti [auditorija], [galvos skausmas] ir kt.
+1. **Atėjimas** → Hero **spine-first** (EN primary: Start your first workflow → `#block1`; secondary: Build a creative brief → `#creative-brief`).
+2. **Kontekstas** – optional `#cmo-context` (before progress); then progress + jump.
+3. **Spine** – contiguous interactive prompts **1, 2, 3, 5** (categories Plan / Create / Check / Improve). Progress 0/4.
+4. **Brief (EN)** – `#creative-brief` after prompt 5 (image JTBD; not required for spine proof).
+5. **Teasers** – 4, 6–10 after brief → Pro storefront (full META/INPUT/OUTPUT offline).
+6. **Kas toliau?** – `#cmo-safety`, scenarios, FAQ, storefront (EN); bendruomenė; footer.
 
 ---
 
@@ -87,5 +90,5 @@ Content Agent išlaiko šią seką ir kategorijas; keičia tik tekstus pagal ši
 ## 7. Susiję dokumentai
 
 - [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) – struktūra ir ID nekeičiami; keičiamas tik turinys (tekstai)
-- [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) – LT/EN keliai ir sinchronizacija
+- [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) – EN kanonas, LT freeze, keliai ir build
 - [.cursorrules](../.cursorrules) – Tu, lakoniškai, palaikantis tonas

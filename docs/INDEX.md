@@ -2,7 +2,15 @@
 
 **Paskirtis:** Vienas įėjimo taškas žmonėms ir AI agentams – ką skaityti pirmiausia pagal rolę ar užduotį. Kanoniniai kodas ir ribos: [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + `npm test`.
 
-**Paskutinis atnaujinimas:** 2026-05-15
+**Paskutinis atnaujinimas:** 2026-08-11 (roadmap A→E→light B→C; spine-first + JTBD/GEO; LT užšaldyta)
+
+---
+
+## 0. Locale (būtina skaityti)
+
+**Kanonas:** [`/en/`](https://promptanatomy.space/en/) – turinys, UX, Commerce, release QA, SEO `x-default`.  
+**LT freeze:** [`/lt/`](https://promptanatomy.space/lt/) – tester snapshot; ne vystyti be Orchestrator scope.  
+Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0.
 
 ---
 
@@ -11,11 +19,21 @@
 | Jei tu… | Atidaryk |
 |---------|----------|
 | Naujas projekte | [README.md](../README.md) → tada šį indeksą |
-| AI agentas (Cursor ir kt.) | [.cursorrules](../.cursorrules) + [AGENTS.md](../AGENTS.md) + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) |
-| Keiti tik lietuviškus / angliškus tekstus | [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) (kas leidžiama) + [`BULLET_PROOF_PROMPTS.md`](BULLET_PROOF_PROMPTS.md) |
+| Orchestrator / prioritetai | [roadmap.md](../roadmap.md) (R1–R4) + [todo.md](../todo.md) (aktyvus R1) + [AGENTS.md](../AGENTS.md) §0.2 |
+| AI agentas (Cursor ir kt.) | [.cursorrules](../.cursorrules) + [AGENTS.md](../AGENTS.md) (§0.1 free surface, §0.2 roadmap, §10 lessons incl. JTBD/GEO + §10.14) + [AGENT_SOT.md](AGENT_SOT.md) + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 |
+| Keiti tik angliškus tekstus / promptus (kanonas) | [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0 + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`BULLET_PROOF_PROMPTS.md`](BULLET_PROOF_PROMPTS.md) |
+| Keiti LT (retas snapshot refresh) | Orchestrator scope + [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §4 |
 | Keiti EN promptų `<pre>` turinį | [`../data/en-prompt-bodies.json`](../data/en-prompt-bodies.json) → `npm run build` |
 | Keiti LT/EN kelius ar build | [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) + [`../scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) |
 | Keiti CMO v2 (kontekstas, scenarijai, safety) | [`../data/*.json`](../data/) + [`../scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) |
+| **Keiti mokamą PDF tarpinę (kainos, license, Stripe)** | [`memo_pdf.md`](../memo_pdf.md) + [`config/sot.json`](../config/sot.json) + [`LEGACY_GOLDEN_STANDARD.md` §7](LEGACY_GOLDEN_STANDARD.md) |
+| **Pridėti / atnaujinti PDF turinį** | [`docs/pdf-source/cmo-{starter,pro}.html`](../docs/pdf-source/) → `npm run pdf:export` (14/30 page-count gate) |
+| **Pozicionavimas / pasiūlymo architektūra** | [`docs/PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) + [`docs/OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md) |
+| **EN creative brief builder (`#creative-brief`)** | Po spine `#block5`, prieš teasers — [`docs/CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md) + [`config/sot.json`](../config/sot.json) `copy.creativeBrief` + [`js/creative-brief.js`](../js/creative-brief.js) |
+| **Įvesti live Stripe / R1 go-live** | [todo.md](../todo.md) → [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) (R1 ops SSOT) + [DEPLOYMENT.md §2.5](../DEPLOYMENT.md) + [`config/sot.json`](../config/sot.json) |
+| **Produkto roadmap** | [roadmap.md](../roadmap.md) — Ambition A→E→light B→C |
+| **GEO / SEO surfaces** | [docs/AGENT_SOT.md](AGENT_SOT.md) §5 + [`scripts/geo-surfaces.js`](../scripts/geo-surfaces.js) (`llms.txt` hash hubs) |
+| **EN JTBD messaging (search intent)** | [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 + [`config/sot.json`](../config/sot.json) `frontFaq` / `knowsAbout` / `storefrontHead` + [`config/brand-seo.json`](../config/brand-seo.json); FAQ triple sync ([AGENTS.md](../AGENTS.md) §10.13) — **ne** nauji `/en/ai-marketing-*` hub'ai |
 | Release / deploy | [CHANGELOG.md](../CHANGELOG.md) + [DEPLOYMENT.md](../DEPLOYMENT.md) + `npm test` |
 
 ---
@@ -24,11 +42,12 @@
 
 | Agentas | Pagrindiniai dokumentai | Kodas / artefaktai |
 |---------|-------------------------|--------------------|
-| **Orchestrator** | [AGENTS.md](../AGENTS.md), [DOCUMENTATION.md](DOCUMENTATION.md), [CHANGELOG.md](../CHANGELOG.md) | Prioritetai, scope |
-| **Curriculum** | [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md), [`PEDAGOGINES_SPECIFIKACIJA.md`](PEDAGOGINES_SPECIFIKACIJA.md) | Seka 1–10, locale atitikmenys |
-| **Content** | [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md), [`BULLET_PROOF_PROMPTS.md`](BULLET_PROOF_PROMPTS.md), [`PEDAGOGINES_SPECIFIKACIJA.md`](PEDAGOGINES_SPECIFIKACIJA.md) | [`../index.html`](../index.html) (LT bazė), [`../data/*.json`](../data/), po pakeitimų `npm run build` |
-| **UI/UX** | [STYLEGUIDE.md](../STYLEGUIDE.md), [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) (struktūra / a11y) | `styles/*.css`, `styles/design-tokens.json`, [`../index.html`](../index.html) |
-| **QA** | [docs/QA_STANDARTAS.md](QA_STANDARTAS.md), [docs/TESTAVIMAS.md](TESTAVIMAS.md), [DOCUMENTATION.md](DOCUMENTATION.md) | `npm test`, `tests/*.test.js`, [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) |
+| **Orchestrator** | [roadmap.md](../roadmap.md), [todo.md](../todo.md), [AGENTS.md](../AGENTS.md) §0.2, [DOCUMENTATION.md](DOCUMENTATION.md), [CHANGELOG.md](../CHANGELOG.md) | Prioritetai R1–R4, scope |
+| **Curriculum** | [`PEDAGOGINES_SPECIFIKACIJA.md`](PEDAGOGINES_SPECIFIKACIJA.md), [`OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md), registry `freeInteractive` | Free spine 1/2/3/5 vs Pro full 10; **EN** `data/en-*.json` |
+| **Content** | [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md), [`BULLET_PROOF_PROMPTS.md`](BULLET_PROOF_PROMPTS.md), [`PEDAGOGINES_SPECIFIKACIJA.md`](PEDAGOGINES_SPECIFIKACIJA.md), [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 | Spine bodies + teaser copy + JTBD FAQ/meta; [`data/en-*.json`](../data/); SOT `frontFaq`; root [`index.html`](../index.html) `applyStaticLocaleText` |
+| **UI/UX** | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6**, [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md), [`CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md), [`BRAND_SYNC.md`](BRAND_SYNC.md) | Product Operator; spine-first hero + diagram; surfaces; `styles/*`; **0** meme slots |
+| **Commerce** (v1.6.0+) | [todo.md](../todo.md) R1 → [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md); [`memo_pdf.md`](../memo_pdf.md), [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md), [`OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md), [`LEGACY_GOLDEN_STANDARD.md` §7](LEGACY_GOLDEN_STANDARD.md), [DEPLOYMENT.md §2.5](../DEPLOYMENT.md) | [`config/sot.json`](../config/sot.json), [`docs/pdf-source/`](../docs/pdf-source/), [`api/`](../api/), [`success.html`](../success.html), [`terms.html`](../terms.html). Tik EN, tik `promptanatomy.space`. R4 Install po R1. |
+| **QA** | [docs/QA_STANDARTAS.md](QA_STANDARTAS.md), [docs/TESTAVIMAS.md](TESTAVIMAS.md), [DOCUMENTATION.md](DOCUMENTATION.md) | `npm test`, `tests/*.test.js`, [`tests/fulfillment-config.test.js`](../tests/fulfillment-config.test.js), [`tests/e2e/`](../tests/e2e/), [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) |
 
 ---
 
@@ -36,10 +55,11 @@
 
 | Užduotis | Žingsniai |
 |----------|-----------|
-| Pakeisti prompto tekstą (LT) | Tik leidžiami laukai pagal **Legacy**; META/INPUT/OUTPUT – **Bullet proof**; nekeisti `id` / `data-*` / JS. `<pre id="promptN">` LT root + EN per `data/en-prompt-bodies.json`. |
-| Pakeisti CMO v2 konteksto / scenarijų / safety bloką | [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §4; redaguoti [`../data/*.json`](../data/) + [`../scripts/build-locale-pages.js`](../scripts/build-locale-pages.js); `npm run build`. |
-| Pakeisti EN UI tekstus | [`../scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) `EN_REPLACEMENTS` + `applyStaticLocaleText` `index.html`'e. |
-| Pakeisti dizainą | STYLEGUIDE + tokenai; po pakeitimų `npm test` (design-system + a11y smoke). |
+| Pakeisti prompto tekstą (EN kanonas) | Tik leidžiami laukai pagal **Legacy**; META/INPUT/OUTPUT – **Bullet proof**; EN `<pre>` – [`data/en-prompt-bodies.json`](../data/en-prompt-bodies.json); struktūra – root `index.html`. **LT nekeisti.** |
+| Pakeisti CMO v2 konteksto / scenarijų / safety bloką | Redaguoti [`data/en-*.json`](../data/) + build; LT JSON – tik snapshot refresh scope. |
+| Pakeisti EN UI tekstus | [`scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) `EN_REPLACEMENTS` + root `applyStaticLocaleText` EN šakos. |
+| Pakeisti EN FAQ / JTBD GEO copy | Sync **trys** vietos: `sot.frontFaq` + build inject/`EN_REPLACEMENTS` + `applyStaticLocaleText` FAQ arrays; meta → `brand-seo.json`. Žr. AGENTS §10.11–13. |
+| Pakeisti dizainą | STYLEGUIDE **1.6** + `design-tokens.json` / `styles/*`; po pakeitimų `npm test` (design-system + a11y smoke). |
 | Pakeisti struktūrą (nauja sekcija, JS API) | QA + sąmoningas **Legacy** atnaujinimas; išplėsti `tests/structure.test.js` jei reikia kontrakto. |
 
 ---
@@ -47,12 +67,13 @@
 ## 4. Kodas ↔ dokumentai (faktinis pipeline)
 
 ```
-index.html (LT bazė) + data/*.json
+index.html (legacy struktūrinis šaltinis) + data/en-*.json (kanonas) + data/lt-*.json (užšaldyta)
     → npm run build
-       1. scripts/generate-og.js → og.png (1200×630 SVG → PNG)
-       2. scripts/build-locale-pages.js → lt/index.html, en/index.html, js/en-prompt-bodies-inline.js
-          (inject CMO v2 blokus: cmo-context, prompt-expected×10, cmo-safety, cmo-scenarios, __CMO_COMPILE)
-       3. scripts/vercel-export-public.js → public/ (Vercel deploy artefaktas)
+       1. scripts/export-favicons.js → favicon PNG pack
+       2. scripts/generate-og.js → og.png (1200×630; brand-seo + design-tokens)
+       3. scripts/build-locale-pages.js → lt/index.html, en/index.html, js/en-prompt-bodies-inline.js
+          (inject: cmo-context, creative-brief EN, prompt-expected×4 spine, cmo-safety, cmo-scenarios, __CMO_COMPILE)
+       4. scripts/vercel-export-public.js → public/ (Vercel deploy artefaktas)
     → npm test (structure + design-system + a11y smoke + lint:html + lint:js)
 ```
 
@@ -78,7 +99,7 @@ index.html (LT bazė) + data/*.json
 | **INDEX.md** (šis failas) | Navigacija |
 | [DOCUMENTATION.md](DOCUMENTATION.md) | Inventorius, atsakomybės, release/docs taisyklės |
 | [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) | Golden standard: ID, JS API, CMO v2 kontraktas, checklist |
-| [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) | LT/EN keliai, sinchronizacija, build |
+| [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) | EN kanonas, LT freeze, build, routing |
 | [BULLET_PROOF_PROMPTS.md](BULLET_PROOF_PROMPTS.md) | Promptų META/INPUT/OUTPUT standartas |
 | [PEDAGOGINES_SPECIFIKACIJA.md](PEDAGOGINES_SPECIFIKACIJA.md) | Auditorija, tonas, seka 1–10 |
 | [QA_STANDARTAS.md](QA_STANDARTAS.md) | QA kriterijai, nuoroda į spinoff01 |
@@ -91,11 +112,14 @@ index.html (LT bazė) + data/*.json
 | Failas | Paskirtis |
 |--------|-----------|
 | [README.md](../README.md) | Produktas, naudojimas, repo medis |
+| [roadmap.md](../roadmap.md) | Produkto roadmap R1–R4 (A→E→light B→C) |
+| [todo.md](../todo.md) | Aktyvus R1 tracker → MUST_TODO_STRIPE |
+| [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) | R1 / Ambition A ops SSOT |
 | [AGENTS.md](../AGENTS.md) | Agentų rolės, workflow, komandos |
 | [.cursorrules](../.cursorrules) | Cursor: kokybė, a11y, docs, commit |
 | [CHANGELOG.md](../CHANGELOG.md) | SemVer istorija |
 | [DEPLOYMENT.md](../DEPLOYMENT.md) | Primary (Vercel) + mirror (GitHub Pages), BASE_PATH |
-| [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema |
+| [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema **1.6** (Product Operator) |
 
 **Pastaba:** Kontaktų forma / Google Apps Script / atsiliepimų schema **NEBĖRA** (pašalinta 2026-05-15). Produktas duomenų nerinkia – tik kopijavimas + localStorage progresas.
 
@@ -112,7 +136,7 @@ index.html (LT bazė) + data/*.json
 
 ```bash
 npm install
-npm run build    # generate-og + build-locale-pages + vercel-export
+npm run build    # icons:export + generate-og + build-locale-pages + vercel-export
 npm test         # build + testai + lint:html + lint:js
 ```
 
@@ -120,8 +144,8 @@ A11y lokaliai (pavyzdys):
 
 ```bash
 npx serve -s . -l 3000
-npx pa11y http://localhost:3000/lt/ --standard WCAG2AA
 npx pa11y http://localhost:3000/en/ --standard WCAG2AA
+# CI taip pat tikrina /lt/ – LT freeze, ne release acceptance
 ```
 
 Žr. [README.md](../README.md) ir [DEPLOYMENT.md](../DEPLOYMENT.md).
