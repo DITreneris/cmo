@@ -4,11 +4,11 @@
 **Active tracker:** [todo.md](todo.md)  
 **Ops detail (R1):** [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md)  
 **Agent contract:** [AGENTS.md](AGENTS.md) §0.2  
-**Last updated:** 2026-08-11
+**Last updated:** 2026-09-03
 
 **Verdict:** Close production commerce first; then GEO on one URL; then one more browser-local tool; then deepen offline Install kits. Do not open SaaS or a multi-kit catalog until R1 converts.
 
-**Naming:** Roadmap phases are **R1–R4** / **Ambition A/E/B/C**. Do **not** call commerce “Phase A” — that label in [AGENTS.md](AGENTS.md) §0.1 means the EN free-surface (spine-first), which is already shipped.
+**Naming:** Roadmap phases are **R1–R4** / **Ambition A/E/B/C**. Do **not** call commerce “Phase A” — that label in [AGENTS.md](AGENTS.md) §0.1 means the EN free-surface (spine-first), which is already shipped. Do **not** treat UX Conversion Audit **P0–P3** as roadmap R1–R4.
 
 ```mermaid
 flowchart LR
@@ -32,7 +32,8 @@ flowchart LR
 | **Kill if** | Fulfillment cannot be made reliable after env + Blob are correctly set |
 
 **In scope:** Blob upload, Vercel Production env, webhook signing, live purchase drills, commit/push redeploy.  
-**Out of scope:** New product features, new browser tools, PDF content expansion, SaaS.
+**Out of scope for exit:** New browser tools, PDF content expansion, SaaS, price/SKU change, CSS dual-layer rewrite.  
+**Parallel (not exit):** `/en/` conversion-surface polish (sticky nav, hero outcome, storefront copy) may ship as **R1-support**. Shipped 2026-09-03. See [todo.md](todo.md).
 
 ---
 
@@ -49,6 +50,8 @@ flowchart LR
 
 **In scope:** `config/sot.json` / `brand-seo.json` JTBD copy, FAQ triple sync, `scripts/geo-surfaces.js` hub quality.  
 **Out of scope:** `/en/ai-marketing-*` landing farms; lengthening path to first Copy.
+
+**Baseline harden (2026-09-03, not R2 exit):** FAQ answer parity in `tests/structure.test.js`, `llms.txt` `#pro-contents` hub, `npm run check:prod` IndexNow key assert, runbook ping after Vercel. Further GEO still waits for R1 exit.
 
 ---
 
@@ -79,8 +82,24 @@ flowchart LR
 | **Primary docs** | [docs/PRODUCT-POSITIONING.md](docs/PRODUCT-POSITIONING.md), [docs/OFFER-ARCHITECTURE.md](docs/OFFER-ARCHITECTURE.md), `docs/pdf-source/*` |
 | **Kill if** | Buyers expect a live app after “system” language and bounce — tighten copy, do not add SaaS here |
 
-**In scope:** PDF/MD depth, team-license clarity, workshop-ready assets.  
+**In scope:** PDF/MD depth, team-license clarity, workshop-ready assets; after converting, persona vs $3.99 reconciliation (Audit P3).  
 **Out of scope:** Accounts, hosted vault, Ambition F.
+
+---
+
+## UX Conversion Audit mapping (2026-09-03)
+
+Audit phases **P0–P3 are not** roadmap R1–R4. Historical canvas: `ux-conversion-audit`. Gap after P0/P1 ship: `ux-audit-roadmap-gap`. Tracker: [todo.md](todo.md).
+
+| Audit | Status | Roadmap home |
+|-------|--------|--------------|
+| P0 defects + P1 nav / hero / storefront | Shipped as **R1-support** | Parallel to Ambition A; does not exit R1 |
+| P0 analytics | Unscheduled | Orchestrator decide; not R1 exit |
+| P1 fat diagram / open brief / comparison table | **Rejected** | Conflicts with [AGENTS.md](AGENTS.md) §0.1 path cut and §10.15 |
+| P2 CSS dual-layer (inline `<style>`) | Parked | Engineering debt with [TEMPLATE_MIGRATION_BACKLOG.md](docs/TEMPLATE_MIGRATION_BACKLOG.md) — **not** R2 GEO |
+| P3 live purchase drills | **Active = R1** | Ambition A / [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md) |
+| P3 persona vs $3.99 | Locked | R4 after R1 converting |
+| RC6 full brand consolidation | Parked | Ambition G |
 
 ---
 
@@ -90,8 +109,8 @@ flowchart LR
 |----------|------------|-------------|
 | **F** — Controlled SaaS | Conflicts with PRODUCT-POSITIONING §3 (no login/dashboard) | Explicit Orchestrator scope + rewrite of §3 claims + budget |
 | **D** — Vertical kit catalog | Dilutes focus before first kit monetizes | R1 converting and fulfillment is boringly reliable |
-| **G** — Mother-brand consolidation | Org/multi-repo; must not block R1 | After R1; brand ops capacity |
-| Template migration | Engineering debt, not product ambition | [docs/TEMPLATE_MIGRATION_BACKLOG.md](docs/TEMPLATE_MIGRATION_BACKLOG.md) when Orchestrator schedules |
+| **G** — Mother-brand consolidation | Org/multi-repo; Audit RC6 (one destination) | After R1; brand ops capacity |
+| Template migration + CSS dual-layer | Engineering debt, not product ambition | [docs/TEMPLATE_MIGRATION_BACKLOG.md](docs/TEMPLATE_MIGRATION_BACKLOG.md) + Audit P2 when Orchestrator schedules |
 
 ---
 

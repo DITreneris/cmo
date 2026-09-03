@@ -3,7 +3,7 @@
 **Purpose:** Single operational entry for Cursor agents and PR review: paths, build, deploy, commerce, GEO.  
 **Not a replacement for:** [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) (DOM/JS contract) or [AGENTS.md](../AGENTS.md) (roles/workflow).
 
-**Last updated:** 2026-08-11 (roadmap A→E→light B→C; AGENTS v1.5.3; DS 1.6; JTBD/GEO)
+**Last updated:** 2026-09-03 (GO_LIVE_RUNBOOK + check:prod; IndexNow after Vercel; `#pro-contents` hub)
 
 ---
 
@@ -22,7 +22,7 @@
 | Go-live checklist (R1 detail) | [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) — Ambition A ops SSOT |
 | JTBD / GEO messaging | Same `/en/` URL: `sot.frontFaq` + `brand-seo` + `storefrontHead` + `llms.txt` hash hubs. Product name stays **Content AI System** ([PRODUCT-POSITIONING.md](PRODUCT-POSITIONING.md) §4). No multi-page SEO hub farm without Orchestrator scope. R2 after R1 exit. |
 
-Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-surface + GEO lessons: [AGENTS.md](../AGENTS.md) §10 (esp. 11–13).
+Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-surface + GEO + R1-support lessons: [AGENTS.md](../AGENTS.md) §10 (esp. 11–13, 16–20).
 
 ---
 
@@ -39,6 +39,8 @@ Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-
 | [scripts/build-locale-pages.js](../scripts/build-locale-pages.js) | Locale build + FAQ inject + GEO emit |
 | [index.html](../index.html) `applyStaticLocaleText` | EN runtime FAQ/hero strings — must sync with `frontFaq` / inject |
 | [scripts/geo-surfaces.js](../scripts/geo-surfaces.js) | robots, sitemap, llms (+ hash hubs), 404, manifest, JSON-LD |
+| [scripts/check-prod-health.js](../scripts/check-prod-health.js) | Production fulfillment-health + IndexNow key (`npm run check:prod`) |
+| [js/va-track.js](../js/va-track.js) | Named conversion events (no PII) |
 | [api/_lib/fulfillment.js](../api/_lib/fulfillment.js) | Stripe fulfillment |
 | [success.html](../success.html), [terms.html](../terms.html) | Hand-edit; sync trust address with SOT |
 
@@ -54,7 +56,7 @@ npm run build   # favicons + og + locale + geo + public/
 npm test        # build + structure + registry + smoke + lint
 ```
 
-`npm test` is the merge gate. Optional: `npm run test:e2e`, `npm run check:fulfillment`.
+`npm test` is the merge gate. Optional: `npm run test:e2e`, `npm run check:fulfillment`, `npm run check:prod`. Go-live command order: [GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md).
 
 **Production build gate (after Stripe go-live):** Vercel Build Command → `REQUIRE_STRIPE_LINKS=1 npm run build` (Stripe links asserted in the locale build). Full `npm test` stays on GitHub CI.
 
@@ -66,6 +68,7 @@ npm test        # build + structure + registry + smoke + lint
 - Placeholder mode: `allowPlaceholderCheckout: true` → CTAs → `/coming-soon.html`
 - Live mode: all three `stripePaymentLinks.*` + `allowPlaceholderCheckout: false`
 - Env matrix: [DEPLOYMENT.md](../DEPLOYMENT.md) §2.5
+- Operator sequence: [GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md) (`pdf:upload-blob:dry` → upload → `check:fulfillment` → `check:prod`)
 
 ---
 
@@ -77,7 +80,7 @@ Emitted by [scripts/geo-surfaces.js](../scripts/geo-surfaces.js) on every build:
 |------|---------|
 | `robots.txt` | Per-AI-bot allow/disallow; `/api/` blocked for default `*` |
 | `sitemap.xml` | `lastmod`, `xmlns:image`, `/en/`, `/lt/`, terms |
-| `llms.txt` / `llms-full.txt` | AI-friendly site map + `/en/#…` hash hubs (`#block1`, `#creative-brief`, `#cmo-safety`, `#faq`, `#pdf-storefront`, `#prompt-basics`); full-10 digest = **Pro/system**, not free interactive claim |
+| `llms.txt` / `llms-full.txt` | AI-friendly site map + `/en/#…` hash hubs (`#block1`, `#creative-brief`, `#cmo-safety`, `#pro-contents`, `#faq`, `#pdf-storefront`, `#prompt-basics`); full-10 digest = **Pro/system**, not free interactive claim |
 | `{INDEXNOW_KEY}.txt` | IndexNow verification |
 | `404.html` | EN noindex → `/en/` |
 | `manifest.webmanifest` | PWA-lite, `start_url: /en/` |
@@ -87,7 +90,7 @@ Emitted by [scripts/geo-surfaces.js](../scripts/geo-surfaces.js) on every build:
 
 **Forbidden:** `aggregateRating` / fake Review schema; `SoftwareApplication` login product; inventing ROI/stack stats as claims.
 
-IndexNow ping: `npm run seo:indexnow:diff` (post-deploy on `main`, non-blocking).
+IndexNow: the **real signal** is `npm run seo:indexnow` after a **Vercel** production deploy (primary host). GitHub Pages `seo:indexnow:diff` on `main` is non-blocking and is not sufficient. `npm run check:prod` asserts the hosted `{INDEXNOW_KEY}.txt` file.
 
 Language/brand: [language-guidelines-en-lt.md](language-guidelines-en-lt.md).
 

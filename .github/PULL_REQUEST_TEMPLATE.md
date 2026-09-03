@@ -19,6 +19,14 @@
 - [ ] `[Chore]` – build, config
 - [ ] Locale: pakeitimai tik EN kanonui (LT nekeista / snapshot refresh scope)
 
+## Ambition (roadmap.md PR rule)
+
+- [ ] **A** — R1 cash register (Stripe / fulfillment)
+- [ ] **E** — R2 GEO on `/en/`
+- [ ] **B** — R3 one more local tool
+- [ ] **C** — R4 Install depth
+- [ ] **Parked** — docs/hygiene / R1-support; not R1 exit; not F/D
+
 ## Kaip testuota
 
 <!-- Kaip patikrinote, kad pakeitimai veikia -->

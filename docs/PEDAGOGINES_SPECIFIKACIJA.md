@@ -10,7 +10,7 @@
 
 - Vartotojas **iš karto supranta**, ką gaus ir ką daryti – be gilinimosi į žargoną.
 - Kiekvienas promptas atsako į **„Ką aš iš to turiu?“** – aiškūs naudos sakiniai (info-bokse arba aprašyme).
-- Seka 1→10 palaiko **mokymosi logiką**: Pradžia (lengviau) → Įgūdžiai → Plėtra → Viskas kartu (10. Pagrindinis promptas).
+- **Free spine** 1→2→3→5 (Plan → Create → Check → Improve) palaiko pirmą ciklą naršyklėje. Pilna seka **1→10** yra Pro/PDF mokymosi gylis, ne free interactive.
 - **Vienas aiškus veiksmas** per promptą; laiko signalas (~X min) išlaikomas; vienas suprantamas CTA.
 
 ---
@@ -31,7 +31,7 @@
 | **Kreipinys** | Tu-forma (LT docs / vidinis): tavo, tau, tu… **EN kanonas (`/en/`):** „you“ – tiesioginis, palaikantis tonas. |
 | **Sakiniai** | Trumpi, lakoniški; vengti ilgų, sudėtingų periodų. |
 | **Tonas** | Motyvacinė, palaikanti – skatina veikti, bet be patetikos. |
-| **Terminologija** | Vartotojui matomas tekstas (antraštės, aprašymai, objectives, instrukcijos, info-boksai) – lietuviškai arba su trumpu paaiškinimu vietoje. Promptų `<pre>` viduje terminus galima palikti, jei glosarėje arba info-bokse paaiškinta. |
+| **Terminologija** | **EN kanonas** (`/en/`): user-visible copy anglų kalba. LT docs / vidinis kreipinys – Tu-forma. Promptų `<pre>` – EN per `data/en-prompt-bodies.json`. |
 
 ---
 

@@ -4,7 +4,7 @@
 **Owner:** Commerce + Content. **Review gate:** every paid-surface copy change is checked against this file before merge.
 **Related:** [OFFER-ARCHITECTURE.md](OFFER-ARCHITECTURE.md), [config/sot.json](../config/sot.json), [memo_pdf.md](../memo_pdf.md), [AGENTS.md](../AGENTS.md), [roadmap.md](../roadmap.md).
 
-**Active product path:** Offline system kits + GEO on `/en/` + optional browser-local tools ([roadmap.md](../roadmap.md) Ambition A → E → light B → C). **SaaS remains “do not claim”** (login, dashboard, hosted studio) until Ambition F is explicitly opened and this file’s §3 is rewritten.
+**Active product path:** Use · Build · Install maturity ladder on `/en/` + GEO on one URL + optional browser-local tools ([roadmap.md](../roadmap.md) Ambition A → E → light B → C). The kits are offline delivery, but the page should sell the system maturity, not lead with “PDF kit.” **SaaS remains “do not claim”** (login, dashboard, hosted studio) until Ambition F is explicitly opened and this file’s §3 is rewritten.
 
 ---
 

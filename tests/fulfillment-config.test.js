@@ -145,6 +145,20 @@ if (sot.commerce) {
 }
 check(sot && sot.site && sot.site.mirror && sot.site.mirror.renderPaidStorefront === false, 'sot.site.mirror.renderPaidStorefront === false (mirror hides paid section)');
 
+const uploadSrc = readText(path.join(ROOT, 'scripts', 'upload-pdfs-to-blob.js'));
+check(uploadSrc.includes('PDF_CMO_STARTER_SOURCE_URL'), 'upload-pdfs-to-blob.js lists PDF_CMO_STARTER_SOURCE_URL');
+check(uploadSrc.includes('PDF_CMO_PRO_SOURCE_URL'), 'upload-pdfs-to-blob.js lists PDF_CMO_PRO_SOURCE_URL');
+check(uploadSrc.includes('PDF_CMO_PRO_MD_SOURCE_URL'), 'upload-pdfs-to-blob.js lists PDF_CMO_PRO_MD_SOURCE_URL');
+check(
+  /Bundle has no third PDF URL/i.test(uploadSrc),
+  'upload-pdfs-to-blob.js notes bundle has no third PDF URL'
+);
+check(/--dry-run/.test(uploadSrc), 'upload-pdfs-to-blob.js supports --dry-run');
+
+const pkg = JSON.parse(readText(path.join(ROOT, 'package.json')));
+check(pkg.scripts && pkg.scripts['check:prod'] === 'node scripts/check-prod-health.js', 'package.json has check:prod');
+check(exists(path.join(ROOT, 'scripts', 'check-prod-health.js')), 'scripts/check-prod-health.js exists');
+
 if (Array.isArray(sot.commerce && sot.commerce.products) && fulfillment.PRODUCTS) {
   const sotMap = sot.commerce.products.reduce((acc, p) => { acc[p.id] = p; return acc; }, {});
   for (const id of ['starter', 'pro', 'bundle']) {

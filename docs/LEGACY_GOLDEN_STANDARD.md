@@ -3,7 +3,7 @@
 **Tikslas:** Dabartinis kodas yra atskaitos taškas (legacy golden standard). Keičiant **turinį** (promptus, antraštes, aprašymus) – būtina laikytis šios struktūros ir konvencijų. Struktūros, ID, CSS klasių ir JavaScript API nekeičiame be QA patvirtinimo ir šio dokumento atnaujinimo. Projektas: Spin-off Nr. 2 (10 promptų CMO rinkiniui).
 
 **Versija:** 2.0
-**Data:** 2026-05-31
+**Data:** 2026-09-03
 **Kalba:** LT
 
 ---
@@ -42,7 +42,7 @@ lt/index.html (užšaldyta), en/index.html (kanonas), js/en-prompt-bodies-inline
 - **Mirror:** `https://ditreneris.github.io/cmo/` (GitHub Pages), aktyvuojamas su `BASE_PATH=/cmo`.
 - Override per env `SITE_ORIGIN` / `BASE_PATH`. Žr. [DEPLOYMENT.md](../DEPLOYMENT.md).
 
-**Sinchronizuota su kodu (2026-08-11, EN path cut):** skip-link; hero **spine-first** + Product Operator (full-bleed `.header`, brand mark, **no top status pills**; slim `.hero-diagram` Plan→Create→Check→Improve pipeline + caption only — **no** outputs row / tagline / cycle-stepper / provider hub / `#framework-schema`); `#heroProof`; muted `#heroTrustPill1/2/3` chips — No signup · ChatGPT + Claude · 4 workflows free; primary EN `#heroCtaSpine` → `#block1` **Start your first workflow**; secondary `#heroCtaBrief` → `#creative-brief` as **text link**); **eiliškumas:** `#executive-summary` → optional `#copy-tips` → closed `#cmo-context` → `#progressIndicator` (`aria-valuemax="4"`) → `#progressJump` (1,2,3,5 · Pro · Brief · FAQ) → **interactive spine** 1,2,3,5 → thin `#cmo-safety` → EN `#creative-brief` (teaser + closed `#cb-builder`) → `#cmo-scenarios` → `#pro-contents` → EN `#pdf-storefront` (**3 cards, no comparison table**) → FAQ → `#prompt-basics`. **Meme slotų nėra**. Dizainas: [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6**. Žr. [CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md).
+**Sinchronizuota su kodu (2026-09-03, EN conversion P0/P1):** skip-link; hero **spine-first** + Product Operator (full-bleed `.header`, brand mark, sticky `#siteNav` su `#navWorkflows`, `#navBrief`, `#navPricing` → `#pdf-storefront`; **no lang switcher**; slim `.hero-diagram` Plan→Create→Check→Improve pipeline + caption only — **no** outputs row / tagline / cycle-stepper / provider hub / `#framework-schema`); `#heroProof`; muted `#heroTrustPill1/2/3` chips — 4 workflows free · Brief builder included · Full kit from $3.99; primary EN `#heroCtaSpine` → `#block1` **Start your first workflow**; secondary `#heroCtaBrief` → `#creative-brief` as **text link**); **eiliškumas:** `#executive-summary` → optional `#copy-tips` → closed `#cmo-context` → `#progressIndicator` (`aria-valuemax="4"`) → `#progressJump` (1,2,3,5 · Pricing · Brief · FAQ) → **interactive spine** 1,2,3,5 → thin `#cmo-safety` → EN `#creative-brief` (teaser + closed `#cb-builder`) → `#cmo-scenarios` → `#pro-contents` → EN `#pdf-storefront` (**3 maturity cards Use/Build/Install, no comparison table**) → FAQ → `#prompt-basics`. **Meme slotų nėra**. Dizainas: [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6**. Žr. [CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md).
 
 ---
 
@@ -66,12 +66,12 @@ index.html (legacy struktūrinis šaltinis) → po `npm run build` → lt/index.
 ├── <a class="skip-link" href="#main-content">Pereiti prie turinio</a>
 ├── <div class="container">
 │   └── <main id="main-content">
-│       ├── <header class="header">        (full-bleed; brand; #heroCtaSpine + #heroCtaBrief; #heroTrustPill*; .header-visual .hero-diagram)
+│       ├── <header class="header">        (full-bleed; brand; #siteNav; #heroCtaSpine + #heroCtaBrief; #heroTrustPill*; .header-visual .hero-diagram)
 │       ├── <section id="executive-summary" class="objectives--skim">
 │       ├── <section class="instructions"> (#copy-tips only; no #framework-schema)
 │       ├── [build inject @ <!-- CMO_CONTEXT -->] <section id="cmo-context"> (closed details)
 │       ├── <div id="progressIndicator">   (max 4 – spine only)
-│       ├── <nav id="progressJump">        (1,2,3,5 · Pro · Brief · FAQ; LT strips Brief)
+│       ├── <nav id="progressJump">        (1,2,3,5 · Pricing · Brief · FAQ; LT strips Brief)
 │       ├── 4× <article class="prompt"> …  (spine 1,2,3,5; #prompt1PathHint on prompt 1)
 │       ├── [build inject @ <!-- CMO_SAFETY -->] <section id="cmo-safety"> (EN: thin + closed details)
 │       ├── [build inject EN @ <!-- CMO_CREATIVE_BRIEF -->] <section id="creative-brief"> (teaser + #cb-builder)
@@ -90,15 +90,16 @@ index.html (legacy struktūrinis šaltinis) → po `npm run build` → lt/index.
 
 **Būtini ID ir atributai (nekeisti):**
 
-- `main-content`, `progressIndicator`, `progressText`, `progressBarFill`, `toast`, `hiddenTextarea`, `ecosystem-strip`, `ecosystem-strip-title`, `progressJump`, `progressJumpCreative` (EN), `heroTrustPill1`, `heroTrustPill2`, `heroTrustPill3`, `heroProof`, `heroCtaSpine`, `heroCtaBrief`, `prompt1PathHint`
-- Kiekvienam promptui: `id="block1"` … `id="block10"`, `id="prompt1"` … `id="prompt10"`
-- Mygtukas: `data-prompt-id="prompt1"` … `"prompt10"`, `aria-label="Kopijuoti promptą N į darbinių atmintinę"`
-- Checkbox: `data-prompt-id="1"` … `"10"`, `aria-label="Pažymėti, kad atlikai šį žingsnį"`
+- `main-content`, `siteNav`, `navWorkflows`, `navBrief`, `navPricing`, `progressIndicator`, `progressText`, `progressBarFill`, `toast`, `hiddenTextarea`, `ecosystem-strip`, `ecosystem-strip-title`, `progressJump`, `progressJumpCreative` (EN), `heroTrustPill1`, `heroTrustPill2`, `heroTrustPill3`, `heroProof`, `heroCtaSpine`, `heroCtaBrief`, `prompt1PathHint`
+- Anchor'iai: `id="block1"` … `id="block10"` (spine + Pro catalog). Interactive `<pre>` tik spine: `id="prompt1"`, `prompt2`, `prompt3`, `prompt5` (nėra `#prompt4` / `#prompt6`–`#prompt10`)
+- Mygtukas (spine): `data-prompt-id="prompt1"` / `"prompt2"` / `"prompt3"` / `"prompt5"`
+- Checkbox (spine): `data-prompt-id="1"` / `"2"` / `"3"` / `"5"` — 4 copy + 4 done (`tests/structure.test.js`)
+- Pro catalog: `#pro-contents` eilutės `#block4/6–10` + `data-teaser-prompt` (ne `.prompt` kortelės)
 - Progreso juosta: `.progress-bar` turi `aria-valuemax="4"` ir EN `aria-label` / `progressText` „of 4 workflows“ (pradžia); JS skaičiuoja tik spine checkboxes 1/2/3/5
-- Info-box: `aria-label="Informacija: promptas N"` (N 1–10)
-- **CMO v2 (tik `lt/`, `en/`):** `cmo-context`, `cmo-safety`, `cmo-scenarios`, `expected1` … `expected10`, `cmoCtxAudience`, `cmoCtxOffer`, `cmoCtxChannels`, `cmoCtxGoal`, `cmoCtxConstraint`
+- Info-box: `aria-label` spine promptams 1, 2, 3, 5
+- **CMO v2 (tik `lt/`, `en/`):** `cmo-context`, `cmo-safety`, `cmo-scenarios`, `expected1` / `expected2` / `expected3` / `expected5`, `cmoCtxAudience`, `cmoCtxOffer`, `cmoCtxChannels`, `cmoCtxGoal`, `cmoCtxConstraint`
 - **Creative brief (tik EN build, įskaitant mirror):** `creative-brief`, `cb-title`, `cb-builder` (default closed), `cbForm`, `cbOutput`, `cbCopyBtn`, `cbQuality`, `cbQualityHint`; žr. [CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md)
-- localStorage raktai: `di_prompt_done_1` … `di_prompt_done_10`
+- localStorage raktai: `di_prompt_done_1` … `di_prompt_done_10` gali likti kode; **spine naudoja 1/2/3/5**, kiti raktai ignoruojami
 - `sessionStorage` (CMO v2): konteksto laukai (audience, offer, channels, goal, constraint); creative brief draft: `cmo.creativeBrief.v1`
 
 ---
@@ -134,8 +135,8 @@ Build skripto literal'ai privalomi:
 ### 3.4 Versijos žyma footer'yje
 
 Build metu iš [package.json](../package.json) `version` lauko įterpiama:
-- LT: `Prompt Anatomy CMO rinkinys v{version}` (su `data-version="{version}"`)
-- EN: `Prompt Anatomy CMO Kit v{version}` (su `data-version="{version}"`)
+- LT: `Turinio DI sistema v{version}` (su `data-version="{version}"`)
+- EN: `Content AI System v{version}` (su `data-version="{version}"`)
 
 Patikra: `tests/structure.test.js` lygina su `readPackageVersion()`.
 
@@ -143,7 +144,7 @@ Patikra: `tests/structure.test.js` lygina su `readPackageVersion()`.
 
 | Saugykla | Raktai | Reikšmės |
 |----------|--------|----------|
-| `localStorage` | `di_prompt_done_1` … `di_prompt_done_10` | `'true'` / `'false'` |
+| `localStorage` | `di_prompt_done_1` … `di_prompt_done_10` | `'true'` / `'false'` — progress skaito tik 1/2/3/5; kiti raktai ignoruojami |
 | `localStorage` | `di_promptu_biblioteka_lang` | `'lt'` / `'en'` |
 | `sessionStorage` (CMO v2) | konteksto laukai | string (vartotojo įvestis) |
 
@@ -167,8 +168,8 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 
 ## 5. Checklist prieš commit (Content / QA)
 
-- [ ] Nepakeisti jokių `id` (block1–block10, prompt1–prompt10, progressText, progressBarFill, toast, main-content, hiddenTextarea, CMO v2 sekcijų id).
-- [ ] Nepakeisti `data-prompt-id` ant mygtukų ir checkbox (prompt1…prompt10 ir 1…10).
+- [ ] Nepakeisti jokių `id` (block1–block10, spine prompt1/2/3/5, progressText, progressBarFill, toast, main-content, hiddenTextarea, CMO v2 sekcijų id).
+- [ ] Nepakeisti `data-prompt-id` ant spine mygtukų ir checkbox (prompt1/2/3/5 ir 1/2/3/5).
 - [ ] Free spine 1,2,3,5: full interactive (`.prompt-header` → body → footer, `#promptN`, copy, done). Pro 4/6–10: `#pro-contents` catalog rows (`data-teaser-prompt`, `#blockN`), **ne** `.prompt--teaser` / be `#promptN` / copy / checkbox. 0× `.prompt-details` free page.
 - [ ] Progress: tik spine checkboxes; „of 4“ / `aria-valuemax="4"`.
 - [ ] **NE pridėti** inline `onclick` / `onkeydown` atributų – binding per `addEventListener`.
@@ -181,7 +182,7 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
   - **Primary (Vercel, `promptanatomy.space`):** `BASE_PATH=''` (default).
   - **Mirror (GitHub Pages, `ditreneris.github.io/cmo`):** `BASE_PATH=/cmo` (env override).
 - [ ] `privatumas.html`: nekeisti `id="back-link"`, `id="back-link-footer"` ir skripto logikos (referrer → lt/ | en/ | index.html).
-- [ ] `npm test` praeina (96+ struktūriniai teiginiai + design-system + a11y smoke + lint).
+- [ ] `npm test` praeina (build + structure + cmo-prompt-registry + design-system + a11y smoke + fulfillment-config + lint).
 
 ---
 
@@ -244,8 +245,8 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 
 ### 7.5. Storefront blokas (EN, ne-mirror)
 
-- Įterpiamas **po** `<section class="upgrade-section" id="faq">`, **prieš** `<section class="upgrade-section ecosystem-strip" id="ecosystem-strip">`.
-- Vidinė ID/struktūra: `#pdf-storefront` → `.pdf-storefront-teaser` (matomas teaser) + `<details class="pdf-storefront-details">` (grid, compare, buyer FAQ, trust) → `.pdf-storefront-grid` (`role="list"`) → 3 × `<article class="pdf-card" id="pdf-card-{starter|pro|bundle}">`.
+- Įterpiamas **prieš** `<section … id="faq">` (po `#pro-contents`). FAQ lieka po storefront; `#ecosystem-strip` – po FAQ / `#prompt-basics`.
+- Vidinė ID/struktūra: `#pdf-storefront` → matomas teaser + 3 × `<article class="pdf-card" id="pdf-card-{starter|pro|bundle}">` (grid **ne** `<details>` viduje). `<details class="pdf-storefront-details">` wrap'ina **tik Buyer FAQ**. `commerce.comparisonTable` gali likti SOT – **nerenderinama**.
 - CTA href:
   - **Live mode:** `https://buy.stripe.com/...` (Stripe Payment Link), `target="_blank"`, `rel="noopener noreferrer"`, `data-placeholder="false"`.
   - **Placeholder mode:** `/coming-soon.html` (relative, same-origin), `data-placeholder="true"`, jokio target/rel.

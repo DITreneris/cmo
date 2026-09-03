@@ -844,9 +844,9 @@ function injectFooterSuite(html, locale) {
   const leaderUrl = 'https://ditreneris.github.io/leader/en/';
   const cross =
     locale === 'en'
-      ? 'Need the CEO/COO kit? <a href="' +
+      ? 'Related sister kit: <a href="' +
         leaderUrl +
-        '" target="_blank" rel="noopener noreferrer">Open Prompt Anatomy Leader</a>'
+        '" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO)'
       : 'Reikia CEO/COO rinkinio? <a href="' +
         leaderUrl +
         '" target="_blank" rel="noopener noreferrer">Atidaryti Prompt Anatomy Leader</a>';
@@ -957,7 +957,10 @@ function buildPdfCard(sot, product) {
   const priceText = '$' + Number(product.priceUsd).toFixed(2);
   const compareText =
     product.compareAtUsd != null
-      ? '<span class="pdf-card-was">was $' + Number(product.compareAtUsd).toFixed(2) + '</span>'
+      ? '<span class="pdf-card-was">' +
+        (product.id === 'bundle' ? 'separately $' : 'was $') +
+        Number(product.compareAtUsd).toFixed(2) +
+        '</span>'
       : '';
   const bullets = product.bullets
     .map((b) => '                    <li>' + escapeHtml(b) + '</li>')
@@ -965,7 +968,9 @@ function buildPdfCard(sot, product) {
   const placeholderBadge = route.isPlaceholder
     ? '\n                <p class="pdf-card-coming" role="note">Live checkout opens soon. Add your email and we will notify you.</p>'
     : '';
-  const ctaLabel = route.isPlaceholder ? 'Notify me when available' : 'Buy on Stripe (' + priceText + ')';
+  const ctaLabel = route.isPlaceholder
+    ? 'Notify me when available'
+    : product.ctaLabel || ('Get ' + product.tierTag + ' kit · ' + priceText);
   const coverSrc = '../' + (product.coverPng || product.coverSvg);
   const recommendedBadge =
     product.recommended === true
@@ -1080,7 +1085,7 @@ function buildPdfStorefrontSection(sot) {
     sot.commerce.deliveryPromise || 'Email delivery within 5 minutes.'
   );
   const faqDetails = buyerFaq
-    ? '            <details class="pdf-storefront-details">\n' +
+    ? '            <details class="pdf-storefront-details" open>\n' +
       '                <summary class="pdf-storefront-details-summary">Buyer FAQ &amp; delivery details</summary>\n' +
       '                <p class="pdf-storefront-delivery"><strong>Delivery:</strong> ' +
       delivery +
@@ -1451,6 +1456,7 @@ function injectCreativeBrief(html, locale) {
   if (locale !== 'en') {
     return html
       .replace(anchor, '')
+      .replace(/\s*<nav class="site-nav no-print" id="siteNav"[\s\S]*?<\/nav>\s*/, '\n')
       .replace(
         /\s*<a href="#creative-brief"[^>]*id="heroCtaBrief"[^>]*>[\s\S]*?<\/a>\s*/,
         '\n'
@@ -1501,7 +1507,7 @@ function injectCreativeBrief(html, locale) {
       '                </details>\n' +
       '                <details class="faq-item" id="faq-brand-voice">\n' +
       '                    <summary>How do you protect brand voice before publishing?</summary>\n' +
-      '                    <p>Set session context and non-negotiable rules, then run the pre-publish safety reviewer (<a href="#cmo-safety">#cmo-safety</a>) to check facts, tone, legal/trust risk, and CTA ownership before you ship.</p>\n' +
+      '                    <p>Set session context and non-negotiable rules, then run the <a href="#cmo-safety">pre-publish safety reviewer</a> to check facts, tone, legal/trust risk, and CTA ownership before you ship.</p>\n' +
       '                </details>\n' +
       '                ' +
       whoFaq;
@@ -1727,13 +1733,19 @@ function insertSeo(html, locale) {
   const ltUrl = makeAbsoluteUrl('/lt/');
   const enUrl = makeAbsoluteUrl('/en/');
   const canonical = makeAbsoluteUrl(canonicalPath);
-  /** USA CMO audience: all locales share English SEO (title, description, OG/Twitter). */
+  /** EN is the product surface; LT remains an archive/CI snapshot without paid-price SEO. */
   const ogLocale = 'en_US';
   const brandSeo = readBrandSeo();
   const title = brandSeo.title;
-  const description = brandSeo.description;
+  const description =
+    locale === 'en'
+      ? brandSeo.description
+      : 'Prompt Anatomy archive snapshot. The canonical Content AI System product surface is the English page.';
   const ogImageUrl = makeAbsoluteUrl('/og.png');
-  const ogImageAlt = brandSeo.ogImageAlt;
+  const ogImageAlt =
+    locale === 'en'
+      ? brandSeo.ogImageAlt
+      : 'Prompt Anatomy Content AI System archive snapshot';
   const insert = [
     `<link rel="canonical" href="${canonical}">`,
     `<link rel="alternate" hreflang="lt" href="${ltUrl}">`,
@@ -1765,6 +1777,18 @@ function insertSeo(html, locale) {
     /<title>[\s\S]*?<\/title>/,
     '<title>' + escapeHtml(title) + '</title>'
   );
+}
+
+function stripLtArchivePaidStrings(html) {
+  return html
+    .replace(
+      "setText('#heroProof', '4 workflows free on this page. Full 10-prompt system kits start at $3.99.');",
+      "setText('#heroProof', '4 workflows free on this page. Full 10-prompt system kits are on the English product surface.');"
+    )
+    .replace(
+      "setText('#heroTrustPill3', 'Full kit from $3.99');",
+      "setText('#heroTrustPill3', 'Full kit on /en/');"
+    );
 }
 
 /** Fix asset paths for pages inside lt/ or en/ */
@@ -1807,21 +1831,21 @@ const EN_REPLACEMENTS_PREFIX = [
   // Footer product link (before generic "Promptų anatomija" so full paragraph matches)
   [
     '<p class="footer-product-link">Spin-off Nr. 2 (Prompt Anatomy). Pilnas mokymas, metodika ir brand centras: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>. Paskutinis atnaujinimas: 2026-04-30.</p>',
-    '<p class="footer-product-link">Part of Prompt Anatomy · Training &amp; checkout → <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a></p>'
+    '<p class="footer-product-link">Part of Prompt Anatomy · Methodology at <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a></p>'
   ],
   ['<span id="footer-email-label">El. paštas:</span>', '<span id="footer-email-label">Email:</span>'],
   ['<span id="footer-address-label">Pašto adresas:</span>', '<span id="footer-address-label">Mailing address:</span>'],
   // Exact strings with "Promptų anatomija" before global replace below (order matters)
   ['aria-label="Atidaryti Promptų anatomija Telegram grupę naujame lange"', 'aria-label="Open Prompt Anatomy Telegram group in new tab"'],
   ['Promptų anatomija', 'Prompt Anatomy'],
-  ['Turinio DI sistema<br>rinkodaros vadovams', 'Content AI System<br>for Marketing Leaders'],
+  ['Turinio DI sistema<br>rinkodaros vadovams', 'Build a 30-day Content AI System your team can reuse'],
   [
     '<p class="header-lead" id="heroLead">Kartok rinkodaros workflow vietoj tuščio prompto kiekvieną kartą.</p>',
-    '<p class="header-lead" id="heroLead">Run repeatable marketing workflows instead of starting from a blank prompt.</p>'
+    '<p class="header-lead" id="heroLead">Copy the Plan → Create → Check → Improve workflow into ChatGPT or Claude, then take the full kit offline when your team needs the system.</p>'
   ],
   [
     '<p class="header-proof" id="heroProof">Nuo kampanijos plano iki kokybės patikros – viena kartojama sistema.</p>',
-    '<p class="header-proof" id="heroProof">From campaign plan to quality check in one repeatable system.</p>'
+    '<p class="header-proof" id="heroProof">4 workflows free on this page. Full 10-prompt system kits start at $3.99.</p>'
   ],
   ['id="hero-diagram-label">Planuok → Kurk → Tikrink → Tobulink</', 'id="hero-diagram-label">Plan → Create → Check → Improve</'],
   ['<span class="hero-diagram__module-title">Planuok</span>', '<span class="hero-diagram__module-title">Plan</span>'],
@@ -1834,15 +1858,15 @@ const EN_REPLACEMENTS_PREFIX = [
   ['<span class="hero-diagram__module-desc">Atsiliepimai → perrašymas</span>', '<span class="hero-diagram__module-desc">Feedback → rewrite</span>'],
   [
     '<li class="trust-pill" id="heroTrustPill1">Be paskyros</li>',
-    '<li class="trust-pill" id="heroTrustPill1">No signup</li>'
+    '<li class="trust-pill" id="heroTrustPill1">4 workflows free</li>'
   ],
   [
     '<li class="trust-pill" id="heroTrustPill2">ChatGPT ir Claude</li>',
-    '<li class="trust-pill" id="heroTrustPill2">ChatGPT + Claude</li>'
+    '<li class="trust-pill" id="heroTrustPill2">Brief builder included</li>'
   ],
   [
     '<li class="trust-pill" id="heroTrustPill3">4 workflow nemokamai</li>',
-    '<li class="trust-pill" id="heroTrustPill3">4 workflows free</li>'
+    '<li class="trust-pill" id="heroTrustPill3">Full kit from $3.99</li>'
   ],
   [
     'class="cta-text-link" id="heroCtaBrief" aria-label="Kurti kūrybinį briefą – pereiti prie brief builder"',
@@ -1870,6 +1894,7 @@ const EN_REPLACEMENTS_PREFIX = [
   ],
   ['<summary id="prompt-basics-summary">Promptų pagrindai (1 min)</summary>', '<summary id="prompt-basics-summary">Prompt basics (1 min)</summary>'],
   ['aria-label="Greita navigacija per promptus"', 'aria-label="Quick jump between prompts"'],
+  ['href="#pro-contents" id="progressJumpPro">Pro</a>', 'href="#pdf-storefront" id="progressJumpPro">Pricing</a>'],
   ['<a href="#faq" id="progressJumpFaq">DUK</a>', '<a href="#faq" id="progressJumpFaq">FAQ</a>'],
   ['<p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Promptas</p>', '<p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Prompt</p>'],
   ['<span id="stickyPromptBarCopyText">Kopijuoti</span>', '<span id="stickyPromptBarCopyText">Copy</span>'],
@@ -1919,10 +1944,7 @@ const EN_REPLACEMENTS_PREFIX = [
     'alt="Random prompting is gambling; structured prompting is engineering"'
   ],
   ['<summary>Daugiau klausimų</summary>', '<summary>More questions</summary>'],
-  [
-    '{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Ar tinka pradedančiajam?","acceptedAnswer":{"@type":"Answer","text":"Taip, jei pildai laukus savo situacija, ne bendrais žodžiais."}},{"@type":"Question","name":"Ar būtina naudoti visus 10?","acceptedAnswer":{"@type":"Answer","text":"Ne, pradėk nuo 1–3 ir plėskis pagal poreikį."}},{"@type":"Question","name":"Kuo tai geriau nei random promptas?","acceptedAnswer":{"@type":"Answer","text":"Čia turi nuoseklią seką, aiškų tikslą ir vertinimą."}},{"@type":"Question","name":"Kiek laiko skirti kasdien?","acceptedAnswer":{"@type":"Answer","text":"20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“."}},{"@type":"Question","name":"Ar tai kursas ar įrankis?","acceptedAnswer":{"@type":"Answer","text":"Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk)."}},{"@type":"Question","name":"Kam tai skirta?","acceptedAnswer":{"@type":"Answer","text":"CMO, rinkodaros vadovams, produktų/augimo komandoms ir vadovams, kuriems reikia greito, pakartojamo turinio ciklo."}},{"@type":"Question","name":"Kuo skiriasi nuo promptų šablonų?","acceptedAnswer":{"@type":"Answer","text":"Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą."}},{"@type":"Question","name":"Ar tinka B2B SaaS, paslaugoms ir e. komercijai?","acceptedAnswer":{"@type":"Answer","text":"Taip. Tiesiog pakeisk auditoriją, pasiūlymą, kanalus ir metrikas – struktūra išlieka ta pati."}}]}',
-    '{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this for beginners?","acceptedAnswer":{"@type":"Answer","text":"Yes, if you fill placeholders with your real context — then copy, paste, and run."}},{"@type":"Question","name":"Do I need all 10 prompts?","acceptedAnswer":{"@type":"Answer","text":"No. Free: 4 workflows (prompts 1, 2, 3, 5) plus the creative brief builder. The Pro kit lists the rest — full META/INPUT/OUTPUT bodies offline (full 10)."}},{"@type":"Question","name":"Why is this better than random prompts?","acceptedAnswer":{"@type":"Answer","text":"You get a repeatable Plan → Create → Check → Improve workflow with clear fields and evaluation — structured prompting, not prompt gambling."}},{"@type":"Question","name":"How much time daily?","acceptedAnswer":{"@type":"Answer","text":"20–30 minutes is enough if you run Create → Check → Improve."}},{"@type":"Question","name":"Is this a course or a tool?","acceptedAnswer":{"@type":"Answer","text":"A copy-paste Content AI System you can use immediately — not a long course. Free spine + brief in the browser; depth offline in the kits."}},{"@type":"Question","name":"Who is this for?","acceptedAnswer":{"@type":"Answer","text":"CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence."}},{"@type":"Question","name":"How is this different from prompt templates?","acceptedAnswer":{"@type":"Answer","text":"You get a sequence, clear fields, evaluation, and a KPI loop — not a one-off output."}},{"@type":"Question","name":"Does this work for B2B SaaS, services, and ecommerce?","acceptedAnswer":{"@type":"Answer","text":"Yes. Swap the audience, offer, channels, and metrics — the structure stays the same."}}]}'
-  ],
+  // FAQPage JSON-LD is emitted from sot.frontFaq + buyerFaq in geo-surfaces.js — do not keep a second 8-item blob here.
   // Progress
   ['Panaudojai 0 iš 4 workflow', 'You used 0 of 4 workflows'],
   ['aria-label="Progresas: 0 iš 4 workflow"', 'aria-label="Progress: 0 of 4 workflows"'],
@@ -2069,14 +2091,18 @@ const EN_REPLACEMENTS_SUFFIX = [
   ['<h3>Sėkmės rinkodaroje <span aria-hidden="true">🚀</span></h3>', '<h3>Go win your market <span aria-hidden="true">🚀</span></h3>'],
   ['<p>Nepamiršk pakeisti <strong>[auditorija]</strong>, <strong>[galvos skausmas]</strong>, <strong>[unikalus pardavimo pasiūlymas]</strong>, <strong>[kanalas]</strong> ir kitus laukus savo duomenimis</p>', '<p>Remember to replace <strong>[audience]</strong>, <strong>[pain point]</strong>, <strong>[unique selling proposition]</strong>, <strong>[channel]</strong> and other placeholders with your data</p>'],
   ['<span class="tag" role="listitem"><span aria-hidden="true">📣</span> Rinkodara</span>', '<span class="tag" role="listitem"><span aria-hidden="true">📣</span> Marketing</span>'],
-  ['<span class="tag" role="listitem"><span aria-hidden="true">📚</span> 10 promptų</span>', '<span class="tag" role="listitem"><span aria-hidden="true">📚</span> 10 prompts</span>'],
+  ['<span class="tag" role="listitem"><span aria-hidden="true">📚</span> 10 promptų</span>', '<span class="tag" role="listitem"><span aria-hidden="true">📚</span> 4 free workflows</span>'],
   ['<span class="tag" role="listitem"><span aria-hidden="true">⚡</span> Veiksmų fokusas</span>', '<span class="tag" role="listitem"><span aria-hidden="true">⚡</span> Action focus</span>'],
-  ['<span class="tag" role="listitem"><span aria-hidden="true">🎯</span> Potencialūs klientai ir rodikliai</span>', '<span class="tag" role="listitem"><span aria-hidden="true">🎯</span> Leads and metrics</span>'],
+  ['<span class="tag" role="listitem"><span aria-hidden="true">🎯</span> Potencialūs klientai ir rodikliai</span>', '<span class="tag" role="listitem"><span aria-hidden="true">🎯</span> Full 10 in Pro</span>'],
   ['<p>&copy; 2026 Tomas Staniulis. Mokymų medžiaga. Visos teisės saugomos. <a href="privatumas.html">Privatumas</a></p>', '<p>&copy; 2026 Tomas Staniulis. Training material. All rights reserved. <a href="../en/privacy.html">Privacy</a></p>'],
   ['<h2 id="ecosystem-strip-title">Prompt Anatomy ekosistema</h2>', '<h2 id="ecosystem-strip-title">Prompt Anatomy ecosystem</h2>'],
   [
     '<p class="ecosystem-strip-intro">Viena vieta: metodika, bendruomenė, el. paštas ir susiję rinkiniai.</p>',
-    '<p class="ecosystem-strip-intro">One place: methodology, community, email, and related kits.</p>'
+    '<p class="ecosystem-strip-intro">Methodology and community. Checkout stays on this page.</p>'
+  ],
+  [
+    '<p class="ecosystem-strip-related">Susijęs: <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO rinkinys)</p>',
+    '<p class="ecosystem-strip-related">Related: <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO kit)</p>'
   ],
   [
     '<li role="listitem"><a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Oficiali metodika (promptanatomy.app)</a></li>',
@@ -2283,6 +2309,7 @@ function buildLocale(locale) {
     html = patchLtCopyPromptHook(html);
     html = injectLtContextScript(html);
     html = injectScenariosTabScript(html, 'lt');
+    html = stripLtArchivePaidStrings(html);
   }
   html = insertSeo(html, locale);
   if (locale === 'en' && geoJsonLdInject) {

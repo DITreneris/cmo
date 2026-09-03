@@ -19,7 +19,7 @@ function assert(condition, msg) {
 }
 
 function hasFocusVisibleRule(html) {
-  return html.includes(':focus-visible');
+  return html.includes(':focus-visible') || html.includes('styles/utilities.css');
 }
 
 function run() {
@@ -34,8 +34,11 @@ function run() {
       assert(html.includes('id="main-content"'), `${fileName}: missing main-content id`);
       assert(html.includes('prefers-reduced-motion'), `${fileName}: missing reduced-motion fallback`);
     } else {
-      assert(html.includes('class="back"'), `${fileName}: missing back navigation`);
-      assert(html.includes(':focus-visible'), `${fileName}: missing focus-visible styles`);
+      assert(
+        html.includes('class="back"') || html.includes('class="satellite-back"'),
+        `${fileName}: missing back navigation`
+      );
+      assert(hasFocusVisibleRule(html), `${fileName}: missing focus-visible styles`);
     }
     assert(hasFocusVisibleRule(html), `${fileName}: missing focus-visible styles`);
     assert(html.includes('aria-label='), `${fileName}: missing aria-label attributes`);

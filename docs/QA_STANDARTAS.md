@@ -26,7 +26,7 @@
 
 ### Prieš kiekvieną merge / PR
 
-- [ ] `npm test` praeina (build + struktūra + design-system smoke + a11y smoke + `lint:html` + `lint:js`).
+- [ ] `npm test` praeina (build + structure + cmo-prompt-registry + design-system smoke + a11y smoke + fulfillment-config + `lint:html` + `lint:js`).
 - [ ] CI (`.github/workflows/ci.yml`) praeina – lint, testai, pa11y (WCAG2AA).
 - [ ] Pakeitimams atitinka dokumentacijos atnaujinimai ([docs/DOCUMENTATION.md](DOCUMENTATION.md)).
 - [ ] Locale: EN kanonas – nereikalingas LT diff ([MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0).

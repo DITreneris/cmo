@@ -12,7 +12,7 @@ Playwright HTML → PDF export does not produce tagged PDF/UA files. Use this ma
 
 ## Export smoke
 
-- [ ] `npm run pdf:export` → Starter **14** pages, Pro **27** pages.
+- [ ] `npm run pdf:export` → Starter **14** pages, Pro **30** pages.
 - [ ] Open both PDFs; confirm no clipped content on TOC, worked example, week-1 quickstart pages.
 - [ ] Grayscale print preview: panels and prompt blocks remain readable.
 
@@ -24,7 +24,7 @@ Playwright HTML → PDF export does not produce tagged PDF/UA files. Use this ma
 
 ## Storefront (EN)
 
-- [ ] Comparison table has caption (visually hidden) and scoped headers.
+- [ ] Comparison table is **not** rendered on `/en/` (`comparisonTable` may remain in SOT unused). No caption required.
 - [ ] Preview thumbnails have descriptive alt text (“Preview page N — watermarked”).
 
 ## When to escalate

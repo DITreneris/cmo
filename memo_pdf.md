@@ -350,10 +350,10 @@ stripe listen --forward-to localhost:3000/api/stripe-webhook   # local webhook d
 | [`success.html`](success.html) | Post-checkout polling UX (EN) |
 | [`terms.html`](terms.html) | Team license + 14-day refund (`#paid-pdf-license`) |
 | [`config/sot.json`](config/sot.json) | Payment Link URLs + commerce copy + buyer FAQ |
-| [`docs/pdf-source/cmo-starter.html`](docs/pdf-source/cmo-starter.html) | 12-page Starter PDF source (Playwright print) |
-| [`docs/pdf-source/cmo-pro.html`](docs/pdf-source/cmo-pro.html) | 24-page Pro PDF source |
+| [`docs/pdf-source/cmo-starter.html`](docs/pdf-source/cmo-starter.html) | 14-page Starter PDF source (Playwright print) |
+| [`docs/pdf-source/cmo-pro.html`](docs/pdf-source/cmo-pro.html) | 30-page Pro PDF source |
 | [`.env.example`](.env.example) | Canonical env list |
-| [`scripts/export-pdfs.js`](scripts/export-pdfs.js) | Playwright PDF export with page-count gate (12/24) |
+| [`scripts/export-pdfs.js`](scripts/export-pdfs.js) | Playwright PDF export with page-count gate (14/30) |
 | [`scripts/check-fulfillment-env.js`](scripts/check-fulfillment-env.js) | Local Redis + Stripe key probe (+ optional Resend) |
 | [`scripts/upload-pdfs-to-blob.js`](scripts/upload-pdfs-to-blob.js) | Upload paid PDFs to Vercel Blob |
 

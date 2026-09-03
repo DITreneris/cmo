@@ -3,7 +3,7 @@
 **Atsakingas:** Curriculum Agent  
 **Tikslas:** Path atitikmenys, routing ir **locale politika** – vienas šaltinis tiesiai UI/UX, Content ir QA.
 
-**Paskutinis atnaujinimas:** 2026-05-31 (EN kanonas; LT užšaldyta)
+**Paskutinis atnaujinimas:** 2026-09-03 (EN kanonas; LT freeze + brief strip)
 
 ---
 
@@ -25,6 +25,7 @@
 - **Neredaguoti** aktyviai [`lt/index.html`](../lt/index.html), [`lt/privatumas.html`](../lt/privatumas.html), [`data/lt-prompt-expected.json`](../data/lt-prompt-expected.json), [`data/lt-scenarios.json`](../data/lt-scenarios.json) – nebent Orchestrator **sąmoningai** atnaujina tester snapshot (retas, atskiras scope).
 - **Nereikalauti** LT/EN turinio pariteto naujuose PR. EN pakeitimai **nebackport'inami** į LT automatiškai.
 - **Nenaudoti** `/lt/` kaip pagrindinio README, deploy ar gyvo testavimo entry point (žr. [TESTAVIMAS.md](TESTAVIMAS.md)).
+- Build **pašalina** iš LT: `#creative-brief`, `#heroCtaBrief`, `#progressJumpCreative`. `#heroCtaSpine` lieka primary.
 
 ### Techninė pastaba (build pipeline)
 
@@ -63,12 +64,10 @@ Root [`index.html`](../index.html) vis dar yra **struktūrinis build šaltinis**
 
 ### Kalbos jungiklis
 
-Kalbos perjungiklis **lieka** abiem pusėms (backward compat + testeriams):
+Kalbos perjungiklis **pašalintas iš produkto UX**. `/en/` yra vienintelis aktyvus vartotojo kelias. `/lt/` lieka tik CI / archive snapshot, nėra linkinamas iš EN produkto paviršių.
 
-- Esant **LT** puslapyje `/lt/` → nuoroda į EN: `/en/`.
-- Esant **LT** puslapyje `/lt/privatumas.html` → nuoroda į EN: `/en/privacy.html`.
-- Esant **EN** puslapyje `/en/` → nuoroda į LT: `/lt/` (tester snapshot).
-- Esant **EN** puslapyje `/en/privacy.html` → nuoroda į LT: `/lt/privatumas.html`.
+- **EN** puslapiai (`/en/`, `/en/privacy.html`) neberodo nuorodų į `/lt/`.
+- **LT** failai gali būti generuojami ir testuojami CI, bet nėra produkto navigacijos dalis.
 
 ---
 
@@ -80,8 +79,7 @@ LT → EN:
   /lt/privatumas.html  → /en/privacy.html
 
 EN → LT:
-  /en/           → /lt/
-  /en/privacy.html → /lt/privatumas.html
+  nėra vartotojo UX kelio; /lt/ lieka archive/CI
 ```
 
 Naudoti santykinius kelius iš root (pvz. `../en/`, `../lt/`) arba su base path priklausomai nuo deploy profilio.

@@ -155,7 +155,7 @@ npm install
 npm test
 ```
 
-`npm test` = build (`lt/en` + `public/`) + struktūra (96+ teiginiai) + design-system smoke + a11y smoke + `lint:html` + `lint:js`.
+`npm test` = build (`lt/en` + `public/`) + structure + cmo-prompt-registry + design-system smoke + a11y smoke + fulfillment-config + `lint:html` + `lint:js`.
 
 ### A11y testavimas lokaliai
 

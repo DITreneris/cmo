@@ -1,7 +1,7 @@
 # Agentų Sistemos Modelis – Apžvalga
 
 **Projektas:** DI Promptų Biblioteka (Turinio DI sistema – CMO rinkinys)  
-**Šio dokumento versija:** 1.5.3 (EN kanonas; spine-first; DS 1.6; JTBD/GEO; roadmap A→E→B→C; LT užšaldyta)  
+**Šio dokumento versija:** 1.5.4 (EN kanonas; spine-first; DS 1.6; JTBD/GEO; R1-support closeout lessons; LT užšaldyta)  
 **Kalba:** LT
 
 ---
@@ -25,7 +25,7 @@
 | **Pro / data SSOT** | Vis dar **10** bodies: `data/en-prompt-bodies.json`, `data/cmo-prompt-registry.json` → `freeInteractive` |
 | **Memes** | **0** gyvoje UI (`data/meme-*` – tik offline/social) |
 | **Free-value order** | Spine `#block5` → thin `#cmo-safety` → EN `#creative-brief` (teaser + closed `#cb-builder`) → `#cmo-scenarios` → `#pro-contents` → storefront (3 cards, **no** comparison table) → FAQ → `#prompt-basics`; LT strip brief + `#heroCtaBrief` + `#progressJumpCreative` |
-| **Path cut (R1 conversion)** | One method surface = hero diagram; **no** cycle-stepper / provider hub / `#framework-schema` / diagram outputs; jump = 1·2·3·5 · Pro · Brief · FAQ |
+| **Path cut (R1 conversion)** | One method surface = hero diagram; **no** cycle-stepper / provider hub / `#framework-schema` / diagram outputs; sticky `#siteNav` = Workflows · Brief builder · Pricing; progress jump = 1·2·3·5 · Pricing · Brief · FAQ |
 
 Detaliau: [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md), [docs/OFFER-ARCHITECTURE.md](docs/OFFER-ARCHITECTURE.md), [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §1.
 
@@ -142,7 +142,7 @@ ORCHESTRATOR AGENT (koordinacija; roadmap.md R1–R4)
 | Komanda | Paskirtis |
 |---------|-----------|
 | `npm install` | Įdiegti priklausomybes |
-| `npm test` | Build (`lt/en`) + struktūra + design-system smoke + a11y smoke + lint (HTML, JS) |
+| `npm test` | Build (`lt/en`) + structure + cmo-prompt-registry + design-system smoke + a11y smoke + fulfillment-config + lint (HTML, JS) |
 | `npm run lint:html` | HTML validacija (`index.html`, `lt/index.html`, `lt/privatumas.html`, `en/index.html`, `en/privacy.html`) |
 | `npm run lint:js` | ESLint visiems .js failams |
 | CI (GitHub Actions) | Lint, test, pa11y a11y – automatiškai push/PR |
@@ -193,14 +193,14 @@ Keičiant **turinį** – atsakingas Content Agent; keičiant **struktūrą arba
 | 2 | **Curriculum** | Nustato spine/teaser ribą, seka, mokymosi tikslus | Scope; `freeInteractive` registry | Specifikacija: ką keisti free vs Pro |
 | 3 | **Content** | Redaguoja turinį **EN kanonui** (`data/en-*.json`, teaser copy, EN build, JTBD FAQ/meta); **privalo laikytis** LEGACY + PRODUCT-POSITIONING §4. **LT nekeičia** be snapshot refresh | Specifikacija | EN tekstai; `frontFaq` ↔ visible FAQ ↔ `applyStaticLocaleText`; nekeičia spine ID kontrakto |
 | 4 | **UI/UX** | Spine-first hero, DS **1.6** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)), brief after spine, teaser UI, a11y – ne META bodies; **nekuria** naujų SEO hub route'ų be Curriculum/Orchestrator | Reikalavimai; LEGACY; STYLEGUIDE 1.6 | CSS/HTML; 0 meme slots; hero diagram; surfaces page/panel/accent |
-| 5 | **Commerce** | Mokama PDF tarpinė: `docs/pdf-source/*.html`, [`config/sot.json`](config/sot.json), fulfillment, kainos. Tik EN, `promptanatomy.space`. Free copy: spine ≠ full 10 interactive | Stripe / Resend / Blob (žr. [memo_pdf.md §8](memo_pdf.md)) | SOT + PDF + storefront; comparison table sync |
+| 5 | **Commerce** | Mokama PDF tarpinė: `docs/pdf-source/*.html`, [`config/sot.json`](config/sot.json), fulfillment, kainos. Tik EN, `promptanatomy.space`. Free copy: spine ≠ full 10 interactive | Stripe / Resend / Blob (žr. [memo_pdf.md §8](memo_pdf.md)) | SOT + PDF + storefront; SOT `comparisonTable` unused on page |
 | 6 | **QA** | `npm test`, `test:fulfillment-config`, `test:e2e`, pa11y; diff vs LEGACY. **Free surface:** spine copy×4 contiguous; order safety → brief → scenarios → `#pro-contents` → storefront → FAQ → basics; progress of 4; 0 memes; 0 `.prompt--teaser`. **GEO:** `frontFaq >= 8`, `llms.txt` hubs, no free-10 claim. **Commerce:** (a) LT be kainų/storefront/Stripe; (b) MIRROR_NOTE=1 be storefront; (c) `assertNoPaidPdfsLeaked()`. | Diff, LEGACY, docs | pass / grąžinti |
 
 ---
 
 ## 10. Lessons (operacinės) – EN free surface + GEO messaging
 
-1. **Ne free = interactive 10.** Full META bodies lieka Pro/PDF; free rodo spine + teasers. GEO/`llms-full` digest ≠ „free interactive 10“.
+1. **Ne free = interactive 10.** Full META bodies lieka Pro/PDF; free rodo spine + `#pro-contents` catalog. GEO/`llms-full` digest ≠ „free interactive 10“.
 2. **Spine → safety → brief → catalog.** Contiguous 1→2→3→5, then thin `#cmo-safety`, EN `#creative-brief` (collapsed builder), `#cmo-scenarios`, then `#pro-contents` (4/6–10 catalog, not faux prompt cards); hero primary = `#heroCtaSpine` → `#block1` (EN). Brief = secondary JTBD (image), not the default path.
 3. **Memes – ne produkto UI.** Assetai OK social; gyvoje `/en/` – 0 `meme-slot-*`.
 4. **Progress = spine count.** Tik checkbox 1/2/3/5; `aria-valuemax="4"`.
@@ -215,7 +215,12 @@ Keičiant **turinį** – atsakingas Content Agent; keičiant **struktūrą arba
 13. **FAQ triple sync.** Changing EN FAQ means all of: (a) `config/sot.json` → `frontFaq` (JSON-LD), (b) build inject / `EN_REPLACEMENTS`, (c) `index.html` `applyStaticLocaleText` FAQ arrays. Miss one → runtime or schema drift.
 14. **Ship cash before platform.** Ambition **A** (R1 go-live) before deep **B** tool suites, Ambition **F** (SaaS), or **D** (new vertical kits). Sequence: A → E → light B → C ([roadmap.md](roadmap.md)). Do not confuse with §0.1 free-surface “Phase A”.
 15. **Collapse secondary tools.** Creative brief stays after safety but default = teaser + `#cb-builder` closed; image tools = ChatGPT + Ideogram only. Storefront keeps 3 SKU cards; do not render comparison table on page (`comparisonTable` may remain in SOT unused).
+16. **Audit P ≠ roadmap R.** UX Conversion Audit **P0–P3** is not Ambition **R1–R4**. Shipped P0/P1 = **R1-support** (parallel `/en/` conversion; does **not** exit R1). Audit P3 live drills = the same R1 Stripe boxes in [todo.md](todo.md) / [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md). Rejected audit asks stay rejected unless Orchestrator rewrites §0.1 / §10.7 / §10.15 + LEGACY (open `#cb-builder`, render `comparisonTable`, fat before/after diagram, dual-primary CTA).
+17. **Offer math must agree on the card.** Bundle `compareAtUsd` = Starter + Pro (`3.99 + 8.99 = 12.98`). Build renders bundle as `separately $…`, not `was $…`. Never ship a bullet that says `$12.98` while the price line says `was $19.99`. Stripe `priceUsd` / Payment Links stay unchanged unless Commerce opens a price PR.
+18. **Footer entity ≠ checkout.** EN `.footer-product-link` = `Part of Prompt Anatomy · Methodology at promptanatomy.app` ([BRAND_SYNC.md](docs/BRAND_SYNC.md), [language-guidelines-en-lt.md](docs/language-guidelines-en-lt.md)). Checkout is `buy.stripe.com` on `promptanatomy.space`. Do not restore “Training & checkout → .app” — that re-teaches the visitor that purchase lives elsewhere.
+19. **Gold is surface, not text.** STYLEGUIDE **1.6**: gold ≈ CTA fill, selected/focus ring, left-edge / border accents. Link and body `color` = `--color-text-primary` (ink). Gold-on-light as link text fails WCAG AA (~2.17:1). Do not treat this as Audit P2 (full inline-`<style>` deletion) — that stays parked with template migration.
+20. **Ecosystem demotion.** `#ecosystem-strip` / footer sister links are methodology + community. Leader and other kits stay quiet related lines, not equal CTAs next to Pricing. Intro copy may state that checkout stays on this page.
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-08-11 (v1.5.3 – EN path cut; §0.1 path cut; lesson §10.15)
+**Paskutinis atnaujinimas:** 2026-09-03 (v1.5.4 – R1-support closeout lessons §10.16–20)

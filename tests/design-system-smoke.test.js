@@ -113,6 +113,20 @@ function run() {
   assert(tokensCss.includes('--radius-xl: 16px') || tokensCss.includes('--radius-xl:16px'),
     'DS 1.6: --radius-xl must be 16px');
 
+  const goldLinkOffenders = [
+    '.progress-jump a',
+    '.faq-more-details summary',
+    '.value-grid-details summary',
+    '.instructions-faq-hint a',
+    '.cmo-footer-crosslink a',
+    '.pdf-storefront-trust a'
+  ];
+  goldLinkOffenders.forEach(function (sel) {
+    const escaped = sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp(escaped.replace(/\s+/g, '\\s*') + '\\s*\\{[^}]*color:\\s*var\\(--color-brand-primary\\)', 's');
+    assert(!re.test(componentsCss), 'DS 1.6: ' + sel + ' must not use gold as text/link color');
+  });
+
   const manifest = JSON.parse(read(WEBMANIFEST));
   assert(manifest.theme_color === '#0B1320', 'site.webmanifest theme_color must be #0B1320');
 

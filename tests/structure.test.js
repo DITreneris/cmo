@@ -351,8 +351,10 @@ function run() {
   )) passed++;
   else failed++;
   if (enPrivacyHtml && assert(
-    enPrivacyHtml.includes('← Back to library') && enPrivacyHtml.includes('<nav class="lang-switcher"'),
-    'en/privacy.html turi kalbos jungiklį ir grįžimo nuorodą'
+    enPrivacyHtml.includes('Back to library') &&
+      !enPrivacyHtml.includes('<nav class="lang-switcher"') &&
+      !enPrivacyHtml.includes('../lt/privatumas.html'),
+    'en/privacy.html turi grįžimo nuorodą ir neberodo LT jungiklio'
   )) passed++;
   else failed++;
   if (ltPrivacyHtml && assert(
@@ -399,6 +401,16 @@ function run() {
   if (assert(enHtml !== null && enHtml.includes('src="../js/en-prompt-bodies-inline.js"'), 'en/index.html – santykinis kelias į en-prompt-bodies-inline.js')) passed++;
   else failed++;
   if (assert(ltHtml !== null && ltHtml.includes('src="../js/en-prompt-bodies-inline.js"'), 'lt/index.html – santykinis kelias į en-prompt-bodies-inline.js')) passed++;
+  else failed++;
+  const vaTrackJs = path.join(__dirname, '..', 'js', 'va-track.js');
+  if (assert(fs.existsSync(vaTrackJs), 'js/va-track.js egzistuoja')) passed++;
+  else failed++;
+  if (assert(html.includes('src="js/va-track.js"'), 'index.html įtraukia js/va-track.js')) passed++;
+  else failed++;
+  if (assert(enHtml !== null && enHtml.includes('src="../js/va-track.js"'), 'en/index.html – santykinis kelias į va-track.js')) passed++;
+  else failed++;
+  const successHtmlForTrack = readFile(path.join(__dirname, '..', 'success.html'));
+  if (assert(successHtmlForTrack !== null && successHtmlForTrack.includes('src="js/va-track.js"'), 'success.html įtraukia js/va-track.js')) passed++;
   else failed++;
   if (assert(enHtml !== null && enHtml.includes('href="../styles/tokens.css"'), 'en/index.html – santykinis kelias į design tokens')) passed++;
   else failed++;
@@ -448,11 +460,11 @@ function run() {
       enHtml.includes('Start your first workflow') &&
       !enHtml.includes('Start with Prompt 1') &&
       enHtml.includes('id="heroTrustPill1"') &&
-      enHtml.includes('No signup') &&
-      enHtml.includes('ChatGPT + Claude') &&
       enHtml.includes('4 workflows free') &&
+      enHtml.includes('Brief builder included') &&
+      enHtml.includes('Full kit from $3.99') &&
       enHtml.includes('id="heroProof"') &&
-      enHtml.includes('From campaign plan to quality check') &&
+      enHtml.includes('Full 10-prompt system kits start at $3.99') &&
       enHtml.includes('hero-diagram') &&
       enHtml.includes('Brief + audience') &&
       !enHtml.includes('hero-diagram__outputs') &&
@@ -475,9 +487,9 @@ function run() {
     )) passed++;
     else failed++;
     if (assert(
-      /href="#pro-contents"\s+id="progressJumpPro"/.test(enHtml) ||
-        /id="progressJumpPro"[^>]*href="#pro-contents"/.test(enHtml),
-      'en/index.html: progressJumpPro uses relative #pro-contents'
+      /href="#pdf-storefront"\s+id="progressJumpPro"/.test(enHtml) ||
+        /id="progressJumpPro"[^>]*href="#pdf-storefront"/.test(enHtml),
+      'en/index.html: progressJumpPro uses Pricing link to #pdf-storefront'
     )) passed++;
     else failed++;
     if (assert(
@@ -569,9 +581,15 @@ function run() {
     else failed++;
     if (assert(
       enHtml.includes('Part of Prompt Anatomy') &&
+        enHtml.includes('Methodology at') &&
         enHtml.includes('utm_source=space') &&
         enHtml.includes('utm_medium=entity_footer'),
       'en/index.html: QW1b entity footer + UTM space'
+    )) passed++;
+    else failed++;
+    if (assert(
+      !enHtml.includes('Training & checkout'),
+      'en/index.html: footer must not send checkout to .app'
     )) passed++;
     else failed++;
     if (assert(
@@ -713,6 +731,19 @@ function run() {
     if (assert(enHtmlForCommerce.includes('$10.99'), 'en/index.html: storefront rodo $10.99')) passed++;
     else failed++;
     if (assert(
+      (function () {
+        const bundleBlock = enHtmlForCommerce.match(/id="pdf-card-bundle"[\s\S]*?<\/article>/);
+        return (
+          bundleBlock &&
+          bundleBlock[0].includes('$10.99') &&
+          bundleBlock[0].includes('separately $12.98') &&
+          !bundleBlock[0].includes('was $19.99')
+        );
+      })(),
+      'en/index.html: Complete kit shows $10.99 vs separately $12.98 (not was $19.99)'
+    )) passed++;
+    else failed++;
+    if (assert(
       !enHtmlForCommerce.includes('pdf-comparison-table') &&
       !enHtmlForCommerce.includes('pdf-storefront-compare'),
       'en/index.html: comparison table not rendered (path cut)'
@@ -848,6 +879,8 @@ function run() {
   else failed++;
   if (assert(llmsTxt !== null && llmsTxt.includes('#cmo-safety') && llmsTxt.includes('#pdf-storefront'), 'llms.txt: hash hubs #cmo-safety + #pdf-storefront')) passed++;
   else failed++;
+  if (assert(llmsTxt !== null && llmsTxt.includes('#pro-contents'), 'llms.txt: hash hub #pro-contents')) passed++;
+  else failed++;
   if (assert(llmsFullTxt !== null && llmsFullTxt.includes('10 prompts'), 'llms-full.txt: prompt digest')) passed++;
   else failed++;
   if (assert(indexNowTxt !== null && indexNowTxt.trim() === INDEXNOW_KEY, 'IndexNow key file hosted')) passed++;
@@ -871,10 +904,48 @@ function run() {
     else failed++;
     if (assert(Array.isArray(sot.frontFaq) && sot.frontFaq.length >= 8, 'sot.json: frontFaq >= 8 for GEO JTBD')) passed++;
     else failed++;
+    if (assert(Array.isArray(sot.frontFaq) && sot.frontFaq.length === 11, 'sot.json: frontFaq length === 11 (visible EN FAQ)')) passed++;
+    else failed++;
+    const frontFaqBlob = JSON.stringify(sot.frontFaq);
+    if (assert(!/Midjourney/i.test(frontFaqBlob) && !/Pro teasers/i.test(frontFaqBlob), 'sot.json: frontFaq has no Midjourney / Pro teasers')) passed++;
+    else failed++;
+    if (enHtmlForCommerce) {
+      if (assert(!/Midjourney/i.test(enHtmlForCommerce) && !/Pro teasers/i.test(enHtmlForCommerce), 'en/index.html: no Midjourney / Pro teasers')) passed++;
+      else failed++;
+      const faqSection = enHtmlForCommerce.match(/<section[^>]*id="faq"[^>]*>[\s\S]*?<\/section>/);
+      const faqHtml = faqSection ? faqSection[0] : '';
+      const missingFaqQs = sot.frontFaq.filter(function (item) {
+        return faqHtml.indexOf('<summary>' + item.q + '</summary>') === -1;
+      });
+      if (assert(missingFaqQs.length === 0, 'en/index.html #faq: every frontFaq.q is a summary')) passed++;
+      else failed++;
+      const faqText = faqHtml.replace(/<[^>]+>/g, '');
+      const missingFaqAs = sot.frontFaq.filter(function (item) {
+        return faqText.indexOf(item.a) === -1;
+      });
+      if (assert(missingFaqAs.length === 0, 'en/index.html #faq: every frontFaq.a appears in FAQ text')) passed++;
+      else failed++;
+    }
+    if (assert(
+      html.includes('ChatGPT or Ideogram') &&
+        !/ChatGPT, Ideogram, Midjourney/.test(html),
+      'index.html applyStaticLocaleText: brief FAQ is Ideogram, not Midjourney'
+    )) passed++;
+    else failed++;
   }
 
   if (enHtmlForCommerce) {
     if (assert(enHtmlForCommerce.includes('id="heroCtaSpine"'), 'en/index.html: #heroCtaSpine primary path')) passed++;
+    else failed++;
+    if (assert(
+      enHtmlForCommerce.includes('id="siteNav"') &&
+        enHtmlForCommerce.includes('id="navWorkflows"') &&
+        enHtmlForCommerce.includes('id="navBrief"') &&
+        enHtmlForCommerce.includes('id="navPricing"') &&
+        (/<a[^>]*id="navPricing"[^>]*href="#pdf-storefront"/.test(enHtmlForCommerce) ||
+          /<a[^>]*href="#pdf-storefront"[^>]*id="navPricing"/.test(enHtmlForCommerce)),
+      'en/index.html: sticky site nav exposes Pricing without scroll'
+    )) passed++;
     else failed++;
     if (assert(
       !/4 core interactive prompts \(1,\s*2,\s*3,\s*4,\s*5/.test(enHtmlForCommerce) &&

@@ -18,7 +18,7 @@
 | **Brief** | Secondary free tool `#creative-brief` (not equal hero primary) |
 | **Pro kit** | Full **10** offline |
 
-**Hero trust chips:** No signup · ChatGPT + Claude · 4 workflows free (Pro/offline in FAQ/storefront).  
+**Hero trust chips:** 4 workflows free · Brief builder included · Full kit from $3.99 (free/paid boundary visible above the fold).  
 **Number story (FAQ/storefront):** Free: 4 workflows + brief. Pro: full 10 offline.  
 **Method (one process):** Plan → Create → Check → Improve.  
 **Usage (one sentence):** Copy → paste into ChatGPT or Claude.
@@ -31,7 +31,7 @@
 | Pro (Build) | `#pdf-storefront` card | 30-page PDF + Markdown | Full prompt bodies, scenarios, workshop, workflow/tool-building method |
 | Bundle (Install) | `#pdf-storefront` card | 2 PDFs, one checkout | Both tiers, team license, 44 pages |
 
-The free library + creative brief builder are the top of the funnel; the storefront upgrade CTA leads to the paid tiers. The paid layer never appears on the LT site or the GitHub Pages mirror (commerce is EN-only, primary host only). `#creative-brief` is free and **does** ship on the mirror.
+The free library + creative brief builder are the top of the funnel; the sticky Pricing nav and storefront upgrade CTA lead to the paid tiers. The paid layer never appears on the LT site or the GitHub Pages mirror (commerce is EN-only, primary host only). `#creative-brief` is free and **does** ship on the mirror.
 
 **Roadmap alignment:** Free → storefront → Stripe fulfillment is **R1 (Ambition A)** — [roadmap.md](../roadmap.md), [todo.md](../todo.md), [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md). Extra browser tools after the spine are **R3 (light Ambition B)**, only after R1 exit. Deeper Install PDF/MD is **R4 (Ambition C)**. SaaS / new vertical kits stay parked.
 
