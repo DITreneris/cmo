@@ -340,10 +340,20 @@
     }, 2200);
   }
 
+  var briefUsed = false;
+  function trackBriefUse() {
+    if (briefUsed) return;
+    briefUsed = true;
+    if (typeof window.trackEvent === 'function') {
+      window.trackEvent('open_brief');
+    }
+  }
+
   function copyPromptText() {
     if (!outputEl) return;
     var text = outputEl.value.trim();
     if (!text) return;
+    trackBriefUse();
     if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
       navigator.clipboard.writeText(text).then(
         function () {
@@ -378,6 +388,7 @@
   }
 
   function openToolAndCopy(url) {
+    trackBriefUse();
     if (!isAllowedToolUrl(url)) {
       showToast('That tool link is not available.');
       return;
@@ -405,6 +416,7 @@
     if (outputEl) outputEl.value = buildImagePrompt(preset);
     updateOutput();
     showStep(1);
+    trackBriefUse();
   }
 
   function showStep(step) {
@@ -474,14 +486,9 @@
   });
 
   var builder = document.getElementById('cb-builder');
-  var briefOpened = false;
   if (builder) {
     builder.addEventListener('toggle', function () {
-      if (!builder.open || briefOpened) return;
-      briefOpened = true;
-      if (typeof window.trackEvent === 'function') {
-        window.trackEvent('open_brief');
-      }
+      if (builder.open) trackBriefUse();
     });
   }
 

@@ -12,9 +12,9 @@ Distinct from `#cmo-context` (text-prompt CONTEXT prepend on Copy). Soft link: A
 
 ## Placement
 
-After `#cmo-safety` (post-spine free loop), before `#cmo-scenarios` and `#pro-contents` catalog (`data-teaser-prompt` 4, 6–10). Secondary hero CTA on EN (`#heroCtaBrief`); primary is `#heroCtaSpine` → `#block1`. Anchor in root `index.html`: `<!-- CMO_CREATIVE_BRIEF -->`. Injected by [`scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) on EN only (LT strips the anchor, `#heroCtaBrief`, and `#progressJumpCreative`).
+Immediately after the hero, **before** `#pdf-storefront` (tool-first CEO IA). Library 1/2/3/5 and `#pro-contents` sit after the kits. Hero primary `#heroCtaSpine` → `#creative-brief`. Secondary `#heroCtaBrief` is **View kits** → `#pdf-storefront`. Anchor in root `index.html`: `<!-- CMO_CREATIVE_BRIEF -->`. Injected by [`scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) on EN only (LT strips the anchor, `#heroCtaBrief`, and `#progressJumpCreative`).
 
-**Default UI:** teaser only (eyebrow + H2 + lead). Full builder lives in closed `<details id="cb-builder">` (“Open brief builder”) so the free path is not a mini-app wall after safety. Opening the builder once fires `open_brief` via [`js/va-track.js`](../js/va-track.js) (no-op without Vercel Analytics).
+**Default UI:** `#cb-builder` **open**. First real use (preset / Copy / sample / tool) fires `open_brief` via [`js/va-track.js`](../js/va-track.js) (no-op without Vercel Analytics). Do not fire on page load.
 
 ## DOM contract
 
@@ -22,7 +22,7 @@ After `#cmo-safety` (post-spine free loop), before `#cmo-scenarios` and `#pro-co
 |---------------|------|
 | `#creative-brief` | Section |
 | `#cb-title` | H2 (always visible teaser) |
-| `#cb-builder` | Collapsed builder `<details>` (default closed) |
+| `#cb-builder` | Open builder `<details>` (default **open**) |
 | `#cb-builder-summary` | Open control |
 | `.cb-presets` + `[data-cb-preset]` | ecommerce / brand / social (inside builder) |
 | `.cb-steps` | Context / Visual / Text focus chips |
@@ -46,7 +46,7 @@ After `#cmo-safety` (post-spine free loop), before `#cmo-scenarios` and `#pro-co
 ## Scripts / styles
 
 - [`js/creative-brief.js`](../js/creative-brief.js) — IIFE; no-ops if `#creative-brief` missing
-- [`styles/components.css`](../styles/components.css) — `.creative-brief*` block
+- [`styles/components.css`](../styles/components.css) — `.creative-brief*` block; output pane is a navy studio (same grammar as `.hero-diagram`). No dashed `.cb-tool-silhouette`.
 
 ## Storage
 

@@ -34,7 +34,7 @@ function buildSvg(brand, tokens) {
   const muted = tokens.color.text.secondary;
   const gold = tokens.color.brand.primary;
   const page = tokens.color.surface.page;
-  const heroEnd = '#eef2f7';
+  const heroEnd = '#ede4d4';
   const { eyebrow, headline, subline } = brand.ogVisual;
 
   return `<?xml version="1.0" encoding="UTF-8"?>

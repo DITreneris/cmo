@@ -94,6 +94,13 @@ function run() {
     html.includes('hero-diagram') || enHtml.includes('hero-diagram'),
     'hero workflow diagram (.hero-diagram) missing'
   );
+  assert(
+    enHtml.includes('hero-sample-image') && enHtml.includes('brief-sample-satori.png'),
+    'EN hero must show the Satori sample image'
+  );
+  const pageHex = (tokenJson.color.surface.page || '').toLowerCase();
+  assert(pageHex === '#f6f1e8', 'design-tokens.json surface.page must be warm paper #F6F1E8');
+  assert(tokensCss.toLowerCase().includes('#f6f1e8'), 'tokens.css must include warm paper #F6F1E8');
   assert(!html.includes('cmo-pro-cover.png') || html.includes('hero-diagram'),
     'hero should prefer workflow diagram over PDF cover as primary visual');
   assert(

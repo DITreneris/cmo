@@ -9,12 +9,21 @@
 const { test, expect } = require('@playwright/test');
 
 test.describe('static site smoke', () => {
-  test('root index loads (LT default landing)', async ({ page }) => {
+  test('root redirects to /en/', async ({ page }) => {
     const errors = [];
     page.on('pageerror', (err) => errors.push(String(err)));
     await page.goto('/');
-    await expect(page).toHaveTitle(/Prompt Anatomy/);
+    await expect(page).toHaveURL(/\/en\/?$/);
+    await expect(page.locator('#main-content')).toBeVisible();
     expect(errors).toEqual([]);
+  });
+
+  test('root redirects to /en/ even with Lithuanian browser locale', async ({ browser }) => {
+    const context = await browser.newContext({ locale: 'lt-LT' });
+    const page = await context.newPage();
+    await page.goto('/');
+    await expect(page).toHaveURL(/\/en\/?$/);
+    await context.close();
   });
 
   test('en/ library loads with copy buttons present', async ({ page }) => {

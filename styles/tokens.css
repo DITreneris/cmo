@@ -1,11 +1,11 @@
-/* Design tokens – Prompt Anatomy Product Operator (DS 1.6).
+/* Design tokens – Prompt Anatomy Product Operator (DS 1.6.1 atmosphere).
    Source of truth: styles/design-tokens.json (asserted by design-system-smoke). */
 
 :root {
   /* Surfaces */
-  --color-surface-page: #f8fafc;
+  --color-surface-page: #f6f1e8;
   --color-surface-card: #ffffff;
-  --color-surface-subtle: #f1f5f9;
+  --color-surface-subtle: #eee6d8;
 
   /* Text */
   --color-text-primary: #0f172a;
@@ -25,7 +25,7 @@
   --color-semantic-success: #38a169;
   --color-semantic-success-hover: #2f855a;
   --color-semantic-error: #e53e3e;
-  --color-border-default: #e2e8f0;
+  --color-border-default: #e0d6c6;
 
   /* Shadows: elevation 0 = none; elevation 1 = restrained; diagram optional stronger */
   --shadow-elevation-0: none;
@@ -57,14 +57,14 @@
   --line-height-tight: 1.12;
   --measure-prose: 70ch;
 
-  /* Hero atmosphere (full-bleed light plane) */
-  --hero-bg: radial-gradient(circle at 50% 18%, rgba(255, 196, 0, 0.1), transparent 58%),
-    linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+  /* Hero atmosphere (full-bleed warm paper) */
+  --hero-bg: radial-gradient(circle at 50% 18%, rgba(255, 196, 0, 0.12), transparent 58%),
+    linear-gradient(180deg, #f6f1e8 0%, #ede4d4 100%);
   --hero-ink: #0b1320;
   --hero-muted: #475569;
-  --hero-gradient-start: #f8fafc;
-  --hero-gradient-mid: #f1f5f9;
-  --hero-gradient-end: #eef2f7;
+  --hero-gradient-start: #f6f1e8;
+  --hero-gradient-mid: #eee6d8;
+  --hero-gradient-end: #ede4d4;
 
   /* Diagram (navy card on light hero) */
   --color-hero-diagram-surface: #0b1320;

@@ -126,6 +126,7 @@ function main() {
 
   // PDF cover thumbnails + watermarked previews (storefront artwork, never the PDFs themselves)
   if (existsRel('assets/pdf-covers')) copyDir('assets/pdf-covers');
+  if (existsRel('assets/hero')) copyDir('assets/hero');
 
   // SEO/robots + Google Search Console HTML verification + GEO surfaces
   if (existsRel('robots.txt')) copyFile('robots.txt');

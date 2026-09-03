@@ -39,15 +39,17 @@ test.describe('paid PDF storefront (en/index.html)', () => {
     await expect(page.locator('#pdf-storefront')).toBeVisible();
   });
 
-  test('renders all products with correct prices', async ({ page }) => {
+  test('renders Starter + Complete cards and Pro text link', async ({ page }) => {
     await expect(page.locator('#pdf-card-starter')).toBeVisible();
-    await expect(page.locator('#pdf-card-pro')).toBeVisible();
     await expect(page.locator('#pdf-card-bundle')).toBeVisible();
+    await expect(page.locator('#pdf-card-pro')).toBeVisible();
+    await expect(page.locator('#pdf-card-starter article, article#pdf-card-starter')).toHaveCount(1);
     await expect(page.locator('#pdf-card-starter')).toContainText('$3.99');
     await expect(page.locator('#pdf-card-pro')).toContainText('$8.99');
     await expect(page.locator('#pdf-card-bundle')).toContainText('$10.99');
     await expect(page.locator('#pdf-card-bundle')).toContainText('separately $12.98');
     await expect(page.locator('#pdf-card-bundle')).not.toContainText('was $19.99');
+    await expect(page.locator('article.pdf-card')).toHaveCount(2);
   });
 
   test('comparison table is not rendered', async ({ page }) => {
@@ -56,10 +58,10 @@ test.describe('paid PDF storefront (en/index.html)', () => {
 
   test('cover thumbnails load (no broken images)', async ({ page }) => {
     const starterCover = page.locator('#pdf-card-starter .pdf-card-cover img').first();
-    const proCover = page.locator('#pdf-card-pro .pdf-card-cover img').first();
+    const bundleCover = page.locator('#pdf-card-bundle .pdf-card-cover img').first();
     await expect(starterCover).toBeVisible();
-    await expect(proCover).toBeVisible();
-    for (const cover of [starterCover, proCover]) {
+    await expect(bundleCover).toBeVisible();
+    for (const cover of [starterCover, bundleCover]) {
       await cover.scrollIntoViewIfNeeded();
       await page.waitForFunction(
         (el) => el && el.naturalWidth > 0,
@@ -71,7 +73,7 @@ test.describe('paid PDF storefront (en/index.html)', () => {
 
   test('CTAs route to the right destination based on SOT mode', async ({ page }) => {
     const starterCta = page.locator('#pdf-card-starter a.pdf-card-cta');
-    const proCta = page.locator('#pdf-card-pro a.pdf-card-cta');
+    const proCta = page.locator('#pdf-card-pro a.pdf-pro-alt-link, #pdf-card-pro a.pdf-card-cta');
     const bundleCta = page.locator('#pdf-card-bundle a.pdf-card-cta');
     const starterHref = await starterCta.getAttribute('href');
     const proHref = await proCta.getAttribute('href');
@@ -102,16 +104,9 @@ test.describe('paid PDF storefront (en/index.html)', () => {
     await expect(page.getByText(/CMO AI Content System - Starter/)).toBeVisible();
   });
 
-  test('PDF preview lightbox opens and closes', async ({ page }) => {
+  test('PDF preview thumbs are not required on pricing cards', async ({ page }) => {
     await page.locator('#pdf-storefront').scrollIntoViewIfNeeded();
-    const thumb = page.locator('#pdf-card-starter .pdf-card-preview-thumb').first();
-    await expect(thumb).toBeVisible();
-    await thumb.click();
-    const lightbox = page.locator('.pdf-preview-lightbox');
-    await expect(lightbox).toBeVisible();
-    await expect(lightbox.locator('.pdf-preview-lightbox__img')).toBeVisible();
-    await page.locator('.pdf-preview-lightbox__close').click();
-    await expect(lightbox).toBeHidden();
+    await expect(page.locator('#pdf-card-starter .pdf-card-preview-thumb')).toHaveCount(0);
   });
 });
 

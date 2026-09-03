@@ -8,7 +8,7 @@
 
 - **Brand name:** Prompt Anatomy only on `/en/`, PDFs, terms, privacy, success, emails.
 - **Product family:** CMO AI Content System (paid); Content AI System (free library hero).
-- **Locale:** EN canonical (`/en/`); SEO `x-default` → `/en/`.
+- **Locale:** EN canonical (`/en/`); SEO `x-default` → `/en/`. Root `/` always redirects to `/en/` — never negotiate `/lt/` from `Accept-Language` or `navigator.language`.
 
 ## Do not ship on public EN pages
 

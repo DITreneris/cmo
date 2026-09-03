@@ -19,6 +19,7 @@ const SITEMAP_PATH = path.join(__dirname, '..', 'sitemap.xml');
 const EN_PROMPT_BODIES_JSON = path.join(__dirname, '..', 'data', 'en-prompt-bodies.json');
 const EN_PROMPT_INLINE_JS = path.join(__dirname, '..', 'js', 'en-prompt-bodies-inline.js');
 const PACKAGE_JSON_PATH = path.join(__dirname, '..', 'package.json');
+const VERCEL_PATH = path.join(__dirname, '..', 'vercel.json');
 const PROD_ORIGIN = 'https://promptanatomy.space';
 const PROD_BASE = '';
 const PROD_OG_IMAGE_URL = `${PROD_ORIGIN}${PROD_BASE}/og.png`;
@@ -96,35 +97,38 @@ function assertFreeSpineAndTeasers(pageHtml) {
   );
 }
 
-/** Free-value order: context → progress → block5 → safety → brief → scenarios → catalog 4. */
+/** Free-value order: brief → PDF → library 1/2/3/5 → safety → catalog → FAQ. */
 function assertSpineFirstOrder(pageHtml, briefMarker) {
-  let ctx = pageHtml.indexOf('id="cmo-context"');
-  if (ctx === -1) ctx = pageHtml.indexOf('<!-- CMO_CONTEXT -->');
-  const progress = pageHtml.indexOf('id="progressIndicator"');
+  const block1 = pageHtml.indexOf('id="block1"');
+  const brief = pageHtml.indexOf(briefMarker);
+  let storefront = pageHtml.indexOf('id="pdf-storefront"');
+  if (storefront === -1) storefront = pageHtml.indexOf('<!-- CMO_PDF_STOREFRONT -->');
+  const block2 = pageHtml.indexOf('id="block2"');
   const block5 = pageHtml.indexOf('id="block5"');
   let safety = pageHtml.indexOf('id="cmo-safety"');
   if (safety === -1) safety = pageHtml.indexOf('<!-- CMO_SAFETY -->');
-  const brief = pageHtml.indexOf(briefMarker);
   let scenarios = pageHtml.indexOf('id="cmo-scenarios"');
   if (scenarios === -1) scenarios = pageHtml.indexOf('<!-- CMO_SCENARIOS -->');
   const teaser4 = pageHtml.indexOf('data-teaser-prompt="4"');
   const faq = pageHtml.indexOf('id="faq"');
   const basics = pageHtml.indexOf('id="prompt-basics"');
   return (
-    ctx !== -1 &&
-    progress !== -1 &&
+    block1 !== -1 &&
+    brief !== -1 &&
+    storefront !== -1 &&
+    block2 !== -1 &&
     block5 !== -1 &&
     safety !== -1 &&
-    brief !== -1 &&
     scenarios !== -1 &&
     teaser4 !== -1 &&
     faq !== -1 &&
     basics !== -1 &&
-    ctx < progress &&
-    progress < block5 &&
+    brief < storefront &&
+    storefront < block1 &&
+    block1 < block2 &&
+    block2 < block5 &&
     block5 < safety &&
-    safety < brief &&
-    brief < scenarios &&
+    safety < scenarios &&
     scenarios < teaser4 &&
     teaser4 < faq &&
     faq < basics
@@ -258,6 +262,34 @@ function run() {
   // --- Lang ir prieinamumas ---
   if (assert(html.includes('lang="lt"'), 'HTML lang="lt"')) passed++;
   else failed++;
+
+  // --- Root always → /en/ (LT is archive via direct URL only) ---
+  if (assert(
+    !html.includes('prefersLithuanianBrowser') &&
+      html.includes("var loc = 'en'"),
+    'index.html: root redirect is /en/ (no navigator.language LT negotiate)'
+  )) passed++;
+  else failed++;
+  const vercelRaw = readFile(VERCEL_PATH);
+  let vercelCfg = null;
+  try { vercelCfg = vercelRaw ? JSON.parse(vercelRaw) : null; } catch (_) { vercelCfg = null; }
+  if (assert(vercelCfg && Array.isArray(vercelCfg.redirects), 'vercel.json: redirects parse')) passed++;
+  else failed++;
+  if (vercelCfg && Array.isArray(vercelCfg.redirects)) {
+    const ltDest = vercelCfg.redirects.filter(function (r) {
+      return String(r.destination || '').indexOf('/lt') !== -1;
+    });
+    if (assert(ltDest.length === 0, 'vercel.json: no redirect destination /lt/')) passed++;
+    else failed++;
+    const rootRedirects = vercelCfg.redirects.filter(function (r) { return r.source === '/'; });
+    if (assert(
+      rootRedirects.length === 1 &&
+        rootRedirects[0].destination === '/en/' &&
+        !rootRedirects[0].has,
+      'vercel.json: / → /en/ unconditionally'
+    )) passed++;
+    else failed++;
+  }
 
   // --- OG/Twitter preview image contract (root) ---
   if (assert(assertOgImageContracts(html, PROD_OG_IMAGE_URL), `index.html naudoja OG paveikslą ${PROD_OG_IMAGE_URL} (su width/height/alt)`)) passed++;
@@ -456,17 +488,23 @@ function run() {
     else failed++;
     if (assert(
       enHtml.includes('id="heroCtaBrief"') &&
-      enHtml.includes('Build a creative brief') &&
-      enHtml.includes('Start your first workflow') &&
+      enHtml.includes('View kits') &&
+      enHtml.includes('Start the builder') &&
+      /id="heroCtaSpine"[^>]*href="#creative-brief"|href="#creative-brief"[^>]*id="heroCtaSpine"/.test(enHtml) &&
       !enHtml.includes('Start with Prompt 1') &&
+      !enHtml.includes('Start your first workflow') &&
       enHtml.includes('id="heroTrustPill1"') &&
       enHtml.includes('4 workflows free') &&
       enHtml.includes('Brief builder included') &&
       enHtml.includes('Full kit from $3.99') &&
       enHtml.includes('id="heroProof"') &&
-      enHtml.includes('Full 10-prompt system kits start at $3.99') &&
+      enHtml.includes('4 workflows after the kits') &&
       enHtml.includes('hero-diagram') &&
-      enHtml.includes('Brief + audience') &&
+      enHtml.includes('hero-sample') &&
+      enHtml.includes('hero-sample-image') &&
+      enHtml.includes('hero-diagram__card--photo') &&
+      enHtml.includes('brief-sample-satori.png') &&
+      enHtml.includes('From the brief builder') &&
       !enHtml.includes('hero-diagram__outputs') &&
       !enHtml.includes('cycle-stepper') &&
       !enHtml.includes('cmo-provider-hub') &&
@@ -480,10 +518,12 @@ function run() {
       assertSpineFirstOrder(enHtml, 'id="creative-brief"') &&
       enHtml.includes('id="pro-contents"') &&
       !enHtml.includes('prompt--teaser') &&
-      enHtml.indexOf('id="cmo-safety"') < enHtml.indexOf('id="creative-brief"') &&
+      enHtml.indexOf('id="creative-brief"') < enHtml.indexOf('id="pdf-storefront"') &&
+      enHtml.indexOf('id="pdf-storefront"') < enHtml.indexOf('id="block1"') &&
+      enHtml.indexOf('id="block1"') < enHtml.indexOf('id="block2"') &&
       enHtml.indexOf('id="pdf-storefront"') < enHtml.indexOf('id="faq"') &&
       !/Iš |Autoriteto/.test(enHtml),
-      'en/index.html: spine-first + safety→brief→catalog→storefront→FAQ + progress of 4'
+      'en/index.html: tool-first CEO IA — open brief → 2 kits → library 1/2/3/5 + FAQ'
     )) passed++;
     else failed++;
     if (assert(
@@ -511,11 +551,12 @@ function run() {
       enHtml.includes('data-cb-preset="ecommerce"') &&
       enHtml.includes('id="progressJumpCreative"') &&
       enHtml.includes('id="cb-builder"') &&
-      enHtml.includes('Open brief builder') &&
+      /id="cb-builder"[^>]*\bopen\b/.test(enHtml) &&
+      enHtml.includes('Brief builder') &&
       (enHtml.includes('js/creative-brief.js') || enHtml.includes('../js/creative-brief.js')) &&
       !enHtml.includes('midjourney.com') &&
       !enHtml.includes('leonardo.ai'),
-      'en/index.html: creative brief collapsed builder + ChatGPT/Ideogram tools only'
+      'en/index.html: creative brief open builder + ChatGPT/Ideogram tools only'
     )) passed++;
     else failed++;
     if (assert(!ltHtml.includes('id="creative-brief"'), 'lt/index.html: NE-turi #creative-brief')) passed++;
@@ -755,7 +796,7 @@ function run() {
       enHtmlForCommerce.includes('id="pdf-card-starter"') &&
         enHtmlForCommerce.includes('id="pdf-card-pro"') &&
         enHtmlForCommerce.includes('id="pdf-card-bundle"'),
-      'en/index.html: trys kortelės (starter + pro + bundle)'
+      'en/index.html: dvi matomos kortelės + Pro nuoroda (starter + bundle + pdf-card-pro)'
     )) passed++;
     else failed++;
     const allowPlaceholder = sot && sot.commerce ? sot.commerce.allowPlaceholderCheckout : null;
@@ -783,7 +824,12 @@ function run() {
     else failed++;
     if (assert(enHtmlForCommerce.includes('cmo-starter-cover.png'), 'en/index.html: Starter cover PNG (WYSIWYG)')) passed++;
     else failed++;
-    if (assert(enHtmlForCommerce.includes('cmo-pro-cover.png'), 'en/index.html: Pro cover PNG (WYSIWYG)')) passed++;
+    if (assert(
+      enHtmlForCommerce.includes('class="pdf-pro-alt"') &&
+        enHtmlForCommerce.includes('id="pdf-card-pro"') &&
+        /buy\.stripe\.com\/[^"]*G0c/.test(enHtmlForCommerce),
+      'en/index.html: Pro yra tekstinė nuoroda (ne trečia kortelė), Stripe G0c gyvas'
+    )) passed++;
     else failed++;
     if (assert(
       !enHtmlForCommerce.includes('cmo-starter-cover.svg'),
@@ -792,10 +838,15 @@ function run() {
     else failed++;
     if (assert(
       (function () {
-        const proBlock = enHtmlForCommerce.match(/id="pdf-card-pro"[\s\S]*?id="pdf-card-bundle"/);
-        return proBlock && proBlock[0].includes('cmo-pro-cover.png') && !proBlock[0].includes('cmo-pro-cover.svg');
+        const proBlock = enHtmlForCommerce.match(/id="pdf-card-pro"[\s\S]*?<\/p>/);
+        return (
+          proBlock &&
+          proBlock[0].includes('pdf-pro-alt') &&
+          !proBlock[0].includes('cmo-pro-cover.png') &&
+          !proBlock[0].includes('<article')
+        );
       })(),
-      'en/index.html: Pro kortelė naudoja cover PNG, ne SVG'
+      'en/index.html: Pro alt eilutė be cover ir be article kortelės'
     )) passed++;
     else failed++;
     if (assert(
@@ -808,7 +859,10 @@ function run() {
   if (ltHtmlForCommerce) {
     if (assert(!ltHtmlForCommerce.includes('id="pdf-storefront"'), 'lt/index.html: NE-turi #pdf-storefront (commerce yra EN-only)')) passed++;
     else failed++;
-    if (assert(!ltHtmlForCommerce.includes('$3.99') && !ltHtmlForCommerce.includes('$8.99') && !ltHtmlForCommerce.includes('$10.99'), 'lt/index.html: NE-rodo commerce kainų')) passed++;
+    if (assert((function () {
+      const visible = String(ltHtmlForCommerce).replace(/<script[\s\S]*?<\/script>/gi, '');
+      return !visible.includes('$3.99') && !visible.includes('$8.99') && !visible.includes('$10.99');
+    })(), 'lt/index.html: NE-rodo commerce kainų')) passed++;
     else failed++;
     if (assert(!/buy\.stripe\.com/.test(ltHtmlForCommerce), 'lt/index.html: NE-turi buy.stripe.com nuorodų')) passed++;
     else failed++;

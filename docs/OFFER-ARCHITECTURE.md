@@ -15,7 +15,7 @@
 | **Content AI System** | Product name (H1 once) |
 | **Workflow** | Free interactive unit = spine prompts **1, 2, 3, 5** (“4 free workflows”) |
 | **Prompt** | Copyable body / “Copy prompt” (hero CTA uses **workflow** language) |
-| **Brief** | Secondary free tool `#creative-brief` (not equal hero primary) |
+| **Brief** | **Primary** free tool `#creative-brief` (open `#cb-builder`; hero CTA) |
 | **Pro kit** | Full **10** offline |
 
 **Hero trust chips:** 4 workflows free · Brief builder included · Full kit from $3.99 (free/paid boundary visible above the fold).  
@@ -27,11 +27,11 @@
 |-------|---------|--------|---------|
 | Free | EN library (`/en/`) | Interactive spine + Pro contents catalog, progress of 4 workflows | 4 free workflows (prompts 1,2,3,5) + safety + brief; 4/6–10 in `#pro-contents` (not fake prompt cards); no sign-up |
 | Free | `#creative-brief` (EN) | Browser-only creative brief builder | Assemble an image-ready prompt; copy / open image tools; ships on mirror too |
-| Starter (Use) | `#pdf-storefront` card | 14-page PDF | Week-1 cadence, offline, printable |
-| Pro (Build) | `#pdf-storefront` card | 30-page PDF + Markdown | Full prompt bodies, scenarios, workshop, workflow/tool-building method |
-| Bundle (Install) | `#pdf-storefront` card | 2 PDFs, one checkout | Both tiers, team license, 44 pages |
+| Starter (Use) | `#pdf-storefront` card | 14-page PDF | Solo 30-day plan, offline, printable |
+| Pro (Build) | text link under cards (`#pdf-card-pro`) | 30-page PDF + Markdown | Full prompt bodies — **not** a third grid card |
+| Bundle (Install / Complete) | `#pdf-storefront` card (Best value) | 2 PDFs, one checkout | Team system; `$10.99` vs separately `$12.98` |
 
-The free library + creative brief builder are the top of the funnel; the sticky Pricing nav and storefront upgrade CTA lead to the paid tiers. The paid layer never appears on the LT site or the GitHub Pages mirror (commerce is EN-only, primary host only). `#creative-brief` is free and **does** ship on the mirror.
+The **open brief builder** sits **above** the two kits. Library 1/2/3/5 (display 1–4) + `#pro-contents` sit **below**. The paid layer never appears on the LT site or the GitHub Pages mirror (commerce is EN-only, primary host only). `#creative-brief` is free and **does** ship on the mirror. 2-card UI ≠ deleting the Pro SKU.
 
 **Roadmap alignment:** Free → storefront → Stripe fulfillment is **R1 (Ambition A)** — [roadmap.md](../roadmap.md), [todo.md](../todo.md), [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md). Extra browser tools after the spine are **R3 (light Ambition B)**, only after R1 exit. Deeper Install PDF/MD is **R4 (Ambition C)**. SaaS / new vertical kits stay parked.
 
@@ -41,22 +41,20 @@ The free library + creative brief builder are the top of the funnel; the sticky 
 
 ```mermaid
 flowchart LR
-  Hero["EN hero slim"] --> Spine["Spine prompts 1 2 3 5"]
-  Spine --> Safety["#cmo-safety thin"]
-  Safety --> Brief["#creative-brief teaser"]
-  Brief --> Scenarios["#cmo-scenarios"]
-  Scenarios --> ProCat["#pro-contents catalog 4 6-10"]
-  ProCat --> Store["#pdf-storefront 3 cards"]
-  Spine -->|"Upgrade CTA"| Store
-  Brief -->|"Upgrade CTA"| Store
-  Store --> Cards["Starter / Pro / Bundle"]
+  Hero["EN hero + brief sample"] --> Tool["Open creative brief"]
+  Tool --> Store["#pdf-storefront 2 cards"]
+  Store --> Lib["Library 1 2 3 5 + safety + pro-contents"]
+  Lib --> Faq["FAQ"]
+  Store --> Cards["Starter + Complete"]
+  Store --> ProAlt["Pro text link"]
   Cards -->|"Stripe Payment Link"| Checkout["Stripe checkout"]
+  ProAlt -->|"Stripe Payment Link"| Checkout
   Checkout --> Webhook["api/stripe-webhook"]
   Webhook --> Email["Resend email + signed link"]
   Email --> Download["api/download"]
 ```
 
-**Path cut:** `#creative-brief` default = teaser + closed `#cb-builder`. Storefront does **not** render `comparisonTable` HTML (SOT data may remain for later).
+**Path cut:** `#creative-brief` default = **open** `#cb-builder`. Storefront shows **2** cards; Pro is a text path. Does **not** render `comparisonTable` HTML (SOT data may remain for later).
 
 ---
 

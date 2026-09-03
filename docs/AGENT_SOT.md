@@ -3,7 +3,7 @@
 **Purpose:** Single operational entry for Cursor agents and PR review: paths, build, deploy, commerce, GEO.  
 **Not a replacement for:** [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) (DOM/JS contract) or [AGENTS.md](../AGENTS.md) (roles/workflow).
 
-**Last updated:** 2026-09-03 (GO_LIVE_RUNBOOK + check:prod; IndexNow after Vercel; `#pro-contents` hub)
+**Last updated:** 2026-09-03 (root `/` → `/en/`; GO_LIVE_RUNBOOK + check:prod; IndexNow after Vercel; `#pro-contents` hub)
 
 ---
 
@@ -12,10 +12,10 @@
 | Aspect | Canon |
 |--------|--------|
 | Public product | **EN canonical** — `/en/` (`hreflang x-default`) |
-| Free EN surface | **Spine-first:** hero → `#block1`; contiguous spine **1,2,3,5**; then `#cmo-safety` → `#creative-brief` → `#cmo-scenarios` → `#pro-contents` (4/6–10 catalog) → storefront; progress **of 4**; **0** meme slots |
-| Design system | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6** Product Operator (Fraunces hero H1; Source Sans 3 UI; JetBrains Mono; hero diagram; surfaces) |
+| Free EN surface | **Tool-first:** hero → open `#creative-brief` → `#pdf-storefront` (2 cards) → library **1,2,3,5** (display 1–4) → `#cmo-safety` → `#cmo-scenarios` → `#pro-contents`; progress **of 4**; **0** meme slots |
+| Design system | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.1** Product Operator (Fraunces hero H1; Source Sans 3 UI; JetBrains Mono; warm paper; hero sample image) |
 | Pro / data SSOT | Still **10** prompt bodies (`data/en-prompt-bodies.json`); registry `freeInteractive: ["1","2","3","5"]` |
-| LT | **Frozen tester snapshot** — `/lt/` shipped; build strips `#creative-brief` + `#heroCtaBrief`; no active dev without Orchestrator scope |
+| LT | **Frozen tester snapshot** — `/lt/` shipped; **not** negotiated from `/` (`Accept-Language` / `navigator.language`); build strips `#creative-brief` + `#heroCtaBrief`; no active dev without Orchestrator scope |
 | Commerce | EN-only on `promptanatomy.space`; mirror omits `#pdf-storefront` (`MIRROR_NOTE=1`); free brief **does** ship on mirror |
 | Fulfillment | Vercel `api/` + Upstash Redis + Resend + Blob |
 | **Roadmap** | [roadmap.md](../roadmap.md) R1–R4 (Ambition **A → E → light B → C**); active tracker [todo.md](../todo.md) |
@@ -31,7 +31,7 @@ Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-
 | Edit (source) | Generated / do not hand-edit |
 |---------------|------------------------------|
 | [index.html](../index.html) (DOM structure) | `lt/index.html`, `en/index.html` via build |
-| [styles/design-tokens.json](../styles/design-tokens.json), [styles/*.css](../styles/) | Shared LT/EN CSS; DS 1.6 in STYLEGUIDE |
+| [styles/design-tokens.json](../styles/design-tokens.json), [styles/*.css](../styles/) | Shared LT/EN CSS; DS 1.6.1 in STYLEGUIDE |
 | [data/en-*.json](../data/) | EN prompt bodies (10), expected, scenarios |
 | [data/cmo-prompt-registry.json](../data/cmo-prompt-registry.json) | Prompt TOC + `freeInteractive` spine ids |
 | [config/sot.json](../config/sot.json) | Commerce, brand, GEO (`frontFaq`, `knowsAbout`), storefront, `copy.creativeBrief` |
@@ -117,6 +117,6 @@ Pa11y (CI): `/lt/`, `/en/`, privacy pages.
 - [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) — structure contract
 - [PRODUCT-POSITIONING.md](PRODUCT-POSITIONING.md) — paid layer copy
 - [BRAND_SYNC.md](BRAND_SYNC.md) — mother brand tokens + QW1b entity footer
-- [STYLEGUIDE.md](../STYLEGUIDE.md) — DS **1.6** Product Operator
+- [STYLEGUIDE.md](../STYLEGUIDE.md) — DS **1.6.1** Product Operator
 - [security.md](security.md) — headers, CSP, secrets
 - [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) — Stripe go-live (R1)

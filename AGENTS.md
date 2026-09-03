@@ -1,7 +1,7 @@
 # Agentų Sistemos Modelis – Apžvalga
 
 **Projektas:** DI Promptų Biblioteka (Turinio DI sistema – CMO rinkinys)  
-**Šio dokumento versija:** 1.5.4 (EN kanonas; spine-first; DS 1.6; JTBD/GEO; R1-support closeout lessons; LT užšaldyta)  
+**Šio dokumento versija:** 1.5.7 (EN kanonas; tool-first CEO IA; atidarytas brief; 2 storefront kortelės; DS 1.6.1; JTBD/GEO; R1-support 4; root `/` → `/en/`; LT užšaldyta)  
 **Kalba:** LT
 
 ---
@@ -13,19 +13,20 @@
 | **`/en/`** | **Kanoninė versija** – visi agentai (Content, UI/UX, Commerce, Curriculum, QA release) dirba čia. SEO `x-default`, Commerce, rankinis testavimas, dokumentacija. |
 | **`/lt/`** | **Užšaldyta testeriams** – build/CI lieka; **jokio aktyvaus turinio/UI vystymo** be Orchestrator „LT snapshot refresh“ scope. |
 
-**Visiems agentams:** nauji PR **nekeičia** LT turinio sinchroniškai; EN pakeitimai **nebackport'inami** į LT. QA release – pilnas checklist **`/en/`**; `/lt/` – tik regresijos smoke (CI). Detaliau: [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md) §0.
+**Visiems agentams:** nauji PR **nekeičia** LT turinio sinchroniškai; EN pakeitimai **nebackport'inami** į LT. Root `/` visada → `/en/` (ne `Accept-Language`, ne `navigator.language`). QA release – pilnas checklist **`/en/`**; `/lt/` – tik regresijos smoke (CI) ir tiesioginis URL. Detaliau: [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md) §0.
 
 ### 0.1 EN free surface (Phase A – privaloma)
 
 | Sluoksnis | Kontraktas |
 |-----------|------------|
-| **Spine-first** | Hero primary → spine `#block1` (`#heroCtaSpine`); secondary → `#creative-brief` (`#heroCtaBrief`) |
-| **Interactive spine** | Promptai **1, 2, 3, 5** (contiguous); free loop includes `#cmo-safety` + `#creative-brief`; progress **of 4** |
-| **Pro catalog** | Promptai **4, 6, 7, 8, 9, 10** – `#pro-contents` po safety + brief + scenarios; `data-teaser-prompt` + `#blockN` eilutės (**ne** `.prompt--teaser`); vienas CTA → storefront |
+| **Tool-first** | Hero primary → `#creative-brief` (`#heroCtaSpine` = Start the builder); secondary → `#pdf-storefront` (`#heroCtaBrief` = View kits). Workflows lieka `#siteNav` / `#progressJump` → `#block1` (library po PDF) |
+| **Use now** | EN `#creative-brief` **atidarytas** (`#cb-builder` `open`) — **virš** PDF. Prompt 1 **nėra** first-use |
+| **Interactive spine** | Promptai **1, 2, 3, 5** vis dar free; **visi keturi** = library **po** PDF; progress **of 4** |
+| **Pro catalog** | Promptai **4, 6, 7, 8, 9, 10** – `#pro-contents` library zonoje; `data-teaser-prompt` + `#blockN` eilutės (**ne** `.prompt--teaser`); vienas CTA → Complete kit |
 | **Pro / data SSOT** | Vis dar **10** bodies: `data/en-prompt-bodies.json`, `data/cmo-prompt-registry.json` → `freeInteractive` |
 | **Memes** | **0** gyvoje UI (`data/meme-*` – tik offline/social) |
-| **Free-value order** | Spine `#block5` → thin `#cmo-safety` → EN `#creative-brief` (teaser + closed `#cb-builder`) → `#cmo-scenarios` → `#pro-contents` → storefront (3 cards, **no** comparison table) → FAQ → `#prompt-basics`; LT strip brief + `#heroCtaBrief` + `#progressJumpCreative` |
-| **Path cut (R1 conversion)** | One method surface = hero diagram; **no** cycle-stepper / provider hub / `#framework-schema` / diagram outputs; sticky `#siteNav` = Workflows · Brief builder · Pricing; progress jump = 1·2·3·5 · Pricing · Brief · FAQ |
+| **Free-value order** | Hero → open `#creative-brief` → `#pdf-storefront` (**2** kortelės Starter + Complete; Pro = tekstinė nuoroda; **no** comparison table) → library **1/2/3/5** + thin `#cmo-safety` + `#cmo-scenarios` + `#pro-contents` → FAQ → `#prompt-basics`; LT strip brief + `#heroCtaBrief` + `#progressJumpCreative`; LT `#heroCtaSpine` lieka → `#block1` |
+| **Path cut (R1 conversion)** | Hero = brief-builder sample (ne pipeline modules, ne Prompt 1 workbook); **no** cycle-stepper / provider hub / `#framework-schema`; sticky `#siteNav` = Workflows · Brief builder · Pricing; progress jump = Plan·Create·Check·Improve · Pricing · Brief · FAQ (ne sticky) |
 
 Detaliau: [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md), [docs/OFFER-ARCHITECTURE.md](docs/OFFER-ARCHITECTURE.md), [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §1.
 
@@ -75,9 +76,9 @@ ORCHESTRATOR AGENT (koordinacija; roadmap.md R1–R4)
 - **Išvestis:** Spine seka 1→2→3→5, teaserių sąrašas, scenarijų startPromptId ant spine; Pro PDF lieka full 10. **R3:** naujo tool placement (po `#block5`, prieš teasers). **R4:** Install pedagogika (workshop depth) be SaaS.
 
 ### UI/UX & Usability Agent
-- **Tikslas:** Sąsajos kokybė, prieinamumas, spine-first hero, brief placement
+- **Tikslas:** Sąsajos kokybė, prieinamumas, tool-first hero, open brief before PDF
 - **Įvestis:** .cursorrules, WCAG AA, [docs/CREATIVE_BRIEF_BUILDER.md](docs/CREATIVE_BRIEF_BUILDER.md), LEGACY; R3 tik po R1 exit
-- **Išvestis:** CSS/HTML/a11y; **negrąžina** meme slotų į gyvą UI; neatidaro teaserių kaip full interactive be Curriculum scope. **R3:** vienas local tool pagal brief pattern; neilgina kelio iki Prompt 1 Copy.
+- **Išvestis:** CSS/HTML/a11y; **negrąžina** meme slotų į gyvą UI; neatidaro teaserių kaip full interactive be Curriculum scope. **R3:** vienas local tool pagal brief pattern; neilgina kelio iki atidaryto builder. Display numeriai 1–4; vidiniai ID lieka 1/2/3/5.
 
 ### QA Agent
 - **Tikslas:** Tikrina kokybę – kodas ir turinys
@@ -130,7 +131,7 @@ ORCHESTRATOR AGENT (koordinacija; roadmap.md R1–R4)
 
 - `[Content]` – turinys + EN JTBD/GEO copy: promptai/teaseriai; `config/brand-seo.json`; SOT `frontFaq` / `knowsAbout`; FAQ inject + `EN_REPLACEMENTS` + root `applyStaticLocaleText` EN arrays (**triple sync**)
 - `[Curriculum]` – struktūros/sekos pakeitimai; `data/cmo-prompt-registry.json` → `freeInteractive`, spine/teaser ownership; pedagogy journey
-- `[UI]` – dizainas, UX, a11y; EN free surface: spine-first hero (`#heroCtaSpine` primary / `#heroCtaBrief` secondary), free loop `#cmo-safety` → `#creative-brief` → `#cmo-scenarios` → `#pro-contents` (not `.prompt--teaser`), progress of 4; `js/creative-brief.js`, SOT `copy.creativeBrief`. LT: strip brief + `#heroCtaBrief`; mirror **gali** turėti brief (ne commerce)
+- `[UI]` – dizainas, UX, a11y; EN free surface: tool-first CEO IA (hero → open brief → 2 PDF kortelės → library 1/2/3/5); `#heroCtaSpine` → `#creative-brief`; `#heroCtaBrief` View kits; `#cb-builder` **open**; `#pro-contents` (not `.prompt--teaser`); progress of 4; `js/creative-brief.js`. LT: strip brief + `#heroCtaBrief`; LT primary lieka `#block1`; mirror **gali** turėti brief (ne commerce)
 - `[QA]` – testai, validacija, fix'ai
 - `[Orchestrator]` – koordinacija, konfigūracija
 - `[Commerce]` – mokama PDF tarpinė: `api/`, `config/sot.json` (įskaitant `storefrontHead` / product bullets / `buyerFaq`), `scripts/export-pdfs.js`, `scripts/upload-pdfs-to-blob.js`, `success.html`, `terms.html`, `coming-soon.html`, EN `#pdf-storefront`. **Tik EN, tik `promptanatomy.space`.**
@@ -172,7 +173,7 @@ Prieš PR įsitikinti, kad `npm test` praeina. A11y: CI tikrina `/lt/` ir `/en/`
 - [.cursorrules](.cursorrules) – Cursor: kokybė, a11y, dokumentacija, commit formatas
 - [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) – dokumentų inventorius ir atsakomybės
 - [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – golden standard (struktūra, ID, JS API, CMO v2, checklist)
-- [STYLEGUIDE.md](STYLEGUIDE.md) – dizaino sistema **1.6** (Product Operator)
+- [STYLEGUIDE.md](STYLEGUIDE.md) – dizaino sistema **1.6.1** (Product Operator, warm paper)
 - [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md) – EN kanonas, LT freeze ([§0](docs/MULTILINGUAL_STRUCTURE.md))
 - [docs/BULLET_PROOF_PROMPTS.md](docs/BULLET_PROOF_PROMPTS.md) – promptų META/INPUT/OUTPUT standartas
 - [docs/PEDAGOGINES_SPECIFIKACIJA.md](docs/PEDAGOGINES_SPECIFIKACIJA.md) – pedagogika ir auditorija
@@ -192,35 +193,36 @@ Keičiant **turinį** – atsakingas Content Agent; keičiant **struktūrą arba
 | 1 | **Orchestrator** | Prioritizuoja užduotį, nustato scope | [roadmap.md](roadmap.md), [todo.md](todo.md), [CHANGELOG.md](CHANGELOG.md) | Užduočių eilė pagal R1–R4 |
 | 2 | **Curriculum** | Nustato spine/teaser ribą, seka, mokymosi tikslus | Scope; `freeInteractive` registry | Specifikacija: ką keisti free vs Pro |
 | 3 | **Content** | Redaguoja turinį **EN kanonui** (`data/en-*.json`, teaser copy, EN build, JTBD FAQ/meta); **privalo laikytis** LEGACY + PRODUCT-POSITIONING §4. **LT nekeičia** be snapshot refresh | Specifikacija | EN tekstai; `frontFaq` ↔ visible FAQ ↔ `applyStaticLocaleText`; nekeičia spine ID kontrakto |
-| 4 | **UI/UX** | Spine-first hero, DS **1.6** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)), brief after spine, teaser UI, a11y – ne META bodies; **nekuria** naujų SEO hub route'ų be Curriculum/Orchestrator | Reikalavimai; LEGACY; STYLEGUIDE 1.6 | CSS/HTML; 0 meme slots; hero diagram; surfaces page/panel/accent |
+| 4 | **UI/UX** | Tool-first hero, DS **1.6.1** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)), open brief before PDF, library 1/2/3/5 after kits, a11y – ne META bodies; **nekuria** naujų SEO hub route'ų be Curriculum/Orchestrator | Reikalavimai; LEGACY; STYLEGUIDE 1.6.1 | CSS/HTML; 0 meme slots; hero sample image; surfaces page/panel/accent |
 | 5 | **Commerce** | Mokama PDF tarpinė: `docs/pdf-source/*.html`, [`config/sot.json`](config/sot.json), fulfillment, kainos. Tik EN, `promptanatomy.space`. Free copy: spine ≠ full 10 interactive | Stripe / Resend / Blob (žr. [memo_pdf.md §8](memo_pdf.md)) | SOT + PDF + storefront; SOT `comparisonTable` unused on page |
-| 6 | **QA** | `npm test`, `test:fulfillment-config`, `test:e2e`, pa11y; diff vs LEGACY. **Free surface:** spine copy×4 contiguous; order safety → brief → scenarios → `#pro-contents` → storefront → FAQ → basics; progress of 4; 0 memes; 0 `.prompt--teaser`. **GEO:** `frontFaq >= 8`, `llms.txt` hubs, no free-10 claim. **Commerce:** (a) LT be kainų/storefront/Stripe; (b) MIRROR_NOTE=1 be storefront; (c) `assertNoPaidPdfsLeaked()`. | Diff, LEGACY, docs | pass / grąžinti |
+| 6 | **QA** | `npm test`, `test:fulfillment-config`, `test:e2e`, pa11y; diff vs LEGACY. **Free surface:** open `#creative-brief` virš PDF; 2 matomos kortelės + Pro text link; library **1/2/3/5** po storefront; progress of 4; 0 memes; 0 `.prompt--teaser`. **GEO:** `frontFaq >= 8`, `llms.txt` hubs, no free-10 claim. **Commerce:** (a) LT be kainų/storefront/Stripe; (b) MIRROR_NOTE=1 be storefront; (c) `assertNoPaidPdfsLeaked()`. | Diff, LEGACY, docs | pass / grąžinti |
 
 ---
 
 ## 10. Lessons (operacinės) – EN free surface + GEO messaging
 
 1. **Ne free = interactive 10.** Full META bodies lieka Pro/PDF; free rodo spine + `#pro-contents` catalog. GEO/`llms-full` digest ≠ „free interactive 10“.
-2. **Spine → safety → brief → catalog.** Contiguous 1→2→3→5, then thin `#cmo-safety`, EN `#creative-brief` (collapsed builder), `#cmo-scenarios`, then `#pro-contents` (4/6–10 catalog, not faux prompt cards); hero primary = `#heroCtaSpine` → `#block1` (EN). Brief = secondary JTBD (image), not the default path.
+2. **Hero → open brief → PDF → library 1/2/3/5.** First use = `#creative-brief` (`#cb-builder` open). Then 2 kits, then all four workflows + `#pro-contents`. Prompt 1 **nėra** first-use ir **nėra** „įrankis“. Hero primary = `#heroCtaSpine` → `#creative-brief`. Secondary = View kits → `#pdf-storefront`. LT primary lieka `#block1`.
 3. **Memes – ne produkto UI.** Assetai OK social; gyvoje `/en/` – 0 `meme-slot-*`.
 4. **Progress = spine count.** Tik checkbox 1/2/3/5; `aria-valuemax="4"`.
 5. **LT freeze + brief strip.** Build pašalina `#creative-brief`, `#heroCtaBrief`, `#progressJumpCreative`; `#heroCtaSpine` lieka primary.
 6. **Repo-local Cursor skills nėra** – rolės/kontraktai: šis failas + [AGENT_SOT.md](docs/AGENT_SOT.md) + LEGACY + PRODUCT-POSITIONING; globalūs skills negali laužyti `npm test` / LEGACY. JTBD/GEO copy **ne** reikalauja naujo skill failo.
-7. **Distance to first Copy > storefront polish.** Funnel drop risk is path conflict + pre-value wall, not Stripe card art. Keep hero → Prompt 1 Copy short; do not re-insert brief/teasers/cycle-stepper/provider hub before spine without Curriculum + LEGACY + `tests/structure.test.js`. Cut > add on `/en/` chrome.
-8. **No Pro catalog inside the spine.** Prompt 4 must not sit between 3 and 5. Upgrade interrupt only after contiguous Plan→Create→Check→Improve (1/2/3/5) plus free-loop safety (and brief on EN). Pro list is one destination (`#pro-contents`), not six fake `.prompt` cards.
+7. **Distance to first use = open builder.** Funnel drop risk is path conflict + pre-value wall, not Stripe card art. Keep hero → `#creative-brief` short; do not put Prompt 1 (or cycle-stepper / provider hub / pipeline modules) before the builder without Curriculum + LEGACY + `tests/structure.test.js`. Context sits with the library, not the tool. Cut > add on `/en/` chrome. Do **not** redefine „įrankis“ as Prompt 1 Copy.
+8. **No Pro catalog inside the spine.** Prompt 4 must not sit between 3 and 5. Library **1/2/3/5** lives **after** PDF as one block. Pro list is one destination (`#pro-contents`), not six fake `.prompt` cards. 2-card UI ≠ SKU delete — Pro `$8.99` lieka tekstine nuoroda.
 9. **EN strings need build pairs + runtime sync.** Root is LT-sourced; `applyCollapsibleSummaries` is a no-op. Never leave LT `#prompt-desc-*` / claims on EN — add explicit EN replace pairs. FAQ/hero JTBD also lives in root `applyStaticLocaleText` EN arrays — update those with inject/`EN_REPLACEMENTS` or EN page load overwrites HTML.
-10. **One primary path.** Dual equal CTAs (image brief vs spine) confuse. Spine primary (`Start your first workflow` → `#block1`) + brief secondary; claims must match free surface (4 workflows + brief, not “100 assets / 45 min”).
+10. **One primary path.** Dual equal CTAs (kits vs builder) confuse. Builder primary (`Start the builder` → `#creative-brief`) + View kits secondary; Workflows stay in nav → library `#block1`. Claims must match free surface (open brief + 4 workflows below, not “100 assets / 45 min”).
 11. **JTBD language ≠ product rename.** Harvest search-intent phrases (workflow, content OS, brand guardrails, structured prompting) into SOT/`brand-seo`/FAQ. Public name stays **Content AI System**. Do not lead with “AI Marketing Operating System,” “PDF kit,” agents, or invented ROI/stack stats ([PRODUCT-POSITIONING.md](docs/PRODUCT-POSITIONING.md) §4).
-12. **GEO on one URL.** Prefer `llms.txt` hash hubs + richer `frontFaq`/JSON-LD over new `/en/ai-marketing-*` landing farms. Multi-page SEO hubs need Orchestrator + Curriculum scope and must not lengthen path to first Copy.
+12. **GEO on one URL.** Prefer `llms.txt` hash hubs + richer `frontFaq`/JSON-LD over new `/en/ai-marketing-*` landing farms. Multi-page SEO hubs need Orchestrator + Curriculum scope and must not lengthen path to the open builder.
 13. **FAQ triple sync.** Changing EN FAQ means all of: (a) `config/sot.json` → `frontFaq` (JSON-LD), (b) build inject / `EN_REPLACEMENTS`, (c) `index.html` `applyStaticLocaleText` FAQ arrays. Miss one → runtime or schema drift.
 14. **Ship cash before platform.** Ambition **A** (R1 go-live) before deep **B** tool suites, Ambition **F** (SaaS), or **D** (new vertical kits). Sequence: A → E → light B → C ([roadmap.md](roadmap.md)). Do not confuse with §0.1 free-surface “Phase A”.
-15. **Collapse secondary tools.** Creative brief stays after safety but default = teaser + `#cb-builder` closed; image tools = ChatGPT + Ideogram only. Storefront keeps 3 SKU cards; do not render comparison table on page (`comparisonTable` may remain in SOT unused).
-16. **Audit P ≠ roadmap R.** UX Conversion Audit **P0–P3** is not Ambition **R1–R4**. Shipped P0/P1 = **R1-support** (parallel `/en/` conversion; does **not** exit R1). Audit P3 live drills = the same R1 Stripe boxes in [todo.md](todo.md) / [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md). Rejected audit asks stay rejected unless Orchestrator rewrites §0.1 / §10.7 / §10.15 + LEGACY (open `#cb-builder`, render `comparisonTable`, fat before/after diagram, dual-primary CTA).
+15. **Brief is the primary free tool.** `#creative-brief` sits **before** PDF; `#cb-builder` default **open**; image tools = ChatGPT + Ideogram only. Storefront shows **2** cards (Starter + Complete); Pro = text path. Do not render comparison table (`comparisonTable` may remain in SOT unused). 2-card UI ≠ deleting the Pro SKU. Do not put Prompt 1 above the builder.
+16. **Audit P ≠ roadmap R.** UX Conversion Audit **P0–P3** is not Ambition **R1–R4**. Shipped P0/P1 = **R1-support**; 2 cards = **R1-support 2**; tool-first IA = **R1-support 3** (does **not** exit R1). Audit P3 live drills = the same R1 Stripe boxes in [todo.md](todo.md) / [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md). Rejected: render `comparisonTable`, dual-primary CTA, delete Pro SKU, redefine „įrankis“ as Prompt 1. Hero brief-builder sample **is** allowed (not the old “fat pipeline diagram”). Open `#cb-builder` **is** canon.
 17. **Offer math must agree on the card.** Bundle `compareAtUsd` = Starter + Pro (`3.99 + 8.99 = 12.98`). Build renders bundle as `separately $…`, not `was $…`. Never ship a bullet that says `$12.98` while the price line says `was $19.99`. Stripe `priceUsd` / Payment Links stay unchanged unless Commerce opens a price PR.
 18. **Footer entity ≠ checkout.** EN `.footer-product-link` = `Part of Prompt Anatomy · Methodology at promptanatomy.app` ([BRAND_SYNC.md](docs/BRAND_SYNC.md), [language-guidelines-en-lt.md](docs/language-guidelines-en-lt.md)). Checkout is `buy.stripe.com` on `promptanatomy.space`. Do not restore “Training & checkout → .app” — that re-teaches the visitor that purchase lives elsewhere.
-19. **Gold is surface, not text.** STYLEGUIDE **1.6**: gold ≈ CTA fill, selected/focus ring, left-edge / border accents. Link and body `color` = `--color-text-primary` (ink). Gold-on-light as link text fails WCAG AA (~2.17:1). Do not treat this as Audit P2 (full inline-`<style>` deletion) — that stays parked with template migration.
+19. **Gold is surface, not text.** STYLEGUIDE **1.6.1**: gold ≈ CTA fill, selected/focus ring, left-edge / border accents. Link and body `color` = `--color-text-primary` (ink). Gold-on-light as link text fails WCAG AA (~2.17:1). Do not treat this as Audit P2 (full inline-`<style>` deletion) — that stays parked with template migration.
 20. **Ecosystem demotion.** `#ecosystem-strip` / footer sister links are methodology + community. Leader and other kits stay quiet related lines, not equal CTAs next to Pricing. Intro copy may state that checkout stays on this page.
+21. **Root never negotiates LT.** `/` → `/en/` in [`vercel.json`](vercel.json) and `redirectRootToLocale`. Do not restore `Accept-Language: .*lt.*` or `prefersLithuanianBrowser()`. `/lt/` is archive — direct URL only. Lithuanian Windows/Chrome would otherwise land on the frozen snapshot (no storefront).
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-09-03 (v1.5.4 – R1-support closeout lessons §10.16–20)
+**Paskutinis atnaujinimas:** 2026-09-03 (v1.5.7 – tool-first CEO IA; DS 1.6.1 atmosphere; library 1/2/3/5 po PDF)

@@ -14,7 +14,7 @@
 2. [AGENTS.md](AGENTS.md) – agentų rolės, workflow, free-surface + JTBD/GEO lessons (§10)
 3. [docs/AGENT_SOT.md](docs/AGENT_SOT.md) – ops keliai (build, GEO hash hubs, commerce); [docs/PRODUCT-POSITIONING.md](docs/PRODUCT-POSITIONING.md) §4 JTBD language
 4. [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – DOM/JS kontraktas (`tests/structure.test.js`)
-5. [STYLEGUIDE.md](STYLEGUIDE.md) – dizaino sistema **1.6** (Product Operator; Fraunces hero H1 only)
+5. [STYLEGUIDE.md](STYLEGUIDE.md) – dizaino sistema **1.6.1** (Product Operator; Fraunces hero H1 only; warm paper)
 6. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) – dokumentų inventorius
 7. [CHANGELOG.md](CHANGELOG.md) – versijų istorija
 
@@ -54,7 +54,7 @@
 
 - Minimizuoti DOM manipuliacijas, naudoti batch updates.
 - **Debounce** input operacijoms (žr. `CONFIG.DEBOUNCE_DELAY`).
-- CSS: `design-tokens.json` → `tokens.css` → `components.css` → `utilities.css` ([STYLEGUIDE.md](STYLEGUIDE.md) **1.6** Product Operator).
+- CSS: `design-tokens.json` → `tokens.css` → `components.css` → `utilities.css` ([STYLEGUIDE.md](STYLEGUIDE.md) **1.6.1** Product Operator).
 - `async/await` vietoj callback'ų.
 
 ### Accessibility (WCAG 2 AA – privaloma)
@@ -135,7 +135,7 @@
 ### CSS
 
 - **CSS:** `styles/design-tokens.json` + `tokens.css` (vienas šaltinis; smoke assert).
-- Sluoksniai: `tokens.css` → `components.css` (DS 1.6 hero/surfaces) → `utilities.css`.
+- Sluoksniai: `tokens.css` → `components.css` (DS 1.6.1 hero/surfaces) → `utilities.css`.
 - Tipografija: Fraunces (display) + Source Sans 3 (UI) + JetBrains Mono — ne Inter-as-display.
 - BEM arba panaši metodologija.
 - Responsive mobile-first.
@@ -226,7 +226,7 @@ Prieš commit / PR:
 ---
 
 **Paskutinis atnaujinimas:** 2026-09-03  
-**Produkto kanonas:** `/en/` (EN) — spine 1/2/3/5 → `#cmo-safety` → `#creative-brief` → `#cmo-scenarios` → `#pro-contents`; Pro owns full 10  
-**Dizaino sistema:** STYLEGUIDE **1.6** Product Operator  
+**Produkto kanonas:** `/en/` (EN) — Hero → open `#creative-brief` → 2 PDF cards → library 1/2/3/5 + `#pro-contents`; Pro owns full 10  
+**Dizaino sistema:** STYLEGUIDE **1.6.1** Product Operator  
 **Build šaltinis:** root `index.html` (legacy struktūra) → `lt/` (užšaldyta) + `en/` (kanonas)  
 **Projekto tipas:** Statinis HTML, CSS sluoksniai, inline JS `index.html`, locale build (`scripts/build-locale-pages.js`)

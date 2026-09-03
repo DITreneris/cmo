@@ -14,7 +14,7 @@
 
 We sell a **content operating system** for in-house marketing teams. We deliver it as printable PDF kits plus a Markdown companion. The PDF is the delivery format, not the product story.
 
-The free EN layer sells "Content AI System" via **4 core interactive workflows** (prompts 1, 2, 3, 5 — default hero path) plus safety + the **creative brief builder** (secondary); prompts 4/6–10 appear in the `#pro-contents` catalog (not faux prompt cards) before the storefront. See [config/brand-seo.json](../config/brand-seo.json). The paid layer must speak the same language so the funnel reads as one product, not a separate document download.
+The free EN layer sells "Content AI System" via the **open creative brief builder** (hero primary) plus **4 core interactive workflows** (prompts 1, 2, 3, 5 — display 1–4 — library after PDF); prompts 4/6–10 appear in the `#pro-contents` catalog (not faux prompt cards) after the storefront. See [config/brand-seo.json](../config/brand-seo.json). The paid layer must speak the same language so the funnel reads as one product, not a separate document download.
 
 ---
 

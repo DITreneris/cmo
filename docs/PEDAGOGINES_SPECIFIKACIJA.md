@@ -67,12 +67,12 @@
 
 ## 5. Vartotojo kelionė (žingsniai)
 
-1. **Atėjimas** → Hero **spine-first** (EN primary: Start your first workflow → `#block1`; secondary: Build a creative brief → `#creative-brief`).
-2. **Kontekstas** – optional `#cmo-context` (before progress); then progress + jump.
-3. **Spine** – contiguous interactive prompts **1, 2, 3, 5** (categories Plan / Create / Check / Improve). Progress 0/4.
-4. **Brief (EN)** – `#creative-brief` after prompt 5 (image JTBD; not required for spine proof).
-5. **Teasers** – 4, 6–10 after brief → Pro storefront (full META/INPUT/OUTPUT offline).
-6. **Kas toliau?** – `#cmo-safety`, scenarios, FAQ, storefront (EN); bendruomenė; footer.
+1. **Atėjimas** → Hero brief-builder sample (EN primary: Start the builder → `#creative-brief`; secondary: View kits → `#pdf-storefront`).
+2. **Use now** – EN `#creative-brief` (`#cb-builder` open).
+3. **Kits** – 2 PDF cards (Starter + Complete); Pro = text link.
+4. **Library** – prompts 1, 2, 3, 5 (display 1–4: Plan / Create / Check / Improve). Progress 0/4. `#cmo-context` closed, prie Prompt 1.
+5. **Pro catalog** – `#pro-contents` 4, 6–10 after library (full META/INPUT/OUTPUT offline).
+6. **Kas toliau?** – `#cmo-safety`, scenarios, FAQ; bendruomenė; footer.
 
 ---
 
