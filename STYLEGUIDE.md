@@ -17,7 +17,7 @@ Spin-off Nr. 2 (Rinkodaros vadovo turinio DI sistema) naudoja **Prompt Anatomy**
 - Tipografija: Fraunces = marketing H1; visa produkto UI = Source Sans 3. Inter nenaudojamas.
 - Trys paviršiai: `page` | `panel` | `accent` – ne kiekviena sekcija = kortelė; open lieka open.
 - Hero = full-bleed light plokštuma; pirmas viewport = brand + H1 + viena eilutė + spine-first CTA + **workflow diagram**.
-- Gold ≈ **5%**: primary CTA, selected/focus, tiny highlights – ne kiekvienas border/link/chip.
+- Gold ≈ **5%**: primary CTA fill, selected/focus ring, surface/border accents – **never** body text or link `color` (use ink `--color-text-primary`; gold fails WCAG AA as text on light).
 - Elevations: **0** (border only) + **1** (subtle); optional stronger shadow tik `.hero-diagram`.
 - Radii: **8 / 12 / 16** only; pill tik status labels.
 - Skaitomumas: body 17px, prose `max-width: 70ch`.
@@ -45,11 +45,11 @@ Skalė: caption 12 → small 14 → body 17 → bodyLg 18 → title 1.35rem → 
 
 **Glossary:** Prompt Anatomy = brand; Content AI System = product; **workflow** = free spine unit (1/2/3/5); **prompt** = copyable body; **brief** = secondary tool; **Pro kit** = full 10 offline.
 
-1. Hero: logo + compact lang; H1 once; `#heroProof`; trust chips (No signup · ChatGPT + Claude · 4 workflows free); primary `#heroCtaSpine` **Start your first workflow**; `#heroCtaBrief` **text link**; `.hero-diagram` (pipeline modules + caption only — no outputs row / tagline)  
+1. Hero: logo + sticky `#siteNav` (Workflows · Brief builder · Pricing); **no lang switcher**; H1 once; `#heroProof` with free→paid anchor; trust chips (4 workflows free · Brief builder included · Full kit from `$3.99`); primary `#heroCtaSpine` **Start your first workflow**; `#heroCtaBrief` **text link**; `.hero-diagram` (pipeline modules + caption only — no outputs row / tagline)  
 2. `#executive-summary` — quiet usage sentence only (no second start CTA)  
 3. Optional copy tips (`#instructions` details)  
 4. `#cmo-context` (collapsed)  
-5. Progress of 4 workflows + jump (1·2·3·5 · Pro · Brief · FAQ; no provider hub)  
+5. Progress of 4 workflows + jump (1·2·3·5 · Pricing · Brief · FAQ; no provider hub)  
 6. Spine prompts 1→2→3→5  
 7. `#cmo-safety` → `#creative-brief` → `#cmo-scenarios`  
 8. `#pro-contents` catalog → storefront → FAQ → `#prompt-basics` → rest 

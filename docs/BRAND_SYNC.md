@@ -56,10 +56,12 @@ Mother contract: [DITreneris/promptanatomy `docs/sibling_memo.md`](https://githu
 
 | Surface | Rule |
 |---------|------|
-| EN `/en/` `.footer-product-link` | `Part of Prompt Anatomy · Training & checkout → promptanatomy.app` |
+| EN `/en/` `.footer-product-link` | `Part of Prompt Anatomy · Methodology at promptanatomy.app` |
 | Href | `https://www.promptanatomy.app/?utm_source=space&utm_medium=entity_footer&utm_campaign=ecosystem` |
 | LT | Frozen — keep legacy spin-off line until Orchestrator snapshot refresh |
-| Scope | Footer entity line only; not storefront CTAs, not a new promo component |
+| Scope | Footer entity line only; not storefront CTAs, checkout routing, or a new promo component |
+
+Checkout stays on `promptanatomy.space` through the product cards and their live Stripe Payment Links. The `.app` footer link is methodology / brand context only.
 
 ---
 

@@ -1,6 +1,6 @@
 # Template migration backlog (Phase 4b — deferred)
 
-**Status:** Not scheduled. Separate Orchestrator scope.
+**Status:** Not scheduled. Separate Orchestrator scope. Includes UX Conversion Audit **P2** (collapse 1,640-line inline `<style>` + `!important` in `components.css`) — that is engineering debt, **not** R2 GEO.
 
 ## Problem
 

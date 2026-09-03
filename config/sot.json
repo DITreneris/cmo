@@ -82,7 +82,7 @@
     },
     {
       "q": "Do I need all 10 prompts?",
-      "a": "No. Free: 4 workflows (prompts 1, 2, 3, 5) plus the creative brief builder. Pro teasers cover the rest — full META/INPUT/OUTPUT bodies ship in the Pro kit (full 10 offline)."
+      "a": "No. Free: 4 workflows (prompts 1, 2, 3, 5) plus the creative brief builder. The Pro kit lists the rest — full META/INPUT/OUTPUT bodies offline (full 10)."
     },
     {
       "q": "Why is this better than random prompts?",
@@ -94,7 +94,7 @@
     },
     {
       "q": "What is the creative brief builder?",
-      "a": "A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT, Ideogram, Midjourney, or similar. No account. It demonstrates the same tool-building idea Pro teaches for teams."
+      "a": "A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT or Ideogram. No account. It demonstrates the same tool-building idea Pro teaches for teams."
     },
     {
       "q": "Is this a course or a tool?",
@@ -106,11 +106,15 @@
     },
     {
       "q": "How do you protect brand voice before publishing?",
-      "a": "Set session context and non-negotiable rules, then run the pre-publish safety reviewer (#cmo-safety) to check facts, tone, legal/trust risk, and CTA ownership before you ship."
+      "a": "Set session context and non-negotiable rules, then run the pre-publish safety reviewer to check facts, tone, legal/trust risk, and CTA ownership before you ship."
     },
     {
       "q": "Who is this for?",
       "a": "CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence."
+    },
+    {
+      "q": "How is this different from prompt templates?",
+      "a": "You get a sequence, clear fields, evaluation, and a KPI loop — not a one-off output."
     },
     {
       "q": "Does this work for B2B SaaS, services, and ecommerce?",
@@ -133,9 +137,10 @@
     "placeholderHref": "/coming-soon.html",
     "deliveryPromise": "Email delivery within 5 minutes. If your link does not arrive in 5 minutes, email info@promptanatomy.app and we will resend immediately.",
     "storefrontHead": {
-      "eyebrow": "Offline system kits",
-      "title": "Install your marketing content operating system — offline",
-      "lead": "Same Plan → Create → Check → Improve system as the free spine — PDF for print, workshops, and team rollout. Not a live app."
+      "eyebrow": "Use · Build · Install",
+      "title": "Take the Content AI System from solo workflow to team operating kit",
+      "lead": "Start free in the browser. Buy the offline kit when you want the printable cadence, full 10-prompt system, workshop flow, and team license.",
+      "outcomeLine": "Free gives you 4 browser workflows plus the brief builder. Starter helps you use the system this week; Pro helps you build reusable team workflows; Complete installs both in one checkout for $10.99 instead of $12.98 separately."
     },
     "comparisonTable": {
       "columns": ["free", "starter", "pro"],
@@ -163,8 +168,9 @@
         "publicId": "cmo-starter",
         "name": "CMO AI Content System · Starter",
         "tierTag": "Use",
-        "tierPromise": "Ready-made workflows for week 1",
-        "subtitle": "14-page kit — use the system, week-1 cadence in 30 minutes",
+        "tierPromise": "Use the system this week",
+        "subtitle": "14-page PDF for week-1 execution: cadence, quickstart, and a worked review",
+        "ctaLabel": "Get Starter · $3.99",
         "priceUsd": 3.99,
         "priceCents": 399,
         "compareAtUsd": 7.99,
@@ -178,9 +184,9 @@
           "assets/pdf-covers/cmo-starter-preview-3.png"
         ],
         "bullets": [
-          "14-page PDF: week-1 cadence + worked weekly review",
-          "10 prompt minis + pre-publish safety pass",
-          "Team license for one in-house marketing team"
+          "Set up your first weekly content cadence without rebuilding prompts from scratch",
+          "Use 10 prompt minis at a glance plus a pre-publish safety pass",
+          "Print and share inside one in-house marketing team"
         ]
       },
       {
@@ -188,8 +194,9 @@
         "publicId": "cmo-pro",
         "name": "CMO AI Content System · Pro",
         "tierTag": "Build",
-        "tierPromise": "Build your own reusable AI tools",
-        "subtitle": "30-page operational PDF — build reusable workflows for teams",
+        "tierPromise": "Build reusable team workflows",
+        "subtitle": "30-page operational PDF + Markdown companion for reusable AI content systems",
+        "ctaLabel": "Get Pro · $8.99",
         "priceUsd": 8.99,
         "priceCents": 899,
         "compareAtUsd": 17.99,
@@ -204,9 +211,9 @@
           "assets/pdf-covers/cmo-pro-preview-3.png"
         ],
         "bullets": [
-          "Full 10 prompts with META / INPUT / OUTPUT bodies",
-          "Build reusable prompt systems and workflow templates",
-          "Workshop + quality rubric + Markdown companion"
+          "Get full META / INPUT / OUTPUT bodies for all 10 prompts",
+          "Turn repeatable marketing jobs into reusable workflow templates",
+          "Run the team workshop with quality rubric and Markdown companion"
         ]
       },
       {
@@ -214,11 +221,12 @@
         "publicId": "cmo-bundle",
         "name": "CMO AI Content System · Complete Kit",
         "tierTag": "Install",
-        "tierPromise": "Install the full content operating system",
-        "subtitle": "Starter (Use) + Pro (Build) — both PDFs, one checkout",
+        "tierPromise": "Install the full offline system",
+        "subtitle": "Starter + Pro together: 44 pages, 2 PDFs, Markdown companion, one checkout",
+        "ctaLabel": "Get Complete · $10.99",
         "priceUsd": 10.99,
         "priceCents": 1099,
-        "compareAtUsd": 19.99,
+        "compareAtUsd": 12.98,
         "pages": 44,
         "format": "2 PDFs (Starter 14p + Pro 30p)",
         "downloadFileName": "cmo-prompt-kit-bundle",
@@ -229,9 +237,9 @@
           "assets/pdf-covers/cmo-pro-preview-3.png"
         ],
         "bullets": [
-          "Starter + Pro PDFs in one checkout",
-          "Pro Markdown companion included",
-          "Team license for one in-house marketing team"
+          "Get Starter and Pro together in one checkout",
+          "Give your team both the week-1 cadence and the reusable workflow method",
+          "Includes Pro Markdown companion and one in-house team license"
         ]
       }
     ]

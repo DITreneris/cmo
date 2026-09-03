@@ -276,7 +276,7 @@
         }
 
         .header-trust a:hover {
-            color: var(--accent-gold-dark);
+            color: var(--hero-ink);
         }
 
         .header-trust a:focus-visible {
@@ -983,7 +983,7 @@
         }
 
         .code-block::before {
-            content: 'Spausk čia ir nukopijuok';
+            content: 'Click to copy';
             position: absolute;
             top: 12px;
             right: 20px;
@@ -1240,6 +1240,20 @@
             outline: 3px solid var(--accent-gold);
             outline-offset: 2px;
             border-radius: 6px;
+        }
+
+        .ecosystem-strip-related {
+            margin: 14px 0 0;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            color: var(--muted, #475569);
+        }
+
+        .ecosystem-strip-related a {
+            color: var(--text);
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
         /* ===== TOAST ===== */
@@ -1699,10 +1713,11 @@
                         <span>Prompt Anatomy</span>
                     </span>
                 </p>
-                <div class="lang-switcher" role="group" aria-label="Kalbos pasirinkimas">
-                    <button type="button" class="lang-btn is-active" id="langLtBtn" aria-label="Perjungti į lietuvių kalbą" aria-pressed="true">LT</button>
-                    <button type="button" class="lang-btn" id="langEnBtn" aria-label="Switch to English" aria-pressed="false">EN</button>
-                </div>
+                <nav class="site-nav no-print" id="siteNav" aria-label="Primary navigation">
+                    <a href="#block1" id="navWorkflows">Workflows</a>
+                    <a href="#creative-brief" id="navBrief">Brief builder</a>
+                    <a href="#pdf-storefront" id="navPricing">Pricing</a>
+                </nav>
             </div>
             <div class="header-grid">
                 <div class="header-copy">
@@ -2083,7 +2098,7 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 </ul>
             </section>
             <div class="prompt-basics-defs" id="definitions" aria-labelledby="definitions-title">
-                <h3 class="visually-hidden" id="definitions-title">Sąvokos</h3>
+                <h3 class="visually-hidden" id="definitions-title">Definitions</h3>
                 <p><strong>Promptas:</strong> aiški instrukcija DI įrankiui su kontekstu, tikslu ir pageidaujamu formatu.</p>
                 <p><strong>Prompt Anatomy:</strong> framework, kuris suvienodina promptų struktūrą ir padaro rezultatą pakartojamą.</p>
                 <p><strong>Turinio DI sistema:</strong> procesas + promptų seka, kuri paverčia „idėjas“ į planą, publikavimą ir matuojamus veiksmus.</p>
@@ -2097,8 +2112,8 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 <li role="listitem"><a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Oficiali metodika (promptanatomy.app)</a></li>
                 <li role="listitem"><a href="https://t.me/prompt_anatomy" target="_blank" rel="noopener noreferrer">Telegram grupė</a></li>
                 <li role="listitem"><a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a></li>
-                <li role="listitem"><a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader (CEO/COO)</a></li>
             </ul>
+            <p class="ecosystem-strip-related">Susijęs: <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO rinkinys)</p>
         </section>
 
         <!-- FOOTER -->
@@ -2154,6 +2169,7 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
         <span>Nukopijuota.</span>
     </div>
 
+    <script src="js/va-track.js"></script>
     <script src="js/en-prompt-bodies-inline.js"></script>
     <script>
         (function() {
@@ -2253,8 +2269,6 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
 
                 var skip = document.querySelector('.skip-link');
                 if (skip) skip.textContent = 'Skip to content';
-                var h1 = q('.header h1');
-                if (h1) h1.innerHTML = 'Content AI System<br>for Marketing Leaders';
                 setText('#heroLead', 'Run repeatable marketing workflows instead of starting from a blank prompt.');
                 setText('#heroProof', 'From campaign plan to quality check in one repeatable system.');
                 setText('#hero-diagram-label', 'Plan → Create → Check → Improve');
@@ -2278,16 +2292,21 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                     ctaSpine.textContent = 'Start your first workflow';
                     setLabel(ctaSpine, 'Start your first workflow – go to workflow 1');
                 }
-                setText('#heroTrustPill1', 'No signup');
-                setText('#heroTrustPill2', 'ChatGPT + Claude');
-                setText('#heroTrustPill3', '4 workflows free');
+                setText('.header h1', 'Build a 30-day Content AI System your team can reuse');
+                setText('#heroLead', 'Copy the Plan → Create → Check → Improve workflow into ChatGPT or Claude, then take the full kit offline when your team needs the system.');
+                setText('#heroProof', '4 workflows free on this page. Full 10-prompt system kits start at $3.99.');
+                setText('#heroTrustPill1', '4 workflows free');
+                setText('#heroTrustPill2', 'Brief builder included');
+                setText('#heroTrustPill3', 'Full kit from $3.99');
 
                 setText('#executive-summary-title', 'How to use');
                 setText('#howItWorksLead', 'Copy → paste into ChatGPT or Claude.');
                 setText('#prompt-basics-summary', 'Prompt basics (1 min)');
                 var progJump = el('progressJump');
                 if (progJump) progJump.setAttribute('aria-label', 'Quick jump between prompts');
-                setText('#progressJumpPro', 'Pro');
+                setText('#progressJumpPro', 'Pricing');
+                var pricingJump = el('progressJumpPro');
+                if (pricingJump) pricingJump.setAttribute('href', '#pdf-storefront');
                 setText('#progressJumpCreative', 'Brief');
                 setText('#progressJumpFaq', 'FAQ');
                 setText('#stickyPromptBarCopyText', 'Copy');
@@ -2437,16 +2456,24 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 ];
                 var faqMoreAnswerTexts = [
                     '20–30 minutes is enough if you run Create → Check → Improve.',
-                    'A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT, Ideogram, Midjourney, or similar. No account. It demonstrates the same tool-building idea Pro teaches for teams.',
+                    'A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT or Ideogram. No account. It demonstrates the same tool-building idea Pro teaches for teams.',
                     'A copy-paste Content AI System you can use immediately — not a long course. Free spine + brief in the browser; depth offline in the kits.',
                     'It is a portable prompt system you run on ChatGPT or Claude — not another SaaS seat. Structured workflows replace random chats and reduce tool sprawl.',
-                    'Set session context and non-negotiable rules, then run the pre-publish safety reviewer (#cmo-safety) to check facts, tone, legal/trust risk, and CTA ownership before you ship.',
+                    'Set session context and non-negotiable rules, then run the pre-publish safety reviewer to check facts, tone, legal/trust risk, and CTA ownership before you ship.',
                     'CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence.',
                     'You get a sequence, clear fields, evaluation, and a KPI loop — not a one-off output.',
                     'Yes. Swap the audience, offer, channels, and metrics — the structure stays the same.'
                 ];
+                var faqBrandVoiceHtml = 'Set session context and non-negotiable rules, then run the <a href="#cmo-safety">pre-publish safety reviewer</a> to check facts, tone, legal/trust risk, and CTA ownership before you ship.';
                 faqMoreSummaries.forEach(function(item, i) { if (faqMoreSummaryTexts[i]) item.textContent = faqMoreSummaryTexts[i]; });
-                faqMoreAnswers.forEach(function(item, i) { if (faqMoreAnswerTexts[i]) item.textContent = faqMoreAnswerTexts[i]; });
+                faqMoreAnswers.forEach(function(item, i) {
+                    if (!faqMoreAnswerTexts[i]) return;
+                    if (faqMoreSummaryTexts[i] === 'How do you protect brand voice before publishing?') {
+                        item.innerHTML = faqBrandVoiceHtml;
+                    } else {
+                        item.textContent = faqMoreAnswerTexts[i];
+                    }
+                });
                 var faqEco = q('.faq-eco-hint');
                 if (faqEco) {
                     faqEco.innerHTML = 'For full methodology and executive context, use the <a href="#ecosystem-strip">ecosystem section</a> – all links in one place.';
@@ -2461,25 +2488,28 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
 
                 setText('#ecosystem-strip-title', 'Prompt Anatomy ecosystem');
                 var ecoIntro = q('.ecosystem-strip-intro');
-                if (ecoIntro) ecoIntro.textContent = 'One place: methodology, community, email, and related kits.';
+                if (ecoIntro) ecoIntro.textContent = 'Methodology and community. Checkout stays on this page.';
                 var ecoLis = qa('.ecosystem-strip-list li');
                 var ecoTexts = [
                     '<a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Official methodology (promptanatomy.app)</a>',
                     '<a href="https://t.me/prompt_anatomy" target="_blank" rel="noopener noreferrer">Telegram group</a>',
-                    '<a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a>',
-                    '<a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader (CEO/COO)</a>'
+                    '<a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a>'
                 ];
                 ecoLis.forEach(function(li, i) { if (ecoTexts[i]) li.innerHTML = ecoTexts[i]; });
+                var ecoRelated = q('.ecosystem-strip-related');
+                if (ecoRelated) {
+                    ecoRelated.innerHTML = 'Related: <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO kit)';
+                }
 
                 var footH3 = q('.footer h3');
                 if (footH3) footH3.innerHTML = 'Go win your market <span aria-hidden="true">🚀</span>';
                 var footP = qa('.footer p');
                 if (footP.length >= 1) footP[0].textContent = 'Remember to replace [audience], [pain point], [unique selling proposition], [channel] and other placeholders with your data';
                 if (footP.length >= 2) {
-                    footP[1].innerHTML = 'Part of Prompt Anatomy · Training &amp; checkout → <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>';
+                    footP[1].innerHTML = 'Part of Prompt Anatomy · Methodology at <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>';
                 }
                 var tags = qa('.footer .tag');
-                var tagTexts = ['Marketing', '10 prompts', 'Action focus', 'Leads and metrics'];
+                var tagTexts = ['Marketing', '4 free workflows', 'Action focus', 'Full 10 in Pro'];
                 tags.forEach(function(t, i) {
                     if (tagTexts[i]) {
                         var em = t.querySelector('span[aria-hidden="true"]');
@@ -2676,6 +2706,9 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 button.setAttribute('aria-label', uiText('Promptas sėkmingai nukopijuotas', 'Prompt copied successfully'));
                 (function() {
                     var pid = button.getAttribute('data-prompt-id') || '';
+                    if (pid === 'prompt1' && typeof window.trackEvent === 'function') {
+                        window.trackEvent('copy_prompt_1');
+                    }
                     var n = pid.replace('prompt', '');
                     var isNumbered = /^\d+$/.test(n);
                     var message = '';
@@ -3182,6 +3215,16 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                         }
                     });
                 }
+
+                document.addEventListener('click', function (event) {
+                    var target = event.target;
+                    if (!target || !target.closest) return;
+                    var cta = target.closest('.pdf-card-cta[data-product-id="starter"]');
+                    if (!cta) return;
+                    if (typeof window.trackEvent === 'function') {
+                        window.trackEvent('click_starter');
+                    }
+                });
 
             });
         })();

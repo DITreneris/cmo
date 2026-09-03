@@ -46,6 +46,8 @@ test.describe('paid PDF storefront (en/index.html)', () => {
     await expect(page.locator('#pdf-card-starter')).toContainText('$3.99');
     await expect(page.locator('#pdf-card-pro')).toContainText('$8.99');
     await expect(page.locator('#pdf-card-bundle')).toContainText('$10.99');
+    await expect(page.locator('#pdf-card-bundle')).toContainText('separately $12.98');
+    await expect(page.locator('#pdf-card-bundle')).not.toContainText('was $19.99');
   });
 
   test('comparison table is not rendered', async ({ page }) => {

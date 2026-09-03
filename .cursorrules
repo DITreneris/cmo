@@ -218,15 +218,15 @@ Prieš commit / PR:
 ## Pagalba
 
 1. [docs/INDEX.md](docs/INDEX.md) – kur rasti, ką skaityti.
-2. [AGENTS.md](AGENTS.md) – agentų rolės + lessons §10 (JTBD/GEO 11–13; no repo-local skills).
+2. [AGENTS.md](AGENTS.md) – agentų rolės + lessons §10 (JTBD/GEO 11–13; R1-support 16–20; no repo-local skills).
 3. [docs/AGENT_SOT.md](docs/AGENT_SOT.md) – ops SOT.
 4. [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – kontraktas.
 5. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) – dokumentų valdymas.
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-08-11  
-**Produkto kanonas:** `/en/` (EN) — spine-first (1/2/3/5) then `#creative-brief` then teasers; Pro owns full 10  
+**Paskutinis atnaujinimas:** 2026-09-03  
+**Produkto kanonas:** `/en/` (EN) — spine 1/2/3/5 → `#cmo-safety` → `#creative-brief` → `#cmo-scenarios` → `#pro-contents`; Pro owns full 10  
 **Dizaino sistema:** STYLEGUIDE **1.6** Product Operator  
 **Build šaltinis:** root `index.html` (legacy struktūra) → `lt/` (užšaldyta) + `en/` (kanonas)  
 **Projekto tipas:** Statinis HTML, CSS sluoksniai, inline JS `index.html`, locale build (`scripts/build-locale-pages.js`)

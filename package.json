@@ -22,7 +22,9 @@
     "pdf:export-md": "node scripts/export-pro-prompts-md.js",
     "pdf:previews": "node scripts/export-pdf-previews.js",
     "pdf:upload-blob": "node scripts/upload-pdfs-to-blob.js",
+    "pdf:upload-blob:dry": "node scripts/upload-pdfs-to-blob.js --dry-run",
     "check:fulfillment": "node scripts/check-fulfillment-env.js",
+    "check:prod": "node scripts/check-prod-health.js",
     "seo:indexnow": "node scripts/indexnow-ping.js",
     "seo:indexnow:diff": "node scripts/indexnow-ping.js --since-head"
   },

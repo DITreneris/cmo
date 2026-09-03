@@ -2,7 +2,7 @@
 
 **Paskirtis:** Vienas įėjimo taškas žmonėms ir AI agentams – ką skaityti pirmiausia pagal rolę ar užduotį. Kanoniniai kodas ir ribos: [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + `npm test`.
 
-**Paskutinis atnaujinimas:** 2026-08-11 (roadmap A→E→light B→C; spine-first + JTBD/GEO; LT užšaldyta)
+**Paskutinis atnaujinimas:** 2026-09-03 (GO_LIVE_RUNBOOK; R1 Stripe still active; GEO baseline harden ≠ R2 exit)
 
 ---
 
@@ -19,8 +19,8 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0.
 | Jei tu… | Atidaryk |
 |---------|----------|
 | Naujas projekte | [README.md](../README.md) → tada šį indeksą |
-| Orchestrator / prioritetai | [roadmap.md](../roadmap.md) (R1–R4) + [todo.md](../todo.md) (aktyvus R1) + [AGENTS.md](../AGENTS.md) §0.2 |
-| AI agentas (Cursor ir kt.) | [.cursorrules](../.cursorrules) + [AGENTS.md](../AGENTS.md) (§0.1 free surface, §0.2 roadmap, §10 lessons incl. JTBD/GEO + §10.14) + [AGENT_SOT.md](AGENT_SOT.md) + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 |
+| Orchestrator / prioritetai | [roadmap.md](../roadmap.md) (R1–R4 + Audit mapping) + [todo.md](../todo.md) (aktyvus R1 Stripe; R1-support leftovers) + [AGENTS.md](../AGENTS.md) §0.2 |
+| AI agentas (Cursor ir kt.) | [.cursorrules](../.cursorrules) + [AGENTS.md](../AGENTS.md) (§0.1 free surface, §0.2 roadmap, §10 lessons incl. JTBD/GEO + §10.14–20 R1-support) + [AGENT_SOT.md](AGENT_SOT.md) + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 |
 | Keiti tik angliškus tekstus / promptus (kanonas) | [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0 + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`BULLET_PROOF_PROMPTS.md`](BULLET_PROOF_PROMPTS.md) |
 | Keiti LT (retas snapshot refresh) | Orchestrator scope + [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §4 |
 | Keiti EN promptų `<pre>` turinį | [`../data/en-prompt-bodies.json`](../data/en-prompt-bodies.json) → `npm run build` |
@@ -29,8 +29,8 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0.
 | **Keiti mokamą PDF tarpinę (kainos, license, Stripe)** | [`memo_pdf.md`](../memo_pdf.md) + [`config/sot.json`](../config/sot.json) + [`LEGACY_GOLDEN_STANDARD.md` §7](LEGACY_GOLDEN_STANDARD.md) |
 | **Pridėti / atnaujinti PDF turinį** | [`docs/pdf-source/cmo-{starter,pro}.html`](../docs/pdf-source/) → `npm run pdf:export` (14/30 page-count gate) |
 | **Pozicionavimas / pasiūlymo architektūra** | [`docs/PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) + [`docs/OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md) |
-| **EN creative brief builder (`#creative-brief`)** | Po spine `#block5`, prieš teasers — [`docs/CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md) + [`config/sot.json`](../config/sot.json) `copy.creativeBrief` + [`js/creative-brief.js`](../js/creative-brief.js) |
-| **Įvesti live Stripe / R1 go-live** | [todo.md](../todo.md) → [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) (R1 ops SSOT) + [DEPLOYMENT.md §2.5](../DEPLOYMENT.md) + [`config/sot.json`](../config/sot.json) |
+| **EN creative brief builder (`#creative-brief`)** | Po `#block5` → `#cmo-safety` → brief → `#cmo-scenarios` → `#pro-contents` — [`docs/CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md) + [`config/sot.json`](../config/sot.json) `copy.creativeBrief` + [`js/creative-brief.js`](../js/creative-brief.js) |
+| **Įvesti live Stripe / R1 go-live** | [docs/GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md) (komandų seka) → [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) (Dashboard + env SSOT) + [todo.md](../todo.md) + [DEPLOYMENT.md §2.5](../DEPLOYMENT.md) |
 | **Produkto roadmap** | [roadmap.md](../roadmap.md) — Ambition A→E→light B→C |
 | **GEO / SEO surfaces** | [docs/AGENT_SOT.md](AGENT_SOT.md) §5 + [`scripts/geo-surfaces.js`](../scripts/geo-surfaces.js) (`llms.txt` hash hubs) |
 | **EN JTBD messaging (search intent)** | [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 + [`config/sot.json`](../config/sot.json) `frontFaq` / `knowsAbout` / `storefrontHead` + [`config/brand-seo.json`](../config/brand-seo.json); FAQ triple sync ([AGENTS.md](../AGENTS.md) §10.13) — **ne** nauji `/en/ai-marketing-*` hub'ai |
@@ -72,9 +72,10 @@ index.html (legacy struktūrinis šaltinis) + data/en-*.json (kanonas) + data/lt
        1. scripts/export-favicons.js → favicon PNG pack
        2. scripts/generate-og.js → og.png (1200×630; brand-seo + design-tokens)
        3. scripts/build-locale-pages.js → lt/index.html, en/index.html, js/en-prompt-bodies-inline.js
-          (inject: cmo-context, creative-brief EN, prompt-expected×4 spine, cmo-safety, cmo-scenarios, __CMO_COMPILE)
+          (inject: cmo-context, creative-brief EN, prompt-expected×4 spine, cmo-safety, cmo-scenarios, __CMO_COMPILE;
+          `geo-surfaces.js` rašo robots/sitemap/llms/JSON-LD iš šio skripto)
        4. scripts/vercel-export-public.js → public/ (Vercel deploy artefaktas)
-    → npm test (structure + design-system + a11y smoke + lint:html + lint:js)
+    → npm test (structure + registry + design-system + a11y smoke + fulfillment-config + lint)
 ```
 
 | Failas / katalogas | Dokumentuota |
@@ -101,9 +102,18 @@ index.html (legacy struktūrinis šaltinis) + data/en-*.json (kanonas) + data/lt
 | [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) | Golden standard: ID, JS API, CMO v2 kontraktas, checklist |
 | [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) | EN kanonas, LT freeze, build, routing |
 | [BULLET_PROOF_PROMPTS.md](BULLET_PROOF_PROMPTS.md) | Promptų META/INPUT/OUTPUT standartas |
-| [PEDAGOGINES_SPECIFIKACIJA.md](PEDAGOGINES_SPECIFIKACIJA.md) | Auditorija, tonas, seka 1–10 |
+| [PEDAGOGINES_SPECIFIKACIJA.md](PEDAGOGINES_SPECIFIKACIJA.md) | Auditorija, tonas; free spine 1/2/3/5, full 1–10 Pro |
 | [QA_STANDARTAS.md](QA_STANDARTAS.md) | QA kriterijai, nuoroda į spinoff01 |
 | [TESTAVIMAS.md](TESTAVIMAS.md) | Gyvas testavimas po deploy |
+| [AGENT_SOT.md](AGENT_SOT.md) | Ops: build, deploy, GEO, commerce |
+| [BRAND_SYNC.md](BRAND_SYNC.md) | Mother brand tokens + entity footer |
+| [CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md) | EN `#creative-brief` DOM + SOT |
+| [OFFER-ARCHITECTURE.md](OFFER-ARCHITECTURE.md) | Free vs paid matrica, funnel |
+| [PRODUCT-POSITIONING.md](PRODUCT-POSITIONING.md) | Paid layer + JTBD §4 |
+| [security.md](security.md) | Headers, CSP, secrets |
+| [language-guidelines-en-lt.md](language-guidelines-en-lt.md) | Viešo UI kalba |
+| [PDF_A11Y_CHECKLIST.md](PDF_A11Y_CHECKLIST.md) | Rankinis PDF a11y prieš release |
+| [TEMPLATE_MIGRATION_BACKLOG.md](TEMPLATE_MIGRATION_BACKLOG.md) | Parked template / CSS dual-layer |
 
 ---
 

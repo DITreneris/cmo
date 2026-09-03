@@ -14,7 +14,7 @@ Distinct from `#cmo-context` (text-prompt CONTEXT prepend on Copy). Soft link: A
 
 After `#cmo-safety` (post-spine free loop), before `#cmo-scenarios` and `#pro-contents` catalog (`data-teaser-prompt` 4, 6–10). Secondary hero CTA on EN (`#heroCtaBrief`); primary is `#heroCtaSpine` → `#block1`. Anchor in root `index.html`: `<!-- CMO_CREATIVE_BRIEF -->`. Injected by [`scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) on EN only (LT strips the anchor, `#heroCtaBrief`, and `#progressJumpCreative`).
 
-**Default UI:** teaser only (eyebrow + H2 + lead). Full builder lives in closed `<details id="cb-builder">` (“Open brief builder”) so the free path is not a mini-app wall after safety.
+**Default UI:** teaser only (eyebrow + H2 + lead). Full builder lives in closed `<details id="cb-builder">` (“Open brief builder”) so the free path is not a mini-app wall after safety. Opening the builder once fires `open_brief` via [`js/va-track.js`](../js/va-track.js) (no-op without Vercel Analytics).
 
 ## DOM contract
 

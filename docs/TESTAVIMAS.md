@@ -43,16 +43,16 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 
 ### UX path cut (EN kanonas, DS 1.6)
 
-- [ ] **Hero:** full-bleed; brand mark; primary = Start your first workflow (`#heroCtaSpine` → `#block1`); secondary = brief text link (`#heroCtaBrief`); `#heroProof`; trust chips `#heroTrustPill1/2/3`; slim `.hero-diagram` (modules + caption only — **no** outputs row / tagline / cycle-stepper); quiet usage strip; nėra mini-prompt demo ir hero Telegram nuorodos.
+- [ ] **Hero:** full-bleed; brand mark; sticky `#siteNav` = Workflows / Brief builder / Pricing; primary = Start your first workflow (`#heroCtaSpine` → `#block1`); secondary = brief text link (`#heroCtaBrief`); `#heroProof` su free→paid anchor; trust chips `#heroTrustPill1/2/3`; slim `.hero-diagram` (modules + caption only — **no** outputs row / tagline / cycle-stepper); quiet usage strip; nėra mini-prompt demo, hero Telegram nuorodos ar lang switcher.
 - [ ] **Type:** Fraunces display (hero H1 only) + Source Sans 3 UI (ne Inter); body ~17px; prose ne full-bleed wall.
 - [ ] **Executive summary:** `#executive-summary.objectives--skim` – quiet usage sentence only; claims = 4 workflows + brief (ne „100 assets / 45 min“).
 - [ ] **Instructions:** `#copy-tips` as optional `<details>`; **no** `#framework-schema` / provider hub.
 - [ ] **CMO context:** closed `#cmo-context` **prieš** progress; forma `<details>`; kopijavimas prepend'ina kontekstą.
 - [ ] **Prompt 1 path hint:** `#prompt1PathHint` – Copy → paste into ChatGPT/Claude.
-- [ ] **Progress jump:** `#progressJump` 1·2·3·5 · Pro · Brief · FAQ; Pro = `#pro-contents`; Brief stripped on `/lt/`.
+- [ ] **Progress jump:** `#progressJump` 1·2·3·5 · Pricing · Brief · FAQ; Pricing = `#pdf-storefront`; Brief stripped on `/lt/`.
 - [ ] **Sticky bar (≤768px):** Po `#block1` pasirodo juosta; Kopijuoti / Kitas → veikia.
 - [ ] **FAQ:** 3 primary klausimai + `<details class="faq-more-details">`; title be „before you start“; JSON-LD pilnas (`frontFaq` ≥ 8).
-- [ ] **PDF storefront (EN):** 3 kortelės, **no** comparison table; live `buy.stripe.com`; Buyer FAQ `<details>`.
+- [ ] **PDF storefront (EN):** 3 Use · Build · Install maturity kortelės, **no** comparison table; live `buy.stripe.com`; Buyer FAQ `<details open>`.
 - [ ] **Free loop after spine:** thin `#cmo-safety` → EN `#creative-brief` (teaser + closed `#cb-builder`) → `#cmo-scenarios` → `#pro-contents` → storefront → FAQ → `#prompt-basics`.
 - [ ] **Meme:** 0 slotų gyvoje UI.
 
@@ -78,7 +78,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - [ ] **`/en/` storefront:** 3 kortelės; CTAs → live `buy.stripe.com` (ne `/coming-soon.html`)
 - [ ] **`/lt/`:** NĖRA `#pdf-storefront`, kainų, `buy.stripe.com`
 - [ ] **Mirror:** `MIRROR_NOTE=1` build — storefront omitted
-- [ ] **`GET /api/fulfillment-health`:** `{ ok: true, missing: [] }`
+- [ ] **`npm run check:prod`:** `{ ok: true, missing: [] }` + IndexNow key file hosted
 - [ ] **Live purchase (Starter $3.99):** email ≤5 min, download veikia, webhook 200
 - [ ] **Live purchase (Pro / Bundle):** po Starter sėkmės
 
@@ -103,13 +103,13 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 ### Pavyzdys
 
 ```markdown
-## 2026-08-11 – DS 1.5 Editorial Operator (docs + code)
+## 2026-09-03 – DS 1.6 Product Operator (docs + code)
 
 - **Testeris:** QA (repo)
 - **URL:** local `/en/` after `npm run build`
-- **Naršyklė:** `npm test` (structure 176 + design-system smoke + lint)
-- **Rezultatas:** ✅ Repo gates green. ⏳ Rankinis visual QA 320/768/1024 (full-bleed hero, Fraunces/Source Sans 3, cycle stepper, surfaces) — checklist §2 UX.
-- **Pastabos:** STYLEGUIDE 1.5; LEGACY/TESTAVIMAS/README/BRAND_SYNC aligned. Product SemVer still 1.9.0 until Orchestrator release bump.
+- **Naršyklė:** `npm test` (structure + design-system smoke + lint)
+- **Rezultatas:** ✅ Repo gates green. ⏳ Rankinis visual QA 320/768/1024 (full-bleed hero, Fraunces H1, Source Sans 3, slim hero diagram, surfaces) — checklist §2 UX.
+- **Pastabos:** STYLEGUIDE 1.6; no cycle-stepper. Product SemVer still 1.9.0 until Orchestrator release bump.
 ```
 
 ```markdown

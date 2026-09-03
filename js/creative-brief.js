@@ -473,6 +473,18 @@
     });
   });
 
+  var builder = document.getElementById('cb-builder');
+  var briefOpened = false;
+  if (builder) {
+    builder.addEventListener('toggle', function () {
+      if (!builder.open || briefOpened) return;
+      briefOpened = true;
+      if (typeof window.trackEvent === 'function') {
+        window.trackEvent('open_brief');
+      }
+    });
+  }
+
   var draft = loadDraft();
   if (draft && draft.data) {
     suppressDraft = true;

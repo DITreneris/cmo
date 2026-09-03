@@ -8,6 +8,8 @@ Kritinės užduotys prieš live checkout ant `promptanatomy.space`. Po kiekvieno
 
 ## Likę rankiniai žingsniai (Vercel + Stripe Dashboard)
 
+**Operator sequence (commands in order):** [docs/GO_LIVE_RUNBOOK.md](docs/GO_LIVE_RUNBOOK.md). Šis failas lieka Dashboard + env SSOT.
+
 Repo paruošta (SOT flip, testai, `vercel.json` build gate). **Prieš pirmą live pirkimą:**
 
 1. **Stripe Dashboard** — patvirtinti success URL + webhook + nukopijuoti `price_...` ir `whsec_...` (žr. § Stripe Dashboard).
@@ -107,7 +109,7 @@ Stripe links vis dar tikrinami `build-locale-pages.js`. Pilnas `npm test` lieka 
 ## QA prieš release
 
 - [ ] `npm run check:fulfillment` — Redis PONG, env complete (Vercel Production env; lokaliai reikia `.env`)
-- [ ] `GET https://promptanatomy.space/api/fulfillment-health` → `{ ok: true, missing: [] }` (po deploy + env)
+- [ ] `npm run check:prod` — `{ ok: true, missing: [] }` + IndexNow key file (po deploy + env)
 - [x] `/en/` — storefront: 3 kortelės, live `buy.stripe.com` (ne `/coming-soon.html`) — **repo build patvirtinta**
 - [x] `/lt/` — **NĖRA** `#pdf-storefront`, kainų, `buy.stripe.com` — **structure tests**
 - [x] Mirror (`MIRROR_NOTE=1` build) — taip pat be storefront — **structure tests**

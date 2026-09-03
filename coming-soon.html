@@ -12,68 +12,45 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #F5F7FA; color: #1A202C; line-height: 1.6; padding: 24px; }
-        main { max-width: 640px; margin: 0 auto; background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 32px; box-shadow: 0 6px 24px rgba(15, 42, 68, 0.08); }
-        h1 { font-size: 1.85rem; margin-bottom: 0.75rem; color: #0F2A44; }
-        h2 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.4rem; color: #0F2A44; }
-        p { margin-bottom: 0.85rem; }
-        a { color: #2B6CB0; }
-        .panel {
-            margin: 1.5rem 0;
-            padding: 16px 18px;
-            background: #FFF8E1;
-            border: 1px solid #F5C518;
-            border-radius: 10px;
-        }
-        .cards { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; margin: 1.25rem 0; }
-        .card { padding: 14px 16px; border: 1px solid #E2E8F0; border-radius: 10px; background: #F7FAFC; }
-        .card .name { font-weight: 700; color: #0F2A44; }
-        .card .price { font-weight: 700; }
-        .home, .lib {
-            display: inline-block; padding: 11px 20px;
-            border-radius: 8px; font-weight: 700; text-decoration: none;
-            margin: 0.5rem 0.5rem 0 0;
-        }
-        .home { background: #2F6FED; color: #fff; }
-        .home:hover { background: #1F4FBF; }
-        .lib { border: 1px solid #2B6CB0; color: #2B6CB0; }
-        .lib:hover { background: #EBF4FF; }
-        .small { font-size: 0.9rem; color: #4A5568; }
-        @media (max-width: 480px) { .cards { grid-template-columns: 1fr; } }
-    </style>
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/utilities.css">
 </head>
-<body>
-    <main aria-labelledby="cs-title">
+<body class="satellite-page">
+    <div class="satellite-shell satellite-shell--narrow">
+        <header class="satellite-header">
+            <p class="satellite-brand">Prompt Anatomy</p>
+            <a href="/en/" class="satellite-back">Back to library</a>
+        </header>
+    <main class="satellite-main" aria-labelledby="cs-title">
         <h1 id="cs-title">The paid PDFs are not on sale yet.</h1>
         <p>Live checkout opens soon on <strong>promptanatomy.space</strong>. The interactive library is already free to use - copy any prompt, run it on your audience, and ship.</p>
 
-        <div class="cards" aria-label="Planned products">
-            <div class="card">
-                <p class="name">CMO AI Content System - Starter</p>
-                <p class="small">14 pages, printable PDF. Use the system.</p>
-                <p class="price">$3.99</p>
+        <div class="satellite-card-grid" aria-label="Planned products">
+            <div class="satellite-card">
+                <p class="satellite-card-name">CMO AI Content System - Starter</p>
+                <p class="satellite-small">14 pages, printable PDF. Use the system.</p>
+                <p class="satellite-price">$3.99</p>
             </div>
-            <div class="card">
-                <p class="name">CMO AI Content System - Pro</p>
-                <p class="small">30 pages: scenarios, rubric, workshop, build your own workflows.</p>
-                <p class="price">$8.99</p>
+            <div class="satellite-card">
+                <p class="satellite-card-name">CMO AI Content System - Pro</p>
+                <p class="satellite-small">30 pages: scenarios, rubric, workshop, build your own workflows.</p>
+                <p class="satellite-price">$8.99</p>
             </div>
         </div>
 
-        <div class="panel" role="note">
+        <div class="satellite-note" role="note">
             <h2>Want to be the first to know?</h2>
             <p>Email <a href="mailto:info@promptanatomy.app?subject=Notify%20me%20when%20CMO%20Kit%20PDFs%20go%20on%20sale">info@promptanatomy.app</a> with the subject line "Notify me" and we will email you on launch day. We do not add you to a marketing list - one notification, then nothing.</p>
         </div>
 
-        <a class="home" href="/en/">Use the free library</a>
-        <a class="lib" href="/en/#cmo-context">Start with the context block</a>
+        <div class="satellite-actions">
+            <a class="satellite-back" href="/en/">Use the free library</a>
+            <a class="satellite-action-secondary" href="/en/#cmo-context">Start with the context block</a>
+        </div>
 
-        <p class="small" style="margin-top: 2rem;">Read the full <a href="/terms.html#paid-pdf-license">team license</a> and our <a href="/en/privacy.html">privacy policy</a> while you wait.</p>
+        <p class="satellite-small">Read the full <a href="/terms.html#paid-pdf-license">team license</a> and our <a href="/en/privacy.html">privacy policy</a> while you wait.</p>
     </main>
+    </div>
 </body>
 </html>

@@ -4,13 +4,17 @@
  * scripts/upload-pdfs-to-blob.js
  *
  * Uploads paid CMO PDFs from api/_private/pdfs/ to Vercel Blob private store.
- * Requires BLOB_READ_WRITE_TOKEN in .env.
+ * Requires BLOB_READ_WRITE_TOKEN in .env (not needed for --dry-run).
  *
  * Run AFTER `npm run pdf:export`:
+ *   node scripts/upload-pdfs-to-blob.js --dry-run
  *   npm run pdf:upload-blob
  *
  * After upload, paste each printed URL into Vercel Production env as
- * PDF_CMO_STARTER_SOURCE_URL / PDF_CMO_PRO_SOURCE_URL, then redeploy.
+ * PDF_CMO_STARTER_SOURCE_URL / PDF_CMO_PRO_SOURCE_URL / PDF_CMO_PRO_MD_SOURCE_URL,
+ * then redeploy.
+ *
+ * Bundle has no third PDF URL — Complete Kit delivers starter + pro files.
  *
  * Memo §3.3: do NOT commit paid PDFs to git; never serve from public/.
  */
@@ -20,6 +24,9 @@ const path = require('path');
 const { put } = require('@vercel/blob');
 
 const ROOT = path.resolve(__dirname, '..');
+const DRY_RUN = process.argv.includes('--dry-run') || process.env.DRY_RUN === '1';
+const BUNDLE_NO_URL_NOTE =
+  'Bundle has no third PDF URL — Complete Kit delivers starter + pro files.';
 
 if (fs.existsSync(path.join(ROOT, '.env'))) {
   // Lightweight .env reader (no dotenv dep) for local CLI use.
@@ -57,9 +64,45 @@ const PDFS = [
     localPath: path.join(ROOT, 'api', '_private', 'prompts', 'cmo-pro-prompts.md'),
     blobPath: 'paid-pdfs/cmo-pro-prompts.md',
     envName: 'PDF_CMO_PRO_MD_SOURCE_URL',
-    contentType: 'text/markdown; charset=utf-8'
+    contentType: 'text/markdown; charset=utf-8',
+    optional: true
   }
 ];
+
+function formatBytes(n) {
+  if (n < 1024) return n + ' B';
+  return (n / 1024).toFixed(1) + ' KB';
+}
+
+function inspectLocal(item) {
+  if (!fs.existsSync(item.localPath)) {
+    return { exists: false, size: null };
+  }
+  return { exists: true, size: fs.statSync(item.localPath).size };
+}
+
+function printExistingEnvPaste() {
+  const lines = [];
+  for (const item of PDFS) {
+    const value = process.env[item.envName];
+    if (value) lines.push(item.envName + '=' + value);
+  }
+  if (!lines.length) return;
+  console.log('\n--- Already in local .env (paste into Vercel if still missing there) ---');
+  for (const line of lines) console.log(line);
+}
+
+function printPasteFooter(lines) {
+  if (!lines.length) return;
+  console.log(
+    '\n--- Paste these into Vercel Production env (Settings -> Environment Variables) ---'
+  );
+  for (const line of lines) console.log(line);
+  console.log('\n' + BUNDLE_NO_URL_NOTE);
+  console.log(
+    'After saving, redeploy. Verify with: npm run check:prod'
+  );
+}
 
 async function uploadOne(item) {
   if (!fs.existsSync(item.localPath)) {
@@ -69,14 +112,44 @@ async function uploadOne(item) {
   }
   const body = fs.readFileSync(item.localPath);
   const result = await put(item.blobPath, body, {
-    access: 'public',
+    access: 'private',
     addRandomSuffix: true,
     contentType: item.contentType || 'application/pdf'
   });
   return result;
 }
 
+function runDryRun() {
+  console.log('Blob upload DRY RUN — no files will be uploaded.\n');
+  let requiredMissing = false;
+  for (const item of PDFS) {
+    const info = inspectLocal(item);
+    if (info.exists) {
+      console.log('[OK]   ' + item.label);
+      console.log('       ' + item.envName);
+      console.log('       ' + formatBytes(info.size) + '  ' + item.localPath);
+    } else if (item.optional) {
+      console.log('[WARN] ' + item.label + ' missing (optional Pro companion)');
+      console.log('       expected ' + item.envName);
+      console.log('       ' + item.localPath);
+    } else {
+      console.log('[FAIL] ' + item.label + ' missing');
+      console.log('       expected ' + item.envName);
+      console.log('       Run npm run pdf:export first.');
+      requiredMissing = true;
+    }
+  }
+  printExistingEnvPaste();
+  console.log('\n' + BUNDLE_NO_URL_NOTE);
+  if (requiredMissing) process.exit(1);
+}
+
 (async () => {
+  if (DRY_RUN) {
+    runDryRun();
+    return;
+  }
+
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
     console.error(
       'BLOB_READ_WRITE_TOKEN is missing. Add it to your .env (from Vercel Storage -> Blob).'
@@ -98,15 +171,7 @@ async function uploadOne(item) {
     }
   }
 
-  if (lines.length) {
-    console.log(
-      '\n--- Paste these into Vercel Production env (Settings -> Environment Variables) ---'
-    );
-    for (const line of lines) console.log(line);
-    console.log(
-      '\nAfter saving, redeploy. Verify with: GET https://promptanatomy.space/api/fulfillment-health'
-    );
-  }
+  printPasteFooter(lines);
 })().catch((err) => {
   console.error(err);
   process.exit(1);

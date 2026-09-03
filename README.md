@@ -8,8 +8,8 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 
 ### Funkcijos
 
-- **Free spine:** 4 interaktyvūs promptai (1, 2, 3, 5) + EN creative brief builder; **4/6–10** – Pro teaseriai; pilni 10 – Pro PDF
-- **Upgrade sluoksnis prieš promptus** – aiškinimas „Kas yra prompt?", „Kas yra Prompt Anatomy?" ir darbo schema
+- **Free spine:** 4 interaktyvūs promptai (1, 2, 3, 5) + EN creative brief builder; **4/6–10** – `#pro-contents` katalogas; pilni 10 – Pro PDF
+- **Prompt basics po FAQ** – „Kas yra prompt?", „Kas yra Prompt Anatomy?" (`#prompt-basics`)
 - **CMO v2 kontekstas + scenarijai + safety** – paspaudus „Kopijuoti promptą", kontekstas (auditorija, USP, kanalai, tikslas, apribojimas) ir privalomos taisyklės automatiškai prepend'inamos prie prompto teksto
 - **FAQ** – greitas aiškumas prieš startą
 - **Interaktyvus dizainas** – DS 1.6 Product Operator, aiškūs mygtukai, progresas (0/4 spine)
@@ -83,7 +83,7 @@ Full contract: [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5.
 │   ├── build-locale-pages.js     # Generuoja lt/, en/ + inject CMO v2 + EN_REPLACEMENTS + EN-only #pdf-storefront (MIRROR_NOTE=1 jį praleidžia)
 │   ├── generate-og.js            # OG paveikslas (SVG → PNG, 1200×630)
 │   ├── vercel-export-public.js   # Vercel statinio output į public/ + analytics + assertNoPaidPdfsLeaked()
-│   ├── export-pdfs.js            # Playwright Letter PDF export + page-count gate (14/27)
+│   ├── export-pdfs.js            # Playwright Letter PDF export + page-count gate (14/30)
 │   ├── export-pdf-covers.js      # PDF page 1 → storefront cover PNG (WYSIWYG)
 │   ├── export-pdf-previews.js    # Watermarked interior pages 2–4 PNG previews
 │   ├── upload-pdfs-to-blob.js    # Vercel Blob privatus įkėlimas
@@ -112,7 +112,7 @@ Full contract: [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5.
 │   └── en-prompt-bodies-inline.js  # Generuojama iš data/en-prompt-bodies.json
 ├── public/                   # Vercel deploy artefaktas (gitignored, generuojamas)
 ├── tests/
-│   ├── structure.test.js         # 134 struktūriniai teiginiai (įsk. CMO v2 + commerce EN-only)
+│   ├── structure.test.js         # spine + commerce + GEO kontraktai (`npm test`)
 │   ├── fulfillment-config.test.js  # 43 teiginiai (PRODUCTS ⇆ SOT consistency, /api kontraktas)
 │   ├── design-system-smoke.test.js
 │   ├── a11y-smoke.test.js
@@ -162,7 +162,9 @@ Full contract: [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5.
   npm install
   npm test            # build + tests + lint
   npm run build       # tik build (generate-og + locale + public)
+  npm run check:prod  # production fulfillment-health + IndexNow key
   ```
+  Go-live command order: [docs/GO_LIVE_RUNBOOK.md](docs/GO_LIVE_RUNBOOK.md).
 - **A11y lokaliai:** `npx serve -s . -l 3000` ir `npx pa11y http://localhost:3000/en/ --standard WCAG2AA` (release QA; CI taip pat tikrina `/lt/`).
 
 ## Licencija

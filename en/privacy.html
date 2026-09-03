@@ -15,35 +15,21 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="manifest" href="../site.webmanifest">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #F5F7FA; color: #1A202C; line-height: 1.6; padding: 24px; max-width: 720px; margin: 0 auto; }
-        h1 { font-size: 1.75rem; margin-bottom: 1rem; }
-        h2 { font-size: 1.15rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
-        p, ul { margin-bottom: 0.75rem; }
-        ul { margin-left: 1.5rem; }
-        a { color: #2B6CB0; }
-        .back { display: inline-block; margin-bottom: 1.5rem; padding: 10px 20px; background: #2B6CB0; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; min-height: 44px; min-width: 44px; line-height: 24px; }
-        .back:hover { background: #2C5282; }
-        .back:focus-visible { outline: 3px solid #2B6CB0; outline-offset: 2px; }
-        .lang-switcher { margin-bottom: 1rem; font-size: 15px; font-weight: 600; }
-        .lang-switcher .lang-current { margin-right: 0.5rem; }
-        .lang-switcher a { color: #2B6CB0; text-decoration: none; padding: 6px 10px; border-radius: 6px; min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; }
-        .lang-switcher a:hover, .lang-switcher a:focus-visible { background: #E2E8F0; outline: 2px solid #2B6CB0; outline-offset: 2px; }
-        address.contact-address { font-style: normal; margin-bottom: 0.75rem; }
-        .contact-address-lines { display: block; margin-top: 0.25rem; }
-    </style>
+    <link rel="stylesheet" href="../styles/tokens.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <link rel="stylesheet" href="../styles/utilities.css">
     <script type="application/ld+json">
         {"@context":"https://schema.org","@type":"Organization","name":"Prompt Anatomy","url":"https://promptanatomy.space/","email":"info@promptanatomy.app","address":{"@type":"PostalAddress","streetAddress":"1311 Park St, Unit #654","addressLocality":"Alameda","addressRegion":"CA","postalCode":"94501","addressCountry":"US"},"sameAs":["https://promptanatomy.space/","https://t.me/prompt_anatomy"]}
     </script>
 </head>
-<body>
-    <nav class="lang-switcher" aria-label="Language"><span class="lang-current" aria-current="true">English</span> <a href="../lt/privatumas.html">Lietuvių</a></nav>
-    <a href="index.html" class="back">← Back to library</a>
-    <h1>Privacy policy</h1>
+<body class="satellite-page">
+    <div class="satellite-shell">
+        <header class="satellite-header">
+            <p class="satellite-brand">Prompt Anatomy</p>
+            <a href="/en/" class="satellite-back" id="back-link" aria-label="Back to Content AI System library">Back to library</a>
+        </header>
+        <main class="satellite-main" aria-labelledby="privacy-title">
+    <h1 id="privacy-title">Privacy policy</h1>
     <p><strong>Prompt Anatomy</strong> is a minimal app. Here’s a brief note about your data.</p>
 
     <h2>Do we collect your data on the free library?</h2>
@@ -73,6 +59,8 @@
         <span class="contact-address-lines">Prompt Anatomy<br>1311 Park St, Unit #654<br>Alameda, CA 94501, USA</span>
     </address>
 
-    <p style="margin-top: 2rem;"><a href="index.html">← Back to library</a></p>
+    <p><a href="/en/" id="back-link-footer">Back to library</a></p>
+        </main>
+    </div>
 </body>
 </html>

@@ -12,29 +12,19 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #F5F7FA; color: #1A202C; line-height: 1.6; padding: 24px; max-width: 760px; margin: 0 auto; }
-        h1 { font-size: 1.85rem; margin-bottom: 0.75rem; color: #0F2A44; }
-        h2 { font-size: 1.2rem; margin-top: 2rem; margin-bottom: 0.5rem; color: #0F2A44; }
-        h3 { font-size: 1rem; margin-top: 1.25rem; margin-bottom: 0.4rem; color: #0F2A44; }
-        p, ul, ol { margin-bottom: 0.85rem; }
-        ul, ol { margin-left: 1.5rem; }
-        a { color: #2B6CB0; }
-        .back { display: inline-block; margin-bottom: 1.25rem; padding: 10px 20px; background: #2B6CB0; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; }
-        .back:hover { background: #2C5282; }
-        .panel { background: #fff; border: 1px solid #E2E8F0; border-radius: 10px; padding: 16px 18px; margin: 1rem 0; }
-        .small { font-size: 0.9rem; color: #4A5568; }
-        address { font-style: normal; }
-    </style>
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/utilities.css">
 </head>
-<body>
-    <a href="/en/" class="back">&larr; Back to the library</a>
-    <h1>Terms of sale and team license</h1>
-    <p class="small">Last updated: 2026-05-17. These terms apply to digital PDFs sold on <strong>promptanatomy.space</strong>: <em>CMO AI Content System - Starter</em> ($3.99) and <em>CMO AI Content System - Pro</em> ($8.99).</p>
+<body class="satellite-page">
+    <div class="satellite-shell">
+        <header class="satellite-header">
+            <p class="satellite-brand">Prompt Anatomy</p>
+            <a href="/en/" class="satellite-back">Back to library</a>
+        </header>
+        <main class="satellite-main" aria-labelledby="terms-title">
+    <h1 id="terms-title">Terms of sale and team license</h1>
+    <p class="satellite-small">Last updated: 2026-05-17. These terms apply to digital PDFs sold on <strong>promptanatomy.space</strong>: <em>CMO AI Content System - Starter</em> ($3.99), <em>CMO AI Content System - Pro</em> ($8.99), and <em>CMO AI Content System - Complete Kit</em> ($10.99).</p>
 
     <h2 id="seller">1. Seller and contact</h2>
     <p>Prompt Anatomy is a trade name of Tomas Staniulis. Mailing address: 1311 Park St, Unit #654, Alameda, CA 94501, USA. Support and license questions: <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a>.</p>
@@ -49,7 +39,7 @@
     <p>Each download URL is signed and short-lived. Links may be re-issued at any time on request. We do not throttle redownloads for the same buyer; we will, however, suspend a link if we observe abuse (mass scraping, link sharing on social channels, or distribution outside the team license below).</p>
 
     <h2 id="paid-pdf-license">5. Team license (CMO AI Content System Starter and Pro)</h2>
-    <div class="panel">
+    <div class="satellite-note">
         <h3>What you may do</h3>
         <ul>
             <li>Use the PDF inside <strong>one in-house marketing team at one company</strong> (typically the CMO + 1-4 directs, or one CMO equivalent).</li>
@@ -82,6 +72,8 @@
     <h2 id="changes">9. Changes</h2>
     <p>We may update these terms; the version that applies to your order is the one in effect at the time of purchase. Material changes are announced on this page with a new "Last updated" date.</p>
 
-    <p style="margin-top: 2.5rem;"><a href="/en/">&larr; Back to the library</a></p>
+    <p><a href="/en/">Back to library</a></p>
+        </main>
+    </div>
 </body>
 </html>
