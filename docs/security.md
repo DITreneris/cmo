@@ -55,6 +55,15 @@ Fix high/critical before release. Document exceptions in CHANGELOG if deferred.
 
 - [api/stripe-webhook.js](../api/stripe-webhook.js) — raw body + Stripe signature verification.
 - Idempotent fulfillment via Redis — duplicate webhooks must not double-send email.
+- Shared Stripe account status mapping:
+  - `ignored` (unknown / foreign product) → **200** (stop retries)
+  - `fulfilled` / `already_fulfilled` / `not_paid` → **200**
+  - `locked` (Redis NX contention) → **503** (Stripe retries)
+- Product identity order: CMO `price.id` → optional `payment_link` allowlist → `metadata.product` (metadata alone is vetoed when line items carry a foreign price id). Never match on dollar amount.
+
+## Follow-up cron
+
+- [api/fulfillment-followup.js](../api/fulfillment-followup.js) — when `FULFILLMENT_FOLLOWUP_ENABLED=1`, `CRON_SECRET` is **required** and must match `Authorization: Bearer …` (otherwise **401**).
 
 ---
 

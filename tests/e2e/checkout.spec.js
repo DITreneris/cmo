@@ -181,4 +181,38 @@ test.describe('success.html polling UX', () => {
       '/api/download?t=mock-pro'
     );
   });
+
+  test('shows Markdown companion when downloads includes pro-md', async ({ page }) => {
+    await page.route(/\/api\/download-link/, async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          status: 'ready',
+          downloadUrl: '/api/download?t=mock-pro',
+          url: '/api/download?t=mock-pro',
+          downloads: [
+            {
+              productId: 'pro',
+              productName: 'CMO AI Content System · Pro',
+              url: '/api/download?t=mock-pro'
+            },
+            {
+              productId: 'pro-md',
+              productName: 'CMO AI Content System · Pro (Markdown companion)',
+              url: '/api/download?t=mock-pro-md'
+            }
+          ]
+        })
+      });
+    });
+    await page.goto('/success?session_id=cs_test_PRO_MD');
+    await expect(page.locator('#status')).toHaveAttribute('data-state', 'ready', { timeout: 10000 });
+    await expect(page.locator('#download-btn')).toHaveAttribute('href', '/api/download?t=mock-pro');
+    await expect(page.locator('#download-area a[data-extra-download="pro-md"]')).toBeVisible();
+    await expect(page.locator('#download-area a[data-extra-download="pro-md"]')).toHaveAttribute(
+      'href',
+      '/api/download?t=mock-pro-md'
+    );
+  });
 });

@@ -130,6 +130,18 @@ check(
   /fulfillment:\s*result\.status/.test(webhookSrc) && /ignored/.test(webhookSrc),
   'stripe-webhook ACKs ignored (non-CMO) checkouts as 200'
 );
+check(
+  /result\.status\s*===\s*['"]locked['"]/.test(webhookSrc) && /status\(503\)/.test(webhookSrc),
+  'stripe-webhook returns 503 for locked (Stripe retries)'
+);
+
+const followupSrc = readText(FOLLOWUP_PATH);
+check(
+  /FULFILLMENT_FOLLOWUP_ENABLED\s*===\s*['"]1['"]/.test(followupSrc) &&
+    /CRON_SECRET/.test(followupSrc) &&
+    /status\(401\)/.test(followupSrc),
+  'fulfillment-followup requires CRON_SECRET when follow-ups enabled (401)'
+);
 
 const dlSrc = readText(DOWNLOAD_PATH);
 check(/Cache-Control['"\s,:]+private[^"]*no-store/i.test(dlSrc) || (/Cache-Control/.test(dlSrc) && /no-store/.test(dlSrc) && /private/.test(dlSrc)), 'download route sets Cache-Control: private + no-store');
@@ -143,6 +155,10 @@ const getDownloadFn = fulfillmentSrc.split('async function getDownloadUrlBySessi
 check(/downloadUrl:\s*primaryUrl/.test(getDownloadFn), 'getDownloadUrlBySessionId returns downloadUrl');
 check(/url:\s*primaryUrl/.test(getDownloadFn), 'getDownloadUrlBySessionId returns LEGACY url alias');
 check(/downloads:\s*downloads/.test(getDownloadFn), 'getDownloadUrlBySessionId returns downloads[]');
+check(
+  /productIncludesMdCompanion/.test(getDownloadFn) && /pro-md/.test(getDownloadFn),
+  'getDownloadUrlBySessionId mints pro-md when companion asset exists'
+);
 check(
   typeof fulfillment.getProductFromSession === 'function',
   'fulfillment exports getProductFromSession (shared-account isolation)'
@@ -190,6 +206,20 @@ if (typeof fulfillment.getProductFromSession === 'function') {
     fulfillment.getProductFromSession({ metadata: { product: 'starter' } }) ===
       fulfillment.PRODUCTS.starter,
     'getProductFromSession matches metadata.product=starter'
+  );
+  check(
+    fulfillment.getProductFromSession({
+      metadata: { product: 'starter' },
+      line_items: { data: [{ price: { id: 'price_foreign', unit_amount: 399 } }] }
+    }) === null,
+    'getProductFromSession vetoes metadata when line items have a foreign price id'
+  );
+  check(
+    fulfillment.getProductFromSession({
+      metadata: { product: 'starter' },
+      line_items: { data: [{ price: { id: 'price_cmo_pro_test', unit_amount: 899 } }] }
+    }) === fulfillment.PRODUCTS.pro,
+    'getProductFromSession prefers CMO price id over conflicting metadata'
   );
   check(
     fulfillment.getProductFromSession({

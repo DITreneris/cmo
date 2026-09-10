@@ -7,8 +7,9 @@
  *
  * Design pillars (memo_pdf.md):
  *  1. One domain (success URL, webhook, Redis, SITE_URL all on .space)
- *  2. Shared Stripe account: fulfill only CMO identity (metadata / payment_link / price id).
+ *  2. Shared Stripe account: fulfill only CMO identity (price id → payment_link → metadata).
  *     Never match on dollar amount. Unknown checkout → ignored (HTTP 200), not 500.
+ *     Lock contention → locked (webhook HTTP 503 so Stripe retries).
  *  3. Idempotent webhook (Redis lock + fulfillment:cs_* state)
  *  4. Two TTLs: 7 days (email link) / 15 minutes (success page in-page link)
  *  5. Private PDFs only; download route is signed + Cache-Control: private, no-store
@@ -233,21 +234,27 @@ function productIncludesMdCompanion(product) {
 }
 
 /**
+ * True when a line-item price id is set and is not a configured CMO price
+ * (foreign SKU on a shared Stripe account — veto metadata.product alone).
+ */
+function lineItemsHaveForeignPriceId(lineItems) {
+  if (!Array.isArray(lineItems) || !lineItems.length) return false;
+  for (const item of lineItems) {
+    const priceId = item && item.price ? item.price.id : '';
+    if (priceId && !getProductByPriceId(priceId)) return true;
+  }
+  return false;
+}
+
+/**
  * Identify a CMO kit checkout. Returns null for other products on the same
  * Stripe account (do not throw — webhook must ACK those events).
+ * Order: CMO price id → payment_link allowlist → metadata.product
+ * (metadata vetoed when line items carry a foreign price id).
  * Amount / tax totals are not identity: another SKU can share $3.99.
  */
 function getProductFromSession(session) {
   if (!session) return null;
-
-  const metadataProduct =
-    session.metadata && session.metadata.product
-      ? getCmoCheckoutProductByMetadata(session.metadata.product)
-      : null;
-  if (metadataProduct) return metadataProduct;
-
-  const byPaymentLink = getProductByPaymentLinkId(session.payment_link);
-  if (byPaymentLink) return byPaymentLink;
 
   const lineItems =
     session.line_items && Array.isArray(session.line_items.data)
@@ -258,6 +265,18 @@ function getProductFromSession(session) {
     const priceId = item && item.price ? item.price.id : '';
     const product = getProductByPriceId(priceId);
     if (product) return product;
+  }
+
+  const byPaymentLink = getProductByPaymentLinkId(session.payment_link);
+  if (byPaymentLink) return byPaymentLink;
+
+  const metadataProduct =
+    session.metadata && session.metadata.product
+      ? getCmoCheckoutProductByMetadata(session.metadata.product)
+      : null;
+  if (metadataProduct) {
+    if (lineItemsHaveForeignPriceId(lineItems)) return null;
+    return metadataProduct;
   }
 
   return null;
@@ -725,7 +744,7 @@ async function resolveDownload(token) {
  * Returns:
  *   { status: 'ready', url, downloadUrl, downloads, expiresAt, maskedEmail, productId, productName }
  *   url === downloadUrl (LEGACY {url} + current {downloadUrl})
- *   downloads[] has one entry per deliverProductIds (bundle = Starter + Pro)
+ *   downloads[] = deliverProductIds (+ pro-md when companion asset exists)
  *   { status: 'processing' }   - webhook has not yet completed
  *   throws Error               - unknown session or missing fulfillment record
  */
@@ -766,6 +785,26 @@ async function getDownloadUrlBySessionId(sessionId, origin) {
       url: buildDownloadUrl(token.token, origin)
     });
     expiresAt = new Date(token.payload.exp * 1000).toISOString();
+  }
+  if (productIncludesMdCompanion(product)) {
+    const md = getProductById('pro-md');
+    const mdUrlEnv = md && md.sourceUrlEnv ? process.env[md.sourceUrlEnv] : null;
+    const mdLocal = md && md.localFileName ? fs.existsSync(getLocalPdfPath(md)) : false;
+    if (md && (mdUrlEnv || mdLocal)) {
+      const mdToken = await storeDownloadToken(
+        sessionId,
+        md.id,
+        fulfillment.email,
+        IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS,
+        { inPage: true }
+      );
+      downloads.push({
+        productId: md.id,
+        productName: md.name,
+        url: buildDownloadUrl(mdToken.token, origin)
+      });
+      expiresAt = new Date(mdToken.payload.exp * 1000).toISOString();
+    }
   }
   if (!downloads.length) {
     throw new Error('No downloadable files on fulfillment record.');

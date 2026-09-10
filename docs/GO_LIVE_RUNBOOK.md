@@ -37,7 +37,7 @@ Paste the printed `ENV=url` lines into Vercel → Production → Environment Var
 
 ## 4. Stripe Dashboard leftovers
 
-Do the remaining boxes in [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md#stripe-dashboard): success URL on **www**, webhook `https://www.promptanatomy.space/api/stripe-webhook`, `metadata.product`, `price_…` / `whsec_…`. Shared Stripe account: foreign SKUs must ACK as ignored, not 500.
+Do the remaining boxes in [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md#stripe-dashboard): success URL on **www**, webhook `https://www.promptanatomy.space/api/stripe-webhook`, `metadata.product`, `price_…` / `whsec_…`. Shared Stripe account: foreign SKUs must ACK as `ignored` (**200**, not 500); Redis lock contention must return **503** so Stripe retries.
 
 ## 5. Local fulfillment probe
 

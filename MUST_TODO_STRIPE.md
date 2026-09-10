@@ -55,7 +55,7 @@ Repo paruošta (SOT flip, testai, `vercel.json` build gate). **Prieš pirmą liv
   `https://www.promptanatomy.space/success.html?session_id={CHECKOUT_SESSION_ID}`
 - [ ] Kiekvienam **CMO Payment Link** metadata: `product=starter` | `pro` | `bundle` (izoliuoja nuo kitų SKU tame pačiame Stripe account)
 - [ ] Webhook: `https://www.promptanatomy.space/api/stripe-webhook`  
-  Events: `checkout.session.completed`, `checkout.session.async_payment_succeeded`. Shared account: svetimi pirkimai → `200` `ignored`, ne `500`. Apex POST 307 sulaužo Stripe.
+  Events: `checkout.session.completed`, `checkout.session.async_payment_succeeded`. Shared account: svetimi pirkimai → `200` `ignored`, ne `500`. Lock contention → `503` (Stripe retry). Apex POST 307 sulaužo Stripe.
 - [ ] Stripe receipts ON (Settings → Customer emails → Successful payments)
 - [ ] Webhook signing secret → Vercel `STRIPE_WEBHOOK_SECRET`
 - [ ] Stripe product descriptions atitinka PDF (14 / 30 / 44 pages) — ne seni skaičiai

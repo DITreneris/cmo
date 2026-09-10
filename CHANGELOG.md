@@ -7,6 +7,7 @@ Formatas pagal [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), versija
 ## [Unreleased]
 
 ### Pataisyta
+- **[Fix] Webhook lock + identity harden (Ambition A):** `locked` → HTTP **503** (Stripe retries); product match order **price → plink → metadata** with foreign-price veto; follow-up cron fail-closed when enabled (`CRON_SECRET` required); success-page `downloads[]` includes Pro Markdown companion when configured. Does not exit R1.
 - **[Fix] Shared Stripe isolation (Ambition A):** webhook ACKs other-account checkouts with `200` `{ fulfillment: "ignored" }` instead of `500`. Match only `metadata.product`, optional `plink_…`, or `STRIPE_PRICE_CMO_*` — never dollar amount. Does not exit R1.
 - **[Fix] Download-link contract (Ambition A):** `success.html` binds `downloadUrl || url`. API returns both keys plus `downloads[]` (Complete Kit = Starter + Pro in-page). Does not exit R1. No SemVer bump.
 - **[Fix] Brief first-use:** `#cb-builder` init no longer autofocuses Campaign goal. `open_brief` fires on form input or preset/copy/tool. ChatGPT + Ideogram allowlist only.
