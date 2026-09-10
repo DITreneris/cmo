@@ -3,12 +3,6 @@
   "installCommand": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PUPPETEER_SKIP_DOWNLOAD=1 npm install",
   "buildCommand": "REQUIRE_STRIPE_LINKS=1 npm run build",
   "redirects": [
-    {
-      "source": "/",
-      "has": [{ "type": "header", "key": "accept-language", "value": ".*lt.*" }],
-      "destination": "/lt/",
-      "permanent": false
-    },
     { "source": "/", "destination": "/en/", "permanent": false },
     { "source": "/index.html", "destination": "/en/", "permanent": false }
   ],

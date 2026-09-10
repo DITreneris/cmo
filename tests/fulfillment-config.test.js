@@ -126,6 +126,22 @@ const webhookSrc = readText(STRIPE_WEBHOOK_PATH);
 check(/bodyParser:\s*false/.test(webhookSrc), 'stripe-webhook disables bodyParser (raw body for signature verification)');
 check(/Stripe-Signature/i.test(webhookSrc), 'stripe-webhook reads Stripe-Signature header');
 check(/module\.exports\s*=/.test(webhookSrc), 'stripe-webhook exports a handler');
+check(
+  /fulfillment:\s*result\.status/.test(webhookSrc) && /ignored/.test(webhookSrc),
+  'stripe-webhook ACKs ignored (non-CMO) checkouts as 200'
+);
+check(
+  /result\.status\s*===\s*['"]locked['"]/.test(webhookSrc) && /status\(503\)/.test(webhookSrc),
+  'stripe-webhook returns 503 for locked (Stripe retries)'
+);
+
+const followupSrc = readText(FOLLOWUP_PATH);
+check(
+  /FULFILLMENT_FOLLOWUP_ENABLED\s*===\s*['"]1['"]/.test(followupSrc) &&
+    /CRON_SECRET/.test(followupSrc) &&
+    /status\(401\)/.test(followupSrc),
+  'fulfillment-followup requires CRON_SECRET when follow-ups enabled (401)'
+);
 
 const dlSrc = readText(DOWNLOAD_PATH);
 check(/Cache-Control['"\s,:]+private[^"]*no-store/i.test(dlSrc) || (/Cache-Control/.test(dlSrc) && /no-store/.test(dlSrc) && /private/.test(dlSrc)), 'download route sets Cache-Control: private + no-store');
@@ -133,6 +149,98 @@ check(/Cache-Control['"\s,:]+private[^"]*no-store/i.test(dlSrc) || (/Cache-Contr
 const dlLinkSrc = readText(DOWNLOAD_LINK_PATH);
 check(/session_id/.test(dlLinkSrc), 'download-link reads session_id');
 check(/202|getDownloadUrlBySessionId|getStatus/i.test(dlLinkSrc), 'download-link supports the polling response (202 / status check)');
+
+const fulfillmentSrc = readText(FULFILLMENT_PATH);
+const getDownloadFn = fulfillmentSrc.split('async function getDownloadUrlBySessionId')[1] || '';
+check(/downloadUrl:\s*primaryUrl/.test(getDownloadFn), 'getDownloadUrlBySessionId returns downloadUrl');
+check(/url:\s*primaryUrl/.test(getDownloadFn), 'getDownloadUrlBySessionId returns LEGACY url alias');
+check(/downloads:\s*downloads/.test(getDownloadFn), 'getDownloadUrlBySessionId returns downloads[]');
+check(
+  /productIncludesMdCompanion/.test(getDownloadFn) && /pro-md/.test(getDownloadFn),
+  'getDownloadUrlBySessionId mints pro-md when companion asset exists'
+);
+check(
+  typeof fulfillment.getProductFromSession === 'function',
+  'fulfillment exports getProductFromSession (shared-account isolation)'
+);
+
+if (typeof fulfillment.getProductFromSession === 'function') {
+  const PRICE_KEYS = [
+    'STRIPE_PRICE_CMO_STARTER_PDF',
+    'STRIPE_PRICE_CMO_PRO_PDF',
+    'STRIPE_PRICE_CMO_BUNDLE_PDF',
+    'STRIPE_PAYMENT_LINK_CMO_STARTER',
+    'STRIPE_PAYMENT_LINK_CMO_PRO',
+    'STRIPE_PAYMENT_LINK_CMO_BUNDLE'
+  ];
+  const savedPrices = {};
+  PRICE_KEYS.forEach((key) => {
+    savedPrices[key] = process.env[key];
+    delete process.env[key];
+  });
+  process.env.STRIPE_PRICE_CMO_STARTER_PDF = 'price_cmo_starter_test';
+  process.env.STRIPE_PRICE_CMO_PRO_PDF = 'price_cmo_pro_test';
+  process.env.STRIPE_PRICE_CMO_BUNDLE_PDF = 'price_cmo_bundle_test';
+  process.env.STRIPE_PAYMENT_LINK_CMO_BUNDLE = 'plink_cmo_bundle_test';
+
+  const otherProductSession = {
+    metadata: {},
+    payment_link: 'plink_1TYfSuGYF93wS2KaJvCDyqrO',
+    amount_subtotal: 1199,
+    amount_total: 1451,
+    line_items: { data: [{ price: { id: 'price_other_sku', unit_amount: 1199 } }] }
+  };
+  check(
+    fulfillment.getProductFromSession(otherProductSession) === null,
+    'getProductFromSession ignores other-account SKU ($11.99 + tax, foreign price id)'
+  );
+  check(
+    fulfillment.getProductFromSession({
+      metadata: {},
+      amount_total: 399,
+      line_items: { data: [{ price: { id: 'price_foreign', unit_amount: 399 } }] }
+    }) === null,
+    'getProductFromSession does not match on amount alone (shared Stripe account)'
+  );
+  check(
+    fulfillment.getProductFromSession({ metadata: { product: 'starter' } }) ===
+      fulfillment.PRODUCTS.starter,
+    'getProductFromSession matches metadata.product=starter'
+  );
+  check(
+    fulfillment.getProductFromSession({
+      metadata: { product: 'starter' },
+      line_items: { data: [{ price: { id: 'price_foreign', unit_amount: 399 } }] }
+    }) === null,
+    'getProductFromSession vetoes metadata when line items have a foreign price id'
+  );
+  check(
+    fulfillment.getProductFromSession({
+      metadata: { product: 'starter' },
+      line_items: { data: [{ price: { id: 'price_cmo_pro_test', unit_amount: 899 } }] }
+    }) === fulfillment.PRODUCTS.pro,
+    'getProductFromSession prefers CMO price id over conflicting metadata'
+  );
+  check(
+    fulfillment.getProductFromSession({
+      metadata: {},
+      line_items: { data: [{ price: { id: 'price_cmo_pro_test', unit_amount: 899 } }] }
+    }) === fulfillment.PRODUCTS.pro,
+    'getProductFromSession matches CMO price id'
+  );
+  check(
+    fulfillment.getProductFromSession({
+      metadata: {},
+      payment_link: 'plink_cmo_bundle_test'
+    }) === fulfillment.PRODUCTS.bundle,
+    'getProductFromSession matches optional payment_link allowlist'
+  );
+
+  PRICE_KEYS.forEach((key) => {
+    if (savedPrices[key] === undefined) delete process.env[key];
+    else process.env[key] = savedPrices[key];
+  });
+}
 
 const sot = JSON.parse(readText(SOT_PATH));
 check(sot && sot.commerce, 'sot.json: commerce block present');
@@ -154,6 +262,11 @@ check(
   'upload-pdfs-to-blob.js notes bundle has no third PDF URL'
 );
 check(/--dry-run/.test(uploadSrc), 'upload-pdfs-to-blob.js supports --dry-run');
+
+const healthSrc = readText(HEALTH_PATH);
+check(!/detail:\s*error\s*&&\s*error\.message/.test(healthSrc), 'fulfillment-health catch does not return error.message');
+check(!/redisDetail/.test(healthSrc), 'fulfillment-health handler source has no redisDetail');
+check(!/redisDetail/.test(fulfillmentSrc), 'fulfillment.js health catch does not include redisDetail');
 
 const pkg = JSON.parse(readText(path.join(ROOT, 'package.json')));
 check(pkg.scripts && pkg.scripts['check:prod'] === 'node scripts/check-prod-health.js', 'package.json has check:prod');

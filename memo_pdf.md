@@ -141,14 +141,15 @@ Mixing modes produces confusing 500s or “no such session” errors.
 
 ### 4.3 Product mapping (defense in depth)
 
-Implement **all** of these in fulfillment code (we do):
+Implement **all** of these in fulfillment code (we do), in this **order**:
 
-1. `session.metadata.product` (set on Payment Link—**best**).
-2. `STRIPE_PRICE_*` env vs line item `price.id`.
-3. Line item `unit_amount` in cents.
-4. Session `amount_total` fallback — **`399` (starter) / `899` (pro)** for $3.99 / $8.99.
+1. `STRIPE_PRICE_CMO_*` env vs line item `price.id` (**authoritative**).
+2. Optional `STRIPE_PAYMENT_LINK_CMO_*` vs `session.payment_link`.
+3. `session.metadata.product` (`starter` | `pro` | `bundle`) — only when line items do **not** carry a foreign (non-CMO) price id.
 
-**Incident (sister project, original $4.99 SKU):** Payment Link had `metadata: {}`; fulfillment still worked via `amount_total: 499` after env was fixed. Still add `metadata.product=starter|pro` here.
+**Do not match on amount.** Another product on the same Stripe account can share $3.99 / $10.99, and Stripe Tax inflates `amount_total`. Unknown checkout → webhook **200** `{ fulfillment: "ignored", reason: "unknown_product" }` so Stripe stops retrying. Never **500** for a foreign SKU. Redis lock contention → **503** so Stripe retries.
+
+**Incident (shared account, 2026-09):** a non-CMO $11.99 Payment Link (`promptanatomy.help`, empty metadata) 500-looped Stripe retries via amount fallback. Isolation: ignore, do not fulfill.
 
 ### 4.4 One domain for money path
 

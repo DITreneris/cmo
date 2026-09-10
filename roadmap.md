@@ -8,7 +8,7 @@
 
 **Verdict:** Close production commerce first; then GEO on one URL; then one more browser-local tool; then deepen offline Install kits. Do not open SaaS or a multi-kit catalog until R1 converts.
 
-**Naming:** Roadmap phases are **R1–R4** / **Ambition A/E/B/C**. Do **not** call commerce “Phase A” — that label in [AGENTS.md](AGENTS.md) §0.1 means the EN free-surface (spine-first), which is already shipped. Do **not** treat UX Conversion Audit **P0–P3** as roadmap R1–R4.
+**Naming:** Roadmap phases are **R1–R4** / **Ambition A/E/B/C**. Do **not** call commerce “Phase A” — that label in [AGENTS.md](AGENTS.md) §0.1 means the EN free-surface (tool-first: open brief → PDF → library), which is already shipped. Do **not** treat UX Conversion Audit **P0–P3** as roadmap R1–R4.
 
 ```mermaid
 flowchart LR

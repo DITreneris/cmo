@@ -37,7 +37,7 @@ Paste the printed `ENV=url` lines into Vercel → Production → Environment Var
 
 ## 4. Stripe Dashboard leftovers
 
-Do the remaining boxes in [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md#stripe-dashboard): success URL, webhook `https://promptanatomy.space/api/stripe-webhook`, `price_…` / `whsec_…` for all three SKUs.
+Do the remaining boxes in [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md#stripe-dashboard): success URL on **www**, webhook `https://www.promptanatomy.space/api/stripe-webhook`, `metadata.product`, `price_…` / `whsec_…`. Shared Stripe account: foreign SKUs must ACK as `ignored` (**200**, not 500); Redis lock contention must return **503** so Stripe retries.
 
 ## 5. Local fulfillment probe
 
@@ -71,7 +71,7 @@ Fails if `/api/fulfillment-health` is not `{ ok: true, missing: [] }` or the Ind
 
 ## 9. Live Starter drill
 
-Buy Starter $3.99 on `/en/#pdf-storefront` → email ≤5 min → `success.html` poll → Download. Then Pro and Bundle. Webhook idempotency: second delivery → `already_fulfilled`.
+Buy Starter $3.99 on `/en/#pdf-storefront` → email ≤5 min → `success.html` poll → Download (`downloadUrl` or LEGACY `url`). Bundle shows a second in-page link for Pro. Then Pro and Bundle. Webhook idempotency: second delivery → `already_fulfilled`.
 
 ## 10. IndexNow on the primary host
 

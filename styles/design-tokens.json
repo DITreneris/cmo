@@ -1,9 +1,9 @@
 {
   "color": {
     "surface": {
-      "page": "#F8FAFC",
+      "page": "#F6F1E8",
       "card": "#FFFFFF",
-      "subtle": "#F1F5F9"
+      "subtle": "#EEE6D8"
     },
     "text": {
       "primary": "#0F172A",
@@ -24,7 +24,7 @@
       "success": "#38A169",
       "successHover": "#2F855A",
       "error": "#E53E3E",
-      "border": "#E2E8F0"
+      "border": "#E0D6C6"
     }
   },
   "spacing": {

@@ -5,7 +5,7 @@
 **R1 ops SSOT:** [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md) (full env matrix — do not duplicate here)  
 **Operator sequence:** [docs/GO_LIVE_RUNBOOK.md](docs/GO_LIVE_RUNBOOK.md) (`pdf:upload-blob:dry` → upload → `check:fulfillment` → `check:prod`)  
 **UX Conversion Audit:** P0/P1 shipped 2026-09-03 as **R1-support** (does **not** count as R1 exit). Audit P0–P3 ≠ roadmap R1–R4.  
-**Last updated:** 2026-09-03 (ops companion + conversion events + GEO baseline harden; R1 Stripe still open)
+**Last updated:** 2026-09-03 (R1-support 3: tool-first IA; R1 Stripe still open)
 
 ---
 
@@ -31,13 +31,23 @@ This **is** Audit P3 “complete live purchase drills”. Do not open a separate
 Does not replace Stripe ops. Does not count as R1 exit.
 
 - [x] Hero diagram: larger system visual + product module labels + outputs row
-- [x] Primary CTA customer language → #block1 (keep spine-first)
+- [x] Primary CTA customer language (superseded by R1-support 3: CTA → `#creative-brief`)
 - [x] Trust chips simplified; one credibility line; quiet usage strip
 - [x] Lang switcher demoted; type weight on lead/CTA
 - [x] Tests + STYLEGUIDE/LEGACY/CHANGELOG sync; `npm test` green
 - [x] **EN path cut:** kill pre-spine chrome; collapse context/safety/brief; storefront no comparison table; docs sync
 - [x] **EN conversion P0/P1:** lang switcher removed from product UX; sticky `#siteNav` adds Workflows / Brief builder / Pricing; hero names the 30-day Content AI System + price anchor; `#progressJumpPro` now jumps to `#pdf-storefront`; storefront copy reframed as Use · Build · Install maturity ladder.
 - [x] **Credibility defects:** EN prompt hover tooltip fixed; EN definitions heading fixed; FAQ no longer shows raw `#cmo-safety` as link text; EN privacy/terms/success/coming-soon use shared DS chrome and back links.
+
+## R1-support 2 — show the product (2026-09-03)
+
+Does not replace Stripe ops. Does not count as R1 exit. Does **not** delete the Pro SKU.
+
+- [x] **CEO IA (superseded by R1-support 3):** do not restore Prompt 1 as first-use
+- [x] **Hero sample (superseded):** 30-day table replaced by brief-builder output
+- [x] **2-card storefront:** Starter $3.99 + Complete $10.99 (Best value); Pro $8.99 = text link
+- [x] **Workbook cards:** title + `<pre>` + Copy + done (no tags / edit-hint / info-box)
+- [x] Docs + `tests/structure.test.js` + checkout e2e synced; 2-card UI ≠ SKU delete
 
 ### Leftovers (optional, non-blocking)
 
@@ -46,15 +56,37 @@ Copy/ops only. Do not reopen path-cut decisions.
 - [x] **Footer / BRAND_SYNC:** shipped EN footer is “Methodology at promptanatomy.app”. Docs match code. Never send checkout to `.app`.
 - [x] **Bundle saving:** state `$12.98` separately vs `$10.99` together — copy only, **no** comparison table on page. *(2026-09-03: `compareAtUsd` 12.98 + `separately $12.98` price line)*
 - [x] **Analytics (Orchestrator decide):** Vercel Web Analytics events `copy_prompt_1` / `open_brief` / `click_starter` / `success_download` (`js/va-track.js`). Enable the dashboard toggle. Not R1 exit.
+- [x] **Root → /en/:** no Accept-Language / navigator.language dump to frozen `/lt/` (2026-09-03). `/lt/` remains direct-URL archive only.
+
+## R1-support 4 — craft atmosphere (2026-09-03)
+
+Does not replace Stripe ops. Does not count as R1 exit. DS 1.6.1, not 1.7.
+
+- [x] Warm paper tokens (`#F6F1E8`); EN hero = Satori sample image + prompt caption
+- [x] Builder output pane navy studio; `.cb-tool-silhouette` removed
+- [x] Complete card visual weight (2 cards stay)
+- [x] Tests + STYLEGUIDE 1.6.1 / LEGACY / CHANGELOG sync
+
+## R1-support 3 — tool-first IA (2026-09-03)
+
+Does not replace Stripe ops. Does not count as R1 exit.
+
+- [x] **True CEO path:** Hero → open `#creative-brief` → 2 PDF cards → library **1/2/3/5** (display 1–4)
+- [x] Hero primary `#heroCtaSpine` → `#creative-brief` (*Start the builder*); sample = brief output
+- [x] `#cb-builder` default **open**; `open_brief` on first use, not page load
+- [x] Improve card displays **4**, not 5; IDs stay `#block5` / `prompt5`
+- [x] Docs + `tests/structure.test.js` + creative-brief e2e synced
 
 ### Do not do (audit asked; canon forbids)
 
 Without Orchestrator rewrite of [AGENTS.md](AGENTS.md) §0.1 / §10.7 / §10.15 + LEGACY:
 
-- Open `#cb-builder` by default
+- Redefine „įrankis“ as Prompt 1 Copy
 - Render `comparisonTable` on `/en/`
-- Replace slim `.hero-diagram` with a before/after artifact
-- Dual-primary CTA (spine stays primary)
+- Dual-primary CTA (builder stays primary on EN)
+- Delete the Pro SKU or change Stripe `priceUsd`
+
+Hero **brief-builder sample** is allowed — that is not the old fat pipeline diagram. Open `#cb-builder` **is** canon.
 
 ---
 

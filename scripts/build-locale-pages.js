@@ -973,29 +973,13 @@ function buildPdfCard(sot, product) {
     : product.ctaLabel || ('Get ' + product.tierTag + ' kit · ' + priceText);
   const coverSrc = '../' + (product.coverPng || product.coverSvg);
   const recommendedBadge =
-    product.recommended === true
-      ? '\n                <p class="pdf-card-badge" role="note">Best for teams</p>'
+    product.id === 'bundle'
+      ? '\n                <p class="pdf-card-badge" role="note">Best value</p>'
       : '';
   const tierBadge = product.tierTag
     ? '\n                    <p class="pdf-card-tier" role="note">' + escapeHtml(product.tierTag) + '</p>'
     : '';
-  const previewPngs = Array.isArray(product.previewPngs) ? product.previewPngs : [];
-  const previewFigures =
-    previewPngs.length > 0
-      ? '\n                <figure class="pdf-card-previews" aria-label="Watermarked preview pages">\n' +
-        previewPngs
-          .map(function (src, idx) {
-            return (
-              '                    <img src="../' +
-              escapeHtml(src) +
-              '" alt="' +
-              escapeHtml(product.name + ' preview page ' + (idx + 1) + ' (watermarked)') +
-              '" loading="lazy" decoding="async" width="72" height="93" class="pdf-card-preview-thumb">'
-            );
-          })
-          .join('\n') +
-        '\n                </figure>'
-      : '';
+  const previewFigures = '';
   return (
     '            <article class="pdf-card" id="pdf-card-' +
     escapeHtml(product.id) +
@@ -1053,8 +1037,28 @@ function buildPdfCard(sot, product) {
   );
 }
 
+function buildProAltLink(sot) {
+  const pro = sot.commerce.products.find((p) => p.id === 'pro');
+  if (!pro) return '';
+  const route = resolveCheckoutHref(sot, 'pro');
+  const priceText = '$' + Number(pro.priceUsd).toFixed(2);
+  return (
+    '            <p class="pdf-pro-alt" id="pdf-card-pro">Only need the Build kit? <a class="pdf-card-cta pdf-pro-alt-link" href="' +
+    escapeHtml(route.href) +
+    '"' +
+    (route.isPlaceholder ? '' : ' target="_blank" rel="noopener noreferrer"') +
+    ' data-product-id="pro" data-placeholder="' +
+    (route.isPlaceholder ? 'true' : 'false') +
+    '">Get Pro · ' +
+    escapeHtml(priceText) +
+    '</a></p>\n'
+  );
+}
+
 function buildPdfStorefrontSection(sot) {
-  const cards = sot.commerce.products.map((p) => buildPdfCard(sot, p)).join('');
+  const visible = sot.commerce.products.filter((p) => p.id === 'starter' || p.id === 'bundle');
+  const cards = visible.map((p) => buildPdfCard(sot, p)).join('');
+  const proAlt = buildProAltLink(sot);
   // Path cut: comparison table not rendered (SOT comparisonTable kept for later).
   const head = sot.commerce.storefrontHead || {};
   const eyebrow = escapeHtml(head.eyebrow || 'Printable kits');
@@ -1085,7 +1089,7 @@ function buildPdfStorefrontSection(sot) {
     sot.commerce.deliveryPromise || 'Email delivery within 5 minutes.'
   );
   const faqDetails = buyerFaq
-    ? '            <details class="pdf-storefront-details" open>\n' +
+    ? '            <details class="pdf-storefront-details">\n' +
       '                <summary class="pdf-storefront-details-summary">Buyer FAQ &amp; delivery details</summary>\n' +
       '                <p class="pdf-storefront-delivery"><strong>Delivery:</strong> ' +
       delivery +
@@ -1111,13 +1115,11 @@ function buildPdfStorefrontSection(sot) {
     lead +
     '</p>\n' +
     outcomeLine +
-    '                <p class="pdf-storefront-delivery"><strong>Delivery:</strong> ' +
-    delivery +
-    '</p>\n' +
     '            </div>\n' +
     '            <div class="pdf-storefront-grid" role="list">\n' +
     cards +
     '            </div>\n' +
+    proAlt +
     faqDetails +
     '            <p class="pdf-storefront-trust">Secure checkout via Stripe. Receipts and downloads delivered by email. <a href="../terms.html#paid-pdf-license">Team license</a> \u00b7 <a href="../en/privacy.html">Privacy</a>.</p>\n' +
     '        </section>\n\n'
@@ -1134,12 +1136,16 @@ function injectPdfStorefront(html, locale) {
   if (sot.commerce.scope !== 'en-only') {
     throw new Error('config/sot.json: commerce.scope must be "en-only" for this repo');
   }
-  const anchor = '<section class="upgrade-section" id="faq"';
-  if (html.indexOf(anchor) === -1) {
-    throw new Error('injectPdfStorefront: anchor for #faq not found');
-  }
+  const commentAnchor = '<!-- CMO_PDF_STOREFRONT -->';
+  const faqAnchor = '<section class="upgrade-section" id="faq"';
   const block = buildPdfStorefrontSection(sot);
-  return html.replace(anchor, block + '        ' + anchor);
+  if (html.indexOf(commentAnchor) !== -1) {
+    return html.replace(commentAnchor, commentAnchor + '\n' + block);
+  }
+  if (html.indexOf(faqAnchor) === -1) {
+    throw new Error('injectPdfStorefront: #faq or <!-- CMO_PDF_STOREFRONT --> not found');
+  }
+  return html.replace(faqAnchor, block + '        ' + faqAnchor);
 }
 
 /* EN-only free Creative brief builder (#creative-brief). Ships on mirror too. */
@@ -1290,8 +1296,8 @@ function buildCreativeBriefSection(sot, options) {
     '            <p class="cb-lead">' +
     escapeHtml(lead) +
     '</p>\n' +
-    '            <details class="cb-builder-details" id="cb-builder">\n' +
-    '                <summary id="cb-builder-summary">Open brief builder</summary>\n' +
+    '            <details class="cb-builder-details" id="cb-builder" open>\n' +
+    '                <summary id="cb-builder-summary">Brief builder</summary>\n' +
     '            <div class="cb-presets" role="group" aria-label="' +
     escapeHtml(presetsLabel) +
     '">\n' +
@@ -1458,7 +1464,7 @@ function injectCreativeBrief(html, locale) {
       .replace(anchor, '')
       .replace(/\s*<nav class="site-nav no-print" id="siteNav"[\s\S]*?<\/nav>\s*/, '\n')
       .replace(
-        /\s*<a href="#creative-brief"[^>]*id="heroCtaBrief"[^>]*>[\s\S]*?<\/a>\s*/,
+        /\s*<a href="#[^"]*"[^>]*id="heroCtaBrief"[^>]*>[\s\S]*?<\/a>\s*/,
         '\n'
       )
       .replace(
@@ -1476,11 +1482,11 @@ function injectCreativeBrief(html, locale) {
   out = out
     .replace(
       /<a href="#block1"[^>]*id="heroCtaSpine"[^>]*>/i,
-      '<a href="#block1" class="cta-button" id="heroCtaSpine" aria-label="Start your first workflow – go to workflow 1">'
+      '<a href="#creative-brief" class="cta-button" id="heroCtaSpine" aria-label="Start the builder – go to the brief builder">'
     )
     .replace(
-      /<a href="#creative-brief"[^>]*id="heroCtaBrief"[^>]*>/i,
-      '<a href="#creative-brief" class="cta-text-link" id="heroCtaBrief" aria-label="Build a creative brief – go to the brief builder">'
+      /<a href="#[^"]*"[^>]*id="heroCtaBrief"[^>]*>/i,
+      '<a href="#pdf-storefront" class="cta-text-link" id="heroCtaBrief" aria-label="View kits – go to pricing">'
     );
   const courseFaq =
     '<details class="faq-item">\n' +
@@ -1838,24 +1844,28 @@ const EN_REPLACEMENTS_PREFIX = [
   // Exact strings with "Promptų anatomija" before global replace below (order matters)
   ['aria-label="Atidaryti Promptų anatomija Telegram grupę naujame lange"', 'aria-label="Open Prompt Anatomy Telegram group in new tab"'],
   ['Promptų anatomija', 'Prompt Anatomy'],
-  ['Turinio DI sistema<br>rinkodaros vadovams', 'Build a 30-day Content AI System your team can reuse'],
+  ['Turinio DI sistema<br>rinkodaros vadovams', 'One brief. An image-ready prompt. Then the workflows your team can reuse.'],
   [
     '<p class="header-lead" id="heroLead">Kartok rinkodaros workflow vietoj tuščio prompto kiekvieną kartą.</p>',
-    '<p class="header-lead" id="heroLead">Copy the Plan → Create → Check → Improve workflow into ChatGPT or Claude, then take the full kit offline when your team needs the system.</p>'
+    '<p class="header-lead" id="heroLead">Fill the brief. Copy the image prompt. Take the kit offline when the team needs it.</p>'
   ],
   [
     '<p class="header-proof" id="heroProof">Nuo kampanijos plano iki kokybės patikros – viena kartojama sistema.</p>',
-    '<p class="header-proof" id="heroProof">4 workflows free on this page. Full 10-prompt system kits start at $3.99.</p>'
+    '<p class="header-proof" id="heroProof">Brief builder open below. 4 workflows after the kits, from $3.99.</p>'
   ],
-  ['id="hero-diagram-label">Planuok → Kurk → Tikrink → Tobulink</', 'id="hero-diagram-label">Plan → Create → Check → Improve</'],
-  ['<span class="hero-diagram__module-title">Planuok</span>', '<span class="hero-diagram__module-title">Plan</span>'],
-  ['<span class="hero-diagram__module-title">Kurk</span>', '<span class="hero-diagram__module-title">Create</span>'],
-  ['<span class="hero-diagram__module-title">Tikrink</span>', '<span class="hero-diagram__module-title">Check</span>'],
-  ['<span class="hero-diagram__module-title">Tobulink</span>', '<span class="hero-diagram__module-title">Improve</span>'],
-  ['<span class="hero-diagram__module-desc">Briefas + auditorija</span>', '<span class="hero-diagram__module-desc">Brief + audience</span>'],
-  ['<span class="hero-diagram__module-desc">Kanalų turinys</span>', '<span class="hero-diagram__module-desc">Channel-ready content</span>'],
-  ['<span class="hero-diagram__module-desc">Prekės ženklas + kokybė</span>', '<span class="hero-diagram__module-desc">Brand + quality</span>'],
-  ['<span class="hero-diagram__module-desc">Atsiliepimai → perrašymas</span>', '<span class="hero-diagram__module-desc">Feedback → rewrite</span>'],
+  ['id="hero-diagram-label">Iš 1-o workflow</', 'id="hero-diagram-label">From the brief builder</'],
+  [
+    'class="hero-diagram__card hero-diagram__card--sample"',
+    'class="hero-diagram__card hero-diagram__card--sample hero-diagram__card--photo"'
+  ],
+  [
+    '<table class="hero-sample">\n                                <caption class="visually-hidden">30 dienų turinio plano pavyzdys</caption>\n                                <thead>\n                                    <tr><th>Diena</th><th>Kanalas</th><th>Tema</th></tr>\n                                </thead>\n                                <tbody>\n                                    <tr><td>01</td><td>LinkedIn</td><td>DI klaidos, kurias kartoja komandos</td></tr>\n                                    <tr><td>02</td><td>LinkedIn</td><td>Agentų ROI – trumpas case</td></tr>\n                                    <tr><td>03</td><td>X</td><td>Promptinimo gija</td></tr>\n                                    <tr><td>04</td><td>Email</td><td>Savaitės cadence</td></tr>\n                                    <tr><td>05</td><td>LinkedIn</td><td>Brand guardrails</td></tr>\n                                </tbody>\n                            </table>',
+    '<picture>\n                                <source type="image/webp" srcset="../assets/hero/brief-sample-satori.webp">\n                                <img class="hero-sample hero-sample-image" src="../assets/hero/brief-sample-satori.png" width="640" height="640" alt="Luxury leather handbag on light stone with cinematic lighting and clean negative space for a headline." decoding="async" fetchpriority="high">\n                            </picture>\n                            <pre class="hero-brief-sample">Luxury leather handbag on light stone,\ncinematic lighting, clean negative space for headline,\n1:1, LinkedIn, premium tone.</pre>'
+  ],
+  [
+    'Sample output of workflow 1 — a 30-day content plan.',
+    'Sample output of the brief builder — an image-ready prompt.'
+  ],
   [
     '<li class="trust-pill" id="heroTrustPill1">Be paskyros</li>',
     '<li class="trust-pill" id="heroTrustPill1">4 workflows free</li>'
@@ -1869,16 +1879,18 @@ const EN_REPLACEMENTS_PREFIX = [
     '<li class="trust-pill" id="heroTrustPill3">Full kit from $3.99</li>'
   ],
   [
-    'class="cta-text-link" id="heroCtaBrief" aria-label="Kurti kūrybinį briefą – pereiti prie brief builder"',
-    'class="cta-text-link" id="heroCtaBrief" aria-label="Build a creative brief – go to the brief builder"'
+    'class="cta-text-link" id="heroCtaBrief" aria-label="Žiūrėti rinkinius – pereiti prie kainų"',
+    'class="cta-text-link" id="heroCtaBrief" aria-label="View kits – go to pricing"'
   ],
-  ['Kurti kūrybinį briefą', 'Build a creative brief'],
+  ['Žiūrėti rinkinius', 'View kits'],
+  ['<span class="prompt-step" id="prompt1Recommended">Workflow 1 of 4</span>', '<span class="prompt-step" id="prompt1Recommended">Workflow 1 of 4</span>'],
   [
     'aria-label="Pradėti pirmą workflow – pereiti prie workflow 1"',
-    'aria-label="Start your first workflow – go to workflow 1"'
+    'aria-label="Start the builder – go to the brief builder"'
   ],
-  ['Pradėti pirmą workflow', 'Start your first workflow'],
-  ['<span class="prompt-recommended" id="prompt1Recommended">Pradėk nuo čia</span>', '<span class="prompt-recommended" id="prompt1Recommended">Start here</span>'],
+  ['Pradėti pirmą workflow', 'Start the builder'],
+  ['Žiūrėti Complete rinkinį', 'See the Complete kit'],
+  ['href="#pdf-storefront" id="progressJumpPro">Pricing</a>', 'href="#pdf-storefront" id="progressJumpPro">Pricing</a>'],
   [
     '<p class="prompt-path-hint" id="prompt1PathHint">Kopijuok Promptą 1 → įklijuok į ChatGPT arba Claude.</p>',
     '<p class="prompt-path-hint" id="prompt1PathHint">Copy Prompt 1 → paste into ChatGPT or Claude.</p>'
@@ -1894,7 +1906,6 @@ const EN_REPLACEMENTS_PREFIX = [
   ],
   ['<summary id="prompt-basics-summary">Promptų pagrindai (1 min)</summary>', '<summary id="prompt-basics-summary">Prompt basics (1 min)</summary>'],
   ['aria-label="Greita navigacija per promptus"', 'aria-label="Quick jump between prompts"'],
-  ['href="#pro-contents" id="progressJumpPro">Pro</a>', 'href="#pdf-storefront" id="progressJumpPro">Pricing</a>'],
   ['<a href="#faq" id="progressJumpFaq">DUK</a>', '<a href="#faq" id="progressJumpFaq">FAQ</a>'],
   ['<p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Promptas</p>', '<p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Prompt</p>'],
   ['<span id="stickyPromptBarCopyText">Kopijuoti</span>', '<span id="stickyPromptBarCopyText">Copy</span>'],
@@ -1988,57 +1999,36 @@ const EN_REPLACEMENTS_PREFIX = [
 
 const EN_REPLACEMENTS_SUFFIX = [
   // Prompt 1 (Plan)
-  ['<div class="category">Planuok</div>', '<div class="category">Plan</div>'],
   ['<h2 class="prompt-title">30 dienų turinio sistema</h2>', '<h2 class="prompt-title">30-day content system</h2>'],
   ['<p class="prompt-desc">Sukurk 30 dienų turinio planą pagal 4 turinio principus</p>', '<p class="prompt-desc">Create a 30-day content plan using 4 content principles</p>'],
   ['aria-label="Pasirinkti ir kopijuoti promptą 1"', 'aria-label="Select and copy prompt 1"'],
-  ['aria-label="Informacija: promptas 1"', 'aria-label="Information: prompt 1"'],
-  ['<strong>Branduolys:</strong>', '<strong>Core:</strong>'],
-  ['<p>4 principai = balansas: autoritetas, problema, įrodymas, pasiūlymas.</p>', '<p>4 principles = balance: authority, problem, proof, offer.</p>'],
-  [
-    'Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.',
-    'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.'
-  ],
   ['aria-label="Kopijuoti promptą 1 į darbinių atmintinę"', 'aria-label="Copy prompt 1 to clipboard"'],
   ['<span>Kopijuoti promptą</span>', '<span>Copy prompt</span>'],
   ['aria-label="Pažymėti, kad atlikai šį žingsnį"', 'aria-label="Mark as done"'],
   ['<span>Pažymėjau kaip atlikau</span>', '<span>Mark as done</span>'],
   // Prompt 2 (Create)
-  ['<div class="category">Kurk</div>', '<div class="category">Create</div>'],
   ['<h2 class="prompt-title">Viena idėja → 7 formatai</h2>', '<h2 class="prompt-title">One idea → 7 formats</h2>'],
   [
     '<p class="prompt-desc" id="prompt-desc-2">Iš vienos idėjos – 7 kanalų vienetai per ~5–10 min</p>',
     '<p class="prompt-desc" id="prompt-desc-2">From one idea — 7 channel units in ~5–10 min</p>'
   ],
   ['aria-label="Pasirinkti ir kopijuoti promptą 2"', 'aria-label="Select and copy prompt 2"'],
-  ['aria-label="Informacija: promptas 2"', 'aria-label="Information: prompt 2"'],
-  ['<strong>Vienos idėjos daug formatų:</strong>', '<strong>One idea, many formats:</strong>'],
-  ['<p>1 idėja = 7 vienetų. Laikas sutaupomas, nuoseklumas išlaikomas.</p>', '<p>1 idea = 7 units. Time saved, consistency kept.</p>'],
-  ['Įklijuok į ChatGPT arba Claude ir pakeisk laukus savo duomenimis.', 'Paste into ChatGPT or Claude and replace placeholders with your data.'],
   ['aria-label="Kopijuoti promptą 2 į darbinių atmintinę"', 'aria-label="Copy prompt 2 to clipboard"'],
   // Prompt 3 (Check)
-  ['<div class="category">Tikrink</div>', '<div class="category">Check</div>'],
   ['<h2 class="prompt-title">LinkedIn Autoriteto Kūrimas</h2>', '<h2 class="prompt-title">LinkedIn authority building</h2>'],
   [
     '<p class="prompt-desc" id="prompt-desc-3">Autoriteto LinkedIn postas su įrodymais per ~3–5 min</p>',
     '<p class="prompt-desc" id="prompt-desc-3">Authority LinkedIn post with proof in ~3–5 min</p>'
   ],
   ['aria-label="Pasirinkti ir kopijuoti promptą 3"', 'aria-label="Select and copy prompt 3"'],
-  ['aria-label="Informacija: promptas 3"', 'aria-label="Information: prompt 3"'],
-  ['<strong>Autoritetas:</strong>', '<strong>Authority:</strong>'],
-  ['<p>Įrodymai + konkretūs punktai = pasitikėjimas ir reakcija.</p>', '<p>Proof + concrete points = trust and engagement.</p>'],
   ['aria-label="Kopijuoti promptą 3 į darbinių atmintinę"', 'aria-label="Copy prompt 3 to clipboard"'],
   // Prompt 5 (Improve)
-  ['<div class="category">Tobulink</div>', '<div class="category">Improve</div>'],
   ['<h2 class="prompt-title">Kasdienė analizė (Veikla→Sprendimas)</h2>', '<h2 class="prompt-title">Daily analysis (Action→Decision)</h2>'],
   [
     '<p class="prompt-desc" id="prompt-desc-5">Iš rodiklių — 4 veiksmai rytojui per ~3–5 min</p>',
     '<p class="prompt-desc" id="prompt-desc-5">From metrics — 4 actions for tomorrow in ~3–5 min</p>'
   ],
   ['aria-label="Pasirinkti ir kopijuoti promptą 5"', 'aria-label="Select and copy prompt 5"'],
-  ['aria-label="Informacija: promptas 5"', 'aria-label="Information: prompt 5"'],
-  ['<strong>Uždaras ciklas:</strong>', '<strong>Closed loop:</strong>'],
-  ['<p>Rodikliai be veiksmų = stovėjimas vietoje. Duomenys → sprendimai.</p>', '<p>Metrics without action = standing still. Data → decisions.</p>'],
   ['aria-label="Kopijuoti promptą 5 į darbinių atmintinę"', 'aria-label="Copy prompt 5 to clipboard"'],
   // FAQ
   ['Dažniausi klausimai', 'Frequently asked questions'],
@@ -2241,7 +2231,7 @@ function assertEnLocaleAdditions(html) {
       throw new Error('EN locale: storefront must not render comparison table (path cut)');
     }
     if (html.indexOf('id="cb-builder"') === -1) {
-      throw new Error('EN locale: missing collapsed #cb-builder details');
+      throw new Error('EN locale: missing #cb-builder details');
     }
     if (html.indexOf('class="pdf-card"') === -1) {
       throw new Error('EN locale: storefront must contain at least one .pdf-card');

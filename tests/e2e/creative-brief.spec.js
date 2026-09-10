@@ -1,20 +1,26 @@
 'use strict';
 
 /**
- * Creative brief builder — EN-only free tool (collapsed by default).
+ * Creative brief builder — EN-only free tool (open by default).
  */
 
 const { test, expect } = require('@playwright/test');
 
 test.describe('creative brief builder', () => {
-  test('en/ shows #creative-brief teaser; builder works after open', async ({ page }) => {
+  test('en/ shows open #creative-brief; builder works without extra click', async ({ page }) => {
     await page.goto('/en/');
     const section = page.locator('#creative-brief');
     await expect(section).toBeVisible();
+    await expect(page.locator('img.hero-sample-image')).toBeVisible();
     await expect(page.locator('#progressJumpCreative')).toBeVisible();
     await expect(page.locator('#cb-builder')).toBeVisible();
+    await expect(page.locator('#cb-builder')).toHaveAttribute('open', '');
 
-    await page.locator('#cb-builder-summary').click();
+    const activeId = await page.evaluate(function () {
+      return document.activeElement && document.activeElement.id;
+    });
+    expect(activeId).not.toBe('cbCampaignGoal');
+
     await expect(page.locator('#cbOutput')).toBeVisible();
 
     await page.locator('[data-cb-preset="ecommerce"]').click();

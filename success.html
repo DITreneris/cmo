@@ -82,8 +82,38 @@
                         .then(function (resp) {
                             if (resp.status === 200) {
                                 return resp.json().then(function (json) {
-                                    if (json && json.url) {
-                                        downloadBtn.href = json.url;
+                                    var href = json && (json.downloadUrl || json.url);
+                                    if (href) {
+                                        downloadBtn.href = href;
+                                        var extras = json.downloads && json.downloads.length ? json.downloads : [];
+                                        var oldExtras = downloadArea.querySelectorAll('a[data-extra-download]');
+                                        for (var i = 0; i < oldExtras.length; i++) {
+                                            oldExtras[i].parentNode.removeChild(oldExtras[i]);
+                                        }
+                                        if (extras.length > 1) {
+                                            var after = downloadBtn;
+                                            for (var j = 1; j < extras.length; j++) {
+                                                var item = extras[j];
+                                                if (!item || !item.url) continue;
+                                                var extra = document.createElement('a');
+                                                extra.className = 'satellite-back';
+                                                extra.setAttribute(
+                                                    'data-extra-download',
+                                                    item.productId || String(j)
+                                                );
+                                                extra.rel = 'nofollow';
+                                                extra.href = item.url;
+                                                extra.textContent = item.productName
+                                                    ? 'Download ' + item.productName
+                                                    : 'Download file';
+                                                if (after.nextSibling) {
+                                                    downloadArea.insertBefore(extra, after.nextSibling);
+                                                } else {
+                                                    downloadArea.appendChild(extra);
+                                                }
+                                                after = extra;
+                                            }
+                                        }
                                         downloadArea.hidden = false;
                                         setState('ready', 'Your download is ready.');
                                         if (typeof window.trackEvent === 'function') {

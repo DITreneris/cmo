@@ -1,22 +1,22 @@
 # DI Promptų Biblioteka – stiliaus gidas (Spin-off Nr. 2)
 
-**Versija:** 1.6  
-**Data:** 2026-08-11  
+**Versija:** 1.6.1  
+**Data:** 2026-09-03  
 **Kalba:** LT  
-**Kryptis:** Product Operator (light SaaS shell; Fraunces **only** hero H1; Source Sans 3 product UI; JetBrains Mono prompts)
+**Kryptis:** Product Operator (warm paper atmosphere; Fraunces **only** hero H1; Source Sans 3 product UI; JetBrains Mono prompts)
 
 Spin-off Nr. 2 (Rinkodaros vadovo turinio DI sistema) naudoja **Prompt Anatomy** brandą iš mother repo [DITreneris/promptanatomy](https://github.com/DITreneris/promptanatomy). Spalvų kanonas: auksas + ink (+ teal kaip antrinis). Sinchronizacija: [docs/BRAND_SYNC.md](docs/BRAND_SYNC.md). Hero diagramos gramatika adaptuota iš sister [DITreneris/blog](https://github.com/DITreneris/blog) (ne Inter, ne dark full-bleed hub).
 
 ---
 
-## 0. DS 1.6 – Product Operator
+## 0. DS 1.6.1 – Product Operator (atmosphere)
 
 ### 0.1 Principai
 
-- **Viena gramatika:** light SaaS shell + serif tik hero H1 + navy product diagram (ne ebook cover).
+- **Viena gramatika:** warm paper shell + serif tik hero H1 + navy product diagram (ne ebook cover, ne cool slate).
 - Tipografija: Fraunces = marketing H1; visa produkto UI = Source Sans 3. Inter nenaudojamas.
 - Trys paviršiai: `page` | `panel` | `accent` – ne kiekviena sekcija = kortelė; open lieka open.
-- Hero = full-bleed light plokštuma; pirmas viewport = brand + H1 + viena eilutė + spine-first CTA + **workflow diagram**.
+- Hero = full-bleed warm paper; pirmas viewport = brand + H1 + viena eilutė + tool-first CTA + **sample output image** (Satori still + prompt caption — not pipeline modules, not prompt-only).
 - Gold ≈ **5%**: primary CTA fill, selected/focus ring, surface/border accents – **never** body text or link `color` (use ink `--color-text-primary`; gold fails WCAG AA as text on light).
 - Elevations: **0** (border only) + **1** (subtle); optional stronger shadow tik `.hero-diagram`.
 - Radii: **8 / 12 / 16** only; pill tik status labels.
@@ -43,18 +43,16 @@ Skalė: caption 12 → small 14 → body 17 → bodyLg 18 → title 1.35rem → 
 
 ### 0.4 Pre-spine IA (EN) + glossary
 
-**Glossary:** Prompt Anatomy = brand; Content AI System = product; **workflow** = free spine unit (1/2/3/5); **prompt** = copyable body; **brief** = secondary tool; **Pro kit** = full 10 offline.
+**Glossary:** Prompt Anatomy = brand; Content AI System = product; **workflow** = free library unit (display 1–4 = IDs 1/2/3/5); **prompt** = copyable body; **brief** = **primary** free tool; **Pro kit** = full 10 offline.
 
-1. Hero: logo + sticky `#siteNav` (Workflows · Brief builder · Pricing); **no lang switcher**; H1 once; `#heroProof` with free→paid anchor; trust chips (4 workflows free · Brief builder included · Full kit from `$3.99`); primary `#heroCtaSpine` **Start your first workflow**; `#heroCtaBrief` **text link**; `.hero-diagram` (pipeline modules + caption only — no outputs row / tagline)  
-2. `#executive-summary` — quiet usage sentence only (no second start CTA)  
-3. Optional copy tips (`#instructions` details)  
-4. `#cmo-context` (collapsed)  
-5. Progress of 4 workflows + jump (1·2·3·5 · Pricing · Brief · FAQ; no provider hub)  
-6. Spine prompts 1→2→3→5  
-7. `#cmo-safety` → `#creative-brief` → `#cmo-scenarios`  
-8. `#pro-contents` catalog → storefront → FAQ → `#prompt-basics` → rest 
+1. Hero: logo + sticky `#siteNav` (Workflows · Brief builder · Pricing); **no lang switcher**; H1 once; `#heroProof` with free→paid anchor; trust IDs `#heroTrustPill1/2/3` as one muted inline row (no pill chrome); primary `#heroCtaSpine` **Start the builder** → `#creative-brief`; `#heroCtaBrief` **View kits** text link → `#pdf-storefront`; `.hero-diagram` = **sample image** (`.hero-sample-image`) + prompt caption *From the brief builder* — no pipeline modules / outputs row  
+2. **Use now:** EN `#creative-brief` (`#cb-builder` **open**)  
+3. `#pdf-storefront` — 2 cards (Starter + Complete); Pro = text link  
+4. Progress of 4 + jump (Plan·Create·Check·Improve · Pricing · Brief · FAQ; **not** sticky)  
+5. Library: prompts 1, 2, 3, 5 (display 1–4) + closed `#cmo-context` → `#cmo-safety` → `#cmo-scenarios` → `#pro-contents`  
+6. Usage strip + copy tips (demoted) → FAQ → `#prompt-basics` → rest  
 
-Spine-first: primary `#heroCtaSpine` → `#block1`. Do not lengthen path to first Copy. No top status pills.
+Tool-first: primary `#heroCtaSpine` → `#creative-brief`. Do not put Prompt 1 before the builder. No top status pills.
 
 ---
 
@@ -77,10 +75,11 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 
 | Kintamasis | Hex | Paskirtis |
 |------------|-----|-----------|
-| `--color-surface-page` | `#F8FAFC` | Puslapio fonas |
+| `--color-surface-page` | `#F6F1E8` | Šiltas popierius |
+| `--color-surface-subtle` | `#EEE6D8` | Antrinis paviršius |
 | `--color-text-primary` | `#0F172A` | Pagrindinis tekstas |
 | `--color-text-secondary` | `#475569` | Antrinis tekstas |
-| `--color-border-default` | `#E2E8F0` | Rėmeliai |
+| `--color-border-default` | `#E0D6C6` | Šilti rėmeliai |
 
 ### 1.3 Semantinės
 
@@ -96,11 +95,11 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 
 ## 2. Hero ir diagram
 
-- **Hero fonas:** `--hero-bg` – šviesus gradientas; **full-bleed** (ne kortelė).
+- **Hero fonas:** `--hero-bg` – šiltas gold radial ant popieriaus (`#F6F1E8` → `#EDE4D4`); **full-bleed** (ne kortelė).
 - **CTA:** `--cta-bg` gold gradient; ink text; `--shadow-cta` restrained.
-- **CTA kontraktas:** primary `#heroCtaSpine` → `#block1` (EN: **Start your first workflow**); secondary `#heroCtaBrief` text link. Brief is never primary.
-- **Vizualas:** `.hero-diagram` – navy card ~38rem, Plan → Create → Check → Improve modules with product descs + figcaption only (no outputs row / tagline / cycle-stepper duplicate). Accessible label visually hidden; **not** PDF cover; no H1 restatement inside the card.
-- Eyebrow ≠ subhead (no duplicate message). Trust = three muted chips (`#heroTrustPill1/2/3`); Pro/offline lives in FAQ/storefront, not hero. Lang switcher is utility (no gold active state).
+- **CTA kontraktas:** primary `#heroCtaSpine` → `#creative-brief` (EN: **Start the builder**); secondary `#heroCtaBrief` **View kits** → `#pdf-storefront`. LT primary lieka `#block1`.
+- **Vizualas:** `.hero-diagram` – navy card ~38rem with `.hero-sample-image` (Satori still) + `<pre class="hero-brief-sample">` caption *From the brief builder*. **Not** pipeline modules; **not** PDF cover; no H1 restatement inside the card. Breakout 1120–1200px. `/lt/` keeps the 30-day table.
+- Eyebrow ≠ subhead (no duplicate message). Trust IDs stay (`#heroTrustPill1/2/3`) as muted inline text. Pro/offline lives in FAQ/storefront, not hero. Lang switcher is utility (no gold active state).
 
 ---
 
@@ -220,7 +219,8 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 - **1.4** – subtract chrome, type/space tokens  
 - **1.5** – Editorial Operator (serif on section titles; PDF cover hero)  
 - **1.6** – Product Operator: serif=hero H1; hero workflow diagram; gold/shadow/radius restraint; dual CSS kill; compact how-it-works  
+- **1.6.1** – Atmosphere: warm paper (`#F6F1E8`); EN hero = Satori sample image + prompt caption; builder output pane = navy studio; Complete card visual weight  
 
 ---
 
-*Atnaujinta 2026-08-11 – DS 1.6 Product Operator.*
+*Atnaujinta 2026-09-03 – DS 1.6.1 Product Operator (atmosphere).*

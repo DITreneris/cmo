@@ -27,7 +27,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 ### Funkcionalumas
 
 - [ ] **Kopijavimas (spine):** Promptai 1, 2, 3, 5 – Copy → DI; kontekstas + taisyklės prepend'inamos. Teaseriai 4/6–10 – be copy, CTA į Pro.
-- [ ] **EN UX spine-first:** hero primary → `#block1`; secondary → `#creative-brief`; brief po spine `#block5`, prieš teasers; contiguous 1→2→3→5; progress of 4; 0 meme slotų; Stripe checkout nepakitęs.
+- [ ] **EN UX tool-first:** hero primary → `#creative-brief` (open builder); secondary View kits → `#pdf-storefront`; 2 kortelės (Starter + Complete); Pro = tekstinė nuoroda; library 1/2/3/5 (display 1–4) po kits; `#cb-builder` **open**; progress of 4; 0 meme slotų; Stripe kainos/linkai nepakitę.
 - [ ] **CMO kontekstas:** Užpildyti `#cmo-context` laukus → kopijuoti promptą → įklijuotas tekstas turi konteksto bloką ir „TAISYKLĖS (privalomos)" / „RULES (non-negotiable)".
 - [ ] **Scenarijai:** `#cmo-scenarios` skirtukai veikia (klaviatūra: rodyklės); kopijavimas iš scenarijaus į clipboard.
 - [ ] **Safety blokas:** `#cmo-safety` recenzento promptas kopijuojasi.
@@ -41,9 +41,9 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - [ ] **Focus:** Matomas focus (pvz. focus-visible) ant mygtukų ir nuorodų.
 - [ ] **Pa11y:** CI bėga į `/en/` (kanonas), `/lt/` (smoke), privacy. Lokaliai release QA: `npx pa11y http://localhost:3000/en/ --standard WCAG2AA --ignore "warning"`.
 
-### UX path cut (EN kanonas, DS 1.6)
+### UX path cut (EN kanonas, DS 1.6.1)
 
-- [ ] **Hero:** full-bleed; brand mark; sticky `#siteNav` = Workflows / Brief builder / Pricing; primary = Start your first workflow (`#heroCtaSpine` → `#block1`); secondary = brief text link (`#heroCtaBrief`); `#heroProof` su free→paid anchor; trust chips `#heroTrustPill1/2/3`; slim `.hero-diagram` (modules + caption only — **no** outputs row / tagline / cycle-stepper); quiet usage strip; nėra mini-prompt demo, hero Telegram nuorodos ar lang switcher.
+- [ ] **Hero:** full-bleed warm paper; brand mark; sticky `#siteNav` = Workflows / Brief builder / Pricing; primary = Start the builder (`#heroCtaSpine` → `#creative-brief`); secondary = View kits (`#heroCtaBrief`); `#heroProof` su free→paid anchor; trust IDs `#heroTrustPill1/2/3` as inline muted text; `.hero-diagram` = Satori sample **image** + prompt caption (*From the brief builder* — **no** outputs row / tagline / cycle-stepper); quiet usage strip; nėra mini-prompt demo, hero Telegram nuorodos ar lang switcher.
 - [ ] **Type:** Fraunces display (hero H1 only) + Source Sans 3 UI (ne Inter); body ~17px; prose ne full-bleed wall.
 - [ ] **Executive summary:** `#executive-summary.objectives--skim` – quiet usage sentence only; claims = 4 workflows + brief (ne „100 assets / 45 min“).
 - [ ] **Instructions:** `#copy-tips` as optional `<details>`; **no** `#framework-schema` / provider hub.
@@ -52,8 +52,8 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - [ ] **Progress jump:** `#progressJump` 1·2·3·5 · Pricing · Brief · FAQ; Pricing = `#pdf-storefront`; Brief stripped on `/lt/`.
 - [ ] **Sticky bar (≤768px):** Po `#block1` pasirodo juosta; Kopijuoti / Kitas → veikia.
 - [ ] **FAQ:** 3 primary klausimai + `<details class="faq-more-details">`; title be „before you start“; JSON-LD pilnas (`frontFaq` ≥ 8).
-- [ ] **PDF storefront (EN):** 3 Use · Build · Install maturity kortelės, **no** comparison table; live `buy.stripe.com`; Buyer FAQ `<details open>`.
-- [ ] **Free loop after spine:** thin `#cmo-safety` → EN `#creative-brief` (teaser + closed `#cb-builder`) → `#cmo-scenarios` → `#pro-contents` → storefront → FAQ → `#prompt-basics`.
+- [ ] **PDF storefront (EN):** 2 kortelės (Starter + Complete) + Pro text link, **no** comparison table; live `buy.stripe.com`; Buyer FAQ `<details>` closed default.
+- [ ] **Free loop after kits:** library 1/2/3/5 → thin `#cmo-safety` → `#cmo-scenarios` → `#pro-contents` → FAQ → `#prompt-basics`.
 - [ ] **Meme:** 0 slotų gyvoje UI.
 
 ### Responsive / naršyklės
@@ -75,7 +75,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 
 ### Commerce (EN-only, live)
 
-- [ ] **`/en/` storefront:** 3 kortelės; CTAs → live `buy.stripe.com` (ne `/coming-soon.html`)
+- [ ] **`/en/` storefront:** 2 kortelės + Pro text link; CTAs → live `buy.stripe.com` (ne `/coming-soon.html`)
 - [ ] **`/lt/`:** NĖRA `#pdf-storefront`, kainų, `buy.stripe.com`
 - [ ] **Mirror:** `MIRROR_NOTE=1` build — storefront omitted
 - [ ] **`npm run check:prod`:** `{ ok: true, missing: [] }` + IndexNow key file hosted

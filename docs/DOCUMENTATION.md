@@ -14,15 +14,15 @@
 | **Verslas ir procesai** | [AGENTS.md](../AGENTS.md) | Agentų rolės, workflow (Content, Curriculum, UI/UX, QA, Orchestrator) |
 | **Kodas ir turinys** | [docs/LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) | Ką galima keisti keičiant turinį; HTML/JS struktūra; CMO v2 kontraktas |
 | **LT/EN** | [docs/MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) | **EN kanonas**; `/lt/` užšaldyta testeriams; build routing |
-| **Dizainas** | [STYLEGUIDE.md](../STYLEGUIDE.md) | DS **1.6** Product Operator: tipografija, paviršiai, hero diagram, anti-patternai |
-| **Brand sync** | [docs/BRAND_SYNC.md](BRAND_SYNC.md) | Mother spalvos/favicon/OG; tipografija – spin-off DS 1.6 |
+| **Dizainas** | [STYLEGUIDE.md](../STYLEGUIDE.md) | DS **1.6.1** Product Operator: tipografija, šiltas popierius, hero sample image, anti-patternai |
+| **Brand sync** | [docs/BRAND_SYNC.md](BRAND_SYNC.md) | Mother gold/ink/favicon; spin-off DS 1.6.1 warm paper |
 | **Kokybė** | [docs/QA_STANDARTAS.md](QA_STANDARTAS.md) | QA kriterijai, komandos (`npm test`, pa11y) |
 | **Testavimas** | [docs/TESTAVIMAS.md](TESTAVIMAS.md) | Gyvo testavimo scenarijai ir žurnalas |
 | **Taisyklės** | [.cursorrules](../.cursorrules) | Kokybė, a11y, commit formatas |
 | **Ops SOT** | [docs/AGENT_SOT.md](AGENT_SOT.md) | Build, deploy, GEO (hash hubs + frontFaq), commerce, free-surface model |
 | **Roadmap** | [roadmap.md](../roadmap.md) | Ambition A→E→light B→C (R1–R4); Audit P0–P3 mapping; parked F/D/G |
 | **Active tracker** | [todo.md](../todo.md) | R1 Stripe ops + R1-support leftovers; Audit ≠ R1 exit |
-| **Agent lessons** | [AGENTS.md](../AGENTS.md) §10 | Operacinės pamokos (spine-first, JTBD/GEO §10.11–13, §10.14 cash before platform, §10.16–20 R1-support closeout, FAQ triple sync) |
+| **Agent lessons** | [AGENTS.md](../AGENTS.md) §10 | Operacinės pamokos (tool-first, JTBD/GEO §10.11–13, §10.14 cash before platform, §10.16–21 R1-support closeout + root never negotiates LT, FAQ triple sync) |
 | **Stripe go-live (R1 detail)** | [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) | Ambition A ops SSOT (Blob, env, webhook, live drills) |
 | **Go-live runbook** | [docs/GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md) | Linear operator commands (`check:prod`, Blob dry-run, TEST_SEND) |
 | **Versijos** | [CHANGELOG.md](../CHANGELOG.md) | Pakeitimų istorija (Keep a Changelog, SemVer) |
@@ -43,7 +43,7 @@
 | [.cursorrules](../.cursorrules) | Kokybė, a11y, dokumentacijos taisyklės | QA + Orchestrator | Taisyklių pakeitimai, nauji reikalavimai |
 | [CHANGELOG.md](../CHANGELOG.md) | Versijų pakeitimų istorija (Keep a Changelog, SemVer) | Kiekvienas (pagal pakeitimą) | Kiekvienas release ir reikšmingi pakeitimai |
 | [DEPLOYMENT.md](../DEPLOYMENT.md) | Primary (Vercel) + mirror (GitHub Pages), BASE_PATH, troubleshooting | QA / Orchestrator | Platforma, URL, post-deploy |
-| [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema **1.6** (Product Operator): spalvos, tipografija, paviršiai, hero diagram | UI/UX | Dizaino pakeitimai, tokenų atnaujinimai |
+| [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema **1.6.1** (Product Operator): spalvos, tipografija, šiltas popierius, hero sample image | UI/UX | Dizaino pakeitimai, tokenų atnaujinimai |
 | [docs/LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) | Atskaitos kontraktas (HTML/JS struktūra, CMO v2, BASE_PATH) | QA / Orchestrator | Struktūros pakeitimai, CMO v2 plėtra |
 | [docs/PRODUCT-POSITIONING.md](PRODUCT-POSITIONING.md) | Mokamo sluoksnio pozicionavimas (CMO AI Content System, Use · Build · Install, ką teigiame / ko ne) + §4 JTBD search-intent language | Commerce / Content | Pavadinimų, pakopų, pozicionavimo, EN JTBD copy pakeitimai |
 | [docs/OFFER-ARCHITECTURE.md](OFFER-ARCHITECTURE.md) | Pasiūlymo architektūra (free vs paid matrica, funnel, copy cascade, regeneration komandos); GEO JTBD on `/en/` | Commerce | Produktų struktūros, copy šaltinių pakeitimai |
@@ -83,7 +83,7 @@
 | [config/brand-seo.json](../config/brand-seo.json) | SEO title, description, OG alt ir OG vizualo tekstai | Content / UI/UX | Keičiant social preview ar `<title>` |
 | [docs/BRAND_SYNC.md](BRAND_SYNC.md) | Mother repo SHA, spalvų map, favicon/OG sync procedūra | UI/UX | Po mother brand pakeitimo |
 | [styles/design-tokens.json](../styles/design-tokens.json) | Dizaino tokenų vienas šaltinis (smoke assert vs `tokens.css`) | UI/UX + QA | Keičiant semantinius / type / shadow tokenus |
-| [styles/tokens.css](../styles/tokens.css), [styles/components.css](../styles/components.css), [styles/utilities.css](../styles/utilities.css) | CSS sluoksniai; components – DS 1.6 hero/surfaces authoritative layer | UI/UX | Keičiant komponentų vizualiką, hero, paviršius |
+| [styles/tokens.css](../styles/tokens.css), [styles/components.css](../styles/components.css), [styles/utilities.css](../styles/utilities.css) | CSS sluoksniai; components – DS 1.6.1 hero/surfaces authoritative layer | UI/UX | Keičiant komponentų vizualiką, hero, paviršius |
 | [scripts/build-locale-pages.js](../scripts/build-locale-pages.js) | Generuoja lt/en + inject CMO v2 blokus + EN_REPLACEMENTS | QA / Orchestrator | LT/EN replace sąrašas, BASE_PATH, canonical/hreflang, CMO v2 inject |
 | [scripts/generate-og.js](../scripts/generate-og.js) | OG paveikslo (1200×630, SVG → PNG) generavimas | UI/UX + QA | Keičiant OG maketą; po pakeitimo `tests/structure.test.js` OG kontraktai |
 | [scripts/vercel-export-public.js](../scripts/vercel-export-public.js) | Vercel statinio output kopijavimas į `public/` + analytics inject | QA / Orchestrator | Keičiant Vercel deploy artefakto sudėtį |
@@ -123,6 +123,7 @@
 | [success.html](../success.html) | Pirkimo sėkmės polling UX (aria-live, noindex) | Commerce / UI/UX | Copy / UX pokyčiai |
 | [terms.html](../terms.html) | Pardavimo sąlygos + Team License (#paid-pdf-license) + 14-day refund | Commerce (juridinė peržiūra atskirai) | Licencijos pokyčiai, refund politika |
 | [coming-soon.html](../coming-soon.html) | Placeholder režimo CTA tikslas, kol nėra live Stripe Payment Links | Commerce | Po live launch – galima pašalinti arba palikti backup'ui |
+| [assets/hero/brief-sample-satori.png](../assets/hero/brief-sample-satori.png) + `.webp` | EN hero brief-builder sample (PNG fallback + WebP LCP) | UI/UX | Hero sample refresh |
 | [assets/pdf-covers/cmo-{starter,pro,bundle}-cover.png](../assets/pdf-covers/) | Storefront cover thumbnails (Playwright WYSIWYG; `npm run pdf:covers`) | UI/UX / Commerce | Cover redesign in `docs/pdf-source/` |
 | [assets/pdf-covers/cmo-pro-cover.svg](../assets/pdf-covers/cmo-pro-cover.svg) | Legacy Pro SVG (bundle naudoja `cmo-bundle-cover.png`) | UI/UX / Commerce | Tik jei SVG dar referencinamas |
 | [assets/pdf-covers/cmo-{starter,pro}-preview-{1,2,3}.png](../assets/pdf-covers/) | Watermarked interior pages 2–4 (`npm run pdf:previews`) | (build output, on demand) | Marketing keitimas |
@@ -136,7 +137,7 @@
 | [tests/fulfillment-config.test.js](../tests/fulfillment-config.test.js) | PRODUCTS ⇆ SOT consistency, env probe, /api kontraktas | QA | Kainų pokyčiai, naujas API route |
 | [tests/e2e/smoke.spec.js](../tests/e2e/smoke.spec.js), [tests/e2e/checkout.spec.js](../tests/e2e/checkout.spec.js), [tests/e2e/creative-brief.spec.js](../tests/e2e/creative-brief.spec.js) | Playwright e2e: storefront, success polling, brief builder | QA | Naujas storefront / brief flow |
 | [playwright.config.js](../playwright.config.js) | Playwright runner config | QA | CI / runner pakeitimai |
-| [vercel.json](../vercel.json) | Cache-Control headers `/api/*` ir `/success.html` (no-store) | Orchestrator / QA | Naujas dinaminis maršrutas |
+| [vercel.json](../vercel.json) | `/` → `/en/` (no LT Accept-Language); Cache-Control `/api/*` ir `/success.html` (no-store) | Orchestrator / QA | Naujas dinaminis maršrutas |
 
 ---
 

@@ -13,7 +13,7 @@
 
 Abu taikiniai dirba kartu: kodas / testai / canonical / hreflang **default**'ai derinami su primary; mirror aktyvuojamas per env override.
 
-**SEO šaltinis tiesai:** primary (`promptanatomy.space`) – canonical/hreflang/sitemap'e; **kanoninis locale – `/en/`** (`hreflang x-default`). `/lt/` lieka deploy'e kaip užšaldyta tester snapshot (žr. [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md) §0). Mirror egzistuoja kaip backup ir backward-compat (senos nuorodos į `/cmo` srautai).
+**SEO šaltinis tiesai:** primary (`promptanatomy.space`) – canonical/hreflang/sitemap'e; **kanoninis locale – `/en/`** (`hreflang x-default`). Root `/` visada 302 → `/en/` ([`vercel.json`](vercel.json)); `/lt/` tik tiesioginiu URL (užšaldyta tester snapshot, žr. [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md) §0). Mirror egzistuoja kaip backup ir backward-compat (senos nuorodos į `/cmo` srautai).
 
 ---
 

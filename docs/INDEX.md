@@ -9,8 +9,8 @@
 ## 0. Locale (būtina skaityti)
 
 **Kanonas:** [`/en/`](https://promptanatomy.space/en/) – turinys, UX, Commerce, release QA, SEO `x-default`.  
-**LT freeze:** [`/lt/`](https://promptanatomy.space/lt/) – tester snapshot; ne vystyti be Orchestrator scope.  
-Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0.
+**LT freeze:** [`/lt/`](https://promptanatomy.space/lt/) – tester snapshot; ne vystyti be Orchestrator scope. Root `/` visada → `/en/` (ne pagal naršyklės kalbą).  
+Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0–§2.
 
 ---
 
@@ -20,7 +20,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0.
 |---------|----------|
 | Naujas projekte | [README.md](../README.md) → tada šį indeksą |
 | Orchestrator / prioritetai | [roadmap.md](../roadmap.md) (R1–R4 + Audit mapping) + [todo.md](../todo.md) (aktyvus R1 Stripe; R1-support leftovers) + [AGENTS.md](../AGENTS.md) §0.2 |
-| AI agentas (Cursor ir kt.) | [.cursorrules](../.cursorrules) + [AGENTS.md](../AGENTS.md) (§0.1 free surface, §0.2 roadmap, §10 lessons incl. JTBD/GEO + §10.14–20 R1-support) + [AGENT_SOT.md](AGENT_SOT.md) + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 |
+| AI agentas (Cursor ir kt.) | [.cursorrules](../.cursorrules) + [AGENTS.md](../AGENTS.md) (§0.1 free surface, §0.2 roadmap, §10 lessons incl. JTBD/GEO + §10.14–21 R1-support) + [AGENT_SOT.md](AGENT_SOT.md) + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 |
 | Keiti tik angliškus tekstus / promptus (kanonas) | [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0 + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`BULLET_PROOF_PROMPTS.md`](BULLET_PROOF_PROMPTS.md) |
 | Keiti LT (retas snapshot refresh) | Orchestrator scope + [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §4 |
 | Keiti EN promptų `<pre>` turinį | [`../data/en-prompt-bodies.json`](../data/en-prompt-bodies.json) → `npm run build` |
@@ -29,7 +29,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0.
 | **Keiti mokamą PDF tarpinę (kainos, license, Stripe)** | [`memo_pdf.md`](../memo_pdf.md) + [`config/sot.json`](../config/sot.json) + [`LEGACY_GOLDEN_STANDARD.md` §7](LEGACY_GOLDEN_STANDARD.md) |
 | **Pridėti / atnaujinti PDF turinį** | [`docs/pdf-source/cmo-{starter,pro}.html`](../docs/pdf-source/) → `npm run pdf:export` (14/30 page-count gate) |
 | **Pozicionavimas / pasiūlymo architektūra** | [`docs/PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) + [`docs/OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md) |
-| **EN creative brief builder (`#creative-brief`)** | Po `#block5` → `#cmo-safety` → brief → `#cmo-scenarios` → `#pro-contents` — [`docs/CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md) + [`config/sot.json`](../config/sot.json) `copy.creativeBrief` + [`js/creative-brief.js`](../js/creative-brief.js) |
+| **EN creative brief builder (`#creative-brief`)** | Po hero, prieš `#pdf-storefront` (`#cb-builder` open) — [`docs/CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md) + [`config/sot.json`](../config/sot.json) `copy.creativeBrief` + [`js/creative-brief.js`](../js/creative-brief.js) |
 | **Įvesti live Stripe / R1 go-live** | [docs/GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md) (komandų seka) → [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) (Dashboard + env SSOT) + [todo.md](../todo.md) + [DEPLOYMENT.md §2.5](../DEPLOYMENT.md) |
 | **Produkto roadmap** | [roadmap.md](../roadmap.md) — Ambition A→E→light B→C |
 | **GEO / SEO surfaces** | [docs/AGENT_SOT.md](AGENT_SOT.md) §5 + [`scripts/geo-surfaces.js`](../scripts/geo-surfaces.js) (`llms.txt` hash hubs) |
@@ -45,7 +45,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0.
 | **Orchestrator** | [roadmap.md](../roadmap.md), [todo.md](../todo.md), [AGENTS.md](../AGENTS.md) §0.2, [DOCUMENTATION.md](DOCUMENTATION.md), [CHANGELOG.md](../CHANGELOG.md) | Prioritetai R1–R4, scope |
 | **Curriculum** | [`PEDAGOGINES_SPECIFIKACIJA.md`](PEDAGOGINES_SPECIFIKACIJA.md), [`OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md), registry `freeInteractive` | Free spine 1/2/3/5 vs Pro full 10; **EN** `data/en-*.json` |
 | **Content** | [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md), [`BULLET_PROOF_PROMPTS.md`](BULLET_PROOF_PROMPTS.md), [`PEDAGOGINES_SPECIFIKACIJA.md`](PEDAGOGINES_SPECIFIKACIJA.md), [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 | Spine bodies + teaser copy + JTBD FAQ/meta; [`data/en-*.json`](../data/); SOT `frontFaq`; root [`index.html`](../index.html) `applyStaticLocaleText` |
-| **UI/UX** | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6**, [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md), [`CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md), [`BRAND_SYNC.md`](BRAND_SYNC.md) | Product Operator; spine-first hero + diagram; surfaces; `styles/*`; **0** meme slots |
+| **UI/UX** | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.1**, [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md), [`CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md), [`BRAND_SYNC.md`](BRAND_SYNC.md) | Product Operator; tool-first CEO IA (hero → open brief → 2 kits → library 1/2/3/5); surfaces; `styles/*`; **0** meme slots |
 | **Commerce** (v1.6.0+) | [todo.md](../todo.md) R1 → [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md); [`memo_pdf.md`](../memo_pdf.md), [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md), [`OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md), [`LEGACY_GOLDEN_STANDARD.md` §7](LEGACY_GOLDEN_STANDARD.md), [DEPLOYMENT.md §2.5](../DEPLOYMENT.md) | [`config/sot.json`](../config/sot.json), [`docs/pdf-source/`](../docs/pdf-source/), [`api/`](../api/), [`success.html`](../success.html), [`terms.html`](../terms.html). Tik EN, tik `promptanatomy.space`. R4 Install po R1. |
 | **QA** | [docs/QA_STANDARTAS.md](QA_STANDARTAS.md), [docs/TESTAVIMAS.md](TESTAVIMAS.md), [DOCUMENTATION.md](DOCUMENTATION.md) | `npm test`, `tests/*.test.js`, [`tests/fulfillment-config.test.js`](../tests/fulfillment-config.test.js), [`tests/e2e/`](../tests/e2e/), [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) |
 
@@ -59,7 +59,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0.
 | Pakeisti CMO v2 konteksto / scenarijų / safety bloką | Redaguoti [`data/en-*.json`](../data/) + build; LT JSON – tik snapshot refresh scope. |
 | Pakeisti EN UI tekstus | [`scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) `EN_REPLACEMENTS` + root `applyStaticLocaleText` EN šakos. |
 | Pakeisti EN FAQ / JTBD GEO copy | Sync **trys** vietos: `sot.frontFaq` + build inject/`EN_REPLACEMENTS` + `applyStaticLocaleText` FAQ arrays; meta → `brand-seo.json`. Žr. AGENTS §10.11–13. |
-| Pakeisti dizainą | STYLEGUIDE **1.6** + `design-tokens.json` / `styles/*`; po pakeitimų `npm test` (design-system + a11y smoke). |
+| Pakeisti dizainą | STYLEGUIDE **1.6.1** + `design-tokens.json` / `styles/*`; po pakeitimų `npm test` (design-system + a11y smoke). |
 | Pakeisti struktūrą (nauja sekcija, JS API) | QA + sąmoningas **Legacy** atnaujinimas; išplėsti `tests/structure.test.js` jei reikia kontrakto. |
 
 ---
@@ -129,7 +129,7 @@ index.html (legacy struktūrinis šaltinis) + data/en-*.json (kanonas) + data/lt
 | [.cursorrules](../.cursorrules) | Cursor: kokybė, a11y, docs, commit |
 | [CHANGELOG.md](../CHANGELOG.md) | SemVer istorija |
 | [DEPLOYMENT.md](../DEPLOYMENT.md) | Primary (Vercel) + mirror (GitHub Pages), BASE_PATH |
-| [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema **1.6** (Product Operator) |
+| [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema **1.6.1** (Product Operator) |
 
 **Pastaba:** Kontaktų forma / Google Apps Script / atsiliepimų schema **NEBĖRA** (pašalinta 2026-05-15). Produktas duomenų nerinkia – tik kopijavimas + localStorage progresas.
 

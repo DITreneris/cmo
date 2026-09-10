@@ -1,6 +1,6 @@
 # Prompt Anatomy · 30-day Content AI System
 
-> Build a reusable 30-day Content AI System for your marketing team. Start with 4 free Plan → Create → Check → Improve workflows and upgrade to full offline kits from $3.99.
+> Fill a brief, copy an image-ready prompt, then run 4 free Plan → Create → Check → Improve workflows. Offline kits from $3.99.
 
 ## Free library
 - https://promptanatomy.space/en/ — creative brief builder + 4 core Plan → Create → Check → Improve workflows; full 10 prompts in Pro kit

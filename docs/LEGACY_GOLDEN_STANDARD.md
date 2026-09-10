@@ -22,7 +22,7 @@
 
 ### Build pipeline
 
-Faktinis **vartotojui matomas puslapis ≠ root [`index.html`](../index.html)**. Kanonas – **`en/index.html`** (`/en/`). Vartotojas gali atidaryti ir `/lt/` (testeriams), bet ji ne roadmap.
+Faktinis **vartotojui matomas puslapis ≠ root [`index.html`](../index.html)**. Kanonas – **`en/index.html`** (`/en/`). Root `/` visada nukreipia į `/en/` (Vercel + JS) – ne pagal `Accept-Language` / `navigator.language`. `/lt/` pasiekiamas tik tiesioginiu URL testeriams, ne roadmap.
 
 ```
 index.html (legacy struktūrinis šaltinis – DOM + LT <pre> branduolys)
@@ -42,7 +42,7 @@ lt/index.html (užšaldyta), en/index.html (kanonas), js/en-prompt-bodies-inline
 - **Mirror:** `https://ditreneris.github.io/cmo/` (GitHub Pages), aktyvuojamas su `BASE_PATH=/cmo`.
 - Override per env `SITE_ORIGIN` / `BASE_PATH`. Žr. [DEPLOYMENT.md](../DEPLOYMENT.md).
 
-**Sinchronizuota su kodu (2026-09-03, EN conversion P0/P1):** skip-link; hero **spine-first** + Product Operator (full-bleed `.header`, brand mark, sticky `#siteNav` su `#navWorkflows`, `#navBrief`, `#navPricing` → `#pdf-storefront`; **no lang switcher**; slim `.hero-diagram` Plan→Create→Check→Improve pipeline + caption only — **no** outputs row / tagline / cycle-stepper / provider hub / `#framework-schema`); `#heroProof`; muted `#heroTrustPill1/2/3` chips — 4 workflows free · Brief builder included · Full kit from $3.99; primary EN `#heroCtaSpine` → `#block1` **Start your first workflow**; secondary `#heroCtaBrief` → `#creative-brief` as **text link**); **eiliškumas:** `#executive-summary` → optional `#copy-tips` → closed `#cmo-context` → `#progressIndicator` (`aria-valuemax="4"`) → `#progressJump` (1,2,3,5 · Pricing · Brief · FAQ) → **interactive spine** 1,2,3,5 → thin `#cmo-safety` → EN `#creative-brief` (teaser + closed `#cb-builder`) → `#cmo-scenarios` → `#pro-contents` → EN `#pdf-storefront` (**3 maturity cards Use/Build/Install, no comparison table**) → FAQ → `#prompt-basics`. **Meme slotų nėra**. Dizainas: [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6**. Žr. [CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md).
+**Sinchronizuota su kodu (2026-09-03, R1-support 4 / craft atmosphere):** skip-link; hero **brief-builder sample image** + Product Operator 1.6.1 (full-bleed `.header`, brand mark, sticky `#siteNav` su `#navWorkflows`, `#navBrief`, `#navPricing` → `#pdf-storefront`; **no lang switcher**; `.hero-diagram` = `.hero-sample-image` Satori still + `.hero-brief-sample` caption + *From the brief builder* — **no** pipeline modules / outputs row / cycle-stepper / provider hub / `#framework-schema`); `#heroProof`; muted `#heroTrustPill1/2/3` IDs (inline, no pill chrome) — 4 workflows free · Brief builder included · Full kit from $3.99; primary EN `#heroCtaSpine` → `#creative-brief` **Start the builder**; secondary `#heroCtaBrief` → `#pdf-storefront` **View kits**); **eiliškumas:** EN `#creative-brief` (**open** `#cb-builder`) → EN `#pdf-storefront` (**2 cards** Starter + Complete; Pro = `#pdf-card-pro` text link; no comparison table) → `#progressIndicator` (`aria-valuemax="4"`, not sticky) → `#progressJump` (Plan·Create·Check·Improve · Pricing · Brief · FAQ) → library **1, 2, 3, 5** (display 1–4) + closed `#cmo-context` → thin `#cmo-safety` → `#cmo-scenarios` → `#pro-contents` → usage/copy-tips → FAQ → `#prompt-basics`. **Meme slotų nėra**. Dizainas: [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6**. Žr. [CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md).
 
 ---
 
@@ -66,18 +66,18 @@ index.html (legacy struktūrinis šaltinis) → po `npm run build` → lt/index.
 ├── <a class="skip-link" href="#main-content">Pereiti prie turinio</a>
 ├── <div class="container">
 │   └── <main id="main-content">
-│       ├── <header class="header">        (full-bleed; brand; #siteNav; #heroCtaSpine + #heroCtaBrief; #heroTrustPill*; .header-visual .hero-diagram)
-│       ├── <section id="executive-summary" class="objectives--skim">
-│       ├── <section class="instructions"> (#copy-tips only; no #framework-schema)
+│       ├── <header class="header">        (full-bleed; brand; #siteNav; #heroCtaSpine → #creative-brief + #heroCtaBrief View kits; #heroTrustPill*; .hero-diagram .hero-sample-image)
+│       ├── [build inject EN @ <!-- CMO_CREATIVE_BRIEF -->] <section id="creative-brief"> (open #cb-builder)
+│       ├── [build inject EN @ <!-- CMO_PDF_STOREFRONT -->] <section id="pdf-storefront"> (2 cards + #pdf-card-pro text link; no comparison table)
+│       ├── <div id="progressIndicator">   (max 4 – not sticky)
+│       ├── <nav id="progressJump">        (Plan·Create·Check·Improve · Pricing · Brief · FAQ; LT strips Brief)
+│       ├── <article class="prompt"> #block1  (library: title + pre + Copy + done; display 1 of 4)
 │       ├── [build inject @ <!-- CMO_CONTEXT -->] <section id="cmo-context"> (closed details)
-│       ├── <div id="progressIndicator">   (max 4 – spine only)
-│       ├── <nav id="progressJump">        (1,2,3,5 · Pricing · Brief · FAQ; LT strips Brief)
-│       ├── 4× <article class="prompt"> …  (spine 1,2,3,5; #prompt1PathHint on prompt 1)
+│       ├── 3× <article class="prompt"> …  (library 2, 3, 5 — display 2–4)
 │       ├── [build inject @ <!-- CMO_SAFETY -->] <section id="cmo-safety"> (EN: thin + closed details)
-│       ├── [build inject EN @ <!-- CMO_CREATIVE_BRIEF -->] <section id="creative-brief"> (teaser + #cb-builder)
-│       ├── [build inject @ <!-- CMO_SCENARIOS -->] #cmo-scenarios (details)
+│       ├── [build inject @ <!-- CMO_SCENARIOS -->] #cmo-scenarios (details, collapsed)
 │       ├── <section id="pro-contents"> … 6× [data-teaser-prompt] #block4/6–10 (catalog rows, not .prompt cards)
-│       ├── [build inject EN] <section id="pdf-storefront"> (3 cards; no comparison table)
+│       ├── <section id="executive-summary"> + #copy-tips (demoted, after library)
 │       ├── <section id="faq">
 │       ├── <details id="prompt-basics">
 │       ├── <section id="ecosystem-strip">
@@ -96,7 +96,7 @@ index.html (legacy struktūrinis šaltinis) → po `npm run build` → lt/index.
 - Checkbox (spine): `data-prompt-id="1"` / `"2"` / `"3"` / `"5"` — 4 copy + 4 done (`tests/structure.test.js`)
 - Pro catalog: `#pro-contents` eilutės `#block4/6–10` + `data-teaser-prompt` (ne `.prompt` kortelės)
 - Progreso juosta: `.progress-bar` turi `aria-valuemax="4"` ir EN `aria-label` / `progressText` „of 4 workflows“ (pradžia); JS skaičiuoja tik spine checkboxes 1/2/3/5
-- Info-box: `aria-label` spine promptams 1, 2, 3, 5
+- Prompt workbook: title + one subtitle + `<pre>` + Copy + Mark as done (no `.prompt-tags` / `.edit-hint` / `.info-box` chrome)
 - **CMO v2 (tik `lt/`, `en/`):** `cmo-context`, `cmo-safety`, `cmo-scenarios`, `expected1` / `expected2` / `expected3` / `expected5`, `cmoCtxAudience`, `cmoCtxOffer`, `cmoCtxChannels`, `cmoCtxGoal`, `cmoCtxConstraint`
 - **Creative brief (tik EN build, įskaitant mirror):** `creative-brief`, `cb-title`, `cb-builder` (default closed), `cbForm`, `cbOutput`, `cbCopyBtn`, `cbQuality`, `cbQualityHint`; žr. [CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md)
 - localStorage raktai: `di_prompt_done_1` … `di_prompt_done_10` gali likti kode; **spine naudoja 1/2/3/5**, kiti raktai ignoruojami
@@ -173,7 +173,7 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 - [ ] Free spine 1,2,3,5: full interactive (`.prompt-header` → body → footer, `#promptN`, copy, done). Pro 4/6–10: `#pro-contents` catalog rows (`data-teaser-prompt`, `#blockN`), **ne** `.prompt--teaser` / be `#promptN` / copy / checkbox. 0× `.prompt-details` free page.
 - [ ] Progress: tik spine checkboxes; „of 4“ / `aria-valuemax="4"`.
 - [ ] **NE pridėti** inline `onclick` / `onkeydown` atributų – binding per `addEventListener`.
-- [ ] Eiliškumas: `#cmo-context` → progress → spine 1/2/3/5 → `#cmo-safety` → EN `#creative-brief` (collapsed builder) → `#cmo-scenarios` → `#pro-contents` → EN storefront (no comparison table) → FAQ → `#prompt-basics`.
+- [ ] Eiliškumas: EN `#creative-brief` (open builder) → EN storefront (**2** cards + Pro text link; no comparison table) → progress → library 1/2/3/5 (display 1–4) + `#cmo-context` → `#cmo-safety` → `#cmo-scenarios` → `#pro-contents` → FAQ → `#prompt-basics`.
 - [ ] Meme: **0** `meme-slot-*` gyvoje UI.
 - [ ] CMO v2 blokai (`#cmo-context`, `.prompt-expected`, `#cmo-safety`, `#cmo-scenarios`, `window.__CMO_COMPILE`) **negali būti rankomis kuriami `index.html`** – jie generuojami iš build skripto + `data/*.json` (anchor'iai `<!-- CMO_SAFETY -->`, `<!-- CMO_SCENARIOS -->`).
 - [ ] `data/en-prompt-bodies.json` turi 10 EN META eilučių (atitiks 10 LT promptų root `index.html`).
@@ -239,14 +239,14 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 | Route | HTTP | Specifikuotas elgesys |
 |-------|------|----------------------|
 | `/api/stripe-webhook` | POST | `bodyParser: false` (raw body); validuoja `Stripe-Signature`; idempotent per Redis lock + `fulfillment:cs_*` būseną; pasirašo download token, įrašo metaduomenis su 7 d. TTL, siunčia Resend laišką. |
-| `/api/download-link` | GET `?session_id=...` | Polling endpoint success.html'ui. 200 + `{url}` jei paruošta; 202 jei vis dar fulfillment'as; 404 jei session nežinoma; 500 server klaidoms. Jokios autentikacijos – tik per session_id. |
+| `/api/download-link` | GET `?session_id=...` | Polling endpoint success.html'ui. 200 + `{ url, downloadUrl, downloads[] }` jei paruošta (`url === downloadUrl`; `downloads` – vienas įrašas per failą, bundle = Starter + Pro); 202 jei vis dar fulfillment'as; 404 jei session nežinoma; 500 server klaidoms. Jokios autentikacijos – tik per session_id. |
 | `/api/download` | GET `?t=<signed>` | Validuoja HMAC parašą + Redis token metaduomenis; load'ina PDF iš `PDF_CMO_*_SOURCE_URL` (Vercel Blob private URL); siunčia bytes su `Cache-Control: private, no-store`; suvartoja `download-token:jti` (single-use). |
 | `/api/fulfillment-health` | GET | Vieša sveikatos patikra. JSON: `{ ok, redis: "PONG"\|null, missing: [env], siteUrl }`. Jokios autentikacijos. |
 
 ### 7.5. Storefront blokas (EN, ne-mirror)
 
-- Įterpiamas **prieš** `<section … id="faq">` (po `#pro-contents`). FAQ lieka po storefront; `#ecosystem-strip` – po FAQ / `#prompt-basics`.
-- Vidinė ID/struktūra: `#pdf-storefront` → matomas teaser + 3 × `<article class="pdf-card" id="pdf-card-{starter|pro|bundle}">` (grid **ne** `<details>` viduje). `<details class="pdf-storefront-details">` wrap'ina **tik Buyer FAQ**. `commerce.comparisonTable` gali likti SOT – **nerenderinama**.
+- Įterpiamas po open brief (`<!-- CMO_PDF_STOREFRONT -->`), **prieš** library 1/2/3/5. FAQ lieka po library; `#ecosystem-strip` – po FAQ / `#prompt-basics`.
+- Vidinė ID/struktūra: `#pdf-storefront` → teaser + **2** × `<article class="pdf-card" id="pdf-card-{starter|bundle}">` (grid **ne** `<details>` viduje) + `<p class="pdf-pro-alt" id="pdf-card-pro">` tekstinė nuoroda. Preview thumbs **nėra**. `<details class="pdf-storefront-details">` wrap'ina **tik Buyer FAQ**. `commerce.comparisonTable` gali likti SOT – **nerenderinama**. 2-card UI ≠ Pro SKU delete.
 - CTA href:
   - **Live mode:** `https://buy.stripe.com/...` (Stripe Payment Link), `target="_blank"`, `rel="noopener noreferrer"`, `data-placeholder="false"`.
   - **Placeholder mode:** `/coming-soon.html` (relative, same-origin), `data-placeholder="true"`, jokio target/rel.
@@ -279,4 +279,4 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-08-11 (EN path cut: slim pre-spine + collapsed brief + no storefront comparison)
+**Paskutinis atnaujinimas:** 2026-09-03 (R1-support 3: tool-first IA; open brief; library 1/2/3/5 po PDF)

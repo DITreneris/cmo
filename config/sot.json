@@ -137,10 +137,10 @@
     "placeholderHref": "/coming-soon.html",
     "deliveryPromise": "Email delivery within 5 minutes. If your link does not arrive in 5 minutes, email info@promptanatomy.app and we will resend immediately.",
     "storefrontHead": {
-      "eyebrow": "Use · Build · Install",
-      "title": "Take the Content AI System from solo workflow to team operating kit",
-      "lead": "Start free in the browser. Buy the offline kit when you want the printable cadence, full 10-prompt system, workshop flow, and team license.",
-      "outcomeLine": "Free gives you 4 browser workflows plus the brief builder. Starter helps you use the system this week; Pro helps you build reusable team workflows; Complete installs both in one checkout for $10.99 instead of $12.98 separately."
+      "eyebrow": "Start solo. Scale when you need it.",
+      "title": "Choose your Content AI System",
+      "lead": "One-time purchase. Download it. Use it in ChatGPT or Claude.",
+      "outcomeLine": "Starter is the 30-day plan. Complete is Starter + Pro for $10.99 instead of $12.98 separately."
     },
     "comparisonTable": {
       "columns": ["free", "starter", "pro"],
@@ -169,7 +169,7 @@
         "name": "CMO AI Content System · Starter",
         "tierTag": "Use",
         "tierPromise": "Use the system this week",
-        "subtitle": "14-page PDF for week-1 execution: cadence, quickstart, and a worked review",
+        "subtitle": "For solo creators — get your next 30 days planned and start publishing",
         "ctaLabel": "Get Starter · $3.99",
         "priceUsd": 3.99,
         "priceCents": 399,
@@ -195,7 +195,7 @@
         "name": "CMO AI Content System · Pro",
         "tierTag": "Build",
         "tierPromise": "Build reusable team workflows",
-        "subtitle": "30-page operational PDF + Markdown companion for reusable AI content systems",
+        "subtitle": "For operators who already have a plan and need the full Build kit",
         "ctaLabel": "Get Pro · $8.99",
         "priceUsd": 8.99,
         "priceCents": 899,
@@ -222,7 +222,7 @@
         "name": "CMO AI Content System · Complete Kit",
         "tierTag": "Install",
         "tierPromise": "Install the full offline system",
-        "subtitle": "Starter + Pro together: 44 pages, 2 PDFs, Markdown companion, one checkout",
+        "subtitle": "For teams — 30-day planning plus the reusable workflow method, one checkout",
         "ctaLabel": "Get Complete · $10.99",
         "priceUsd": 10.99,
         "priceCents": 1099,

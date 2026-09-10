@@ -12,7 +12,7 @@ Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Papras
 - **Prompt basics po FAQ** – „Kas yra prompt?", „Kas yra Prompt Anatomy?" (`#prompt-basics`)
 - **CMO v2 kontekstas + scenarijai + safety** – paspaudus „Kopijuoti promptą", kontekstas (auditorija, USP, kanalai, tikslas, apribojimas) ir privalomos taisyklės automatiškai prepend'inamos prie prompto teksto
 - **FAQ** – greitas aiškumas prieš startą
-- **Interaktyvus dizainas** – DS 1.6 Product Operator, aiškūs mygtukai, progresas (0/4 spine)
+- **Interaktyvus dizainas** – DS 1.6.1 Product Operator, aiškūs mygtukai, progresas (0/4 spine)
 - **Kopijavimas** – pasirink promptą, spausk „Kopijuoti promptą", įklijuok ir pakeisk laukus
 - **Responsive** – veikia desktop ir mobiliai (Mobile UI First)
 - **Be duomenų rinkimo** – kontaktų formos nėra; „Pažymėjau kaip atlikau" saugoma tik tavo įrenginyje (localStorage), kontekstas – sessionStorage
@@ -57,7 +57,7 @@ Full contract: [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5.
 ## Technologijos
 
 - **HTML5** – semantinė struktūra, prieinamumas (skip link, ARIA, progress)
-- **CSS3** – dizaino sistema **1.6** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)): [styles/design-tokens.json](styles/design-tokens.json) → [styles/tokens.css](styles/tokens.css) → [styles/components.css](styles/components.css) → [styles/utilities.css](styles/utilities.css); gold/ink brand; surface page/panel/accent; hero workflow diagram
+- **CSS3** – dizaino sistema **1.6.1** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)): [styles/design-tokens.json](styles/design-tokens.json) → [styles/tokens.css](styles/tokens.css) → [styles/components.css](styles/components.css) → [styles/utilities.css](styles/utilities.css); gold/ink brand; warm paper; surface page/panel/accent; hero sample image
 - **Vanilla JavaScript** – kopijavimas, progresas (localStorage), CMO v2 kontekstas (sessionStorage), be frameworkų
 - **Build:** Node.js skriptai ([scripts/build-locale-pages.js](scripts/build-locale-pages.js), [scripts/generate-og.js](scripts/generate-og.js), [scripts/vercel-export-public.js](scripts/vercel-export-public.js))
 - **Google Fonts** – Fraunces (hero H1), Source Sans 3 (UI/body), JetBrains Mono (prompts)

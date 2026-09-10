@@ -3,7 +3,7 @@
 /**
  * GET /api/fulfillment-followup
  * Vercel Cron: sends due Starter post-purchase follow-up emails (Day 3 / Day 7).
- * Requires FULFILLMENT_FOLLOWUP_ENABLED=1 and CRON_SECRET header match.
+ * When FULFILLMENT_FOLLOWUP_ENABLED=1, CRON_SECRET is required (Bearer match → 401).
  */
 
 const { processDueFollowups, listMissingFulfillmentEnv } = require('./_lib/fulfillment');
@@ -14,8 +14,17 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  const followupsEnabled = process.env.FULFILLMENT_FOLLOWUP_ENABLED === '1';
   const cronSecret = process.env.CRON_SECRET;
-  if (cronSecret) {
+  if (followupsEnabled) {
+    if (!cronSecret) {
+      return res.status(401).json({ error: 'Unauthorized', detail: 'CRON_SECRET required' });
+    }
+    const auth = req.headers.authorization || '';
+    if (auth !== `Bearer ${cronSecret}`) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  } else if (cronSecret) {
     const auth = req.headers.authorization || '';
     if (auth !== `Bearer ${cronSecret}`) {
       return res.status(401).json({ error: 'Unauthorized' });

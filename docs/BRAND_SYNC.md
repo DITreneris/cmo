@@ -6,7 +6,7 @@
 
 This document tracks visual identity alignment with the Prompt Anatomy brand hub (`promptanatomy.app`). Product copy and SEO for `.space` live in [`config/brand-seo.json`](../config/brand-seo.json).
 
-**Spin-off DS (web UI):** [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6** Product Operator — Fraunces **hero H1 only** + Source Sans 3 product UI + JetBrains Mono prompts; full-bleed light hero + navy workflow diagram (grammar adapted from sister [DITreneris/blog](https://github.com/DITreneris/blog); not blog Inter / dark hub). Mother sync owns **colors + favicon mark**; type/composition are spin-off decisions.
+**Spin-off DS (web UI):** [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.1** Product Operator — Fraunces **hero H1 only** + Source Sans 3 product UI + JetBrains Mono prompts; full-bleed **warm paper** hero + navy sample card (grammar adapted from sister [DITreneris/blog](https://github.com/DITreneris/blog); not blog Inter / dark hub). Mother sync owns **gold + ink + favicon mark**; page/hero atmosphere (warm paper `#F6F1E8`) is a spin-off decision. Shared CSS warms `/lt/` paper without changing LT HTML.
 
 ---
 
@@ -18,7 +18,7 @@ This document tracks visual identity alignment with the Prompt Anatomy brand hub
 | `--color-brand-accent` `#cfa73a` | `color.brand.primary` |
 | `--color-brand-accent-hover` `#e8b93c` | `color.brand.primaryHover` |
 | `--color-ecosystem-1` `#2e9e7e` | `color.brand.tertiary` |
-| Hero bg `#f8fafc` → `#eef2f7` | `tokens.css` `--hero-bg` |
+| Hero bg `#f6f1e8` → `#ede4d4` (spin-off warm paper; mother remains gold+ink) | `tokens.css` `--hero-bg` |
 
 **Print secondary (PDF footers only):** `#0F2A44` — not used for web UI.
 

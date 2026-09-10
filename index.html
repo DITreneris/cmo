@@ -78,7 +78,7 @@
         }
 
         .container {
-            max-width: 960px;
+            max-width: 1160px;
             margin: 0 auto;
             padding: 60px 28px;
         }
@@ -1142,9 +1142,9 @@
             padding: 14px 20px;
             margin-bottom: 24px;
             min-height: 44px;
-            position: sticky;
-            top: 14px;
-            z-index: 900;
+            position: static;
+            top: auto;
+            z-index: 1;
         }
 
         .progress-wrap.is-sticky {
@@ -1733,62 +1733,38 @@
                     </div>
                     <div class="header-cta">
                         <a href="#block1" class="cta-button" id="heroCtaSpine" aria-label="Pradėti pirmą workflow – pereiti prie workflow 1">Pradėti pirmą workflow</a>
-                        <a href="#creative-brief" class="cta-text-link" id="heroCtaBrief" aria-label="Kurti kūrybinį briefą – pereiti prie brief builder">Kurti kūrybinį briefą</a>
+                        <a href="#pdf-storefront" class="cta-text-link" id="heroCtaBrief" aria-label="Žiūrėti rinkinius – pereiti prie kainų">Žiūrėti rinkinius</a>
                     </div>
                 </div>
                 <div class="header-visual">
                     <figure class="hero-diagram" aria-labelledby="hero-diagram-label">
-                        <div class="hero-diagram__card">
-                            <p class="hero-diagram__label visually-hidden" id="hero-diagram-label">Planuok → Kurk → Tikrink → Tobulink</p>
-                            <ul class="hero-diagram__pipeline">
-                                <li class="hero-diagram__module">
-                                    <span class="hero-diagram__module-title">Planuok</span>
-                                    <span class="hero-diagram__module-desc">Briefas + auditorija</span>
-                                </li>
-                                <li class="hero-diagram__flow-arrow" aria-hidden="true">→</li>
-                                <li class="hero-diagram__module">
-                                    <span class="hero-diagram__module-title">Kurk</span>
-                                    <span class="hero-diagram__module-desc">Kanalų turinys</span>
-                                </li>
-                                <li class="hero-diagram__flow-arrow" aria-hidden="true">→</li>
-                                <li class="hero-diagram__module">
-                                    <span class="hero-diagram__module-title">Tikrink</span>
-                                    <span class="hero-diagram__module-desc">Prekės ženklas + kokybė</span>
-                                </li>
-                                <li class="hero-diagram__flow-arrow" aria-hidden="true">→</li>
-                                <li class="hero-diagram__module">
-                                    <span class="hero-diagram__module-title">Tobulink</span>
-                                    <span class="hero-diagram__module-desc">Atsiliepimai → perrašymas</span>
-                                </li>
-                            </ul>
+                        <div class="hero-diagram__card hero-diagram__card--sample">
+                            <p class="hero-diagram__label" id="hero-diagram-label">Iš 1-o workflow</p>
+                            <table class="hero-sample">
+                                <caption class="visually-hidden">30 dienų turinio plano pavyzdys</caption>
+                                <thead>
+                                    <tr><th>Diena</th><th>Kanalas</th><th>Tema</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>01</td><td>LinkedIn</td><td>DI klaidos, kurias kartoja komandos</td></tr>
+                                    <tr><td>02</td><td>LinkedIn</td><td>Agentų ROI – trumpas case</td></tr>
+                                    <tr><td>03</td><td>X</td><td>Promptinimo gija</td></tr>
+                                    <tr><td>04</td><td>Email</td><td>Savaitės cadence</td></tr>
+                                    <tr><td>05</td><td>LinkedIn</td><td>Brand guardrails</td></tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <figcaption class="hero-diagram__caption">Method: Plan, Create, Check, Improve — four free workflows on this page; full 10 in Pro.</figcaption>
+                        <figcaption class="hero-diagram__caption">Sample output of workflow 1 — a 30-day content plan.</figcaption>
                     </figure>
                 </div>
             </div>
         </header>
 
-        <section class="objectives objectives--skim" id="executive-summary" aria-labelledby="executive-summary-title">
-            <h2 id="executive-summary-title" class="visually-hidden">Kaip naudoti</h2>
-            <p class="usage-strip" id="howItWorksLead">Kopijuok → įklijuok į ChatGPT arba Claude.</p>
-        </section>
+        <!-- CMO_CREATIVE_BRIEF -->
 
-        <!-- INSTRUCTIONS (optional copy tips) -->
-        <section class="instructions" aria-labelledby="instructions-title">
-            <details class="copy-tips-details" id="copy-tips">
-                <summary id="instructions-title">Kopijavimo patarimai <span class="prompt-time" role="status" aria-label="Orientacinis laikas: 3–5 min per žingsnį">~3–5 min</span></summary>
-                <ol>
-                    <li>Pasirink promptą ir spausk ant jo – tekstas pažymėsis</li>
-                    <li>Spausk <strong>„Kopijuoti promptą“</strong> arba <code>Ctrl+C</code> / <code>Cmd+C</code></li>
-                    <li>Įklijuok į ChatGPT, Claude ar kitą DI (dirbtinio intelekto) įrankį</li>
-                    <li>Pakeisk <code>[auditorija]</code>, <code>[galvos skausmas]</code>, <code>[unikalus pardavimo pasiūlymas]</code>, <code>[kanalas]</code> ir kitus laukus savo duomenimis – ir gauk rezultatą</li>
-                </ol>
-            </details>
-        </section>
+        <!-- CMO_PDF_STOREFRONT -->
 
-        <!-- CMO_CONTEXT -->
-
-        <!-- PROGRESS INDICATOR (S1) -->
+        <!-- LIBRARY NAV -->
         <div class="progress-wrap" id="progressIndicator" aria-live="polite" aria-atomic="true">
             <p id="progressText">Panaudojai 0 iš 4 workflow</p>
             <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="4" aria-label="Progresas: 0 iš 4 workflow">
@@ -1797,26 +1773,24 @@
         </div>
 
         <nav class="progress-jump no-print" id="progressJump" aria-label="Greita navigacija per promptus">
-            <a href="#block1">1</a>
-            <a href="#block2">2</a>
-            <a href="#block3">3</a>
-            <a href="#block5">5</a>
+            <a href="#block1">Plan</a>
+            <a href="#block2">Create</a>
+            <a href="#block3">Check</a>
+            <a href="#block5">Improve</a>
             <span class="progress-jump-sep" aria-hidden="true">·</span>
-            <a href="#pro-contents" id="progressJumpPro">Pro</a>
+            <a href="#pdf-storefront" id="progressJumpPro">Pricing</a>
             <span class="progress-jump-sep" aria-hidden="true">·</span>
             <a href="#creative-brief" id="progressJumpCreative">Brief</a>
             <span class="progress-jump-sep" aria-hidden="true">·</span>
             <a href="#faq" id="progressJumpFaq">DUK</a>
         </nav>
 
-        <!-- PROMPT 1 -->
+        <!-- PROMPT 1 — library -->
         <article class="prompt">
             <div class="prompt-header">
                 <div class="prompt-meta">
                     <div class="number">1</div>
-                    <div class="category">Planuok</div>
-                    <span class="prompt-time">~5–10 min</span>
-                    <span class="prompt-recommended" id="prompt1Recommended">Pradėk nuo čia</span>
+                    <span class="prompt-step" id="prompt1Recommended">Workflow 1 of 4</span>
                 </div>
                 <h2 class="prompt-title">30 dienų turinio sistema</h2>
                 <p class="prompt-desc">Sukurk 30 dienų turinio planą pagal 4 turinio principus</p>
@@ -1835,15 +1809,8 @@ INPUT: Auditorija [ ], galvos skausmas [ ], unikalus pardavimo pasiūlymas [ ], 
 
 OUTPUT: Lentelė/sąrašas – 30 dienų: tema, įžanginis kabliukas, formatas, raginimas veikti, matavimo rodikliai. LT arba EN; konkretus tonas.</pre>
                 </div>
-                <div class="info-box" role="note" aria-label="Informacija: promptas 1">
-<div class="info-content">
-                        <strong>Branduolys:</strong>
-                        <p>4 principai = balansas: autoritetas, problema, įrodymas, pasiūlymas.</p>
-                    </div>
-                </div>
             </div>
             <div class="prompt-footer">
-                <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
                 <button class="btn" 
                         aria-label="Kopijuoti promptą 1 į darbinių atmintinę"
                         data-prompt-id="prompt1">
@@ -1856,13 +1823,14 @@ OUTPUT: Lentelė/sąrašas – 30 dienų: tema, įžanginis kabliukas, formatas,
             </div>
         </article>
 
+        <!-- CMO_CONTEXT -->
+
         <!-- PROMPT 2 -->
         <article class="prompt">
             <div class="prompt-header">
                 <div class="prompt-meta">
                     <div class="number">2</div>
-                    <div class="category">Kurk</div>
-                    <span class="prompt-time">~5–10 min</span>
+                    <span class="prompt-step">Workflow 2 of 4</span>
                 </div>
                 <h2 class="prompt-title">Viena idėja → 7 formatai</h2>
                 <p class="prompt-desc" id="prompt-desc-2">Iš vienos idėjos – 7 kanalų vienetai per ~5–10 min</p>
@@ -1880,15 +1848,8 @@ INPUT: Idėja [ ]. Ta pati branduolinė žinutė; pritaikyta kanalui.
 
 OUTPUT: 7 blokai – LinkedIn, karuselė, 30s video, el. laiškas, titulinis ekranas, reklama, 3 įžanginiai kabliukai. LT arba EN; konkretus tonas.</pre>
                 </div>
-                <div class="info-box" role="note" aria-label="Informacija: promptas 2">
-<div class="info-content">
-                        <strong>Vienos idėjos daug formatų:</strong>
-                        <p>1 idėja = 7 vienetų. Laikas sutaupomas, nuoseklumas išlaikomas.</p>
-                    </div>
-                </div>
             </div>
             <div class="prompt-footer">
-                <p class="prompt-cta">Įklijuok į ChatGPT arba Claude ir pakeisk laukus savo duomenimis.</p>
                 <button class="btn" 
                         aria-label="Kopijuoti promptą 2 į darbinių atmintinę"
                         data-prompt-id="prompt2">
@@ -1906,8 +1867,7 @@ OUTPUT: 7 blokai – LinkedIn, karuselė, 30s video, el. laiškas, titulinis ekr
             <div class="prompt-header">
                 <div class="prompt-meta">
                     <div class="number">3</div>
-                    <div class="category">Tikrink</div>
-                    <span class="prompt-time">~3–5 min</span>
+                    <span class="prompt-step">Workflow 3 of 4</span>
                 </div>
                 <h2 class="prompt-title">LinkedIn Autoriteto Kūrimas</h2>
                 <p class="prompt-desc" id="prompt-desc-3">Autoriteto LinkedIn postas su įrodymais per ~3–5 min</p>
@@ -1925,15 +1885,8 @@ INPUT: Tema [ ], pavyzdys/skaičius [ ]. 150–200 žodžių; be tuščių frazi
 
 OUTPUT: 1 postas – įžanginis kabliukas, 3 punktai, 1 pavyzdys, raginimas veikti. LT arba EN; įžūlus, pagrįstas.</pre>
                 </div>
-                <div class="info-box" role="note" aria-label="Informacija: promptas 3">
-<div class="info-content">
-                        <strong>Autoritetas:</strong>
-                        <p>Įrodymai + konkretūs punktai = pasitikėjimas ir reakcija.</p>
-                    </div>
-                </div>
             </div>
             <div class="prompt-footer">
-                <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
                 <button class="btn" 
                         aria-label="Kopijuoti promptą 3 į darbinių atmintinę"
                         data-prompt-id="prompt3">
@@ -1950,9 +1903,8 @@ OUTPUT: 1 postas – įžanginis kabliukas, 3 punktai, 1 pavyzdys, raginimas vei
         <article class="prompt">
             <div class="prompt-header">
                 <div class="prompt-meta">
-                    <div class="number">5</div>
-                    <div class="category">Tobulink</div>
-                    <span class="prompt-time">~3–5 min</span>
+                    <div class="number">4</div>
+                    <span class="prompt-step">Workflow 4 of 4</span>
                 </div>
                 <h2 class="prompt-title">Kasdienė analizė (Veikla→Sprendimas)</h2>
                 <p class="prompt-desc" id="prompt-desc-5">Iš rodiklių — 4 veiksmai rytojui per ~3–5 min</p>
@@ -1970,15 +1922,8 @@ INPUT: Rodikliai – skaičiai, kanalai, periodas [ ]. Kontekstas: ką bandėte,
 
 OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką testuoti, (4) Ką stabdyti. LT arba EN; konkretus, veiksmo orientuotas.</pre>
                 </div>
-                <div class="info-box" role="note" aria-label="Informacija: promptas 5">
-<div class="info-content">
-                        <strong>Uždaras ciklas:</strong>
-                        <p>Rodikliai be veiksmų = stovėjimas vietoje. Duomenys → sprendimai.</p>
-                    </div>
-                </div>
             </div>
             <div class="prompt-footer">
-                <p class="prompt-cta">Nukopijuok ir įklijuok į ChatGPT arba Claude – tai šio žingsnio tikslas.</p>
                 <button class="btn" 
                         aria-label="Kopijuoti promptą 5 į darbinių atmintinę"
                         data-prompt-id="prompt5">
@@ -1992,8 +1937,6 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
         </article>
 
         <!-- CMO_SAFETY -->
-
-        <!-- CMO_CREATIVE_BRIEF -->
 
         <!-- CMO_SCENARIOS -->
 
@@ -2027,7 +1970,24 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                     <span class="pro-contents-outcome" id="prompt-desc-10">Control-center planas</span>
                 </li>
             </ul>
-            <a class="btn" id="pro-contents-cta" href="https://promptanatomy.space/en/#pdf-storefront">Žiūrėti Pro rinkinį</a>
+            <a class="btn" id="pro-contents-cta" href="#pdf-storefront">Žiūrėti Complete rinkinį</a>
+        </section>
+
+        <section class="objectives objectives--skim" id="executive-summary" aria-labelledby="executive-summary-title">
+            <h2 id="executive-summary-title" class="visually-hidden">Kaip naudoti</h2>
+            <p class="usage-strip" id="howItWorksLead">Kopijuok → įklijuok į ChatGPT arba Claude.</p>
+        </section>
+
+        <section class="instructions" aria-labelledby="instructions-title">
+            <details class="copy-tips-details" id="copy-tips">
+                <summary id="instructions-title">Kopijavimo patarimai <span class="prompt-time" role="status" aria-label="Orientacinis laikas: 3–5 min per žingsnį">~3–5 min</span></summary>
+                <ol>
+                    <li>Pasirink promptą ir spausk ant jo – tekstas pažymėsis</li>
+                    <li>Spausk <strong>„Kopijuoti promptą“</strong> arba <code>Ctrl+C</code> / <code>Cmd+C</code></li>
+                    <li>Įklijuok į ChatGPT, Claude ar kitą DI (dirbtinio intelekto) įrankį</li>
+                    <li>Pakeisk <code>[auditorija]</code>, <code>[galvos skausmas]</code>, <code>[unikalus pardavimo pasiūlymas]</code>, <code>[kanalas]</code> ir kitus laukus savo duomenimis – ir gauk rezultatą</li>
+                </ol>
+            </details>
         </section>
 
         <section class="upgrade-section" id="faq" aria-labelledby="faq-title">
@@ -2179,20 +2139,6 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
             var LANG_KEY = 'di_promptu_biblioteka_lang';
             var locale = 'en';
 
-            function prefersLithuanianBrowser() {
-                var langs = [];
-                if (navigator.language) langs.push(navigator.language);
-                if (navigator.languages) {
-                    for (var i = 0; i < navigator.languages.length; i++) {
-                        langs.push(navigator.languages[i]);
-                    }
-                }
-                for (var j = 0; j < langs.length; j++) {
-                    if (langs[j] && String(langs[j]).toLowerCase().indexOf('lt') === 0) return true;
-                }
-                return false;
-            }
-
             function getLocaleFromPathname() {
                 var path = (window.location.pathname || '').toLowerCase();
                 if (/\/lt(?:\/|$)/.test(path)) return 'lt';
@@ -2226,7 +2172,7 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                     var stored = localStorage.getItem(LANG_KEY);
                     if (stored === 'lt' || stored === 'en') { locale = stored; return; }
                 } catch (e) { /* ignore */ }
-                locale = prefersLithuanianBrowser() ? 'lt' : 'en';
+                locale = 'en';
             }
             resolveLocale();
 
@@ -2241,11 +2187,11 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 return segs.length <= 1;
             }
 
-            // Root / or /cmo/ → /en/ or /lt/ (browser + storage); avoids LT source page at bare host.
+            // Root / or /cmo/ → /en/ always. /lt/ is archive-only (direct URL).
             (function redirectRootToLocale() {
                 if (!isRootEntryPage()) return;
                 var base = getBasePathPrefix();
-                var loc = locale === 'en' ? 'en' : 'lt';
+                var loc = 'en';
                 var target;
                 if (base) {
                     target = base.replace(/\/?$/, '') + '/' + loc + '/' + (window.location.hash || '');
@@ -2269,32 +2215,26 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
 
                 var skip = document.querySelector('.skip-link');
                 if (skip) skip.textContent = 'Skip to content';
-                setText('#heroLead', 'Run repeatable marketing workflows instead of starting from a blank prompt.');
-                setText('#heroProof', 'From campaign plan to quality check in one repeatable system.');
-                setText('#hero-diagram-label', 'Plan → Create → Check → Improve');
-                var diagramTitles = qa('.hero-diagram__module-title');
-                var diagramDescs = qa('.hero-diagram__module-desc');
-                ['Plan', 'Create', 'Check', 'Improve'].forEach(function(label, i) {
-                    if (diagramTitles[i]) diagramTitles[i].textContent = label;
-                });
-                ['Brief + audience', 'Channel-ready content', 'Brand + quality', 'Feedback → rewrite'].forEach(function(label, i) {
-                    if (diagramDescs[i]) diagramDescs[i].textContent = label;
-                });
+                setText('#hero-diagram-label', 'From the brief builder');
                 var langGroup = q('.lang-switcher');
                 if (langGroup) langGroup.setAttribute('aria-label', 'Language selection');
                 var ctaBrief = el('heroCtaBrief');
                 if (ctaBrief) {
-                    ctaBrief.textContent = 'Build a creative brief';
-                    setLabel(ctaBrief, 'Build a creative brief – go to the brief builder');
+                    ctaBrief.textContent = 'View kits';
+                    ctaBrief.setAttribute('href', '#pdf-storefront');
+                    setLabel(ctaBrief, 'View kits – go to pricing');
                 }
                 var ctaSpine = el('heroCtaSpine');
                 if (ctaSpine) {
-                    ctaSpine.textContent = 'Start your first workflow';
-                    setLabel(ctaSpine, 'Start your first workflow – go to workflow 1');
+                    ctaSpine.textContent = 'Start the builder';
+                    ctaSpine.setAttribute('href', '#creative-brief');
+                    setLabel(ctaSpine, 'Start the builder – go to the brief builder');
                 }
-                setText('.header h1', 'Build a 30-day Content AI System your team can reuse');
-                setText('#heroLead', 'Copy the Plan → Create → Check → Improve workflow into ChatGPT or Claude, then take the full kit offline when your team needs the system.');
-                setText('#heroProof', '4 workflows free on this page. Full 10-prompt system kits start at $3.99.');
+                setText('.header h1', 'One brief. An image-ready prompt. Then the workflows your team can reuse.');
+                setText('#heroLead', 'Fill the brief. Copy the image prompt. Take the kit offline when the team needs it.');
+                setText('#heroProof', 'Brief builder open below. 4 workflows after the kits, from $3.99.');
+                var heroCaption = q('.hero-diagram__caption');
+                if (heroCaption) heroCaption.textContent = 'Sample output of the brief builder — an image-ready prompt.';
                 setText('#heroTrustPill1', '4 workflows free');
                 setText('#heroTrustPill2', 'Brief builder included');
                 setText('#heroTrustPill3', 'Full kit from $3.99');
@@ -2994,34 +2934,8 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 // S1: progreso indikatorius
                 updateProgressIndicator();
 
-                // Sticky progress polish: add shadow only when stuck
-                (function initStickyProgressState() {
-                    var prog = document.getElementById('progressIndicator');
-                    if (!prog) return;
-                    var topPx = 14;
-                    var ticking = false;
-
-                    function onScrollOrResize() {
-                        if (ticking) return;
-                        ticking = true;
-                        window.requestAnimationFrame(function() {
-                            ticking = false;
-                            try {
-                                var rect = prog.getBoundingClientRect();
-                                prog.classList.toggle('is-sticky', rect.top <= topPx + 0.5);
-                            } catch (_) { /* ignore */ }
-                        });
-                    }
-
-                    onScrollOrResize();
-                    window.addEventListener('scroll', onScrollOrResize, { passive: true });
-                    window.addEventListener('resize', onScrollOrResize);
-                })();
-
                 // LT/EN: atnaujinti statinį tekstą pagal locale
                 applyStaticLocaleText();
-                renderEditHints();
-                renderPromptTags();
 
                 (function initPdfPreviewLightbox() {
                     var thumbs = document.querySelectorAll('.pdf-card-preview-thumb');

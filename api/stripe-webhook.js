@@ -137,12 +137,23 @@ module.exports = async function handler(req, res) {
 
   try {
     const result = await fulfillCheckoutSession(getStripe(), sessionId, origin);
-    return res.status(200).json({
+    const payload = {
       received: true,
       eventType: event.type,
       fulfillment: result.status,
       sessionId
-    });
+    };
+    if (result.status === 'ignored') {
+      console.info('[stripe-webhook] ignored non-CMO checkout', sessionId);
+      payload.reason = result.reason || 'unknown_product';
+    }
+    // locked = another worker holds the Redis NX lock. ACK 200 would stop Stripe
+    // retries while the holder may have crashed — return 503 so Stripe retries.
+    if (result.status === 'locked') {
+      console.warn('[stripe-webhook] fulfillment lock contended', sessionId);
+      return res.status(503).json(payload);
+    }
+    return res.status(200).json(payload);
   } catch (error) {
     console.error('[stripe-webhook] fulfillment error:', error && error.stack ? error.stack : error);
     return res.status(500).json({

@@ -3,7 +3,7 @@
 **Atsakingas:** Curriculum Agent  
 **Tikslas:** Path atitikmenys, routing ir **locale politika** – vienas šaltinis tiesiai UI/UX, Content ir QA.
 
-**Paskutinis atnaujinimas:** 2026-09-03 (EN kanonas; LT freeze + brief strip)
+**Paskutinis atnaujinimas:** 2026-09-03 (EN kanonas; root `/` visada → `/en/`; LT freeze + brief strip)
 
 ---
 
@@ -53,7 +53,10 @@ Root [`index.html`](../index.html) vis dar yra **struktūrinis build šaltinis**
 
 ### Root `/`
 
-- `index.html` – legacy LT struktūrinis šaltinis (ne redirect, ne kanoninis produkto URL).
+- **Vercel (`promptanatomy.space`):** `/` ir `/index.html` visada → `/en/` (302). Jokio `Accept-Language` / geo negotiate į `/lt/`.
+- **JS (mirror / `serve`):** `redirectRootToLocale` šaknyje visada → `/en/` (ne `navigator.language`, ne `localStorage`).
+- `/lt/` lieka **tik tiesioginiu URL** (testeriai, CI). Nėra produkto kelio iš root ar EN UI.
+- `index.html` – legacy LT struktūrinis šaltinis (ne kanoninis produkto URL).
 - `scripts/build-locale-pages.js` iš `index.html` sugeneruoja:
   - `lt/index.html` (užšaldyta snapshot)
   - `en/index.html` (kanonas)
