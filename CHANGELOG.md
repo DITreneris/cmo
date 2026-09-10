@@ -6,6 +6,13 @@ Formatas pagal [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), versija
 
 ## [Unreleased]
 
+### Pataisyta
+- **[Fix] Shared Stripe isolation (Ambition A):** webhook ACKs other-account checkouts with `200` `{ fulfillment: "ignored" }` instead of `500`. Match only `metadata.product`, optional `plink_…`, or `STRIPE_PRICE_CMO_*` — never dollar amount. Does not exit R1.
+- **[Fix] Download-link contract (Ambition A):** `success.html` binds `downloadUrl || url`. API returns both keys plus `downloads[]` (Complete Kit = Starter + Pro in-page). Does not exit R1. No SemVer bump.
+- **[Fix] Brief first-use:** `#cb-builder` init no longer autofocuses Campaign goal. `open_brief` fires on form input or preset/copy/tool. ChatGPT + Ideogram allowlist only.
+- **[QA] Fulfillment-health:** public JSON omits `redisDetail` and raw `error.message`.
+- **[UI] Hero LCP + EN meta:** WebP + `fetchpriority="high"` on the Satori sample; `brand-seo.json` mentions the open brief and 4 workflows / `$3.99`.
+
 ### Prideta
 - **[Commerce] R1 ops companion (Ambition A):** Blob `--dry-run` + `npm run check:prod` (fulfillment-health + IndexNow key) + [docs/GO_LIVE_RUNBOOK.md](docs/GO_LIVE_RUNBOOK.md). Does not exit R1. No SemVer bump.
 - **[UI] Conversion events:** `js/va-track.js` — `copy_prompt_1`, `open_brief`, `click_starter`, `success_download` (no PII; no-op without Vercel Analytics).

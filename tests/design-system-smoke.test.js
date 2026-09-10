@@ -95,8 +95,11 @@ function run() {
     'hero workflow diagram (.hero-diagram) missing'
   );
   assert(
-    enHtml.includes('hero-sample-image') && enHtml.includes('brief-sample-satori.png'),
-    'EN hero must show the Satori sample image'
+    enHtml.includes('hero-sample-image') &&
+      enHtml.includes('brief-sample-satori.png') &&
+      enHtml.includes('brief-sample-satori.webp') &&
+      enHtml.includes('fetchpriority="high"'),
+    'EN hero must show the Satori sample image with WebP and fetchpriority'
   );
   const pageHex = (tokenJson.color.surface.page || '').toLowerCase();
   assert(pageHex === '#f6f1e8', 'design-tokens.json surface.page must be warm paper #F6F1E8');

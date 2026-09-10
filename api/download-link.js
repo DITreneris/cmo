@@ -3,7 +3,8 @@
 /**
  * GET /api/download-link?session_id=cs_...
  * Returns one of:
- *   200 { status: 'ready', downloadUrl, expiresAt, maskedEmail, productId, productName }
+ *   200 { status: 'ready', url, downloadUrl, downloads, expiresAt, maskedEmail, productId, productName }
+ *     url === downloadUrl (LEGACY {url} alias). downloads[] = one link per file.
  *   202 { status: 'processing' }                   - webhook in progress
  *   404 { error: 'Unknown checkout session' }      - never seen this id
  *   500 { error: 'Fulfillment is not configured', detail: [...] }

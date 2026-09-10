@@ -18,8 +18,31 @@ function assert(condition, msg) {
   }
 }
 
-function hasFocusVisibleRule(html) {
-  return html.includes(':focus-visible') || html.includes('styles/utilities.css');
+function linkedStylesheets(html) {
+  const hrefs = [];
+  const re = /<link\b[^>]*rel=["']stylesheet["'][^>]*>/gi;
+  let match = re.exec(html);
+  while (match) {
+    const href = /\bhref=["']([^"']+)["']/i.exec(match[0]);
+    if (href) hrefs.push(href[1]);
+    match = re.exec(html);
+  }
+  return hrefs;
+}
+
+function hasFocusVisibleRule(html, htmlPath) {
+  if (html.includes(':focus-visible')) return true;
+  const dir = path.dirname(htmlPath);
+  const hrefs = linkedStylesheets(html);
+  for (let i = 0; i < hrefs.length; i++) {
+    const href = hrefs[i];
+    if (/^https?:/i.test(href)) continue;
+    const cssPath = path.resolve(dir, href);
+    if (!fs.existsSync(cssPath)) continue;
+    const css = fs.readFileSync(cssPath, 'utf8');
+    if (css.includes(':focus-visible')) return true;
+  }
+  return false;
 }
 
 function run() {
@@ -38,9 +61,8 @@ function run() {
         html.includes('class="back"') || html.includes('class="satellite-back"'),
         `${fileName}: missing back navigation`
       );
-      assert(hasFocusVisibleRule(html), `${fileName}: missing focus-visible styles`);
     }
-    assert(hasFocusVisibleRule(html), `${fileName}: missing focus-visible styles`);
+    assert(hasFocusVisibleRule(html, file), `${fileName}: missing :focus-visible rule in page or linked CSS`);
     assert(html.includes('aria-label='), `${fileName}: missing aria-label attributes`);
   }
 

@@ -137,12 +137,17 @@ module.exports = async function handler(req, res) {
 
   try {
     const result = await fulfillCheckoutSession(getStripe(), sessionId, origin);
-    return res.status(200).json({
+    const payload = {
       received: true,
       eventType: event.type,
       fulfillment: result.status,
       sessionId
-    });
+    };
+    if (result.status === 'ignored') {
+      console.info('[stripe-webhook] ignored non-CMO checkout', sessionId);
+      payload.reason = result.reason || 'unknown_product';
+    }
+    return res.status(200).json(payload);
   } catch (error) {
     console.error('[stripe-webhook] fulfillment error:', error && error.stack ? error.stack : error);
     return res.status(500).json({

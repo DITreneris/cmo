@@ -128,4 +128,57 @@ test.describe('success.html polling UX', () => {
     await expect(page.locator('#status')).toHaveAttribute('data-state', 'error');
     await expect(page.getByText(/No session id/i)).toBeVisible();
   });
+
+  // serve clean-urls: /success.html?x=1 redirects to /success and drops the query.
+  test('binds Download from downloadUrl or url', async ({ page }) => {
+    await page.route(/\/api\/download-link/, async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          status: 'ready',
+          downloadUrl: '/api/download?t=mock-starter',
+          url: '/api/download?t=mock-starter'
+        })
+      });
+    });
+    await page.goto('/success?session_id=cs_test_READY');
+    await expect(page.locator('#status')).toHaveAttribute('data-state', 'ready', { timeout: 10000 });
+    await expect(page.locator('#download-area')).toBeVisible();
+    await expect(page.locator('#download-btn')).toHaveAttribute('href', '/api/download?t=mock-starter');
+  });
+
+  test('shows a second in-page link when downloads has two files', async ({ page }) => {
+    await page.route(/\/api\/download-link/, async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          status: 'ready',
+          downloadUrl: '/api/download?t=mock-starter',
+          url: '/api/download?t=mock-starter',
+          downloads: [
+            {
+              productId: 'starter',
+              productName: 'CMO AI Content System · Starter',
+              url: '/api/download?t=mock-starter'
+            },
+            {
+              productId: 'pro',
+              productName: 'CMO AI Content System · Pro',
+              url: '/api/download?t=mock-pro'
+            }
+          ]
+        })
+      });
+    });
+    await page.goto('/success?session_id=cs_test_BUNDLE');
+    await expect(page.locator('#status')).toHaveAttribute('data-state', 'ready', { timeout: 10000 });
+    await expect(page.locator('#download-btn')).toBeVisible();
+    await expect(page.locator('#download-area a[data-extra-download="pro"]')).toBeVisible();
+    await expect(page.locator('#download-area a[data-extra-download="pro"]')).toHaveAttribute(
+      'href',
+      '/api/download?t=mock-pro'
+    );
+  });
 });

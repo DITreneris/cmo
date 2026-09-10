@@ -35,6 +35,7 @@ Promote to enforcing CSP only after:
 - [scripts/vercel-export-public.js](../scripts/vercel-export-public.js) — `assertNoPaidPdfsLeaked()` blocks any `.pdf` under `public/`.
 - Mirror build uses `MIRROR_NOTE=1` — no storefront, no Stripe links.
 - `/api/*` — `Cache-Control: no-store`.
+- `/api/fulfillment-health` is public by design. JSON is `{ ok, missing, redis, blobConfigured }` only — no `redisDetail` and no raw `error.message`.
 
 ---
 

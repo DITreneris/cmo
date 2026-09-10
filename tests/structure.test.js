@@ -444,6 +444,17 @@ function run() {
   const successHtmlForTrack = readFile(path.join(__dirname, '..', 'success.html'));
   if (assert(successHtmlForTrack !== null && successHtmlForTrack.includes('src="js/va-track.js"'), 'success.html įtraukia js/va-track.js')) passed++;
   else failed++;
+  const briefJs = readFile(path.join(__dirname, '..', 'js', 'creative-brief.js'));
+  if (assert(
+    briefJs &&
+      briefJs.includes("window.trackEvent('open_brief')") &&
+      /function showStep\(step,\s*shouldFocus\)/.test(briefJs) &&
+      /showStep\(1\);\s*$/m.test(briefJs) &&
+      !briefJs.includes('midjourney.com') &&
+      !briefJs.includes('leonardo.ai'),
+    'js/creative-brief.js: open_brief, init showStep(1) be focus, ChatGPT/Ideogram allowlist'
+  )) passed++;
+  else failed++;
   if (assert(enHtml !== null && enHtml.includes('href="../styles/tokens.css"'), 'en/index.html – santykinis kelias į design tokens')) passed++;
   else failed++;
   if (assert(ltHtml !== null && ltHtml.includes('href="../styles/tokens.css"'), 'lt/index.html – santykinis kelias į design tokens')) passed++;
@@ -879,6 +890,11 @@ function run() {
     if (assert(successHtml.includes('aria-live'), 'success.html: aria-live region polling statusui')) passed++;
     else failed++;
     if (assert(successHtml.includes('session_id'), 'success.html: skaito session_id iš URL')) passed++;
+    else failed++;
+    if (assert(
+      successHtml.includes('downloadUrl || json.url') || successHtml.includes('json.downloadUrl || json.url'),
+      'success.html: bindina downloadUrl arba LEGACY url'
+    )) passed++;
     else failed++;
   }
 

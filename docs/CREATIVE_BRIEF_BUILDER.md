@@ -14,7 +14,7 @@ Distinct from `#cmo-context` (text-prompt CONTEXT prepend on Copy). Soft link: A
 
 Immediately after the hero, **before** `#pdf-storefront` (tool-first CEO IA). Library 1/2/3/5 and `#pro-contents` sit after the kits. Hero primary `#heroCtaSpine` → `#creative-brief`. Secondary `#heroCtaBrief` is **View kits** → `#pdf-storefront`. Anchor in root `index.html`: `<!-- CMO_CREATIVE_BRIEF -->`. Injected by [`scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) on EN only (LT strips the anchor, `#heroCtaBrief`, and `#progressJumpCreative`).
 
-**Default UI:** `#cb-builder` **open**. First real use (preset / Copy / sample / tool) fires `open_brief` via [`js/va-track.js`](../js/va-track.js) (no-op without Vercel Analytics). Do not fire on page load.
+**Default UI:** `#cb-builder` **open**. First real use (form input **or** preset / Copy / sample / tool) fires `open_brief` via [`js/va-track.js`](../js/va-track.js) (no-op without Vercel Analytics). Do not fire on page load. Init must not steal focus (`showStep(1)` without `shouldFocus`).
 
 ## DOM contract
 

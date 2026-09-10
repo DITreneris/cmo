@@ -16,6 +16,11 @@ test.describe('creative brief builder', () => {
     await expect(page.locator('#cb-builder')).toBeVisible();
     await expect(page.locator('#cb-builder')).toHaveAttribute('open', '');
 
+    const activeId = await page.evaluate(function () {
+      return document.activeElement && document.activeElement.id;
+    });
+    expect(activeId).not.toBe('cbCampaignGoal');
+
     await expect(page.locator('#cbOutput')).toBeVisible();
 
     await page.locator('[data-cb-preset="ecommerce"]').click();

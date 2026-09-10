@@ -25,8 +25,7 @@ module.exports = async function handler(req, res) {
   } catch (error) {
     return res.status(500).json({
       ok: false,
-      error: 'Health check failed',
-      detail: error && error.message ? String(error.message) : 'unknown'
+      error: 'Health check failed'
     });
   }
 };

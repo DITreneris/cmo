@@ -48,15 +48,7 @@
     'chatgpt.com': true,
     'www.chatgpt.com': true,
     'ideogram.ai': true,
-    'www.ideogram.ai': true,
-    'www.midjourney.com': true,
-    'midjourney.com': true,
-    'www.adobe.com': true,
-    'adobe.com': true,
-    'leonardo.ai': true,
-    'www.leonardo.ai': true,
-    'blackforestlabs.ai': true,
-    'www.blackforestlabs.ai': true
+    'www.ideogram.ai': true
   };
 
   var PRESETS = {
@@ -415,11 +407,11 @@
     suppressDraft = false;
     if (outputEl) outputEl.value = buildImagePrompt(preset);
     updateOutput();
-    showStep(1);
+    showStep(1, true);
     trackBriefUse();
   }
 
-  function showStep(step) {
+  function showStep(step, shouldFocus) {
     var n = Number(step) || 1;
     section.querySelectorAll('.cb-panel').forEach(function (panel) {
       var id = Number(panel.getAttribute('data-cb-panel'));
@@ -430,6 +422,7 @@
       btn.classList.toggle('is-active', active);
       btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
+    if (!shouldFocus) return;
     var panel = section.querySelector('.cb-panel[data-cb-panel="' + n + '"]');
     if (panel) {
       var focusable = panel.querySelector('input, select, textarea');
@@ -438,6 +431,7 @@
   }
 
   function onFormInput() {
+    trackBriefUse();
     updateOutput();
   }
 
@@ -475,7 +469,7 @@
 
   section.querySelectorAll('.cb-step').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      showStep(btn.getAttribute('data-cb-step'));
+      showStep(btn.getAttribute('data-cb-step'), true);
     });
   });
 

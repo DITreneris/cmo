@@ -123,6 +123,7 @@
 | [success.html](../success.html) | Pirkimo sėkmės polling UX (aria-live, noindex) | Commerce / UI/UX | Copy / UX pokyčiai |
 | [terms.html](../terms.html) | Pardavimo sąlygos + Team License (#paid-pdf-license) + 14-day refund | Commerce (juridinė peržiūra atskirai) | Licencijos pokyčiai, refund politika |
 | [coming-soon.html](../coming-soon.html) | Placeholder režimo CTA tikslas, kol nėra live Stripe Payment Links | Commerce | Po live launch – galima pašalinti arba palikti backup'ui |
+| [assets/hero/brief-sample-satori.png](../assets/hero/brief-sample-satori.png) + `.webp` | EN hero brief-builder sample (PNG fallback + WebP LCP) | UI/UX | Hero sample refresh |
 | [assets/pdf-covers/cmo-{starter,pro,bundle}-cover.png](../assets/pdf-covers/) | Storefront cover thumbnails (Playwright WYSIWYG; `npm run pdf:covers`) | UI/UX / Commerce | Cover redesign in `docs/pdf-source/` |
 | [assets/pdf-covers/cmo-pro-cover.svg](../assets/pdf-covers/cmo-pro-cover.svg) | Legacy Pro SVG (bundle naudoja `cmo-bundle-cover.png`) | UI/UX / Commerce | Tik jei SVG dar referencinamas |
 | [assets/pdf-covers/cmo-{starter,pro}-preview-{1,2,3}.png](../assets/pdf-covers/) | Watermarked interior pages 2–4 (`npm run pdf:previews`) | (build output, on demand) | Marketing keitimas |
