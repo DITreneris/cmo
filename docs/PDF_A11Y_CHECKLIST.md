@@ -31,4 +31,4 @@ Playwright HTML → PDF export does not produce tagged PDF/UA files. Use this ma
 
 If a buyer requires WCAG 2.x PDF/UA tagged output, plan a post-process tagger (Adobe Acrobat Pro, axesPDF, or commercial pipeline) — out of scope for the default Playwright build.
 
-**Owner:** Commerce + QA before each release that changes `docs/pdf-source/*.html`.
+**Owner:** Commerce + QA before each release that changes operator-local `docs/pdf-source/*.html` (see [README.md](pdf-source/README.md)). HTML interiors are not in git.

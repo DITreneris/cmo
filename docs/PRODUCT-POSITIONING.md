@@ -62,17 +62,19 @@ Copy SSOT for these jobs: [`config/sot.json`](../config/sot.json) (`frontFaq`, `
 1. **Do not lead with "PDF kit" or "printable kits."** That lowers perceived value before anyone reads the bullets. Sell the system; mention PDF as the format in the FAQ and trust line.
 2. **Keep Starter and Pro clearly different in kind.** Starter = *use* ready-made workflows. Pro = *build* your own. If they read as two sizes of the same file, the ladder fails.
 3. **Do not imply a live app exists.** Words like "system," "workflow kit," "browser builder," and "tool-building method" are fine; "log in," "dashboard," and "platform" are not, until a real app ships. The free `#creative-brief` section is a browser builder, not a hosted studio.
-4. **Keep internal identifiers stable.** Rename display strings only. Stripe metadata ids, `publicId`, blob paths, download filenames, and price cents must not change — fulfillment depends on them.
+4. **Keep internal identifiers stable.** Rename display strings only. Stripe `metadata.product` (`starter` / `pro` / `bundle`), Blob paths (`paid-pdfs/cmo-*.pdf`), fulfillment `publicId` / `downloadFileName`, and price cents must not change — fulfillment depends on them. SOT `publicId` / `downloadFileName` must match [`api/_lib/fulfillment.js`](../api/_lib/fulfillment.js) `PRODUCTS` (tests assert). JSON-LD `sku` is derived as `cmo-` + `id` (`cmo-starter`) and is a separate layer.
 
 ---
 
 ## 6. Naming reference
 
-| Layer | v2 public name | Internal id (do not change) |
-|-------|----------------|------------------------------|
-| Family | CMO AI Content System | — |
-| Starter | CMO AI Content System · Starter | `starter` / `cmo-starter` |
-| Pro | CMO AI Content System · Pro | `pro` / `cmo-pro` |
-| Bundle | CMO AI Content System · Complete Kit | `bundle` / `cmo-bundle` |
+| Layer | v2 public name | Checkout `id` | Fulfillment `publicId` | JSON-LD `sku` |
+|-------|----------------|---------------|-------------------------|---------------|
+| Family | CMO AI Content System | — | — | — |
+| Starter | CMO AI Content System · Starter | `starter` | `cmo-starter-pdf` | `cmo-starter` |
+| Pro | CMO AI Content System · Pro | `pro` | `cmo-pro-pdf` | `cmo-pro` |
+| Bundle | CMO AI Content System · Complete Kit | `bundle` | `cmo-bundle-pdf` | `cmo-bundle` |
+
+Buyer download filenames (Content-Disposition, from `PRODUCTS.downloadFileName`): `prompt-anatomy-cmo-starter.pdf`, `prompt-anatomy-cmo-pro.pdf`. Bundle is not a single file (`cmo-prompt-kit-bundle`). Blob local names stay `cmo-starter.pdf` / `cmo-pro.pdf`.
 
 After a v2 copy pass, a search for "CMO Prompt Kit" should return zero hits in EN paid surfaces (storefront, PDF covers and footers, fulfillment emails, success page).

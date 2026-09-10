@@ -23,6 +23,15 @@ const path = require('path');
 const { chromium } = require('@playwright/test');
 
 const ROOT = path.resolve(__dirname, '..');
+const MISSING_SOURCE_HINT =
+  'Paid PDF interiors are operator-local (gitignored). See docs/pdf-source/README.md.';
+
+function requirePdfSource(htmlPath) {
+  if (!fs.existsSync(htmlPath)) {
+    throw new Error('Source HTML missing: ' + htmlPath + '. ' + MISSING_SOURCE_HINT);
+  }
+}
+
 const SOURCES = [
   {
     label: 'Starter',
@@ -50,9 +59,7 @@ function countPdfPages(buffer) {
 }
 
 async function exportOne(browser, source) {
-  if (!fs.existsSync(source.htmlPath)) {
-    throw new Error(`Source HTML missing: ${source.htmlPath}`);
-  }
+  requirePdfSource(source.htmlPath);
   const ctx = await browser.newContext();
   const page = await ctx.newPage();
 

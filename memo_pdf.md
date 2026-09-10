@@ -254,7 +254,7 @@ Centralize commerce copy in `config/sot.json#commerce` where possible; hydrate U
 | ~14:52 | Resend **200**, `fulfillment: fulfilled` | Correct `sk_live_...` + full env; manual event replay |
 | After deploy | `fulfillment-health` **ok** | All required env present |
 
-**Session reference (live test):** `cs_live_a1GWQ6J4J87WC3zNf9ChGyMoU4VgeP7S1Ybdmbhyy9lIj4F4bOUM6DtzEg`, event `evt_1TXg79GYF93wS2Kahle9jaUe`, $4.99 Beginners, Payment Link `plink_1TXdozGYF93wS2KabE5nEKfw`.
+**Session reference (live test, ids redacted):** `cs_live_…`, event `evt_…`, $4.99 Beginners, Payment Link `plink_…`.
 
 ---
 
@@ -351,8 +351,7 @@ stripe listen --forward-to localhost:3000/api/stripe-webhook   # local webhook d
 | [`success.html`](success.html) | Post-checkout polling UX (EN) |
 | [`terms.html`](terms.html) | Team license + 14-day refund (`#paid-pdf-license`) |
 | [`config/sot.json`](config/sot.json) | Payment Link URLs + commerce copy + buyer FAQ |
-| [`docs/pdf-source/cmo-starter.html`](docs/pdf-source/cmo-starter.html) | 14-page Starter PDF source (Playwright print) |
-| [`docs/pdf-source/cmo-pro.html`](docs/pdf-source/cmo-pro.html) | 30-page Pro PDF source |
+| [`docs/pdf-source/README.md`](docs/pdf-source/README.md) | Operator-local HTML interiors (gitignored); `pdf:export` is local-only |
 | [`.env.example`](.env.example) | Canonical env list |
 | [`scripts/export-pdfs.js`](scripts/export-pdfs.js) | Playwright PDF export with page-count gate (14/30) |
 | [`scripts/check-fulfillment-env.js`](scripts/check-fulfillment-env.js) | Local Redis + Stripe key probe (+ optional Resend) |

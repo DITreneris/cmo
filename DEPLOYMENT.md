@@ -9,7 +9,7 @@
 | Vaidmuo | URL | Platforma | `BASE_PATH` | Build artefaktas | Workflow |
 |---------|-----|-----------|-------------|------------------|----------|
 | **Primary** | `https://promptanatomy.space` | **Vercel** | `''` (tuščia) | `public/` (per `scripts/vercel-export-public.js`) | Vercel auto-deploy iš `main` |
-| **Mirror** | `https://ditreneris.github.io/cmo/` | **GitHub Pages** | `/cmo` | repo šaknis (`path: .`) | [.github/workflows/deploy.yml](.github/workflows/deploy.yml) |
+| **Mirror** | `https://ditreneris.github.io/cmo/` | **GitHub Pages** | `''` (workflow; canonical stays `.space`) | `public/` (`path: public`) | [.github/workflows/deploy.yml](.github/workflows/deploy.yml) |
 
 Abu taikiniai dirba kartu: kodas / testai / canonical / hreflang **default**'ai derinami su primary; mirror aktyvuojamas per env override.
 
@@ -28,16 +28,19 @@ npm run build
 
 `npm run build` (žr. [package.json](package.json)) atlieka:
 
-1. `scripts/generate-og.js` → `og.png` (1200×630).
-2. `scripts/build-locale-pages.js` → `lt/index.html`, `en/index.html`, `js/en-prompt-bodies-inline.js` (su default `BASE_PATH=''`).
-3. `scripts/vercel-export-public.js` → `public/` (visi statiniai assets + `@vercel/analytics` snippet'as įterpiamas tik į `public/` HTML, ne į repo šaltinį).
+1. `scripts/export-favicons.js` → favicon PNG pack.
+2. `scripts/generate-og.js` → `og.png` (1200×630).
+3. `scripts/build-locale-pages.js` → `lt/index.html`, `en/index.html`, `js/en-prompt-bodies-inline.js` (su default `BASE_PATH=''`); GEO emit (`robots` / `sitemap` / `llms`).
+4. `scripts/vercel-export-public.js` → `public/` (allowlist; **be** `data/` / `docs/` / `api/`; `@vercel/analytics` snippet'as tik į `public/` HTML).
 
 ### Vercel konfigūracija
 
+Šaltinis: [`vercel.json`](vercel.json) (ne dashboard default'ai).
+
 - **Framework preset:** None / Other (static).
-- **Build command:** `npm run build`.
+- **Build command:** `REQUIRE_STRIPE_LINKS=1 npm run build` (Stripe Payment Link gate locale build'e).
 - **Output directory:** `public`.
-- **Install command:** `npm install`.
+- **Install command:** `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PUPPETEER_SKIP_DOWNLOAD=1 npm install`.
 - **Environment:** `BASE_PATH` neapibrėžta (default `''`), `SITE_ORIGIN=https://promptanatomy.space` (default).
 
 **Analytics:** `@vercel/analytics` snippet'as įterpiamas į `public/` HTML failus tik per export skriptą; norint matyti duomenis – įjungti Web Analytics Vercel dashboard'e.
@@ -62,7 +65,7 @@ npm run build
    git push -u cmo main
    ```
 3. **GitHub (repo cmo):** Settings → Pages → **Source: GitHub Actions**.
-4. Po push paleidžiamas [.github/workflows/deploy.yml](.github/workflows/deploy.yml): `npm test` → `npm run build` su `BASE_PATH=/cmo` → upload `path: .` artefaktas → publish į Pages.
+4. Po push paleidžiamas [.github/workflows/deploy.yml](.github/workflows/deploy.yml): `npm test` → `npm run build` su `MIRROR_NOTE=1` → upload `path: public` artefaktas → publish į Pages. Do not upload the repo root (`path: .`) — that published `docs/`, `api/`, and `data/`.
 
 ### Vėlesni deploy
 

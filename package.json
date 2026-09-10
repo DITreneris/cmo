@@ -2,7 +2,7 @@
   "name": "di-promptu-biblioteka",
   "version": "1.9.0",
   "private": true,
-  "description": "DI Promptų Biblioteka – statinė HTML platforma + EN paid PDF fulfillment (CMO Kit)",
+  "description": "Content AI System — static HTML library + EN paid PDF fulfillment (CMO kit)",
   "scripts": {
     "generate:og": "node scripts/generate-og.js",
     "icons:export": "node scripts/export-favicons.js",

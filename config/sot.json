@@ -1,5 +1,4 @@
 {
-  "$schema": "./sot.schema.json",
   "version": "1.7.1",
   "brand": {
     "publicName": "Prompt Anatomy",
@@ -165,7 +164,7 @@
     "products": [
       {
         "id": "starter",
-        "publicId": "cmo-starter",
+        "publicId": "cmo-starter-pdf",
         "name": "CMO AI Content System · Starter",
         "tierTag": "Use",
         "tierPromise": "Use the system this week",
@@ -176,7 +175,7 @@
         "compareAtUsd": 7.99,
         "pages": 14,
         "format": "PDF (Letter, English)",
-        "downloadFileName": "cmo-prompt-kit-starter.pdf",
+        "downloadFileName": "prompt-anatomy-cmo-starter.pdf",
         "coverPng": "assets/pdf-covers/cmo-starter-cover.png",
         "previewPngs": [
           "assets/pdf-covers/cmo-starter-preview-1.png",
@@ -191,7 +190,7 @@
       },
       {
         "id": "pro",
-        "publicId": "cmo-pro",
+        "publicId": "cmo-pro-pdf",
         "name": "CMO AI Content System · Pro",
         "tierTag": "Build",
         "tierPromise": "Build reusable team workflows",
@@ -203,7 +202,7 @@
         "pages": 30,
         "format": "PDF + Markdown companion",
         "recommended": true,
-        "downloadFileName": "cmo-prompt-kit-pro.pdf",
+        "downloadFileName": "prompt-anatomy-cmo-pro.pdf",
         "coverPng": "assets/pdf-covers/cmo-pro-cover.png",
         "previewPngs": [
           "assets/pdf-covers/cmo-pro-preview-1.png",
@@ -218,7 +217,7 @@
       },
       {
         "id": "bundle",
-        "publicId": "cmo-bundle",
+        "publicId": "cmo-bundle-pdf",
         "name": "CMO AI Content System · Complete Kit",
         "tierTag": "Install",
         "tierPromise": "Install the full offline system",

@@ -26,6 +26,14 @@ const { chromium } = require('@playwright/test');
 
 const ROOT = path.resolve(__dirname, '..');
 const OUT_DIR = path.join(ROOT, 'assets', 'pdf-covers');
+const MISSING_SOURCE_HINT =
+  'Paid PDF interiors are operator-local (gitignored). See docs/pdf-source/README.md.';
+
+function requirePdfSource(htmlPath) {
+  if (!fs.existsSync(htmlPath)) {
+    throw new Error('Source HTML missing: ' + htmlPath + '. ' + MISSING_SOURCE_HINT);
+  }
+}
 
 const SOURCES = [
   {
@@ -68,9 +76,7 @@ function fileUrl(p) {
 }
 
 async function exportPreviews(browser, source) {
-  if (!fs.existsSync(source.htmlPath)) {
-    throw new Error(`Source HTML missing: ${source.htmlPath}`);
-  }
+  requirePdfSource(source.htmlPath);
   const ctx = await browser.newContext({
     viewport: { width: 816, height: 1056 },
     deviceScaleFactor: 2

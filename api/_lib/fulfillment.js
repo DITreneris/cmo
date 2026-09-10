@@ -823,7 +823,7 @@ async function getDownloadUrlBySessionId(sessionId, origin) {
   };
 }
 
-function buildFollowupEmail(template, email) {
+function buildFollowupEmail(template, _email) {
   const site = getSiteUrl();
   if (template === 'starter-day3') {
     return {

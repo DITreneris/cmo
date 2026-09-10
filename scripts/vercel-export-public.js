@@ -78,12 +78,19 @@ function existsRel(relPath) {
   return fs.existsSync(path.join(ROOT, relPath));
 }
 
+const BLOCKED_PUBLIC_HTML = new Set(['cmo-starter.html', 'cmo-pro.html', 'cmo-bundle.html']);
+
 function assertNoPaidPdfsLeaked() {
-  const blockedDirs = [path.join(PUBLIC_DIR, 'api', '_private'), path.join(PUBLIC_DIR, 'paid-pdfs')];
+  const blockedDirs = [
+    path.join(PUBLIC_DIR, 'api'),
+    path.join(PUBLIC_DIR, 'docs'),
+    path.join(PUBLIC_DIR, 'docs', 'pdf-source'),
+    path.join(PUBLIC_DIR, 'paid-pdfs')
+  ];
   for (const dir of blockedDirs) {
     if (fs.existsSync(dir)) {
       throw new Error(
-        'Refusing to publish: ' + dir + ' must never be inside public/. Paid PDFs are private (Vercel Blob).'
+        'Refusing to publish: ' + dir + ' must never be inside public/. Paid PDFs and repo internals stay off the static export.'
       );
     }
   }
@@ -96,6 +103,10 @@ function assertNoPaidPdfsLeaked() {
       } else if (/\.pdf$/i.test(ent.name)) {
         throw new Error(
           'Refusing to publish: PDF found at ' + full + '. Paid PDFs must only live in api/_private/ and Vercel Blob.'
+        );
+      } else if (BLOCKED_PUBLIC_HTML.has(ent.name.toLowerCase())) {
+        throw new Error(
+          'Refusing to publish: paid PDF HTML found at ' + full + '. Interiors are operator-local (see docs/pdf-source/README.md).'
         );
       }
     }
@@ -122,7 +133,7 @@ function main() {
   // Assets
   copyDir('styles');
   copyDir('js');
-  if (existsRel('data')) copyDir('data');
+  // data/*.json is build input (inlined into pages / js/). Do not publish the folder.
 
   // PDF cover thumbnails + watermarked previews (storefront artwork, never the PDFs themselves)
   if (existsRel('assets/pdf-covers')) copyDir('assets/pdf-covers');

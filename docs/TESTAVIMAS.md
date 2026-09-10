@@ -26,7 +26,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 
 ### Funkcionalumas
 
-- [ ] **Kopijavimas (spine):** Promptai 1, 2, 3, 5 – Copy → DI; kontekstas + taisyklės prepend'inamos. Teaseriai 4/6–10 – be copy, CTA į Pro.
+- [ ] **Kopijavimas (spine):** Promptai 1, 2, 3, 5 – Copy → DI; kontekstas + taisyklės prepend'inamos. `#pro-contents` 4/6–10 – katalogas be copy, CTA į Complete kit.
 - [ ] **EN UX tool-first:** hero primary → `#creative-brief` (open builder); secondary View kits → `#pdf-storefront`; 2 kortelės (Starter + Complete); Pro = tekstinė nuoroda; library 1/2/3/5 (display 1–4) po kits; `#cb-builder` **open**; progress of 4; 0 meme slotų; Stripe kainos/linkai nepakitę.
 - [ ] **CMO kontekstas:** Užpildyti `#cmo-context` laukus → kopijuoti promptą → įklijuotas tekstas turi konteksto bloką ir „TAISYKLĖS (privalomos)" / „RULES (non-negotiable)".
 - [ ] **Scenarijai:** `#cmo-scenarios` skirtukai veikia (klaviatūra: rodyklės); kopijavimas iš scenarijaus į clipboard.
@@ -47,7 +47,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - [ ] **Type:** Fraunces display (hero H1 only) + Source Sans 3 UI (ne Inter); body ~17px; prose ne full-bleed wall.
 - [ ] **Executive summary:** `#executive-summary.objectives--skim` – quiet usage sentence only; claims = 4 workflows + brief (ne „100 assets / 45 min“).
 - [ ] **Instructions:** `#copy-tips` as optional `<details>`; **no** `#framework-schema` / provider hub.
-- [ ] **CMO context:** closed `#cmo-context` **prieš** progress; forma `<details>`; kopijavimas prepend'ina kontekstą.
+- [ ] **CMO context:** closed `#cmo-context` **po** `#block1` (library zona po storefront/progress); forma `<details>`; kopijavimas prepend'ina kontekstą.
 - [ ] **Prompt 1 path hint:** `#prompt1PathHint` – Copy → paste into ChatGPT/Claude.
 - [ ] **Progress jump:** `#progressJump` 1·2·3·5 · Pricing · Brief · FAQ; Pricing = `#pdf-storefront`; Brief stripped on `/lt/`.
 - [ ] **Sticky bar (≤768px):** Po `#block1` pasirodo juosta; Kopijuoti / Kitas → veikia.
@@ -63,7 +63,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 
 ### Turinio / bullet-proof (META, INPUT, OUTPUT)
 
-- [ ] **Struktūra:** Kiekvienas iš **10** promptų turi aiškius META, INPUT, OUTPUT blokus (kopijuojamas tekstas).
+- [ ] **Struktūra:** Keturi **free** spine promptai turi META, INPUT, OUTPUT (kopijuojamas tekstas). Pilni 10 kūnų – Pro PDF, ne gyvoje UI.
 - [ ] **Copyable:** Į darbinių atmintinę kopijuojamas META+INPUT+OUTPUT su CMO v2 prepend (kontekstas + taisyklės, jei aktyvūs); info-box ir „Tikėtinas atsakymas" sekcijos rodomos atskirai ir nekopijuojamos.
 - [ ] **Tikėtinas atsakymas:** Po kiekvienu promptu matosi `.prompt-expected` su ≥2 bullet'ais.
 - [ ] **Turinio patikra:** Nukopijuoti 1–2 promptus, įklijuoti – įklijuotas tekstas turi tinkamą formatą (žr. [BULLET_PROOF_PROMPTS.md](BULLET_PROOF_PROMPTS.md)).
@@ -109,7 +109,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - **URL:** local `/en/` after `npm run build`
 - **Naršyklė:** `npm test` (structure + design-system smoke + lint)
 - **Rezultatas:** ✅ Repo gates green. ⏳ Rankinis visual QA 320/768/1024 (full-bleed hero, Fraunces H1, Source Sans 3, slim hero diagram, surfaces) — checklist §2 UX.
-- **Pastabos:** STYLEGUIDE 1.6; no cycle-stepper. Product SemVer still 1.9.0 until Orchestrator release bump.
+- **Pastabos:** STYLEGUIDE 1.6.1; no cycle-stepper. Product SemVer still 1.9.0 until Orchestrator release bump.
 ```
 
 ```markdown
@@ -137,7 +137,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 ## 4. Susiję
 
 - [BULLET_PROOF_PROMPTS.md](BULLET_PROOF_PROMPTS.md) – promptų kokybės standartas (META/INPUT/OUTPUT, bullet-proof)
-- [STYLEGUIDE.md](../STYLEGUIDE.md) – DS **1.6** Product Operator (visual QA)
+- [STYLEGUIDE.md](../STYLEGUIDE.md) – DS **1.6.1** Product Operator (visual QA)
 - [QA_STANDARTAS.md](QA_STANDARTAS.md) – QA kriterijai ir nuoroda į spinoff01  
 - [DEPLOYMENT.md](../DEPLOYMENT.md) – kaip deploy ir kad po deploy būtų testuojama gyvai  
 

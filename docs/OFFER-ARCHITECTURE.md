@@ -67,7 +67,7 @@ Everything paid-facing originates in `config/sot.json` and the PDF HTML sources,
 | Storefront head, cards, FAQ, prices, page counts (`comparisonTable` not rendered) | [config/sot.json](../config/sot.json) | Injected into EN build |
 | SEO / OG meta | [config/brand-seo.json](../config/brand-seo.json) | EN `<head>` + OG image |
 | EN page render | [scripts/build-locale-pages.js](../scripts/build-locale-pages.js) | `en/index.html` storefront + value cards |
-| PDF interiors, covers, footers | [docs/pdf-source/cmo-starter.html](pdf-source/cmo-starter.html), [cmo-pro.html](pdf-source/cmo-pro.html), [cmo-bundle.html](pdf-source/cmo-bundle.html) | Buyer PDFs + cover PNGs |
+| PDF interiors, covers, footers | Operator-local [docs/pdf-source/*.html](pdf-source/README.md) (gitignored) + committed [assets/pdf-covers/](../assets/pdf-covers/) | Buyer PDFs + cover PNGs |
 | Fulfillment + emails | [api/_lib/fulfillment.js](../api/_lib/fulfillment.js) | Product names, follow-up copy |
 | Post-purchase | [success.html](../success.html), [terms.html](../terms.html) | Family name, license |
 | Page-count CI gate | [scripts/export-pdfs.js](../scripts/export-pdfs.js) | 14 / 30 page assertion |
@@ -79,7 +79,7 @@ Everything paid-facing originates in `config/sot.json` and the PDF HTML sources,
 ## 4. Regeneration commands
 
 ```bash
-# 1. Edit config/sot.json + docs/pdf-source/*.html
+# 1. Edit config/sot.json + operator-local docs/pdf-source/*.html (see docs/pdf-source/README.md)
 
 # 2. Regenerate visual assets (Playwright Chromium required)
 npx playwright install chromium

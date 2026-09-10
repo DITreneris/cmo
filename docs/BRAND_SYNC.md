@@ -28,7 +28,7 @@ This document tracks visual identity alignment with the Prompt Anatomy brand hub
 
 | Asset | Source | Notes |
 |-------|--------|-------|
-| `styles/design-tokens.json` | Mother colors + spin-off type/shadow/space (DS 1.6) | Single source for CSS + OG; smoke asserts sync vs `tokens.css` |
+| `styles/design-tokens.json` | Mother colors + spin-off type/shadow/space (DS 1.6.1) | Single source for CSS + OG; smoke asserts sync vs `tokens.css` |
 | `favicon.svg` | **Derivative** of mother `frontend/public/favicon.svg` | Same lightning mark; ink `#0B1320` + gold `#CFA73A` (replaces legacy teal `#008579`) |
 | `favicon-*.png`, `apple-touch-icon.png`, `android-chrome-*.png` | Generated: `npm run icons:export` | From local SVG |
 | `site.webmanifest` | Local; `theme_color` `#0B1320` | `short_name`: PA Library |
@@ -67,6 +67,6 @@ Checkout stays on `promptanatomy.space` through the product cards and their live
 
 ## Related docs
 
-- [STYLEGUIDE.md](../STYLEGUIDE.md) — web design system **1.6** (Product Operator)
+- [STYLEGUIDE.md](../STYLEGUIDE.md) — web design system **1.6.1** (Product Operator)
 - [DOCUMENTATION.md](DOCUMENTATION.md) — file inventory
 - [AGENTS.md](../AGENTS.md) — locale policy (EN canon)
