@@ -9,7 +9,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const REGISTRY_PATH = path.join(ROOT, 'data', 'cmo-prompt-registry.json');
-const SCENARIOS_PATH = path.join(ROOT, 'public', 'data', 'en-scenarios.json');
+const SCENARIOS_PATH = path.join(ROOT, 'data', 'en-scenarios.json');
 
 const VALID_PHASES = new Set(['Plan', 'Create', 'Check', 'Improve']);
 

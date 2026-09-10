@@ -51,7 +51,7 @@ lt/index.html (užšaldyta), en/index.html (kanonas), js/en-prompt-bodies-inline
 | Kategorija | Fiksuota (nekeičiame keisdami turinį) | Leidžiama keisti (turinys) |
 |------------|----------------------------------------|----------------------------|
 | **HTML** | Struktūra: `<main id="main-content">`, sekcijos, 4× interactive spine + `#pro-contents` (6× `data-teaser-prompt` / `#block4/6–10`), id `block1`–`block10`, spine `prompt1/2/3/5`, CMO v2 (`cmo-context`, `cmo-safety`, `cmo-scenarios`, `expected1/2/3/5`) | Tekstai: hero, objectives, instrukcijos, titles/desc, spine `<pre>` (EN via `data/en-prompt-bodies.json`), Pro catalog copy, community, footer |
-| **CSS** | Tokenai ([styles/design-tokens.json](../styles/design-tokens.json) → [styles/tokens.css](../styles/tokens.css)), komponentai ([styles/components.css](../styles/components.css) – DS 1.6 hero/surfaces), utilities – žr. [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6** | Nėra (turinio keitimas neturi keisti klasių ar layout) |
+| **CSS** | Tokenai ([styles/design-tokens.json](../styles/design-tokens.json) → [styles/tokens.css](../styles/tokens.css)), komponentai ([styles/components.css](../styles/components.css) – DS 1.6.1 hero/surfaces), utilities – žr. [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.1** | Nėra (turinio keitimas neturi keisti klasių ar layout) |
 | **JS** | IIFE `index.html`; CONFIG, selectText, copyPrompt, handleCodeBlockKeydown, fallbackCopy, showSuccess/showError/showToast, localStorage raktai `di_prompt_done_1`…`10`, debounce; locale resolve, uiText, applyStaticLocaleText, LANG_KEY `di_promptu_biblioteka_lang`. **Event binding:** `addEventListener` per `DOMContentLoaded` (be inline `onclick`/`onkeydown` – `tests/structure.test.js` to reikalauja). **CMO v2 (tik build output):** `window.__CMO_COMPILE` hook, `sessionStorage` kontekstui | Nėra |
 | **A11y** | Skip link `#main-content`, role="button"/tabindex="0" ant .code-block, aria-label mygtukams ir checkbox, aria-live/role="progressbar", toast role="status" | Nėra (prieinamumo atributų reikšmes keisti tik pagal reikalavimus, nekeičiant struktūros) |
 
@@ -145,7 +145,7 @@ Patikra: `tests/structure.test.js` lygina su `readPackageVersion()`.
 | Saugykla | Raktai | Reikšmės |
 |----------|--------|----------|
 | `localStorage` | `di_prompt_done_1` … `di_prompt_done_10` | `'true'` / `'false'` — progress skaito tik 1/2/3/5; kiti raktai ignoruojami |
-| `localStorage` | `di_promptu_biblioteka_lang` | `'lt'` / `'en'` |
+| `localStorage` | `di_promptu_biblioteka_lang` | `'lt'` / `'en'` — **nenaudojama routing'ui** `/en/` ir `/lt/` (kelias laimi `resolveLocale`). Click handleriai no-op be `#langLtBtn` / `#langEnBtn`. **Netrinti** iš `index.html` (Legacy JS + LT freeze). |
 | `sessionStorage` (CMO v2) | konteksto laukai | string (vartotojo įvestis) |
 
 Keičiant turinį **nepridėti** inline event atributų, nekeisti funkcijų pavadinimų, neištraukti JS į atskirą failą be QA patvirtinimo ir šio dokumento atnaujinimo.
@@ -219,20 +219,22 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 | Laukas | Reikalavimas |
 |--------|--------------|
 | `commerce.scope` | Privalo būti `"en-only"`. |
-| `commerce.products` | Tiksliai 3 elementai: `id: "starter"` ($3.99 / 399 cents / 14 p.), `id: "pro"` ($8.99 / 899 cents / 30 p.), `id: "bundle"` ($10.99 / 1099 cents / 44 p.). Public pavadinimai: „CMO AI Content System · Starter / Pro / Complete Kit". |
+| `commerce.products` | Tiksliai 3 elementai: `id: "starter"` ($3.99 / 399 cents / 14 p.), `id: "pro"` ($8.99 / 899 cents / 30 p.), `id: "bundle"` ($10.99 / 1099 cents / 44 p.). Public pavadinimai: „CMO AI Content System · Starter / Pro / Complete Kit". `publicId` / `downloadFileName` privalo sutapti su `PRODUCTS` (`cmo-starter-pdf` / `prompt-anatomy-cmo-starter.pdf`, analogiškai Pro; bundle `cmo-bundle-pdf` / `cmo-prompt-kit-bundle`). JSON-LD `sku` = `cmo-` + `id` (atskiras sluoksnis). |
 | `commerce.allowPlaceholderCheckout` | `true` (placeholder mode, prieš live Stripe) ARBA `false` (live, abu Payment Link URL'ai užpildyti). |
 | `commerce.placeholderHref` | Ne tuščia eilutė (default `/coming-soon.html`). |
 | `commerce.stripePaymentLinks.{starter,pro}` | Tuščia eilutė (placeholder mode) ARBA `https://buy.stripe.com/...` URL (live mode). |
 | `site.host` | `"promptanatomy.space"` |
 | `site.mirror.renderPaidStorefront` | `false` (sąmoninga politikos deklaracija) |
 
-`api/_lib/fulfillment.js` `PRODUCTS` map ir `config/sot.json` `commerce.products` privalo sutapti `priceCents` ⇆ `amountCents` (`tests/fulfillment-config.test.js` to validuoja).
+`api/_lib/fulfillment.js` `PRODUCTS` map ir `config/sot.json` `commerce.products` privalo sutapti `priceCents` ⇆ `amountCents`, `publicId`, ir `downloadFileName` (`tests/fulfillment-config.test.js` to validuoja). Stripe `metadata.product` lieka `id` (`starter` / `pro` / `bundle`). `getProductById` priima `id` arba `publicId`.
 
 ### 7.3. Privatūs PDF (niekada `public/`, niekada git)
 
 - PDF dirbiniai gyvena **tik** [`api/_private/pdfs/`](../api/_private/pdfs/) (lokalus build) ir Vercel Blob privačiame store (production runtime). Niekada `public/`, niekada git.
-- [`scripts/vercel-export-public.js`](../scripts/vercel-export-public.js) `assertNoPaidPdfsLeaked()` blokuoja deploy, jei rastų `.pdf` po `public/` arba `api/_private/`.
-- `.gitignore` rules: `api/_private/`, `assets/paid-pdfs/`, `docs/pdf-source/*.pdf`. Aiškiai NE-ignoruoja `assets/pdf-covers/` (cover thumbnails commit'inami).
+- PDF **HTML interiors** (`docs/pdf-source/cmo-*.html`) are operator-local and gitignored. See [`docs/pdf-source/README.md`](pdf-source/README.md). Cover PNGs in `assets/pdf-covers/` stay in git.
+- [`scripts/vercel-export-public.js`](../scripts/vercel-export-public.js) `assertNoPaidPdfsLeaked()` blocks deploy if `public/` contains `.pdf`, `api/`, `docs/`, or `cmo-{starter,pro,bundle}.html`. `data/` is build input (inlined) — not copied to `public/`.
+- GitHub Pages mirror uploads `public/` only ([`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml)), never the repo root.
+- `.gitignore` rules: `api/_private/`, `assets/paid-pdfs/`, `docs/pdf-source/*.pdf`, `docs/pdf-source/*.html`. Aiškiai NE-ignoruoja `assets/pdf-covers/` (cover thumbnails commit'inami).
 
 ### 7.4. API routes contract (Vercel serverless)
 
@@ -270,7 +272,7 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 - [index.html](../index.html) – legacy struktūrinis šaltinis; **produkto kanonas – `en/`**
 - [scripts/build-locale-pages.js](../scripts/build-locale-pages.js) – CMO v2 blokų inject + EN_REPLACEMENTS
 - [data/](../data/) – JSON šaltiniai (en-prompt-bodies, lt/en-prompt-expected, lt/en-scenarios)
-- [STYLEGUIDE.md](../STYLEGUIDE.md) – dizaino sistema **1.6** (Product Operator)
+- [STYLEGUIDE.md](../STYLEGUIDE.md) – dizaino sistema **1.6.1** (Product Operator)
 - [docs/MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) – EN kanonas, LT freeze, keliai ir build
 - [tests/structure.test.js](../tests/structure.test.js), [tests/design-system-smoke.test.js](../tests/design-system-smoke.test.js), [package.json](../package.json) (`npm test`) – struktūros / DS regresijos
 - [AGENTS.md](../AGENTS.md) – agentų rolės ir užduočių seka

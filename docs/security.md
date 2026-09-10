@@ -32,8 +32,9 @@ Promote to enforcing CSP only after:
 
 ## Paid PDF leak prevention
 
-- [scripts/vercel-export-public.js](../scripts/vercel-export-public.js) — `assertNoPaidPdfsLeaked()` blocks any `.pdf` under `public/`.
-- Mirror build uses `MIRROR_NOTE=1` — no storefront, no Stripe links.
+- Paid PDF **HTML interiors** (`docs/pdf-source/cmo-*.html`) are operator-local and gitignored. See [pdf-source/README.md](pdf-source/README.md).
+- [scripts/vercel-export-public.js](../scripts/vercel-export-public.js) — `assertNoPaidPdfsLeaked()` blocks `.pdf`, `api/`, `docs/`, and paid HTML names under `public/`. `data/` is build input, not a public URL.
+- Mirror build uses `MIRROR_NOTE=1` — no storefront, no Stripe links. Pages artifact is `public/` only (not the repo root).
 - `/api/*` — `Cache-Control: no-store`.
 - `/api/fulfillment-health` is public by design. JSON is `{ ok, missing, redis, blobConfigured }` only — no `redisDetail` and no raw `error.message`.
 

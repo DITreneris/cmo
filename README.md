@@ -1,180 +1,116 @@
-# Turinio DI sistema – rinkodaros vadovams
+# Content AI System
 
-**Spin-off Nr. 2** iš [Promptų anatomijos](https://www.promptanatomy.app/). Nemokamai: 4 workflow (Plan → Create → Check → Improve) + EN creative brief. Pilni 10 promptų – Pro rinkinyje offline. Kopijuok → įklijuok į ChatGPT arba Claude.
+A static HTML product for marketing leaders. **Canon: [`/en/`](https://promptanatomy.space/en/)**. Free: a **creative brief builder** plus **4 workflows** (Plan → Create → Check → Improve). Full META bodies for all 10 prompts live in the Pro kit (PDF), not as ten interactive cards.
 
-## Apie projektą
+Part of [Prompt Anatomy](https://www.promptanatomy.app/). Copy → paste into ChatGPT or Claude. No account. No lead-gen backend.
 
-Interaktyvi HTML platforma su 10 paruoštų promptų rinkodaros sistemai. Paprasta kalba, lietuviški terminai (įžanginis kabliukas, raginimas veikti, matavimo rodikliai, unikalus pardavimo pasiūlymas). Turinys: 30 dienų planas pagal 4 principus, vienos idėjos daug formatų, LinkedIn autoritetas, 30 s video, kasdienė analizė (rodikliai → veiksmai), prieštaravimų apdorojimas, lead generator + DM seka, kliento istorijos, temų grupė, pagrindinis promptas (valdymo centras).
+## What you get
 
-### Funkcijos
+| Layer | What ships |
+|-------|------------|
+| **Free (`/en/`)** | Open brief builder → 2 kit cards (Starter + Complete; Pro is a text link) → library prompts **1, 2, 3, 5** (display 1–4) + Pro catalog `#pro-contents` |
+| **Paid (primary host only)** | CMO AI Content System · Starter **$3.99** (14 p.) · Pro **$8.99** (30 p. + Markdown) · Complete **$10.99** (both, vs $12.98 separately) |
+| **`/lt/`** | Frozen tester snapshot — no storefront, no brief. Direct URL only. Root `/` always redirects to `/en/`. |
 
-- **Free spine:** 4 interaktyvūs promptai (1, 2, 3, 5) + EN creative brief builder; **4/6–10** – `#pro-contents` katalogas; pilni 10 – Pro PDF
-- **Prompt basics po FAQ** – „Kas yra prompt?", „Kas yra Prompt Anatomy?" (`#prompt-basics`)
-- **CMO v2 kontekstas + scenarijai + safety** – paspaudus „Kopijuoti promptą", kontekstas (auditorija, USP, kanalai, tikslas, apribojimas) ir privalomos taisyklės automatiškai prepend'inamos prie prompto teksto
-- **FAQ** – greitas aiškumas prieš startą
-- **Interaktyvus dizainas** – DS 1.6.1 Product Operator, aiškūs mygtukai, progresas (0/4 spine)
-- **Kopijavimas** – pasirink promptą, spausk „Kopijuoti promptą", įklijuok ir pakeisk laukus
-- **Responsive** – veikia desktop ir mobiliai (Mobile UI First)
-- **Be duomenų rinkimo** – kontaktų formos nėra; „Pažymėjau kaip atlikau" saugoma tik tavo įrenginyje (localStorage), kontekstas – sessionStorage
-- **Mokama EN PDF tarpinė (v1.6.0+, tik `promptanatomy.space`)** – du atsisiunčiami PDF rinkodaros vadovams: *CMO AI Content System · Starter*, *CMO AI Content System · Pro*, Complete Kit. Stripe Payment Links → webhook → pasirašyta atsisiuntimo nuoroda per Resend. **Tik EN, tik primary host.** **Roadmap:** [roadmap.md](roadmap.md) (A→E→light B→C). **Active go-live (R1):** [todo.md](todo.md) → [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md). LT `/lt/` – užšaldyta nemokama biblioteka testeriams (be storefront). Detalės: [memo_pdf.md](memo_pdf.md), [DEPLOYMENT.md §2.5](DEPLOYMENT.md), [docs/LEGACY_GOLDEN_STANDARD.md §7](docs/LEGACY_GOLDEN_STANDARD.md).
+Stripe checkout, webhook, and signed downloads run only on **[promptanatomy.space](https://promptanatomy.space)**. The GitHub Pages mirror omits `#pdf-storefront`.
 
-### SEO + GEO + AI crawlers (2026)
+Roadmap (R1 cash register → R2 GEO → R3 one more local tool → R4 Install): [roadmap.md](roadmap.md). Active Stripe ops: [todo.md](todo.md) → [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md).
 
-Build emits from [`config/sot.json`](config/sot.json) + [`scripts/geo-surfaces.js`](scripts/geo-surfaces.js) — do not hand-edit:
+## How to use
 
-- `robots.txt` — per-AI-bot policy; `/api/` and PDF preview paths carved out for training bots
-- `sitemap.xml` — `xmlns:image`, `<lastmod>`, `/en/`, `/lt/`, terms
-- `llms.txt` + `llms-full.txt` — AI-friendly site map and prompt digest
-- `manifest.webmanifest` — PWA-lite (`start_url: /en/`)
-- `404.html` — EN-only, canonical → `/en/`
+1. Open the [primary EN page](https://promptanatomy.space/en/) (or the [mirror](https://ditreneris.github.io/cmo/en/) for the free library only).
+2. **Start in the brief builder** (open by default). Fill the brief → copy an image-ready prompt into ChatGPT or Ideogram. Nothing leaves the browser.
+3. Optionally **View kits** for Starter / Complete (Pro is a text path). Checkout is Stripe on `.space`.
+4. Use the four workflows below the kits: select a prompt → **Copy prompt** (session context + non-negotiable rules prepend when filled) → paste into ChatGPT or Claude.
+5. Mark “done” if you want — progress is `localStorage` only (4 of 4).
+
+Prompts **4, 6–10** are catalog rows in `#pro-contents`, not copyable cards. Full bodies are in Pro / Complete.
+
+## Free workflows (library)
+
+1. **30-day content system** — plan on four principles (Authority, Problem, Example, Offer)
+2. **One idea → 7 formats** — LinkedIn, carousel, 30s video, email, cover, ad, 3 hooks
+3. **LinkedIn authority** — 150–200 words with hook, proof, CTA
+4. **Daily review (Check → Improve)** — metrics → what failed, why, what to do next *(internal id `#block5`)*
+
+Pro catalog (offline in the kit): 30s video, objections, lead post + DM sequence, case-study structure, pillar topics, control-center prompt.
+
+## SEO / GEO (generated — do not hand-edit)
+
+Build emits from [`config/sot.json`](config/sot.json) + [`scripts/geo-surfaces.js`](scripts/geo-surfaces.js):
+
+- `robots.txt`, `sitemap.xml`, `llms.txt` / `llms-full.txt` (hash hubs on `/en/#…`)
+- `manifest.webmanifest` (`start_url: /en/`), `404.html` (EN → `/en/`)
 - IndexNow key file + `npm run seo:indexnow:diff` (post-deploy, non-blocking)
 - EN JSON-LD `@graph`: WebSite, Organization, Person, FAQPage, 3× Product + Offer
 
-Full contract: [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5.
+Contract: [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5.
 
-## Promptų sąrašas
+## Stack
 
-1. **30 dienų turinio sistema** – planas pagal 4 principus (Autoritetas, Problema, Pavyzdys, Pasiūlymas)
-2. **Viena idėja → 7 formatai** – LinkedIn, karuselė, 30 s video, el. laiškas, titulinis ekranas, reklama, 3 įžanginiai kabliukai
-3. **LinkedIn autoriteto kūrimas** – 150–200 žodžių su įžanginiu kabliuku, įrodymais, raginimu veikti
-4. **Sukurti video – lengviau dar nebuvo!** – 30 s scenarijus: įžanginis kabliukas, 3 punktai, pavyzdys, raginimas veikti
-5. **Kasdienė analizė (Veikla→Sprendimas)** – iš rodiklių suprask: kas neveikia, kodėl, ką daryti
-6. **Prieštaravimų apdorojimo įrankis** – 10 turinio vienetų iš klientų prieštaravimų
-7. **Lead generator postas + DM seka** – postas + 4 žinučių seka
-8. **Kliento istorijos struktūra** – problema, sprendimas, procesas, rezultatas, raginimas veikti
-9. **Temų grupė** – 1 pagrindinė tema + 8 subtemos, vidinės nuorodos
-10. **Pagrindinis promptas (valdymo centras)** – 30 d. struktūra, 5 turinio vienetai, hipotezės, veiksmai
+- Semantic HTML5, WCAG 2 AA (skip link, ARIA, keyboard)
+- Design system **1.6.1** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)): `design-tokens.json` → `tokens.css` → `components.css` → `utilities.css`
+- Vanilla JS (no framework): copy, progress, CMO context (`sessionStorage`), brief builder
+- Fonts: Fraunces (hero H1 only), Source Sans 3 (UI), JetBrains Mono (prompts)
+- Build: Node scripts (locale pages, OG, favicons, `public/` export). Paid PDF HTML is **operator-local** (gitignored) — see [docs/pdf-source/README.md](docs/pdf-source/README.md)
 
-## Kaip naudoti
+## Repository layout
 
-1. Atidaryk [primary URL (EN)](https://promptanatomy.space/en/) arba [mirror URL (EN)](https://ditreneris.github.io/cmo/en/)
-2. (Pasirenkama) Užpildyk **kontekstą** viršuje (auditorija, USP, kanalai, tikslas, apribojimas) – jis išliks tik šioje sesijoje
-3. Pasirink promptą ir spausk ant jo – tekstas pažymėsis
-4. Spausk **„Kopijuoti promptą"** arba `Ctrl+C` / `Cmd+C` (kontekstas ir taisyklės automatiškai prepend'inamos)
-5. Įklijuok į ChatGPT, Claude ar kitą DI įrankį
-6. Pakeisk likusius placeholder'ius (jei yra) savo duomenimis
-
-## Technologijos
-
-- **HTML5** – semantinė struktūra, prieinamumas (skip link, ARIA, progress)
-- **CSS3** – dizaino sistema **1.6.1** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)): [styles/design-tokens.json](styles/design-tokens.json) → [styles/tokens.css](styles/tokens.css) → [styles/components.css](styles/components.css) → [styles/utilities.css](styles/utilities.css); gold/ink brand; warm paper; surface page/panel/accent; hero sample image
-- **Vanilla JavaScript** – kopijavimas, progresas (localStorage), CMO v2 kontekstas (sessionStorage), be frameworkų
-- **Build:** Node.js skriptai ([scripts/build-locale-pages.js](scripts/build-locale-pages.js), [scripts/generate-og.js](scripts/generate-og.js), [scripts/vercel-export-public.js](scripts/vercel-export-public.js))
-- **Google Fonts** – Fraunces (hero H1), Source Sans 3 (UI/body), JetBrains Mono (prompts)
-
-## Struktūra
-
-**Dokumentacijos indeksas (agentams ir komandai):** [docs/INDEX.md](docs/INDEX.md).
+**Internal docs (LT) start at [docs/INDEX.md](docs/INDEX.md).** This README is the public English entry.
 
 ```
 .
-├── index.html                # Legacy struktūrinis build šaltinis (DOM + LT <pre>); kanonas – en/
-├── privatumas.html           # Legacy LT privatumas (root, backward compat); kanonas – en/privacy.html
-├── lt/                       # Generuojama: užšaldyta tester snapshot (lt/index.html, lt/privatumas.html)
-├── en/                       # Generuojama: kanoninė versija (en/index.html, en/privacy.html)
-├── data/                     # JSON šaltiniai build'ui
-│   ├── en-prompt-bodies.json     # 10 EN META eilučių
-│   ├── en-prompt-expected.json   # „Expected output" EN
-│   ├── lt-prompt-expected.json   # „Tikėtinas atsakymas" LT
-│   ├── en-scenarios.json         # CMO „Clarity practice" scenarijai EN
-│   ├── lt-scenarios.json         # CMO scenarijai LT
-│   └── meme-*.(png|webp)         # offline/social meme assetai (ne gyvoje UI)
-├── scripts/
-│   ├── build-locale-pages.js     # Generuoja lt/, en/ + inject CMO v2 + EN_REPLACEMENTS + EN-only #pdf-storefront (MIRROR_NOTE=1 jį praleidžia)
-│   ├── generate-og.js            # OG paveikslas (SVG → PNG, 1200×630)
-│   ├── vercel-export-public.js   # Vercel statinio output į public/ + analytics + assertNoPaidPdfsLeaked()
-│   ├── export-pdfs.js            # Playwright Letter PDF export + page-count gate (14/30)
-│   ├── export-pdf-covers.js      # PDF page 1 → storefront cover PNG (WYSIWYG)
-│   ├── export-pdf-previews.js    # Watermarked interior pages 2–4 PNG previews
-│   ├── upload-pdfs-to-blob.js    # Vercel Blob privatus įkėlimas
-│   └── check-fulfillment-env.js  # Lokalus env / Redis / Stripe / Resend probe
-├── api/                          # Vercel serverless (paid PDF fulfillment, EN-only, .space only)
-│   ├── _lib/fulfillment.js       # PRODUCTS map ($3.99 / $8.99), Resend, signed tokens
-│   ├── stripe-webhook.js         # bodyParser:false, signature verify, idempotent
-│   ├── download-link.js          # success.html polling (200/202/404)
-│   ├── download.js               # Pasirašytas PDF su Cache-Control: private, no-store
-│   └── fulfillment-health.js     # Vieša env + Redis sveikatos patikra
-├── config/
-│   └── sot.json                  # Single source of truth: produktai, kainos, Stripe links, mirror policy
-├── docs/pdf-source/
-│   ├── cmo-starter.html          # 14 p. Starter PDF HTML šaltinis (Letter)
-│   └── cmo-pro.html              # 30 p. Pro PDF HTML šaltinis (Letter)
-├── assets/pdf-covers/
-│   ├── cmo-starter-cover.png     # Storefront thumbnail (Playwright from PDF page 1)
-│   ├── cmo-pro-cover.png
-│   └── cmo-pro-cover.svg         # Bundle card only (until bundle cover phase)
-├── styles/
-│   ├── design-tokens.json
-│   ├── tokens.css
-│   ├── components.css            # + .pdf-storefront / .pdf-card (no-print)
-│   └── utilities.css
-├── js/
-│   └── en-prompt-bodies-inline.js  # Generuojama iš data/en-prompt-bodies.json
-├── public/                   # Vercel deploy artefaktas (gitignored, generuojamas)
-├── tests/
-│   ├── structure.test.js         # spine + commerce + GEO kontraktai (`npm test`)
-│   ├── fulfillment-config.test.js  # 43 teiginiai (PRODUCTS ⇆ SOT consistency, /api kontraktas)
-│   ├── design-system-smoke.test.js
-│   ├── a11y-smoke.test.js
-│   └── e2e/
-│       ├── smoke.spec.js          # Playwright: viewer load, /terms, /coming-soon, /en/privacy
-│       └── checkout.spec.js       # Playwright: storefront, success polling (placeholder vs live)
-├── playwright.config.js
-├── success.html, terms.html, coming-soon.html  # Mokama PDF tarpinė pagalbiniai puslapiai (EN)
-├── memo_pdf.md, .env.example
-├── docs/
-│   ├── INDEX.md              # Navigacija pagal rolę ir užduotį
-│   ├── DOCUMENTATION.md      # Dokumentų inventorius
-│   ├── LEGACY_GOLDEN_STANDARD.md  # Golden standard (struktūra, ID, JS, CMO v2)
-│   ├── MULTILINGUAL_STRUCTURE.md  # EN kanonas, LT freeze, build
-│   ├── BULLET_PROOF_PROMPTS.md    # Promptų šablonas
-│   ├── PEDAGOGINES_SPECIFIKACIJA.md
-│   ├── QA_STANDARTAS.md      # QA (spinoff01)
-│   └── TESTAVIMAS.md         # Gyvo testavimo žurnalas
-├── .github/workflows/
-│   ├── ci.yml                # npm test + pa11y (/lt/, /en/, privacy)
-│   └── deploy.yml            # GitHub Pages mirror
-├── README.md, AGENTS.md, CHANGELOG.md, DEPLOYMENT.md, STYLEGUIDE.md
-├── .cursorrules              # Cursor: kokybė, a11y, docs, commit
-├── .pa11yrc.json, .htmlvalidate.json, .eslintrc.json, .nojekyll
-├── og.png, favicon.svg
-├── robots.txt, sitemap.xml
-└── package.json              # npm test, lint:html, lint:js, build
+├── index.html                 # Legacy structural source (DOM + LT <pre>); product canon is en/
+├── lt/  en/                   # Generated locales (lt frozen; en canon)
+├── data/                      # Build input (not copied to public/)
+│   ├── en-prompt-bodies.json  # 10 EN META bodies
+│   ├── cmo-prompt-registry.json
+│   └── {lt,en}-prompt-expected.json, {lt,en}-scenarios.json
+├── scripts/                   # build-locale-pages, geo-surfaces, vercel-export-public, pdf:*, check:*
+├── api/                       # Vercel serverless fulfillment (EN, .space only)
+├── config/sot.json             # Prices, Stripe links, FAQ, brief copy
+├── js/                        # creative-brief.js, va-track.js, generated en-prompt-bodies-inline.js
+├── styles/                    # tokens + components + utilities
+├── assets/pdf-covers/         # Storefront PNGs (HTML interiors are gitignored)
+├── public/                    # Deploy artifact (gitignored)
+├── tests/                     # structure, registry, design-system, a11y, fulfillment-config, e2e/
+├── success.html, terms.html, coming-soon.html
+├── vercel.json                # / → /en/; REQUIRE_STRIPE_LINKS=1 build
+├── package.json               # 1.9.0 — npm test, build, pdf:*, check:prod
+└── docs/                      # INDEX, LEGACY, AGENT_SOT, GO_LIVE_RUNBOOK, …
 ```
 
-## Privatumas
+## Privacy
 
-- **Minimali aplikacija:** **nerinkime jokių asmens duomenų**. Visas naudojimas vyksta tik tavo įrenginyje (kopijavimas, „Pažymėjau kaip atlikau" – localStorage; CMO kontekstas – sessionStorage).
-- **Privatumo politika:** EN [en/privacy.html](en/privacy.html) (kanonas). LT [lt/privatumas.html](lt/privatumas.html) – užšaldyta tester versija.
+The free library does **not** collect personal data. Copy, brief drafts, and “done” checkboxes stay on the device (`sessionStorage` / `localStorage`). Paid checkout uses Stripe + Resend for fulfillment email only — see [en/privacy.html](en/privacy.html). Frozen LT policy: [lt/privatumas.html](lt/privatumas.html).
 
-## Deployment ir gyvas testavimas
+## Deploy
 
-- **Primary URL:** [promptanatomy.space](https://promptanatomy.space) (Vercel, default `BASE_PATH=''`).
-- **Mirror URL:** [ditreneris.github.io/cmo](https://ditreneris.github.io/cmo/) (GitHub Pages backup, `BASE_PATH=/cmo`).
-- **Deploy:** Vercel auto-deploy iš `main`; GitHub Pages per [.github/workflows/deploy.yml](.github/workflows/deploy.yml). Instrukcijos: [DEPLOYMENT.md](DEPLOYMENT.md).
-- **QA standartas:** [DITreneris/spinoff01](https://github.com/DITreneris/spinoff01). Projektas laikosi [docs/QA_STANDARTAS.md](docs/QA_STANDARTAS.md); po deploy – gyvas testavimas pagal [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md).
+| Role | URL | Notes |
+|------|-----|--------|
+| **Primary** | [promptanatomy.space](https://promptanatomy.space) | Vercel; `public/`; checkout + `/api/` |
+| **Mirror** | [ditreneris.github.io/cmo](https://ditreneris.github.io/cmo/) | GitHub Pages; `MIRROR_NOTE=1`; no storefront; artifact is `public/` only |
 
-## Reikalavimai
+Details: [DEPLOYMENT.md](DEPLOYMENT.md). Operator go-live order: [docs/GO_LIVE_RUNBOOK.md](docs/GO_LIVE_RUNBOOK.md).
 
-- **Naudojimui:** Nėra būtinų priklausomybių – atidaryk primary arba mirror URL.
-- **Development/CI:**
-  ```bash
-  npm install
-  npm test            # build + tests + lint
-  npm run build       # tik build (generate-og + locale + public)
-  npm run check:prod  # production fulfillment-health + IndexNow key
-  ```
-  Go-live command order: [docs/GO_LIVE_RUNBOOK.md](docs/GO_LIVE_RUNBOOK.md).
-- **A11y lokaliai:** `npx serve -s . -l 3000` ir `npx pa11y http://localhost:3000/en/ --standard WCAG2AA` (release QA; CI taip pat tikrina `/lt/`).
+## Development
 
-## Licencija
+```bash
+npm install
+npm test            # build + structure + registry + smoke + fulfillment-config + lint
+npm run build       # favicons + OG + locale + public/
+npm run check:prod  # production fulfillment-health + IndexNow key
+```
 
-Šis projektas yra atviro kodo ir gali būti naudojamas laisvai.
+Local a11y (release QA is `/en/`):
 
-## Autorius
+```bash
+npx serve -s . -l 3000
+npx pa11y http://localhost:3000/en/ --standard WCAG2AA
+```
 
-Sukurta rinkodaros vadovams ir komandoms – sistemingai generuoti turinį, kurti potencialius klientus ir matuoti rezultatus. Pilnas interaktyvus mokymas: [Promptų anatomija](https://www.promptanatomy.app/).
+QA standard: [docs/QA_STANDARTAS.md](docs/QA_STANDARTAS.md). Live checklist: [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md).
 
----
+## License
 
-**Sėkmės rinkodaroje.**
+The free site source in this repository may be used as a static library. **Paid PDF interiors and binaries are not in git** (operator-local). Team license, refund, and checkout terms: [terms.html](terms.html).

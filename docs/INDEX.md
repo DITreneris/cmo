@@ -2,7 +2,7 @@
 
 **Paskirtis:** Vienas įėjimo taškas žmonėms ir AI agentams – ką skaityti pirmiausia pagal rolę ar užduotį. Kanoniniai kodas ir ribos: [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + `npm test`.
 
-**Paskutinis atnaujinimas:** 2026-09-03 (GO_LIVE_RUNBOOK; R1 Stripe still active; GEO baseline harden ≠ R2 exit)
+**Paskutinis atnaujinimas:** 2026-09-10 (public README EN; PDF HTML operator-local; Pages `public/`)
 
 ---
 
@@ -18,7 +18,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0–�
 
 | Jei tu… | Atidaryk |
 |---------|----------|
-| Naujas projekte | [README.md](../README.md) → tada šį indeksą |
+| Naujas projekte | [README.md](../README.md) (**EN**, GitHub) → tada šį indeksą |
 | Orchestrator / prioritetai | [roadmap.md](../roadmap.md) (R1–R4 + Audit mapping) + [todo.md](../todo.md) (aktyvus R1 Stripe; R1-support leftovers) + [AGENTS.md](../AGENTS.md) §0.2 |
 | AI agentas (Cursor ir kt.) | [.cursorrules](../.cursorrules) + [AGENTS.md](../AGENTS.md) (§0.1 free surface, §0.2 roadmap, §10 lessons incl. JTBD/GEO + §10.14–21 R1-support) + [AGENT_SOT.md](AGENT_SOT.md) + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 |
 | Keiti tik angliškus tekstus / promptus (kanonas) | [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0 + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`BULLET_PROOF_PROMPTS.md`](BULLET_PROOF_PROMPTS.md) |
@@ -27,7 +27,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0–�
 | Keiti LT/EN kelius ar build | [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) + [`../scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) |
 | Keiti CMO v2 (kontekstas, scenarijai, safety) | [`../data/*.json`](../data/) + [`../scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) |
 | **Keiti mokamą PDF tarpinę (kainos, license, Stripe)** | [`memo_pdf.md`](../memo_pdf.md) + [`config/sot.json`](../config/sot.json) + [`LEGACY_GOLDEN_STANDARD.md` §7](LEGACY_GOLDEN_STANDARD.md) |
-| **Pridėti / atnaujinti PDF turinį** | [`docs/pdf-source/cmo-{starter,pro}.html`](../docs/pdf-source/) → `npm run pdf:export` (14/30 page-count gate) |
+| **Pridėti / atnaujinti PDF turinį** | Operator-local [`docs/pdf-source/*.html`](pdf-source/README.md) (gitignored) → `npm run pdf:export` (14/30 page-count gate). Covers stay in `assets/pdf-covers/`. |
 | **Pozicionavimas / pasiūlymo architektūra** | [`docs/PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) + [`docs/OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md) |
 | **EN creative brief builder (`#creative-brief`)** | Po hero, prieš `#pdf-storefront` (`#cb-builder` open) — [`docs/CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md) + [`config/sot.json`](../config/sot.json) `copy.creativeBrief` + [`js/creative-brief.js`](../js/creative-brief.js) |
 | **Įvesti live Stripe / R1 go-live** | [docs/GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md) (komandų seka) → [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) (Dashboard + env SSOT) + [todo.md](../todo.md) + [DEPLOYMENT.md §2.5](../DEPLOYMENT.md) |
@@ -46,7 +46,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0–�
 | **Curriculum** | [`PEDAGOGINES_SPECIFIKACIJA.md`](PEDAGOGINES_SPECIFIKACIJA.md), [`OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md), registry `freeInteractive` | Free spine 1/2/3/5 vs Pro full 10; **EN** `data/en-*.json` |
 | **Content** | [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md), [`BULLET_PROOF_PROMPTS.md`](BULLET_PROOF_PROMPTS.md), [`PEDAGOGINES_SPECIFIKACIJA.md`](PEDAGOGINES_SPECIFIKACIJA.md), [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 | Spine bodies + teaser copy + JTBD FAQ/meta; [`data/en-*.json`](../data/); SOT `frontFaq`; root [`index.html`](../index.html) `applyStaticLocaleText` |
 | **UI/UX** | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.1**, [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md), [`CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md), [`BRAND_SYNC.md`](BRAND_SYNC.md) | Product Operator; tool-first CEO IA (hero → open brief → 2 kits → library 1/2/3/5); surfaces; `styles/*`; **0** meme slots |
-| **Commerce** (v1.6.0+) | [todo.md](../todo.md) R1 → [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md); [`memo_pdf.md`](../memo_pdf.md), [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md), [`OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md), [`LEGACY_GOLDEN_STANDARD.md` §7](LEGACY_GOLDEN_STANDARD.md), [DEPLOYMENT.md §2.5](../DEPLOYMENT.md) | [`config/sot.json`](../config/sot.json), [`docs/pdf-source/`](../docs/pdf-source/), [`api/`](../api/), [`success.html`](../success.html), [`terms.html`](../terms.html). Tik EN, tik `promptanatomy.space`. R4 Install po R1. |
+| **Commerce** (v1.6.0+) | [todo.md](../todo.md) R1 → [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md); [`memo_pdf.md`](../memo_pdf.md), [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md), [`OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md), [`LEGACY_GOLDEN_STANDARD.md` §7](LEGACY_GOLDEN_STANDARD.md), [DEPLOYMENT.md §2.5](../DEPLOYMENT.md) | [`config/sot.json`](../config/sot.json), operator-local [`docs/pdf-source/`](pdf-source/README.md), [`api/`](../api/), [`success.html`](../success.html), [`terms.html`](../terms.html). Tik EN, tik `promptanatomy.space`. R4 Install po R1. |
 | **QA** | [docs/QA_STANDARTAS.md](QA_STANDARTAS.md), [docs/TESTAVIMAS.md](TESTAVIMAS.md), [DOCUMENTATION.md](DOCUMENTATION.md) | `npm test`, `tests/*.test.js`, [`tests/fulfillment-config.test.js`](../tests/fulfillment-config.test.js), [`tests/e2e/`](../tests/e2e/), [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) |
 
 ---
@@ -114,6 +114,8 @@ index.html (legacy struktūrinis šaltinis) + data/en-*.json (kanonas) + data/lt
 | [language-guidelines-en-lt.md](language-guidelines-en-lt.md) | Viešo UI kalba |
 | [PDF_A11Y_CHECKLIST.md](PDF_A11Y_CHECKLIST.md) | Rankinis PDF a11y prieš release |
 | [TEMPLATE_MIGRATION_BACKLOG.md](TEMPLATE_MIGRATION_BACKLOG.md) | Parked template / CSS dual-layer |
+| [GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md) | R1 operatorių seka (Blob dry-run → check:prod) |
+| [pdf-source/README.md](pdf-source/README.md) | Paid PDF HTML operator-local (gitignored) |
 
 ---
 
@@ -121,7 +123,7 @@ index.html (legacy struktūrinis šaltinis) + data/en-*.json (kanonas) + data/lt
 
 | Failas | Paskirtis |
 |--------|-----------|
-| [README.md](../README.md) | Produktas, naudojimas, repo medis |
+| [README.md](../README.md) | **Public EN** product overview (GitHub); kanonas `/en/` |
 | [roadmap.md](../roadmap.md) | Produkto roadmap R1–R4 (A→E→light B→C) |
 | [todo.md](../todo.md) | Aktyvus R1 tracker → MUST_TODO_STRIPE |
 | [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) | R1 / Ambition A ops SSOT |

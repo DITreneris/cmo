@@ -3,7 +3,7 @@
 **Purpose:** Single operational entry for Cursor agents and PR review: paths, build, deploy, commerce, GEO.  
 **Not a replacement for:** [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) (DOM/JS contract) or [AGENTS.md](../AGENTS.md) (roles/workflow).
 
-**Last updated:** 2026-09-03 (root `/` → `/en/`; GO_LIVE_RUNBOOK + check:prod; IndexNow after Vercel; `#pro-contents` hub)
+**Last updated:** 2026-09-10 (lean cut: PDF HTML gitignored; Pages artifact `public/`; `data/` not copied to `public/`)
 
 ---
 
@@ -32,8 +32,9 @@ Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-
 |---------------|------------------------------|
 | [index.html](../index.html) (DOM structure) | `lt/index.html`, `en/index.html` via build |
 | [styles/design-tokens.json](../styles/design-tokens.json), [styles/*.css](../styles/) | Shared LT/EN CSS; DS 1.6.1 in STYLEGUIDE |
-| [data/en-*.json](../data/) | EN prompt bodies (10), expected, scenarios |
+| [data/en-*.json](../data/) | EN prompt bodies (10), expected, scenarios — **build input**, not a public URL |
 | [data/cmo-prompt-registry.json](../data/cmo-prompt-registry.json) | Prompt TOC + `freeInteractive` spine ids |
+| [docs/pdf-source/README.md](pdf-source/README.md) | Paid PDF HTML is operator-local (gitignored); covers stay in `assets/pdf-covers/` |
 | [config/sot.json](../config/sot.json) | Commerce, brand, GEO (`frontFaq`, `knowsAbout`), storefront, `copy.creativeBrief` |
 | [config/brand-seo.json](../config/brand-seo.json) | Title, description, OG alt / JTBD meta |
 | [scripts/build-locale-pages.js](../scripts/build-locale-pages.js) | Locale build + FAQ inject + GEO emit |
@@ -58,15 +59,24 @@ npm test        # build + structure + registry + smoke + lint
 
 `npm test` is the merge gate. Optional: `npm run test:e2e`, `npm run check:fulfillment`, `npm run check:prod`. Go-live command order: [GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md).
 
+`public/` is an allowlist (locales, `js/`, `styles/`, covers, SEO files). It must not contain `data/`, `docs/`, `api/`, or paid PDF HTML. GitHub Pages uploads `public/` only.
+
 **Production build gate (after Stripe go-live):** Vercel Build Command → `REQUIRE_STRIPE_LINKS=1 npm run build` (Stripe links asserted in the locale build). Full `npm test` stays on GitHub CI.
 
 ---
 
 ## 4. Commerce (summary)
 
-- Products: Starter $3.99, Pro $8.99, Bundle $10.99 — [config/sot.json](../config/sot.json)
-- Placeholder mode: `allowPlaceholderCheckout: true` → CTAs → `/coming-soon.html`
-- Live mode: all three `stripePaymentLinks.*` + `allowPlaceholderCheckout: false`
+- Products: Starter $3.99, Pro $8.99, Bundle $10.99 — [config/sot.json](../config/sot.json) (`allowPlaceholderCheckout: false` shipped; `/coming-soon.html` is backup only)
+- Identifier layers (do not collapse):
+
+| `id` | `publicId` (SOT = PRODUCTS) | Download filename | JSON-LD sku | Blob local |
+|------|---------------------------|-------------------|-------------|------------|
+| `starter` | `cmo-starter-pdf` | `prompt-anatomy-cmo-starter.pdf` | `cmo-starter` | `cmo-starter.pdf` |
+| `pro` | `cmo-pro-pdf` | `prompt-anatomy-cmo-pro.pdf` | `cmo-pro` | `cmo-pro.pdf` |
+| `bundle` | `cmo-bundle-pdf` | `cmo-prompt-kit-bundle` | `cmo-bundle` | (Starter + Pro) |
+
+  Stripe `metadata.product` uses `id`. `getProductById` accepts `id` or `publicId`. SOT `publicId` / `downloadFileName` must match PRODUCTS (`tests/fulfillment-config.test.js`).
 - Env matrix: [DEPLOYMENT.md](../DEPLOYMENT.md) §2.5
 - Operator sequence: [GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md) (`pdf:upload-blob:dry` → upload → `check:fulfillment` → `check:prod`)
 
@@ -101,7 +111,7 @@ Language/brand: [language-guidelines-en-lt.md](language-guidelines-en-lt.md).
 | Target | URL |
 |--------|-----|
 | Primary | https://promptanatomy.space/en/ |
-| Mirror | https://ditreneris.github.io/cmo/en/ (no storefront) |
+| Mirror | https://ditreneris.github.io/cmo/en/ (no storefront; artifact = `public/` only) |
 
 Post-deploy QA: [TESTAVIMAS.md](TESTAVIMAS.md) — **release acceptance on `/en/` only**.
 

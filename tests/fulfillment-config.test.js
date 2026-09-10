@@ -282,6 +282,14 @@ if (Array.isArray(sot.commerce && sot.commerce.products) && fulfillment.PRODUCTS
         Math.round(Number(fromSot.priceUsd) * 100) === fromLib.amountCents,
         `${id}: SOT priceUsd ($${fromSot.priceUsd}) matches fulfillment.amountCents (${fromLib.amountCents})`
       );
+      check(
+        fromSot.publicId === fromLib.publicId,
+        `${id}: SOT publicId (${fromSot.publicId}) matches PRODUCTS.publicId (${fromLib.publicId})`
+      );
+      check(
+        fromSot.downloadFileName === fromLib.downloadFileName,
+        `${id}: SOT downloadFileName (${fromSot.downloadFileName}) matches PRODUCTS.downloadFileName (${fromLib.downloadFileName})`
+      );
     }
   }
 }

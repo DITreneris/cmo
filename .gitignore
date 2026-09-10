@@ -40,11 +40,16 @@ public/
 *.min.js
 *.min.css
 
-# Paid PDF artefacts (NEVER commit paid PDF binaries)
+# Paid PDF artefacts (NEVER commit paid PDF binaries or interiors)
 api/_private/
 assets/paid-pdfs/
 docs/pdf-source/*.pdf
+docs/pdf-source/*.html
 !assets/pdf-covers/
+
+# Local analysis dumps (not product source)
+pdf_analysis.txt
+report.txt
 
 # Playwright artefacts
 test-results/
