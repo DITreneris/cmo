@@ -4,6 +4,7 @@
 **Source:** Production incident and recovery on the sister project **promptanatomy.online**, May 16, 2026 (pattern reused here unchanged).  
 **Language:** English (en-US). Buyer-facing surface in this repo is **EN only**; LT site stays free, no LT commerce.  
 **Products in this repo:** `starter` ($3.99 / 14 p.), `pro` ($8.99 / 30 p.), `bundle` ($10.99 / 44 p.). Pro includes optional Markdown companion (`PDF_CMO_PRO_MD_SOURCE_URL`).  
+**Ops SSOT (do not start here for go-live):** [docs/GO_LIVE_RUNBOOK.md](docs/GO_LIVE_RUNBOOK.md) → [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md) → [`config/sot.json`](config/sot.json). This memo is **architecture / sister-project handoff** only.  
 **Related repo docs:** [DEPLOYMENT.md](DEPLOYMENT.md), [.env.example](.env.example), [CHANGELOG.md](CHANGELOG.md), [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md).
 
 ---
@@ -50,14 +51,14 @@ Use this as a copy-paste gate before announcing paid PDFs.
 
 ### 3.1 Stripe Dashboard (per product)
 
-- [ ] **Live** Products / Prices created — **$3.99 (starter)** and **$8.99 (pro)**; note each `price_...` id.
+- [ ] **Live** Products / Prices created — **$3.99 (starter)**, **$8.99 (pro)**, and **$10.99 (bundle / Complete Kit)**; note each `price_...` id.
 - [ ] **Payment Link** per product with live `https://buy.stripe.com/...` URL.
 - [ ] **Success URL** (redirect, not Stripe-hosted confirmation):
   ```text
   https://YOUR_DOMAIN/success.html?session_id={CHECKOUT_SESSION_ID}
   ```
   Keep `{CHECKOUT_SESSION_ID}` literally—Stripe substitutes it.
-- [ ] **Metadata** on each Payment Link: `product` = `starter` | `pro`. Do not rely only on amount matching.
+- [ ] **Metadata** on each Payment Link: `product` = `starter` | `pro` | `bundle`. Do not rely only on amount matching.
 - [ ] **Customer emails → Successful payments** enabled (Stripe receipt = second email you promise on the site).
 - [ ] **Webhook endpoint** on **YOUR_DOMAIN** only:
   ```text
@@ -74,12 +75,12 @@ Paste **all** of these into **Production** (Preview optional for staging). Never
 |----------|----------------|
 | `STRIPE_SECRET_KEY` | `sk_live_...` for live sessions; used by `sessions.retrieve`. **Webhook signature alone does not prove this key works.** |
 | `STRIPE_WEBHOOK_SECRET` | `whsec_...` for **this** endpoint URL only. |
-| `STRIPE_PRICE_CMO_STARTER_PDF` / `STRIPE_PRICE_CMO_PRO_PDF` | Must match Payment Link Price ids (backup mapping). |
+| `STRIPE_PRICE_CMO_STARTER_PDF` / `STRIPE_PRICE_CMO_PRO_PDF` / `STRIPE_PRICE_CMO_BUNDLE_PDF` | Must match Payment Link Price ids (backup mapping). |
 | `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` | Fulfillment + tokens. |
 | `DOWNLOAD_TOKEN_SECRET` | HMAC for signed URLs; use `base64url` or quote values with `+` in Vercel UI. |
 | `RESEND_API_KEY` | Outbound delivery email. |
 | `FULFILLMENT_FROM_EMAIL` | Must be a **verified** Resend sender for your domain. |
-| `PDF_CMO_STARTER_SOURCE_URL` / `PDF_CMO_PRO_SOURCE_URL` | Private Blob (or other) URLs—not public `/` paths. |
+| `PDF_CMO_STARTER_SOURCE_URL` / `PDF_CMO_PRO_SOURCE_URL` / `PDF_CMO_BUNDLE_SOURCE_URL` | Private Blob (or other) URLs—not public `/` paths. Optional: `PDF_CMO_PRO_MD_SOURCE_URL`. |
 | `BLOB_READ_WRITE_TOKEN` | Required to fetch private Vercel Blob PDFs server-side. |
 | `SITE_URL` | Canonical origin in emailed links (`https://YOUR_DOMAIN`). |
 
@@ -284,6 +285,7 @@ Vercel Production env (all required):
   STRIPE_WEBHOOK_SECRET=whsec_____________________
   STRIPE_PRICE_CMO_STARTER_PDF=price_____________________
   STRIPE_PRICE_CMO_PRO_PDF=price_____________________
+  STRIPE_PRICE_CMO_BUNDLE_PDF=price_____________________
   UPSTASH_REDIS_REST_URL=https://__________.upstash.io
   UPSTASH_REDIS_REST_TOKEN=____________________
   DOWNLOAD_TOKEN_SECRET=____________________   (openssl rand -base64 48)
@@ -292,6 +294,7 @@ Vercel Production env (all required):
   BLOB_READ_WRITE_TOKEN=vercel_blob____________________
   PDF_CMO_STARTER_SOURCE_URL=https://__________.private.blob.vercel-storage.com/paid-pdfs/cmo-starter.pdf
   PDF_CMO_PRO_SOURCE_URL=https://__________.private.blob.vercel-storage.com/paid-pdfs/cmo-pro.pdf
+  PDF_CMO_BUNDLE_SOURCE_URL=https://__________.private.blob.vercel-storage.com/paid-pdfs/cmo-bundle.pdf
   SITE_URL=https://promptanatomy.space
 
 Post-deploy:
@@ -344,7 +347,7 @@ stripe listen --forward-to localhost:3000/api/stripe-webhook   # local webhook d
 | File | Role |
 |------|------|
 | [`api/stripe-webhook.js`](api/stripe-webhook.js) | Signature verify + fulfillment entry |
-| [`api/_lib/fulfillment.js`](api/_lib/fulfillment.js) | Product map (`starter`/`pro`, 399/899), Redis, Resend, tokens, PDF load |
+| [`api/_lib/fulfillment.js`](api/_lib/fulfillment.js) | Product map (`starter`/`pro`/`bundle`, 399/899/1099 + optional pro-md), Redis, Resend, tokens, PDF load |
 | [`api/download-link.js`](api/download-link.js) | Success page polling (`?session_id=cs_*`) |
 | [`api/download.js`](api/download.js) | Signed PDF bytes (`?t=...`) |
 | [`api/fulfillment-health.js`](api/fulfillment-health.js) | Production env/Redis probe |
@@ -372,4 +375,4 @@ stripe listen --forward-to localhost:3000/api/stripe-webhook   # local webhook d
 
 ---
 
-*Last updated: 2026-05-17 (CMO Kit adoption: $3.99 starter / $8.99 pro on promptanatomy.space, EN-only).*
+*Last updated: 2026-09-11 (Bundle $10.99 in §3.1 + env; ops SSOT → GO_LIVE / MUST_TODO / sot.json; this memo = architecture reference).*

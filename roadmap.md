@@ -4,7 +4,7 @@
 **Active tracker:** [todo.md](todo.md)  
 **Ops detail (R1):** [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md)  
 **Agent contract:** [AGENTS.md](AGENTS.md) §0.2  
-**Last updated:** 2026-09-03
+**Last updated:** 2026-09-11
 
 **Verdict:** Close production commerce first; then GEO on one URL; then one more browser-local tool; then deepen offline Install kits. Do not open SaaS or a multi-kit catalog until R1 converts.
 
@@ -28,7 +28,7 @@ flowchart LR
 | **Owner** | Commerce (+ Orchestrator gate) |
 | **Entry** | Repo SOT already has live Payment Links; `allowPlaceholderCheckout: false` |
 | **Exit** | `GET /api/fulfillment-health` → `{ ok: true }`; live Starter (then Pro/Bundle) email + download ≤5 min; `success.html` poll works |
-| **Primary docs** | [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md), [DEPLOYMENT.md](DEPLOYMENT.md) §2.5, [memo_pdf.md](memo_pdf.md) |
+| **Primary docs** | [docs/GO_LIVE_RUNBOOK.md](docs/GO_LIVE_RUNBOOK.md) (command order) → [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md) (Dashboard + env) → [DEPLOYMENT.md](DEPLOYMENT.md) §2.5 + [`config/sot.json`](config/sot.json). [memo_pdf.md](memo_pdf.md) = architecture reference only |
 | **Kill if** | Fulfillment cannot be made reliable after env + Blob are correctly set |
 
 **In scope:** Blob upload, Vercel Production env, webhook signing, live purchase drills, commit/push redeploy.  
@@ -59,12 +59,12 @@ flowchart LR
 
 | | |
 |--|--|
-| **Goal** | Exactly **one** new sessionStorage tool after spine `#block5`, before teasers |
+| **Goal** | Exactly **one** new sessionStorage tool after spine `#block5`, before `#pro-contents` |
 | **Owner** | Curriculum (placement) → UI/UX + Content |
 | **Entry** | R2 exit (or Orchestrator waives R2 if GEO baseline already green) |
-| **Exit** | Tool ships EN-only (mirror OK); LT strip; e2e; hero → Prompt 1 Copy path unchanged; secondary to brief/tool only |
-| **Primary docs** | [docs/CREATIVE_BRIEF_BUILDER.md](docs/CREATIVE_BRIEF_BUILDER.md) (pattern), [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md), [AGENTS.md](AGENTS.md) §10.7 |
-| **Kill if** | Tool becomes a pre-value wall or dual-primary CTA with the spine |
+| **Exit** | Tool ships EN-only (mirror OK); LT strip; e2e; hero → open `#creative-brief` path unchanged (`#heroCtaSpine` primary; See pricing secondary); new tool does not sit above the open builder |
+| **Primary docs** | [docs/CREATIVE_BRIEF_BUILDER.md](docs/CREATIVE_BRIEF_BUILDER.md) (pattern), [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md), [AGENTS.md](AGENTS.md) §0.1 / §10.7 |
+| **Kill if** | Tool becomes a pre-value wall or dual-primary CTA with the builder / storefront |
 
 **In scope:** One local builder (e.g. pre-publish gate or weekly rhythm) — no account, no POST.  
 **Out of scope:** Tool suite sprawl, I2V, Consistency Lock Lab, React port, SaaS.

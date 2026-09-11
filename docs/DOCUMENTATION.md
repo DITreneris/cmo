@@ -56,8 +56,9 @@
 | [docs/AGENT_SOT.md](AGENT_SOT.md) | Operacinis SOT: build, deploy, GEO (hash hubs + frontFaq), commerce | Orchestrator / QA | Pipeline, GEO, go-live proceso pakeitimai |
 | [docs/security.md](security.md) | Headers, CSP, secrets, PDF leak policy | QA / Orchestrator | Saugumo pakeitimai |
 | [docs/language-guidelines-en-lt.md](language-guidelines-en-lt.md) | EN kanonas, brand, LT freeze | Content / QA | Viešo UI kalbos taisyklės |
-| [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) | Stripe + PDF go-live checklist — **R1 / Ambition A ops SSOT** | Commerce | Prieš live checkout; detail už [todo.md](../todo.md) |
+| [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) | Stripe + PDF go-live checklist — **R1 / Ambition A ops SSOT** (Dashboard + env) | Commerce | Prieš live checkout; detail už [todo.md](../todo.md) |
 | [docs/GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md) | Viena puslapio operatorių seka (dry-run → Blob → check:fulfillment → check:prod → IndexNow) | Commerce / Orchestrator | R1 ops komandų pokyčiai |
+| [memo_pdf.md](../memo_pdf.md) | Architecture / sister-project handoff — **reference**; go-live = GO_LIVE → MUST_TODO → `sot.json` | Commerce / Orchestrator | Architektūros pokyčiai (ne pirmas agentų žingsnis) |
 | [docs/TEMPLATE_MIGRATION_BACKLOG.md](TEMPLATE_MIGRATION_BACKLOG.md) | Phase 4b template epic (deferred) | Orchestrator | Scope patvirtinimas |
 | [docs/PDF_A11Y_CHECKLIST.md](PDF_A11Y_CHECKLIST.md) | Rankinis PDF a11y prieš paid release | Commerce / QA | Operator-local `docs/pdf-source/*.html` pakeitimai (žr. [README](pdf-source/README.md)) |
 | [.github/PULL_REQUEST_TEMPLATE.md](../.github/PULL_REQUEST_TEMPLATE.md) | PR šablonas | Orchestrator / QA | Checklist pakeitimai |
@@ -101,14 +102,14 @@
 | [tests/a11y-smoke.test.js](../tests/a11y-smoke.test.js) | A11y smoke (skip-link, focus-visible, reduced-motion, aria-label) | QA | Keičiant interaktyvius elementus ar a11y taisykles |
 | [js/creative-brief.js](../js/creative-brief.js) | EN `#creative-brief` builder (sessionStorage, copy) | UI/UX | Builder UI / SOT copy |
 | [js/va-track.js](../js/va-track.js) | Vercel Analytics `trackEvent` (no PII; no-op without `window.va`) | UI/UX / Commerce | Naujas conversion event |
-| [.github/workflows/ci.yml](../.github/workflows/ci.yml) | CI – npm test + pa11y į /lt/, /en/, privacy | QA / Orchestrator | Nauji testai, lint, a11y URL |
+| [.github/workflows/ci.yml](../.github/workflows/ci.yml) | CI – npm test + pa11y į /lt/, /en/, /en/privacy/ per `npx serve public` (be `-s`) | QA / Orchestrator | Nauji testai, lint, a11y URL |
 | [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) | GitHub Pages deploy (mirror, `path: public`, `MIRROR_NOTE: '1'`) | QA / Orchestrator | Deploy žingsniai, environment, BASE_PATH, MIRROR_NOTE |
 
 ### Mokama PDF tarpinė (v1.6.0+, EN-only, tik `promptanatomy.space`)
 
 | Failas / katalogas | Paskirtis | Atsakingas | Kada atnaujinti |
 |--------------------|-----------|------------|-----------------|
-| [memo_pdf.md](../memo_pdf.md) | Architektūros sprendimas, sister-project handoff (CMO konkrečios reikšmės §8) | Commerce / Orchestrator | Architektūros pokyčiai, kainos, env raktų pervadinimai |
+| [memo_pdf.md](../memo_pdf.md) | Architecture reference / sister-project handoff (ne go-live SSOT; Bundle + starter/pro) | Commerce / Orchestrator | Architektūros pokyčiai, kainos, env raktų pervadinimai |
 | [config/sot.json](../config/sot.json) | Single source of truth: produktai ($3.99 / $8.99 / $10.99), Stripe Payment Links, allowPlaceholderCheckout, mirror policy, Buyer FAQ | Commerce | Live Payment Link pridėjimas, kainų / FAQ atnaujinimai |
 | [docs/pdf-source/README.md](pdf-source/README.md) | Paid PDF HTML interiors are operator-local (gitignored). `pdf:export` / `pdf:covers` / `pdf:previews` run only when the three HTML files are on disk. | Commerce / Content | PDF turinio pakeitimai (kainos, copy, prompts, covers) |
 | [docs/PDF_A11Y_CHECKLIST.md](PDF_A11Y_CHECKLIST.md) | Rankinis PDF a11y checklist prieš release | Commerce / QA | PDF šaltinio pakeitimai |
@@ -121,7 +122,7 @@
 | [success.html](../success.html) | Pirkimo sėkmės polling UX (aria-live, noindex) | Commerce / UI/UX | Copy / UX pokyčiai |
 | [terms.html](../terms.html) | Pardavimo sąlygos + Team License (#paid-pdf-license) + 14-day refund | Commerce (juridinė peržiūra atskirai) | Licencijos pokyčiai, refund politika |
 | [coming-soon.html](../coming-soon.html) | Placeholder režimo CTA tikslas, kol nėra live Stripe Payment Links | Commerce | Po live launch – galima pašalinti arba palikti backup'ui |
-| [assets/hero/brief-sample-satori.png](../assets/hero/brief-sample-satori.png) + `.webp` | EN hero brief-builder sample (PNG fallback + WebP LCP) | UI/UX | Hero sample refresh |
+| [assets/hero/brief-sample-satori.png](../assets/hero/brief-sample-satori.png) + `.webp` | EN hero brief-builder sample (PNG fallback + WebP LCP). Live still = `0400` challenger (structured bag / gold clasp / travertine). Operator A/B candidates in `assets/hero_png/` are gitignored. | UI/UX | Hero sample refresh |
 | [assets/pdf-covers/cmo-{starter,pro,bundle}-cover.png](../assets/pdf-covers/) | Storefront cover thumbnails (Playwright WYSIWYG; `npm run pdf:covers`) | UI/UX / Commerce | Cover redesign from operator-local `docs/pdf-source/*.html` |
 | [assets/pdf-covers/cmo-pro-cover.svg](../assets/pdf-covers/cmo-pro-cover.svg) | Unused leftover (storefront uses PNG covers; bundle = `cmo-bundle-cover.png`). Do not delete in this hygiene pass. | UI/UX / Commerce | Tik jei SVG vėl referencinamas |
 | [assets/pdf-covers/cmo-{starter,pro}-preview-{1,2,3}.png](../assets/pdf-covers/) | Watermarked interior pages 2–4 (`npm run pdf:previews`) | (build output, on demand) | Marketing keitimas |
@@ -135,7 +136,8 @@
 | [tests/fulfillment-config.test.js](../tests/fulfillment-config.test.js) | PRODUCTS ⇆ SOT consistency, env probe, /api kontraktas | QA | Kainų pokyčiai, naujas API route |
 | [tests/e2e/smoke.spec.js](../tests/e2e/smoke.spec.js), [tests/e2e/checkout.spec.js](../tests/e2e/checkout.spec.js), [tests/e2e/creative-brief.spec.js](../tests/e2e/creative-brief.spec.js) | Playwright e2e: storefront, success polling, brief builder | QA | Naujas storefront / brief flow |
 | [playwright.config.js](../playwright.config.js) | Playwright runner config | QA | CI / runner pakeitimai |
-| [vercel.json](../vercel.json) | `/` → `/en/`; `buildCommand` = `REQUIRE_STRIPE_LINKS=1 npm run build`; Cache-Control `/api/*` ir `/success.html` (no-store) | Orchestrator / QA | Naujas dinaminis maršrutas |
+| [vercel.json](../vercel.json) | `/` → `/en/`; 308 `/en/privacy.html` → `/en/privacy/` ir `/terms.html` → `/terms/`; rewrite slash → `.html`; export also writes `public/en/privacy/index.html` + `public/terms/index.html` (Pages); `buildCommand` = `REQUIRE_STRIPE_LINKS=1 npm run build`; Cache-Control `/api/*` ir `/success.html` (no-store). No `cleanUrls`. | Orchestrator / QA | Naujas dinaminis maršrutas |
+| [serve.json](../serve.json) | Local `npx serve public` slash rewrites (no 308) so e2e matches `.space` | QA | Privacy/terms public URL |
 
 ---
 
@@ -159,6 +161,7 @@
 
 - **Versijavimas:** Dokumentai versijuojami per **Git** (istorija = audit trail).
 - **Archyvas:** Istoriniai šablonai laikomi Git istorijoje; atskiro `docs/archive/` katalogo nenaudojame.
+- **Demote, ne folder:** Pasenusius, bet dar naudingus failus (**reference** / **parked**) išimti iš agentų pirmo skaitymo kelio per [docs/INDEX.md](INDEX.md) §5 — ne kurti `docs/archive/`.
 - **Retention:** Automatinio dokumentų trynimo nenaudoti; archyve laikyti pagal poreikį.
 
 ---
