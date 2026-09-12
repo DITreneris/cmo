@@ -30,6 +30,7 @@
 - [ ] CI (`.github/workflows/ci.yml`) praeina – lint, testai, pa11y (WCAG2AA).
 - [ ] Pakeitimams atitinka dokumentacijos atnaujinimai ([docs/DOCUMENTATION.md](DOCUMENTATION.md)).
 - [ ] Locale: EN kanonas – nereikalingas LT diff ([MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0).
+- [ ] EN free surface (jei liečia `/en/` UI): hero → open `#creative-brief` → **2** PDF kortelės + Pro text link → library **1/2/3/5**; progress of 4; 0 memes; 0 `.prompt--teaser` — pilnas checklist [TESTAVIMAS.md](TESTAVIMAS.md) §2.
 
 ### Prieš release
 
@@ -51,7 +52,7 @@
 | `npm test` | Build (`lt/en`) + struktūra + design-system smoke + a11y smoke + HTML/JS lint |
 | `npm run lint:html` | HTML validacija (`index.html`, `lt/index.html`, `lt/privatumas.html`, `en/index.html`, `en/privacy.html`) |
 | `npm run lint:js` | ESLint |
-| A11y lokaliai | `npx serve -s . -l 3000` + `npx pa11y http://localhost:3000/en/ --standard WCAG2AA` (release QA; CI taip pat `/lt/` smoke – [.github/workflows/ci.yml](../.github/workflows/ci.yml)) |
+| A11y lokaliai | `npx serve public -l 3000` + `npx pa11y http://127.0.0.1:3000/en/ --standard WCAG2AA` (release QA; CI taip pat `/lt/` smoke ir `/en/privacy/` – [.github/workflows/ci.yml](../.github/workflows/ci.yml)). Ne `serve -s .`. |
 
 ---
 
@@ -62,4 +63,4 @@
 - [docs/TESTAVIMAS.md](TESTAVIMAS.md) – gyvo testavimo scenarijai ir žurnalas  
 - [DEPLOYMENT.md](../DEPLOYMENT.md) – deploy ir testavimas po deploy  
 
-**Paskutinis atnaujinimas:** 2026-02-18
+**Paskutinis atnaujinimas:** 2026-09-11

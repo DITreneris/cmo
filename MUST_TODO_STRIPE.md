@@ -19,7 +19,7 @@ Repo paruošta (SOT flip, testai, `vercel.json` build gate). **Prieš pirmą liv
 
 ---
 
-## Repo paruošimas (Phase 1a — padaryta kode)
+## Repo paruošimas (padaryta kode — ne „Phase A“)
 
 - [x] `api/_lib/fulfillment.js` — starter + pro + bundle
 - [x] `config/sot.json` — 3 produktai, placeholder režimas
@@ -110,7 +110,7 @@ Stripe links vis dar tikrinami `build-locale-pages.js`. Pilnas `npm test` lieka 
 
 - [ ] `npm run check:fulfillment` — Redis PONG, env complete (Vercel Production env; lokaliai reikia `.env`)
 - [ ] `npm run check:prod` — `{ ok: true, missing: [] }` + IndexNow key file (po deploy + env)
-- [x] `/en/` — storefront: 3 kortelės, live `buy.stripe.com` (ne `/coming-soon.html`) — **repo build patvirtinta**
+- [x] `/en/` — storefront: **2** kortelės (Starter + Complete) + Pro tekstinė nuoroda, live `buy.stripe.com` (ne `/coming-soon.html`) — **repo build patvirtinta**
 - [x] `/lt/` — **NĖRA** `#pdf-storefront`, kainų, `buy.stripe.com` — **structure tests**
 - [x] Mirror (`MIRROR_NOTE=1` build) — taip pat be storefront — **structure tests**
 - [ ] Stripe **live mode**: Starter, Pro, Bundle → el. laiškas per ≤5 min → download veikia

@@ -72,7 +72,7 @@ Does not replace Stripe ops. Does not count as R1 exit. DS 1.6.1, not 1.7.
 Does not replace Stripe ops. Does not count as R1 exit.
 
 - [x] **True CEO path:** Hero → open `#creative-brief` → 2 PDF cards → library **1/2/3/5** (display 1–4)
-- [x] Hero primary `#heroCtaSpine` → `#creative-brief` (*Start the builder*); sample = brief output
+- [x] Hero primary `#heroCtaSpine` → `#creative-brief` (*Build my prompt*); sample = brief output
 - [x] `#cb-builder` default **open**; `open_brief` on first use, not page load
 - [x] Improve card displays **4**, not 5; IDs stay `#block5` / `prompt5`
 - [x] Docs + `tests/structure.test.js` + creative-brief e2e synced
@@ -109,5 +109,5 @@ Commands: [docs/OFFER-ARCHITECTURE.md](docs/OFFER-ARCHITECTURE.md) §4 (`pdf:cov
 ## Done (archive)
 
 - PDF covers Starter + Pro + Bundle (Playwright WYSIWYG) — shipped v1.8 / v1.9; SOT `coverPng` for all three SKUs
-- Repo commerce prep Phase 1a/1b — live Payment Links in SOT; `allowPlaceholderCheckout: false`; structure/e2e gates (ops remaining = R1 above)
+- Repo commerce prep (done in code) — live Payment Links in SOT; `allowPlaceholderCheckout: false`; structure/e2e gates (ops remaining = R1 above)
 - EN conversion P0/P1 (Audit) — sticky Pricing nav, hero outcome + price anchor, Use · Build · Install storefront, satellite DS chrome (2026-09-03)
