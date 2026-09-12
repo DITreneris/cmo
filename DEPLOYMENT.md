@@ -38,6 +38,8 @@ npm run build
 Šaltinis: [`vercel.json`](vercel.json) (ne dashboard default'ai).
 
 - **Framework preset:** None / Other (static).
+- **Redirects:** `/` ir `/index.html` visada → `/en/` (302). Jokio `Accept-Language` / geo negotiate į `/lt/`.
+- **Privacy / Terms slash (`.space` + Pages HTML):** rewrite `/en/privacy/` → `/en/privacy.html` and `/terms/` → `/terms.html`; 308 `.html` and no-slash → slash. Do **not** enable `cleanUrls` (drops `?session_id=` on `/success.html`). Do not pretty-URL `/success.html` or `/coming-soon.html`. Export writes `public/en/privacy/index.html` and `public/terms/index.html` so Pages slash URLs resolve without `vercel.json`. Host-relative `/styles/` on Pages under `/cmo` is known. CI pa11y: `npx serve public -l 3000` (no `-s`), wait-on `/en/`.
 - **Build command:** `REQUIRE_STRIPE_LINKS=1 npm run build` (Stripe Payment Link gate locale build'e).
 - **Output directory:** `public`.
 - **Install command:** `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PUPPETEER_SKIP_DOWNLOAD=1 npm install`.
@@ -163,12 +165,12 @@ npm test
 ### A11y testavimas lokaliai
 
 ```bash
-npx serve -s . -l 3000
+npx serve public -l 3000
 # Kitoje terminale:
-npx pa11y http://localhost:3000/lt/ --standard WCAG2AA --ignore "warning"
-npx pa11y http://localhost:3000/en/ --standard WCAG2AA --ignore "warning"
-npx pa11y http://localhost:3000/lt/privatumas.html --standard WCAG2AA --ignore "warning"
-npx pa11y http://localhost:3000/en/privacy.html --standard WCAG2AA --ignore "warning"
+npx pa11y http://127.0.0.1:3000/lt/ --standard WCAG2AA --ignore "warning"
+npx pa11y http://127.0.0.1:3000/en/ --standard WCAG2AA --ignore "warning"
+npx pa11y http://127.0.0.1:3000/lt/privatumas.html --standard WCAG2AA --ignore "warning"
+npx pa11y http://127.0.0.1:3000/en/privacy/ --standard WCAG2AA --ignore "warning"
 ```
 
 CI automatiškai atlieka tuos pačius pa11y patikrinimus per [.github/workflows/ci.yml](.github/workflows/ci.yml).
@@ -190,7 +192,7 @@ CI automatiškai atlieka tuos pačius pa11y patikrinimus per [.github/workflows/
 | **Vercel: „No Output Directory named `public`"** | `package.json` `build` skriptas turi įtraukti `vercel-export-public.js`. Patikrinti `npm run build` lokaliai – `public/` privalo atsirasti. |
 | **GitHub Pages 404** | Settings → Pages → Source: **GitHub Actions** (ne „Deploy from branch"). |
 | **Deploy workflow failed (test job)** | Lokaliai paleisti `npm test`. |
-| **CI workflow failed (pa11y)** | Lokaliai: `npx serve -s . -l 3000` + `npx pa11y http://localhost:3000/lt/ --standard WCAG2AA`. |
+| **CI workflow failed (pa11y)** | Lokaliai: `npx serve public -l 3000` + `npx pa11y http://127.0.0.1:3000/en/privacy/ --standard WCAG2AA`. Ne `serve -s .`. |
 | **pa11y: No usable sandbox** (CI) | `.pa11yrc.json` turi `--no-sandbox` Chrome args. Jei vis tiek krenta – patikrinti workflow. |
 | **Mirror rodo seną canonical** | Patikrinti [.github/workflows/deploy.yml](.github/workflows/deploy.yml) `env` (`BASE_PATH`, `SITE_ORIGIN`). Žr. §2 pastabą. |
 | **Mirror rodo `#pdf-storefront` (turi nerodyti)** | [.github/workflows/deploy.yml](.github/workflows/deploy.yml) deploy job env turi `MIRROR_NOTE: '1'`. Žr. §2 mirror politikos pastabą. |

@@ -4,7 +4,15 @@
   "buildCommand": "REQUIRE_STRIPE_LINKS=1 npm run build",
   "redirects": [
     { "source": "/", "destination": "/en/", "permanent": false },
-    { "source": "/index.html", "destination": "/en/", "permanent": false }
+    { "source": "/index.html", "destination": "/en/", "permanent": false },
+    { "source": "/en/privacy.html", "destination": "/en/privacy/", "statusCode": 308 },
+    { "source": "/en/privacy", "destination": "/en/privacy/", "statusCode": 308 },
+    { "source": "/terms.html", "destination": "/terms/", "statusCode": 308 },
+    { "source": "/terms", "destination": "/terms/", "statusCode": 308 }
+  ],
+  "rewrites": [
+    { "source": "/en/privacy/", "destination": "/en/privacy.html" },
+    { "source": "/terms/", "destination": "/terms.html" }
   ],
   "headers": [
     {

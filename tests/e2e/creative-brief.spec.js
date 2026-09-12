@@ -22,6 +22,14 @@ test.describe('creative brief builder', () => {
     expect(activeId).not.toBe('cbCampaignGoal');
 
     await expect(page.locator('#cbOutput')).toBeVisible();
+    await expect(page.locator('#cbPanelVisual')).toBeHidden();
+    await expect(page.locator('#cbPanelText')).toBeHidden();
+    await page.locator('[data-cb-step="2"]').click();
+    await expect(page.locator('#cbPanelVisual')).toBeVisible();
+    await expect(page.locator('#cbPanelContext')).toBeHidden();
+    await page.locator('[data-cb-step="1"]').click();
+    await expect(page.locator('#cbPanelContext')).toBeVisible();
+    await expect(page.locator('#cbPanelVisual')).toBeHidden();
 
     await page.locator('[data-cb-preset="ecommerce"]').click();
     const output = page.locator('#cbOutput');

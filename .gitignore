@@ -47,6 +47,9 @@ docs/pdf-source/*.pdf
 docs/pdf-source/*.html
 !assets/pdf-covers/
 
+# Operator hero A/B candidates (live still is assets/hero/brief-sample-satori.*)
+assets/hero_png/
+
 # Local analysis dumps (not product source)
 pdf_analysis.txt
 report.txt

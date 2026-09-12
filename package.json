@@ -14,7 +14,7 @@
     "test:fulfillment-config": "node tests/fulfillment-config.test.js",
     "test:smoke": "start-server-and-test \"npx serve public -l 3000\" http://127.0.0.1:3000/ \"npx playwright test tests/e2e/smoke.spec.js\"",
     "test:e2e": "start-server-and-test \"npx serve public -l 3000\" http://127.0.0.1:3000/ \"npx playwright test tests/e2e/\"",
-    "test:a11y": "start-server-and-test \"npx serve public -l 3000\" http://127.0.0.1:3000/ \"npx pa11y http://127.0.0.1:3000/en/ --config .pa11yrc.json && npx pa11y http://127.0.0.1:3000/success.html?session_id=cs_test_FAKE --config .pa11yrc.json && npx pa11y http://127.0.0.1:3000/terms.html --config .pa11yrc.json\"",
+    "test:a11y": "start-server-and-test \"npx serve public -l 3000\" http://127.0.0.1:3000/ \"npx pa11y http://127.0.0.1:3000/en/ --config .pa11yrc.json && npx pa11y http://127.0.0.1:3000/success.html?session_id=cs_test_FAKE --config .pa11yrc.json && npx pa11y http://127.0.0.1:3000/terms/ --config .pa11yrc.json\"",
     "lint:html": "npx html-validate index.html lt/index.html lt/privatumas.html en/index.html en/privacy.html success.html terms.html coming-soon.html",
     "lint:js": "npx eslint . --ext .js",
     "pdf:export": "node scripts/export-pdfs.js",

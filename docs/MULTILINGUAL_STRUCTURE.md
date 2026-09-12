@@ -42,10 +42,10 @@ Root [`index.html`](../index.html) vis dar yra **struktūrinis build šaltinis**
 | LT path | EN path | Pastaba |
 |---------|---------|---------|
 | `/lt/` (index.html – biblioteka) | `/en/` (index.html – library) | **Kanonas:** `/en/` |
-| `/lt/privatumas.html` | `/en/privacy.html` | LT free-only; EN + paid processors |
+| `/lt/privatumas.html` | `/en/privacy/` (disk: `en/privacy.html`) | LT free-only; EN + paid processors |
 
 - **Biblioteka:** LT = `lt/index.html`, EN = `en/index.html`.
-- **Privatumas:** LT = `lt/privatumas.html`, EN = `en/privacy.html`.
+- **Privatumas:** LT = `lt/privatumas.html` (public `/lt/privatumas.html`); EN = `en/privacy.html` (public `/en/privacy/`).
 
 ---
 
@@ -69,7 +69,7 @@ Root [`index.html`](../index.html) vis dar yra **struktūrinis build šaltinis**
 
 Kalbos perjungiklis **pašalintas iš produkto UX**. `/en/` yra vienintelis aktyvus vartotojo kelias. `/lt/` lieka tik CI / archive snapshot, nėra linkinamas iš EN produkto paviršių.
 
-- **EN** puslapiai (`/en/`, `/en/privacy.html`) neberodo nuorodų į `/lt/`.
+- **EN** puslapiai (`/en/`, `/en/privacy/`) neberodo nuorodų į `/lt/`.
 - **LT** failai gali būti generuojami ir testuojami CI, bet nėra produkto navigacijos dalis.
 
 ---
@@ -79,7 +79,7 @@ Kalbos perjungiklis **pašalintas iš produkto UX**. `/en/` yra vienintelis akty
 ```
 LT → EN:
   /lt/                 → /en/
-  /lt/privatumas.html  → /en/privacy.html
+  /lt/privatumas.html  → /en/privacy/
 
 EN → LT:
   nėra vartotojo UX kelio; /lt/ lieka archive/CI

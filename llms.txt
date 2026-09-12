@@ -6,12 +6,12 @@
 - https://promptanatomy.space/en/ — creative brief builder + 4 core Plan → Create → Check → Improve workflows; full 10 prompts in Pro kit
 
 ## On this page
-- https://promptanatomy.space/en/#block1 — start spine (Prompt 1)
 - https://promptanatomy.space/en/#creative-brief — creative brief builder
+- https://promptanatomy.space/en/#pdf-storefront — Use · Build · Install kits
+- https://promptanatomy.space/en/#block1 — library workflow 1
 - https://promptanatomy.space/en/#cmo-safety — pre-publish safety
 - https://promptanatomy.space/en/#pro-contents — Pro catalog (prompts 4, 6–10)
 - https://promptanatomy.space/en/#faq — FAQ
-- https://promptanatomy.space/en/#pdf-storefront — Use · Build · Install kits
 - https://promptanatomy.space/en/#prompt-basics — structured prompting
 
 ## Use · Build · Install kits (paid PDFs)
@@ -20,8 +20,8 @@
 - Complete Kit ($10.99)
 
 ## Policies
-- Privacy: https://promptanatomy.space/en/privacy.html
-- Terms: https://promptanatomy.space/terms.html
+- Privacy: https://promptanatomy.space/en/privacy/
+- Terms: https://promptanatomy.space/terms/
 
 ## Contact
 - info@promptanatomy.app

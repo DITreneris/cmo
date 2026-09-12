@@ -32,11 +32,11 @@ jobs:
 
       - name: Accessibility check (pa11y)
         run: |
-          npx serve -s . -l 3000 &
-          npx wait-on -t 60000 http://127.0.0.1:3000/
+          npx serve public -l 3000 &
+          npx wait-on -t 60000 http://127.0.0.1:3000/en/
           npx pa11y http://127.0.0.1:3000/lt/ --standard WCAG2AA --ignore "warning" --reporter cli -- --no-sandbox
           npx pa11y http://127.0.0.1:3000/en/ --standard WCAG2AA --ignore "warning" --reporter cli -- --no-sandbox
           npx pa11y http://127.0.0.1:3000/lt/privatumas.html --standard WCAG2AA --ignore "warning" --reporter cli -- --no-sandbox
-          npx pa11y http://127.0.0.1:3000/en/privacy.html --standard WCAG2AA --ignore "warning" --reporter cli -- --no-sandbox
+          npx pa11y http://127.0.0.1:3000/en/privacy/ --standard WCAG2AA --ignore "warning" --reporter cli -- --no-sandbox
         env:
           CI: true

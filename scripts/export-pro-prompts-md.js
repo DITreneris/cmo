@@ -57,7 +57,7 @@ registry.prompts.forEach(function (meta, index) {
 
 lines.push('---');
 lines.push('');
-lines.push('© Prompt Anatomy · Team license: promptanatomy.space/terms.html#paid-pdf-license');
+lines.push('© Prompt Anatomy · Team license: promptanatomy.space/terms/#paid-pdf-license');
 
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
 fs.writeFileSync(outPath, lines.join('\n'), 'utf8');

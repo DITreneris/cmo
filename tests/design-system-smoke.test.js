@@ -51,6 +51,10 @@ function run() {
   assert(tokensCss.includes('--measure-prose'), 'tokens.css missing --measure-prose');
   assert(componentsCss.includes('.btn'), 'components.css missing button styles');
   assert(componentsCss.includes('.progress-wrap'), 'components.css missing progress styles');
+  assert(
+    /\.header-bar\s*\{[\s\S]*?position:\s*sticky/.test(componentsCss),
+    'components.css .header-bar must be page-level sticky'
+  );
   assert(componentsCss.includes('.surface-panel'), 'components.css missing surface-panel');
   assert(componentsCss.includes('.surface-accent'), 'components.css missing surface-accent');
   assert(componentsCss.includes('100vw'), 'components.css missing full-bleed hero width');
@@ -116,6 +120,8 @@ function run() {
   assert(!html.includes('hero-diagram__outputs'), 'hero diagram outputs row must be removed (path cut)');
   assert(!html.includes('cycle-stepper'), 'cycle-stepper must be removed from index.html (path cut)');
   assert(!html.includes('cmo-provider-hub'), 'provider hub must be removed from index.html (path cut)');
+  assert(!componentsCss.includes('.cycle-stepper'), 'components.css must not keep dead .cycle-stepper');
+  assert(!componentsCss.includes('.cmo-provider-hub'), 'components.css must not keep dead .cmo-provider-hub');
   assert(!html.includes('🔒') && !html.includes('📖'), 'decorative emoji chrome must be removed from index.html markup');
   assert(!html.includes('💡') && !html.includes('📋'), 'emoji chrome (info/copy) must be removed from index.html markup');
   assert(componentsCss.includes('.hero-diagram'), 'components.css missing .hero-diagram');
@@ -129,13 +135,53 @@ function run() {
     '.value-grid-details summary',
     '.instructions-faq-hint a',
     '.cmo-footer-crosslink a',
-    '.pdf-storefront-trust a'
+    '.pdf-storefront-trust a',
+    '.ecosystem-strip-list a',
+    '.footer-product-link a',
+    '.footer-email a',
+    '.pdf-card-badge'
   ];
   goldLinkOffenders.forEach(function (sel) {
     const escaped = sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const re = new RegExp(escaped.replace(/\s+/g, '\\s*') + '\\s*\\{[^}]*color:\\s*var\\(--color-brand-primary\\)', 's');
     assert(!re.test(componentsCss), 'DS 1.6: ' + sel + ' must not use gold as text/link color');
   });
+  const ecoLinkBlock = html.match(/\.ecosystem-strip-list a\s*\{[^}]+\}/);
+  assert(
+    ecoLinkBlock &&
+      !/color:\s*var\(--accent-primary\)/.test(ecoLinkBlock[0]) &&
+      !/color:\s*var\(--color-brand-primary\)/.test(ecoLinkBlock[0]),
+    'index.html .ecosystem-strip-list a must not use gold as link color'
+  );
+
+  const tokensLinkIdx = html.indexOf('href="styles/tokens.css"');
+  assert(tokensLinkIdx !== -1, 'index.html missing tokens.css link for inline-style parse');
+  const styleBeforeTokens = html.slice(0, tokensLinkIdx);
+  const styleOpen = styleBeforeTokens.lastIndexOf('<style>');
+  const styleClose = styleBeforeTokens.indexOf('</style>', styleOpen);
+  assert(styleOpen !== -1 && styleClose !== -1, 'index.html missing large <style> before tokens.css');
+  const inlineSheet = styleBeforeTokens.slice(styleOpen, styleClose);
+  assert(
+    !/\.header\s*\{[^}]*border-radius:\s*(20px|16px)/.test(inlineSheet),
+    'inline <style> must not restate .header card border-radius 20px/16px'
+  );
+  assert(
+    !/\.trust-pill\s*\{[^}]*(9999px|backdrop-filter)/.test(inlineSheet),
+    'inline <style> must not restate pill .trust-pill chrome'
+  );
+  assert(
+    !/\.container\s*\{[^}]*max-width:\s*1160px/.test(inlineSheet),
+    'inline <style> must not restate .container max-width 1160px'
+  );
+  assert(
+    /\.lang-switcher\s*\{/.test(componentsCss),
+    'components.css must keep .lang-switcher (LT freeze widget)'
+  );
+  const ltPrivacy = read(path.join(ROOT, 'lt', 'privatumas.html'));
+  assert(
+    ltPrivacy.includes('class="lang-switcher"'),
+    'lt/privatumas.html must keep the language switcher'
+  );
 
   const manifest = JSON.parse(read(WEBMANIFEST));
   assert(manifest.theme_color === '#0B1320', 'site.webmanifest theme_color must be #0B1320');

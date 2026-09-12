@@ -31,7 +31,7 @@
       "title": "Creative brief builder",
       "lead": "Fill the brief → get an image-ready prompt. Browser-only. Copy, paste, run. No account.",
       "presetsLabel": "Quick starts",
-      "sampleLabel": "Try sample",
+      "sampleLabel": "Try an example",
       "stepsContext": "Context",
       "stepsVisual": "Visual",
       "stepsText": "Text",
@@ -41,7 +41,7 @@
       "copiedLabel": "Copied",
       "toolsTitle": "Open an image tool",
       "toolsDesc": "Opens in a new tab and copies your prompt.",
-      "emptyPlaceholder": "Start with a subject or load a preset — your image prompt builds here.",
+      "emptyPlaceholder": "Try an example, or add a subject — your prompt builds here.",
       "tipsTitle": "Expert tips",
       "tips": [
         {

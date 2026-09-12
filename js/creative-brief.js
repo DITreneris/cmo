@@ -139,6 +139,13 @@
     }).length;
   }
 
+  var QUALITY_LABELS = {
+    weak: 'Ready to build',
+    medium: 'Basic brief',
+    good: 'Good brief',
+    premium: 'Detailed brief'
+  };
+
   function getQualityLevel(filled) {
     var total = TRACKED_KEYS.length;
     if (filled <= 2) return 'weak';
@@ -221,11 +228,13 @@
     var level = getQualityLevel(filled);
     var missing = getHintMissing(data);
     if (qualityBadge) {
-      qualityBadge.textContent = filled + '/' + TRACKED_KEYS.length + ' — ' + level;
+      qualityBadge.textContent = QUALITY_LABELS[level] || 'Ready to build';
       qualityBadge.setAttribute('data-level', level);
     }
     if (qualityHint) {
-      if (level === 'premium' || missing.length === 0) {
+      if (filled === 0) {
+        qualityHint.textContent = 'Add a subject and a goal to get started.';
+      } else if (level === 'premium' || missing.length === 0) {
         qualityHint.textContent = 'Ready to copy into your image tool.';
       } else {
         var labels = missing.slice(0, 3).map(function (key) {

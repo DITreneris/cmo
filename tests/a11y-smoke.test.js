@@ -37,7 +37,9 @@ function hasFocusVisibleRule(html, htmlPath) {
   for (let i = 0; i < hrefs.length; i++) {
     const href = hrefs[i];
     if (/^https?:/i.test(href)) continue;
-    const cssPath = path.resolve(dir, href);
+    const cssPath = href.charAt(0) === '/'
+      ? path.join(ROOT, href.replace(/^\//, ''))
+      : path.resolve(dir, href);
     if (!fs.existsSync(cssPath)) continue;
     const css = fs.readFileSync(cssPath, 'utf8');
     if (css.includes(':focus-visible')) return true;

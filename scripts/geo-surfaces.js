@@ -122,10 +122,10 @@ function buildSitemapXml(siteOrigin, root) {
       siteOrigin + '/assets/pdf-covers/cmo-pro-cover.png',
       siteOrigin + '/assets/pdf-covers/cmo-bundle-cover.png'
     ]},
-    { loc: siteOrigin + '/en/privacy.html', file: 'en/privacy.html', images: [] },
+    { loc: siteOrigin + '/en/privacy/', file: 'en/privacy.html', images: [] },
     { loc: siteOrigin + '/lt/', file: 'lt/index.html', images: [] },
     { loc: siteOrigin + '/lt/privatumas.html', file: 'lt/privatumas.html', images: [] },
-    { loc: siteOrigin + '/terms.html', file: 'terms.html', images: [] }
+    { loc: siteOrigin + '/terms/', file: 'terms.html', images: [] }
   ];
   const parts = [
     '<?xml version="1.0" encoding="UTF-8"?>',
@@ -158,12 +158,12 @@ function buildLlmsTxt(siteOrigin, brandSeo) {
     '- ' + en + ' — creative brief builder + 4 core Plan → Create → Check → Improve workflows; full 10 prompts in Pro kit',
     '',
     '## On this page',
-    '- ' + en + '#block1 — start spine (Prompt 1)',
     '- ' + en + '#creative-brief — creative brief builder',
+    '- ' + en + '#pdf-storefront — Use · Build · Install kits',
+    '- ' + en + '#block1 — library workflow 1',
     '- ' + en + '#cmo-safety — pre-publish safety',
     '- ' + en + '#pro-contents — Pro catalog (prompts 4, 6–10)',
     '- ' + en + '#faq — FAQ',
-    '- ' + en + '#pdf-storefront — Use · Build · Install kits',
     '- ' + en + '#prompt-basics — structured prompting',
     '',
     '## Use · Build · Install kits (paid PDFs)',
@@ -172,8 +172,8 @@ function buildLlmsTxt(siteOrigin, brandSeo) {
     '- Complete Kit ($10.99)',
     '',
     '## Policies',
-    '- Privacy: ' + siteOrigin + '/en/privacy.html',
-    '- Terms: ' + siteOrigin + '/terms.html',
+    '- Privacy: ' + siteOrigin + '/en/privacy/',
+    '- Terms: ' + siteOrigin + '/terms/',
     '',
     '## Contact',
     '- info@promptanatomy.app',

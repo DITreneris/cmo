@@ -74,49 +74,7 @@
             font-size: var(--font-size-body);
         }
 
-        .container {
-            max-width: 1160px;
-            margin: 0 auto;
-            padding: 60px 28px;
-        }
-
-        /* ===== HEADER (light hero – Prompt Anatomy) ===== */
-        .header {
-            position: relative;
-            background: var(--hero-bg);
-            color: var(--hero-ink);
-            padding: 46px 48px;
-            border-radius: 20px;
-            margin-bottom: 40px;
-            box-shadow: var(--shadow-elevation-hero);
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-
-        .header::before {
-            display: none;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            opacity: 0.03;
-            pointer-events: none;
-            z-index: 0;
-            mix-blend-mode: multiply;
-        }
-
-        .header .header-badges,
-        .header h1,
-        .header p,
-        .header .header-cta,
-        .header .header-note {
-            position: relative;
-            z-index: 1;
-        }
-
+        /* ===== HEADER (geometry lives in components.css DS 1.6.1) ===== */
         .header-badges {
             display: flex;
             flex-wrap: wrap;
@@ -139,42 +97,6 @@
             letter-spacing: 0.08em;
             color: var(--hero-ink);
             border: 1px solid rgba(11, 19, 32, 0.08);
-        }
-
-        .badge-spinoff {
-            border: 1px solid rgba(207, 167, 58, 0.45);
-        }
-
-        .lang-switcher {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-        .lang-btn {
-            background: transparent;
-            color: var(--hero-muted);
-            border: 1px solid transparent;
-            padding: 4px 8px;
-            min-width: 36px;
-            min-height: 36px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s, color 0.2s;
-        }
-        .lang-btn:hover,
-        .lang-btn:focus-visible {
-            background: rgba(11, 19, 32, 0.06);
-            border-color: rgba(11, 19, 32, 0.14);
-            color: var(--hero-ink);
-            outline: 2px solid rgba(11, 19, 32, 0.25);
-            outline-offset: 2px;
-        }
-        .lang-btn.is-active {
-            background: rgba(11, 19, 32, 0.06);
-            border-color: rgba(11, 19, 32, 0.18);
-            color: var(--hero-ink);
         }
 
         /* Prompt Anatomy – mažesnis kontrastas ir padding, kad nekonkuruotų su hero */
@@ -240,23 +162,6 @@
             list-style: none;
             margin: 0;
             padding: 0;
-        }
-
-        .trust-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            border-radius: 9999px;
-            border: 1px solid rgba(11, 19, 32, 0.1);
-            background: rgba(255, 255, 255, 0.78);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.01em;
-            color: var(--hero-ink);
-            min-height: 36px;
         }
 
         .header-trust a {
@@ -1228,7 +1133,7 @@
             align-items: center;
             min-height: 44px;
             font-weight: 700;
-            color: var(--accent-primary);
+            color: var(--text);
             text-decoration: underline;
             text-underline-offset: 3px;
         }
@@ -1493,10 +1398,6 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .container {
-                padding: 50px 24px;
-            }
-
             .header h1 {
                 font-size: 44px;
             }
@@ -1505,15 +1406,6 @@
         @media (max-width: 768px) {
             body {
                 font-size: 16px;
-            }
-
-            .container {
-                padding: 40px 20px;
-            }
-
-            .header {
-                padding: 40px 28px;
-                border-radius: 16px;
             }
 
             .header h1 {
@@ -1556,10 +1448,6 @@
         }
 
         @media (max-width: 480px) {
-            .header {
-                padding: 32px 20px;
-            }
-
             .header h1 {
                 font-size: 28px;
             }
@@ -1619,14 +1507,6 @@
 
         /* Mobile UI First: mažiausias viewport (320–375px) */
         @media (max-width: 375px) {
-            .container {
-                padding: 24px 16px;
-            }
-
-            .header {
-                padding: 24px 16px;
-            }
-
             .header h1 {
                 font-size: 24px;
             }
@@ -1701,42 +1581,42 @@
     <div class="container">
         <main id="main-content">
 
+        <div class="header-top header-bar">
+            <p class="header-brand">
+                <span class="header-brand-mark">
+                    <img src="../favicon.svg" width="28" height="28" alt="" aria-hidden="true">
+                    <span>Prompt Anatomy</span>
+                </span>
+            </p>
+            <nav class="site-nav no-print" id="siteNav" aria-label="Primary navigation">
+                <a href="#block1" id="navWorkflows">Workflows</a>
+                <a href="#creative-brief" id="navBrief">Brief builder</a>
+                <a href="#pdf-storefront" id="navPricing">Pricing</a>
+            </nav>
+        </div>
         <!-- HERO -->
         <header class="header">
-            <div class="header-top header-bar">
-                <p class="header-brand">
-                    <span class="header-brand-mark">
-                        <img src="../favicon.svg" width="28" height="28" alt="" aria-hidden="true">
-                        <span>Prompt Anatomy</span>
-                    </span>
-                </p>
-                <nav class="site-nav no-print" id="siteNav" aria-label="Primary navigation">
-                    <a href="#block1" id="navWorkflows">Workflows</a>
-                    <a href="#creative-brief" id="navBrief">Brief builder</a>
-                    <a href="#pdf-storefront" id="navPricing">Pricing</a>
-                </nav>
-            </div>
             <div class="header-grid">
                 <div class="header-copy">
-                    <h1>One brief. An image-ready prompt. Then the workflows your team can reuse.</h1>
-                    <p class="header-lead" id="heroLead">Fill the brief. Copy the image prompt. Take the kit offline when the team needs it.</p>
-                    <p class="header-proof" id="heroProof">Brief builder open below. 4 workflows after the kits, from $3.99.</p>
+                    <h1>Turn one brief into an image-ready prompt.</h1>
+                    <p class="header-lead" id="heroLead">Fill the fields. Copy a structured prompt. Run it in your image tool.</p>
+                    <p class="header-proof" id="heroProof">Free below — no account.</p>
                     <div class="header-trust">
                         <ul class="trust-pills">
-                            <li class="trust-pill" id="heroTrustPill1">4 workflows free</li>
-                            <li class="trust-pill" id="heroTrustPill2">Brief builder included</li>
-                            <li class="trust-pill" id="heroTrustPill3">Full kit from $3.99</li>
+                            <li class="trust-pill" id="heroTrustPill1">Free to start</li>
+                            <li class="trust-pill" id="heroTrustPill2">No sign-up</li>
+                            <li class="trust-pill" id="heroTrustPill3">Reusable workflows</li>
                         </ul>
                     </div>
                     <div class="header-cta">
-                        <a href="#creative-brief" class="cta-button" id="heroCtaSpine" aria-label="Start the builder – go to the brief builder">Start the builder</a>
-                        <a href="#pdf-storefront" class="cta-text-link" id="heroCtaBrief" aria-label="View kits – go to pricing">View kits</a>
+                        <a href="#creative-brief" class="cta-button" id="heroCtaSpine" aria-label="Build my prompt – go to the brief builder">Build my prompt</a>
+                        <a href="#pdf-storefront" class="cta-text-link" id="heroCtaBrief" aria-label="See pricing – go to pricing">See pricing</a>
                     </div>
                 </div>
                 <div class="header-visual">
                     <figure class="hero-diagram" aria-labelledby="hero-diagram-label">
                         <div class="hero-diagram__card hero-diagram__card--sample hero-diagram__card--photo">
-                            <p class="hero-diagram__label" id="hero-diagram-label">From the brief builder</p>
+                            <p class="hero-diagram__label" id="hero-diagram-label">From brief → image prompt</p>
                             <picture>
                                 <source type="image/webp" srcset="../assets/hero/brief-sample-satori.webp">
                                 <img class="hero-sample hero-sample-image" src="../assets/hero/brief-sample-satori.png" width="640" height="640" alt="Luxury leather handbag on light stone with cinematic lighting and clean negative space for a headline." decoding="async" fetchpriority="high">
@@ -1755,6 +1635,9 @@ cinematic lighting, clean negative space for headline,
             <p class="cb-eyebrow">Free browser builder</p>
             <h2 id="cb-title">Creative brief builder</h2>
             <p class="cb-lead">Fill the brief → get an image-ready prompt. Browser-only. Copy, paste, run. No account.</p>
+            <p class="cb-sample-row">
+                <button type="button" class="btn cb-preset-btn cb-sample-btn" id="cbSampleBtn">Try an example</button>
+            </p>
             <details class="cb-builder-details" id="cb-builder" open>
                 <summary id="cb-builder-summary">Brief builder</summary>
             <div class="cb-presets" role="group" aria-label="Quick starts">
@@ -1762,7 +1645,6 @@ cinematic lighting, clean negative space for headline,
                 <button type="button" class="btn cb-preset-btn" data-cb-preset="ecommerce">Ecommerce</button>
                 <button type="button" class="btn cb-preset-btn" data-cb-preset="brand">Brand</button>
                 <button type="button" class="btn cb-preset-btn" data-cb-preset="social">Social</button>
-                <button type="button" class="btn cb-preset-btn cb-sample-btn" id="cbSampleBtn">Try sample</button>
             </div>
             <div class="cb-steps" role="group" aria-label="Brief steps">
                 <button type="button" class="cb-step is-active" data-cb-step="1" aria-pressed="true">1. Context</button>
@@ -1877,11 +1759,11 @@ cinematic lighting, clean negative space for headline,
                 <div class="cb-output-wrap">
                     <div class="cb-quality" id="cbQuality" aria-live="polite">
                         <span class="cb-quality-label">Brief readiness</span>
-                        <span class="cb-quality-badge" id="cbQualityBadge" data-level="weak">0/9 — weak</span>
-                        <p class="cb-quality-hint" id="cbQualityHint">Add a subject to start.</p>
+                        <span class="cb-quality-badge" id="cbQualityBadge" data-level="weak">Ready to build</span>
+                        <p class="cb-quality-hint" id="cbQualityHint">Add a subject and a goal to get started.</p>
                     </div>
                     <label class="cb-output-label" for="cbOutput">Generated image prompt</label>
-                    <textarea id="cbOutput" class="cb-output" rows="8" placeholder="Start with a subject or load a preset — your image prompt builds here." aria-label="Generated image prompt — you can edit"></textarea>
+                    <textarea id="cbOutput" class="cb-output" rows="8" placeholder="Try an example, or add a subject — your prompt builds here." aria-label="Generated image prompt — you can edit"></textarea>
                     <div class="cb-output-actions">
                         <button type="button" class="btn btn-primary" id="cbCopyBtn" disabled>Copy prompt</button>
                         <span class="cb-char-count" id="cbCharCount" aria-live="polite">0 characters</span>
@@ -1996,7 +1878,7 @@ cinematic lighting, clean negative space for headline,
                 </details>
             </div>
             </details>
-            <p class="pdf-storefront-trust">Secure checkout via Stripe. Receipts and downloads delivered by email. <a href="../terms.html#paid-pdf-license">Team license</a> · <a href="../en/privacy.html">Privacy</a>.</p>
+            <p class="pdf-storefront-trust">Secure checkout via Stripe. Receipts and downloads delivered by email. <a href="/terms/#paid-pdf-license">Team license</a> · <a href="/en/privacy/">Privacy</a>.</p>
         </section>
 
 
@@ -2462,42 +2344,31 @@ Questions:
             <p class="ecosystem-strip-intro">Methodology and community. Checkout stays on this page.</p>
             <ul class="ecosystem-strip-list" role="list">
                 <li role="listitem"><a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Official methodology (promptanatomy.app)</a></li>
-                <li role="listitem"><a href="https://t.me/prompt_anatomy" target="_blank" rel="noopener noreferrer">Telegram group</a></li>
-                <li role="listitem"><a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a></li>
-            </ul>
+                </ul>
             <p class="ecosystem-strip-related">Related: <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO kit)</p>
         </section>
 
         <!-- FOOTER -->
         <!-- BENDRUOMENĖ -->
         <section class="community" id="community" aria-labelledby="community-title">
-            <h2 id="community-title">Want more?<br>Join our US-focused Telegram group.</h2>
-            <p>Get playbooks, real examples, and prompt updates for US-market execution.</p>
+            <h2 id="community-title">Join the community.</h2>
+            <p>Examples and prompt updates. US-market notes welcome.</p>
             <a href="https://t.me/prompt_anatomy" class="community-cta-primary" target="_blank" rel="noopener noreferrer" aria-label="Open Prompt Anatomy Telegram group in new tab">Join Telegram group</a>
         </section>
 
         <footer class="footer">
             <div class="cmo-footer-meta print-muted">
-                <p class="cmo-footer-crosslink">Related sister kit: <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO)</p>
                 <p class="cmo-kit-version" data-version="1.9.0">Content AI System v1.9.0</p>
             </div>
 
-            <h3>Go win your market <span aria-hidden="true">🚀</span></h3>
-            <p>Remember to replace <strong>[audience]</strong>, <strong>[pain point]</strong>, <strong>[unique selling proposition]</strong>, <strong>[channel]</strong> and other placeholders with your data</p>
-            <p class="footer-product-link">Part of Prompt Anatomy · Methodology at <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a></p>
+            <p class="footer-product-link" id="footer-product-link">Part of Prompt Anatomy · Methodology at <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a></p>
             <p class="footer-email"><span id="footer-email-label">Email:</span> <a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a></p>
             <address class="footer-address" id="footer-address" aria-labelledby="footer-address-label">
                 <span id="footer-address-label">Mailing address:</span>
                 <span class="footer-address-lines">Prompt Anatomy<br>1311 Park St, Unit #654<br>Alameda, CA 94501, USA</span>
             </address>
-            <div class="tags" role="list">
-                <span class="tag" role="listitem"><span aria-hidden="true">📣</span> Marketing</span>
-                <span class="tag" role="listitem"><span aria-hidden="true">📚</span> 4 free workflows</span>
-                <span class="tag" role="listitem"><span aria-hidden="true">⚡</span> Action focus</span>
-                <span class="tag" role="listitem"><span aria-hidden="true">🎯</span> Full 10 in Pro</span>
-            </div>
             <div class="copyright">
-                <p>&copy; 2026 Tomas Staniulis. Training material. All rights reserved. <a href="../en/privacy.html">Privacy</a></p>
+                <p>&copy; 2026 Tomas Staniulis. All rights reserved. <a href="/en/privacy/">Privacy</a></p>
             </div>
         </footer>
 
@@ -2612,29 +2483,27 @@ Questions:
 
                 var skip = document.querySelector('.skip-link');
                 if (skip) skip.textContent = 'Skip to content';
-                setText('#hero-diagram-label', 'From the brief builder');
-                var langGroup = q('.lang-switcher');
-                if (langGroup) langGroup.setAttribute('aria-label', 'Language selection');
+                setText('#hero-diagram-label', 'From brief → image prompt');
                 var ctaBrief = el('heroCtaBrief');
                 if (ctaBrief) {
-                    ctaBrief.textContent = 'View kits';
+                    ctaBrief.textContent = 'See pricing';
                     ctaBrief.setAttribute('href', '#pdf-storefront');
-                    setLabel(ctaBrief, 'View kits – go to pricing');
+                    setLabel(ctaBrief, 'See pricing – go to pricing');
                 }
                 var ctaSpine = el('heroCtaSpine');
                 if (ctaSpine) {
-                    ctaSpine.textContent = 'Start the builder';
+                    ctaSpine.textContent = 'Build my prompt';
                     ctaSpine.setAttribute('href', '#creative-brief');
-                    setLabel(ctaSpine, 'Start the builder – go to the brief builder');
+                    setLabel(ctaSpine, 'Build my prompt – go to the brief builder');
                 }
-                setText('.header h1', 'One brief. An image-ready prompt. Then the workflows your team can reuse.');
-                setText('#heroLead', 'Fill the brief. Copy the image prompt. Take the kit offline when the team needs it.');
-                setText('#heroProof', 'Brief builder open below. 4 workflows after the kits, from $3.99.');
+                setText('.header h1', 'Turn one brief into an image-ready prompt.');
+                setText('#heroLead', 'Fill the fields. Copy a structured prompt. Run it in your image tool.');
+                setText('#heroProof', 'Free below — no account.');
                 var heroCaption = q('.hero-diagram__caption');
                 if (heroCaption) heroCaption.textContent = 'Sample output of the brief builder — an image-ready prompt.';
-                setText('#heroTrustPill1', '4 workflows free');
-                setText('#heroTrustPill2', 'Brief builder included');
-                setText('#heroTrustPill3', 'Full kit from $3.99');
+                setText('#heroTrustPill1', 'Free to start');
+                setText('#heroTrustPill2', 'No sign-up');
+                setText('#heroTrustPill3', 'Reusable workflows');
 
                 setText('#executive-summary-title', 'How to use');
                 setText('#howItWorksLead', 'Copy → paste into ChatGPT or Claude.');
@@ -2705,19 +2574,14 @@ Questions:
 
                 var prompts = qa('article.prompt');
                 // EN <pre> bodies: single source data/en-prompt-bodies.json → js/en-prompt-bodies-inline.js (npm run build)
+                // Key by internal pre.id (1/2/3/5), never display .number (1–4).
                 var enPromptPre = (typeof window.__EN_PROMPT_PRE !== 'undefined' && window.__EN_PROMPT_PRE) ? window.__EN_PROMPT_PRE : [];
-                var promptData = [
-                    { category: 'Plan', title: '30-day content system', desc: 'Create a 30-day content plan using 4 content principles', infoStrong: 'Core:', infoP: '4 principles = balance: authority, problem, proof, offer.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 1', infoAria: 'Information: prompt 1', btnAria: 'Copy prompt 1 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Create', title: 'One idea → 7 formats', desc: 'From one idea — 7 channel units in ~5–10 min', infoStrong: 'One idea, many formats:', infoP: '1 idea = 7 units. Time saved, consistency kept.', cta: 'Paste into ChatGPT or Claude and replace placeholders with your data.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 2', infoAria: 'Information: prompt 2', btnAria: 'Copy prompt 2 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Check', title: 'LinkedIn authority building', desc: 'Authority LinkedIn post with proof in ~3–5 min', infoStrong: 'Authority:', infoP: 'Proof + concrete points = trust and engagement.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 3', infoAria: 'Information: prompt 3', btnAria: 'Copy prompt 3 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Pro', title: '30 sec video script', desc: '30s video with hook and CTA — full prompt in the Pro kit', infoStrong: 'Short format:', infoP: '2 seconds = stay or scroll. The hook is key.', cta: 'Copy, paste into your AI tool, and replace [topic] and [example] with your data.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 4', infoAria: 'Information: prompt 4', btnAria: 'Copy prompt 4 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Improve', title: 'Daily analysis (Action→Decision)', desc: 'From metrics — 4 actions for tomorrow in ~3–5 min', infoStrong: 'Closed loop:', infoP: 'Metrics without action = standing still. Data → decisions.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 5', infoAria: 'Information: prompt 5', btnAria: 'Copy prompt 5 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Skills', title: 'Objection handling tool', desc: 'From customer objections create content that neutralizes them', infoStrong: 'Conversion:', infoP: 'Real questions + answers = less friction, more trust.', cta: 'Paste into ChatGPT or Claude – replace objections and context.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 6', infoAria: 'Information: prompt 6', btnAria: 'Copy prompt 6 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Skills', title: 'Lead generator post + DM sequence', desc: 'Lead generator post + 4-message sequence', infoStrong: 'Leads:', infoP: 'Sequence: follower → customer. Structure increases conversion.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 7', infoAria: 'Information: prompt 7', btnAria: 'Copy prompt 7 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Skills', title: 'Customer story structure', desc: 'Turn data into a customer story', infoStrong: 'Proof:', infoP: 'Numbers + process = credibility and conversion.', cta: 'Copy and paste – enter customer data and get a structured story.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 8', infoAria: 'Information: prompt 8', btnAria: 'Copy prompt 8 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'Growth', title: 'Topic cluster', desc: 'Main topic + 8 subtopics, internal links', infoStrong: 'Authority:', infoP: 'Main topic + subtopics = reach and expert position.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 9', infoAria: 'Information: prompt 9', btnAria: 'Copy prompt 9 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
-                    { category: 'All together', title: 'Main prompt (control center)', desc: 'One integrated plan: content, one idea many formats, testing, actions', infoStrong: 'Control center:', infoP: 'Everything in one place: 30-day plan, 1→7, testing, priorities.', cta: 'This prompt covers everything—copy, paste, and fill in your business fields.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 10', infoAria: 'Information: prompt 10', btnAria: 'Copy prompt 10 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' }
-                ];
+                var promptDataById = {
+                    1: { category: 'Plan', title: '30-day content system', desc: 'Create a 30-day content plan using 4 content principles', infoStrong: 'Core:', infoP: '4 principles = balance: authority, problem, proof, offer.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 1', infoAria: 'Information: prompt 1', btnAria: 'Copy prompt 1 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
+                    2: { category: 'Create', title: 'One idea → 7 formats', desc: 'From one idea — 7 channel units in ~5–10 min', infoStrong: 'One idea, many formats:', infoP: '1 idea = 7 units. Time saved, consistency kept.', cta: 'Paste into ChatGPT or Claude and replace placeholders with your data.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 2', infoAria: 'Information: prompt 2', btnAria: 'Copy prompt 2 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
+                    3: { category: 'Check', title: 'LinkedIn authority building', desc: 'Authority LinkedIn post with proof in ~3–5 min', infoStrong: 'Authority:', infoP: 'Proof + concrete points = trust and engagement.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 3', infoAria: 'Information: prompt 3', btnAria: 'Copy prompt 3 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
+                    5: { category: 'Improve', title: 'Daily analysis (Action→Decision)', desc: 'From metrics — 4 actions for tomorrow in ~3–5 min', infoStrong: 'Closed loop:', infoP: 'Metrics without action = standing still. Data → decisions.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 5', infoAria: 'Information: prompt 5', btnAria: 'Copy prompt 5 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' }
+                };
                 setText('#pro-contents-title', 'Also in the Pro kit');
                 setText('#pro-contents-lead', 'Full prompt bodies offline in Pro.');
                 setText('#pro-contents-cta', 'See Pro kit');
@@ -2735,10 +2599,12 @@ Questions:
                     setText('#prompt-desc-' + n, row.outcome);
                 });
                 prompts.forEach(function(art) {
-                    var numEl = art.querySelector('.number');
-                    var num = numEl ? parseInt(numEl.textContent, 10) : 0;
-                    if (!promptData[num - 1]) return;
-                    var d = promptData[num - 1];
+                    var preEl = art.querySelector('.code-block pre');
+                    var promptId = (preEl && preEl.id) || '';
+                    var match = /^prompt(\d+)$/.exec(promptId);
+                    var id = match ? parseInt(match[1], 10) : 0;
+                    var d = promptDataById[id];
+                    if (!d) return;
                     var cat = art.querySelector('.category');
                     if (cat) cat.textContent = d.category;
                     var tit = art.querySelector('.prompt-title');
@@ -2757,10 +2623,8 @@ Questions:
                     if (cb) setLabel(cb, d.doneAria);
                     var doneWrap = art.querySelector('.prompt-done-wrap span');
                     if (doneWrap) doneWrap.textContent = d.doneLabel;
-                    var preEl = art.querySelector('.code-block pre');
-                    if (preEl && enPromptPre[num - 1]) preEl.textContent = enPromptPre[num - 1];
+                    if (preEl && enPromptPre[id - 1]) preEl.textContent = enPromptPre[id - 1];
                 });
-                setText('#prompt1Recommended', 'Start here');
 
                 setText('#faq-title', 'Frequently asked questions');
                 var faqMoreSummary = q('.faq-more-details summary');
@@ -2817,9 +2681,9 @@ Questions:
                 }
 
                 var commTitle = el('community-title');
-                if (commTitle) commTitle.innerHTML = 'Want more?<br>Join our US-focused Telegram group.';
+                if (commTitle) commTitle.textContent = 'Join the community.';
                 var commP = q('.community p');
-                if (commP) commP.textContent = 'Get playbooks, real examples, and prompt updates for US-market execution.';
+                if (commP) commP.textContent = 'Examples and prompt updates. US-market notes welcome.';
                 var commPrimary = q('.community-cta-primary');
                 if (commPrimary) { commPrimary.textContent = 'Join Telegram group'; setLabel(commPrimary, 'Open Prompt Anatomy Telegram group in new tab'); }
 
@@ -2828,31 +2692,32 @@ Questions:
                 if (ecoIntro) ecoIntro.textContent = 'Methodology and community. Checkout stays on this page.';
                 var ecoLis = qa('.ecosystem-strip-list li');
                 var ecoTexts = [
-                    '<a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Official methodology (promptanatomy.app)</a>',
-                    '<a href="https://t.me/prompt_anatomy" target="_blank" rel="noopener noreferrer">Telegram group</a>',
-                    '<a href="mailto:info@promptanatomy.app">info@promptanatomy.app</a>'
+                    '<a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Official methodology (promptanatomy.app)</a>'
                 ];
-                ecoLis.forEach(function(li, i) { if (ecoTexts[i]) li.innerHTML = ecoTexts[i]; });
+                ecoLis.forEach(function(li, i) {
+                    if (ecoTexts[i]) li.innerHTML = ecoTexts[i];
+                    else if (li.parentNode) li.parentNode.removeChild(li);
+                });
                 var ecoRelated = q('.ecosystem-strip-related');
                 if (ecoRelated) {
                     ecoRelated.innerHTML = 'Related: <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO kit)';
                 }
 
-                var footH3 = q('.footer h3');
-                if (footH3) footH3.innerHTML = 'Go win your market <span aria-hidden="true">🚀</span>';
-                var footP = qa('.footer p');
-                if (footP.length >= 1) footP[0].textContent = 'Remember to replace [audience], [pain point], [unique selling proposition], [channel] and other placeholders with your data';
-                if (footP.length >= 2) {
-                    footP[1].innerHTML = 'Part of Prompt Anatomy · Methodology at <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>';
-                }
-                var tags = qa('.footer .tag');
-                var tagTexts = ['Marketing', '4 free workflows', 'Action focus', 'Full 10 in Pro'];
-                tags.forEach(function(t, i) {
-                    if (tagTexts[i]) {
-                        var em = t.querySelector('span[aria-hidden="true"]');
-                        t.innerHTML = (em ? '<span aria-hidden="true">' + em.textContent + '</span> ' : '') + tagTexts[i];
-                    }
+                var removeEl = function(n) {
+                    if (n && n.parentNode) n.parentNode.removeChild(n);
+                };
+                removeEl(el('footerSignoff'));
+                removeEl(q('.footer > h3'));
+                removeEl(el('footerPlaceholderHint'));
+                qa('.footer > p').forEach(function(p) {
+                    if (!p.className) removeEl(p);
                 });
+                qa('.footer .tags').forEach(removeEl);
+                qa('.cmo-footer-crosslink').forEach(removeEl);
+                var footLink = el('footer-product-link') || q('.footer-product-link');
+                if (footLink) {
+                    footLink.innerHTML = 'Part of Prompt Anatomy · Methodology at <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>';
+                }
                 var emailLabel = el('footer-email-label');
                 if (emailLabel) emailLabel.textContent = 'Email:';
                 var addressLabel = el('footer-address-label');
@@ -2860,19 +2725,13 @@ Questions:
                 var copyright = q('.copyright p');
                 if (copyright) {
                     var path = (window.location.pathname || '').toLowerCase();
-                    var privacyHref = locale === 'en' ? '../en/privacy.html' : ((/\/lt(?:\/|$)/.test(path) || /\/en(?:\/|$)/.test(path)) ? '../privatumas.html' : 'privatumas.html');
-                    copyright.innerHTML = '&copy; 2026 Tomas Staniulis. Training material. All rights reserved. <a href="' + privacyHref + '">Privacy</a>';
+                    var privacyHref = locale === 'en' ? '/en/privacy/' : ((/\/lt(?:\/|$)/.test(path) || /\/en(?:\/|$)/.test(path)) ? '../privatumas.html' : 'privatumas.html');
+                    copyright.innerHTML = '&copy; 2026 Tomas Staniulis. All rights reserved. <a href="' + privacyHref + '">Privacy</a>';
                 }
                 var toast = el('toast');
                 if (toast) { var ts = toast.querySelector('span'); if (ts) ts.textContent = 'Copied'; setLabel(toast, 'Copy notification'); }
                 var hiddenTa = el('hiddenTextarea');
                 if (hiddenTa) setLabel(hiddenTa, 'Text to copy field');
-                var langGroup = q('.lang-switcher');
-                if (langGroup) setLabel(langGroup, 'Language selection');
-                var langLt = el('langLtBtn');
-                if (langLt) setLabel(langLt, 'Switch to Lithuanian');
-                var langEn = el('langEnBtn');
-                if (langEn) setLabel(langEn, 'Switch to English');
             }
 
             // ===== KONFIGŪRACIJA =====
@@ -3209,111 +3068,6 @@ Questions:
                 }
             }
 
-            function renderEditHints() {
-                var hintsLt = [
-                    'Pakeisk: [auditorija], [galvos skausmas], [USP], [kanalas].',
-                    'Pakeisk: [idėja] (viena branduolinė žinutė).',
-                    'Pakeisk: [tema], [pavyzdys/skaičius].',
-                    'Pakeisk: [tema], [pavyzdys].',
-                    'Pakeisk: [rodikliai], [kontekstas], [hipotezė].',
-                    'Pakeisk: [prieštaravimai], [kontekstas].',
-                    'Pakeisk: [tema], [auditorija], [pasiūlymas].',
-                    'Pakeisk: [klientas], [procesas], [rezultatai].',
-                    'Pakeisk: [pagrindinė tema], [auditorija].',
-                    'Pakeisk: [verslas], [auditorija], [tikslai], [kanalai].'
-                ];
-                var hintsEn = [
-                    'Replace: [audience], [pain point], [USP], [channel].',
-                    'Replace: [idea] (one core message).',
-                    'Replace: [topic], [proof/number].',
-                    'Replace: [topic], [example].',
-                    'Replace: [metrics], [context], [hypothesis].',
-                    'Replace: [objections], [context].',
-                    'Replace: [topic], [audience], [offer].',
-                    'Replace: [customer], [process], [results].',
-                    'Replace: [main topic], [audience].',
-                    'Replace: [business], [audience], [goals], [channels].'
-                ];
-                var hints = locale === 'en' ? hintsEn : hintsLt;
-                document.querySelectorAll('article.prompt').forEach(function(art) {
-                    var body = art.querySelector('.prompt-body');
-                    if (!body) return;
-                    var codeBlock = body.querySelector('.code-block');
-                    if (!codeBlock) return;
-                    var numEl = art.querySelector('.number');
-                    var num = numEl ? parseInt(numEl.textContent, 10) : 0;
-                    var hintIdx = num > 0 ? num - 1 : -1;
-
-                    var hint = body.querySelector('.edit-hint');
-                    if (!hint) {
-                        hint = document.createElement('p');
-                        hint.className = 'edit-hint';
-                        body.insertBefore(hint, codeBlock);
-                    }
-                    hint.textContent = (hintIdx >= 0 && hints[hintIdx]) || uiText('Pakeisk [ ] laukus savo duomenimis.', 'Replace [ ] placeholders with your data.');
-                });
-            }
-
-            function renderPromptTags() {
-                var tagsLt = [
-                    ['Planas', 'Sistema'],
-                    ['Repurpose', 'Formatai'],
-                    ['LinkedIn', 'Autoritetas'],
-                    ['Video', 'Kabliukas'],
-                    ['Rodikliai', 'Sprendimai'],
-                    ['Prieštaravimai', 'Konversija'],
-                    ['Lead gen', 'DM seka'],
-                    ['Istorija', 'Įrodymai'],
-                    ['SEO', 'Temų klasteris'],
-                    ['Valdymas', 'Prioritetai']
-                ];
-                var tagsEn = [
-                    ['Plan', 'System'],
-                    ['Repurpose', 'Formats'],
-                    ['LinkedIn', 'Authority'],
-                    ['Video', 'Hook'],
-                    ['Metrics', 'Decisions'],
-                    ['Objections', 'Conversion'],
-                    ['Lead gen', 'DM sequence'],
-                    ['Story', 'Proof'],
-                    ['SEO', 'Topic cluster'],
-                    ['Control', 'Priorities']
-                ];
-                var tags = locale === 'en' ? tagsEn : tagsLt;
-
-                document.querySelectorAll('article.prompt').forEach(function(art) {
-                    var header = art.querySelector('.prompt-header');
-                    if (!header) return;
-                    var meta = header.querySelector('.prompt-meta');
-                    if (!meta) return;
-                    var numEl = art.querySelector('.number');
-                    var num = numEl ? parseInt(numEl.textContent, 10) : 0;
-                    var tagIdx = num > 0 ? num - 1 : -1;
-
-                    var tagWrap = header.querySelector('.prompt-tags');
-                    if (!tagWrap) {
-                        tagWrap = document.createElement('div');
-                        tagWrap.className = 'prompt-tags';
-                        var afterMeta = meta.nextSibling;
-                        if (afterMeta && afterMeta.parentNode === header) {
-                            header.insertBefore(tagWrap, afterMeta);
-                        } else {
-                            header.appendChild(tagWrap);
-                        }
-                    }
-
-                    var list = tagIdx >= 0 ? (tags[tagIdx] || []) : [];
-                    tagWrap.innerHTML = '';
-                    list.slice(0, 2).forEach(function(t) {
-                        if (!t) return;
-                        var s = document.createElement('span');
-                        s.className = 'prompt-tag';
-                        s.textContent = t;
-                        tagWrap.appendChild(s);
-                    });
-                });
-            }
-
             // ===== INICIALIZACIJA =====
             document.addEventListener('DOMContentLoaded', function() {
                 bindPromptInteractions();
@@ -3334,79 +3088,23 @@ Questions:
                 // LT/EN: atnaujinti statinį tekstą pagal locale
                 applyStaticLocaleText();
 
-                (function initPdfPreviewLightbox() {
-                    var thumbs = document.querySelectorAll('.pdf-card-preview-thumb');
-                    if (!thumbs.length) return;
-                    var overlay = document.createElement('div');
-                    overlay.className = 'pdf-preview-lightbox';
-                    overlay.hidden = true;
-                    overlay.setAttribute('role', 'dialog');
-                    overlay.setAttribute('aria-modal', 'true');
-                    overlay.setAttribute('aria-label', 'PDF preview');
-                    overlay.innerHTML =
-                        '<div class="pdf-preview-lightbox__dialog">' +
-                        '<button type="button" class="pdf-preview-lightbox__close">Close preview</button>' +
-                        '<img class="pdf-preview-lightbox__img" alt="" decoding="async">' +
-                        '</div>';
-                    document.body.appendChild(overlay);
-                    var imgEl = overlay.querySelector('.pdf-preview-lightbox__img');
-                    var closeBtn = overlay.querySelector('.pdf-preview-lightbox__close');
-                    var lastFocus = null;
-
-                    function closeLightbox() {
-                        overlay.hidden = true;
-                        document.body.style.overflow = '';
-                        if (lastFocus && lastFocus.focus) lastFocus.focus();
-                    }
-
-                    function openLightbox(thumb) {
-                        lastFocus = document.activeElement;
-                        imgEl.src = thumb.currentSrc || thumb.src;
-                        imgEl.alt = thumb.alt || 'PDF preview';
-                        overlay.hidden = false;
-                        document.body.style.overflow = 'hidden';
-                        closeBtn.focus();
-                    }
-
-                    thumbs.forEach(function (thumb) {
-                        thumb.setAttribute('tabindex', '0');
-                        thumb.setAttribute('role', 'button');
-                        thumb.addEventListener('click', function () { openLightbox(thumb); });
-                        thumb.addEventListener('keydown', function (e) {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault();
-                                openLightbox(thumb);
-                            }
-                        });
-                    });
-                    closeBtn.addEventListener('click', closeLightbox);
-                    overlay.addEventListener('click', function (e) {
-                        if (e.target === overlay) closeLightbox();
-                    });
-                    document.addEventListener('keydown', function (e) {
-                        if (e.key === 'Escape' && !overlay.hidden) closeLightbox();
-                    });
-                })();
-
-                (function initPromptCollapse() {
-                    function openFromHash() {
-                        var hash = window.location.hash;
-                        if (!hash || !/^#block(10|[2-9])$/.test(hash)) return;
-                        var num = hash.replace('#block', '');
-                        var details = document.querySelector('.prompt-details[data-prompt="' + num + '"]');
-                        if (!details) return;
-                        details.open = true;
-                        var article = details.closest('article.prompt');
-                        if (article) {
-                            article.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+                (function initSiteNavScroll() {
+                    var nav = document.getElementById('siteNav');
+                    if (!nav) return;
+                    nav.addEventListener('click', function (event) {
+                        var link = event.target && event.target.closest ? event.target.closest('a[href^="#"]') : null;
+                        if (!link) return;
+                        var id = (link.getAttribute('href') || '').slice(1);
+                        var target = id ? document.getElementById(id) : null;
+                        if (!target) return;
+                        event.preventDefault();
+                        if (window.history && window.history.pushState) {
+                            window.history.pushState(null, '', '#' + id);
+                        } else {
+                            window.location.hash = id;
                         }
-                    }
-                    if (document.readyState === 'loading') {
-                        document.addEventListener('DOMContentLoaded', openFromHash);
-                    } else {
-                        openFromHash();
-                    }
-                    window.addEventListener('hashchange', openFromHash);
+                        target.scrollIntoView({ block: 'start', behavior: 'auto' });
+                    });
                 })();
 
                 (function initStickyPromptBar() {
@@ -3480,52 +3178,12 @@ Questions:
                     }, { passive: true });
 
                     copyBtn.addEventListener('click', function() {
-                        var pre = document.getElementById(currentPromptId);
-                        var art = pre && pre.closest('article.prompt');
-                        var details = art && art.querySelector('.prompt-details');
-                        if (details && !details.open) {
-                            details.open = true;
-                        }
                         var btn = document.querySelector('.prompt-footer .btn[data-prompt-id="' + currentPromptId + '"]');
                         if (btn) btn.click();
                     });
 
                     syncBarForPrompt('prompt1');
                 })();
-
-                // Kalbos perjungiklis: active būsena ir paspaudimai
-                var langLtBtn = document.getElementById('langLtBtn');
-                var langEnBtn = document.getElementById('langEnBtn');
-                if (langLtBtn && langEnBtn) {
-                    langLtBtn.classList.toggle('is-active', locale === 'lt');
-                    langLtBtn.setAttribute('aria-pressed', locale === 'lt' ? 'true' : 'false');
-                    langEnBtn.classList.toggle('is-active', locale === 'en');
-                    langEnBtn.setAttribute('aria-pressed', locale === 'en' ? 'true' : 'false');
-                    langLtBtn.addEventListener('click', function() {
-                        if (locale === 'lt') return;
-                        try { localStorage.setItem(LANG_KEY, 'lt'); } catch (e) { /* ignore */ }
-                        var hash = window.location.hash || '';
-                        var path = (window.location.pathname || '').toLowerCase();
-                        var base = getBasePathPrefix();
-                        if (/\/en(?:\/|$)/.test(path)) {
-                            window.location.href = window.location.pathname.replace(/\/en(?:\/|$)/, '/lt/') + hash;
-                        } else {
-                            window.location.href = base + '/lt/' + hash;
-                        }
-                    });
-                    langEnBtn.addEventListener('click', function() {
-                        if (locale === 'en') return;
-                        try { localStorage.setItem(LANG_KEY, 'en'); } catch (e) { /* ignore */ }
-                        var hash = window.location.hash || '';
-                        var path = (window.location.pathname || '').toLowerCase();
-                        var base = getBasePathPrefix();
-                        if (/\/lt(?:\/|$)/.test(path)) {
-                            window.location.href = window.location.pathname.replace(/\/lt(?:\/|$)/, '/en/') + hash;
-                        } else {
-                            window.location.href = base + '/en/' + hash;
-                        }
-                    });
-                }
 
                 document.addEventListener('click', function (event) {
                     var target = event.target;
