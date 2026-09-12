@@ -34,13 +34,13 @@ function readSitemapUrls() {
 function fileToUrls(file, origin) {
   const map = {
     'index.html': [origin + '/', origin + '/en/'],
-    'config/sot.json': [origin + '/en/', origin + '/en/privacy.html'],
+    'config/sot.json': [origin + '/en/', origin + '/en/privacy/'],
     'config/brand-seo.json': [origin + '/en/'],
     'data/en-prompt-bodies.json': [origin + '/en/'],
     'en/index.html': [origin + '/en/'],
-    'en/privacy.html': [origin + '/en/privacy.html'],
+    'en/privacy.html': [origin + '/en/privacy/'],
     'lt/index.html': [origin + '/lt/'],
-    'terms.html': [origin + '/terms.html'],
+    'terms.html': [origin + '/terms/'],
     'robots.txt': [origin + '/en/'],
     'llms.txt': [origin + '/en/'],
     'sitemap.xml': readSitemapUrls()

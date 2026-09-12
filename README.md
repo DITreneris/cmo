@@ -20,7 +20,7 @@ Roadmap (R1 cash register → R2 GEO → R3 one more local tool → R4 Install):
 
 1. Open the [primary EN page](https://promptanatomy.space/en/) (or the [mirror](https://ditreneris.github.io/cmo/en/) for the free library only).
 2. **Start in the brief builder** (open by default). Fill the brief → copy an image-ready prompt into ChatGPT or Ideogram. Nothing leaves the browser.
-3. Optionally **View kits** for Starter / Complete (Pro is a text path). Checkout is Stripe on `.space`.
+3. Optionally **See pricing** for Starter / Complete (Pro is a text path). Checkout is Stripe on `.space`.
 4. Use the four workflows below the kits: select a prompt → **Copy prompt** (session context + non-negotiable rules prepend when filled) → paste into ChatGPT or Claude.
 5. Mark “done” if you want — progress is `localStorage` only (4 of 4).
 
@@ -82,7 +82,7 @@ Contract: [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5.
 
 ## Privacy
 
-The free library does **not** collect personal data. Copy, brief drafts, and “done” checkboxes stay on the device (`sessionStorage` / `localStorage`). Paid checkout uses Stripe + Resend for fulfillment email only — see [en/privacy.html](en/privacy.html). Frozen LT policy: [lt/privatumas.html](lt/privatumas.html).
+The free library does **not** collect personal data. Copy, brief drafts, and “done” checkboxes stay on the device (`sessionStorage` / `localStorage`). Paid checkout uses Stripe + Resend for fulfillment email only — see disk [en/privacy.html](en/privacy.html) (live [`/en/privacy/`](https://promptanatomy.space/en/privacy/)). Frozen LT policy: [lt/privatumas.html](lt/privatumas.html).
 
 ## Deploy
 
@@ -105,8 +105,8 @@ npm run check:prod  # production fulfillment-health + IndexNow key
 Local a11y (release QA is `/en/`):
 
 ```bash
-npx serve -s . -l 3000
-npx pa11y http://localhost:3000/en/ --standard WCAG2AA
+npx serve public -l 3000
+npx pa11y http://127.0.0.1:3000/en/ --standard WCAG2AA
 ```
 
 QA standard: [docs/QA_STANDARTAS.md](docs/QA_STANDARTAS.md). Live checklist: [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md).

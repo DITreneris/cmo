@@ -93,7 +93,7 @@ function assertFreeSpineAndTeasers(pageHtml) {
     pageHtml.includes('id="pro-contents"') &&
     spineOk &&
     teasersOk &&
-    pageHtml.includes('openFromHash')
+    !pageHtml.includes('openFromHash')
   );
 }
 
@@ -258,6 +258,12 @@ function run() {
   const privatumas = readFile(PRIVATUMAS_PATH);
   if (assert(privatumas !== null && privatumas.length > 0, 'privatumas.html egzistuoja')) passed++;
   else failed++;
+  if (privatumas && assert(
+    privatumas.includes(`hreflang="en" href="${PROD_ORIGIN}${PROD_BASE}/en/privacy/"`) &&
+      privatumas.includes('href="/en/privacy/"'),
+    'privatumas.html: EN hreflang and English link use /en/privacy/'
+  )) passed++;
+  else failed++;
 
   // --- Lang ir prieinamumas ---
   if (assert(html.includes('lang="lt"'), 'HTML lang="lt"')) passed++;
@@ -289,7 +295,54 @@ function run() {
       'vercel.json: / → /en/ unconditionally'
     )) passed++;
     else failed++;
+    if (assert(
+      vercelCfg.cleanUrls !== true,
+      'vercel.json: no cleanUrls (success.html query must stay)'
+    )) passed++;
+    else failed++;
+    const privacyHtmlRedirect = vercelCfg.redirects.filter(function (r) { return r.source === '/en/privacy.html'; });
+    const termsHtmlRedirect = vercelCfg.redirects.filter(function (r) { return r.source === '/terms.html'; });
+    if (assert(
+      privacyHtmlRedirect.length === 1 &&
+        privacyHtmlRedirect[0].destination === '/en/privacy/' &&
+        privacyHtmlRedirect[0].statusCode === 308 &&
+        termsHtmlRedirect.length === 1 &&
+        termsHtmlRedirect[0].destination === '/terms/' &&
+        termsHtmlRedirect[0].statusCode === 308,
+      'vercel.json: 308 .html → slash for privacy and terms'
+    )) passed++;
+    else failed++;
+    const successRedirects = vercelCfg.redirects.filter(function (r) {
+      return String(r.source || '').indexOf('success') !== -1 || String(r.source || '').indexOf('coming-soon') !== -1;
+    });
+    if (assert(successRedirects.length === 0, 'vercel.json: no success/coming-soon pretty-URL redirects')) passed++;
+    else failed++;
   }
+  if (vercelCfg && Array.isArray(vercelCfg.rewrites)) {
+    const privacyRewrite = vercelCfg.rewrites.filter(function (r) { return r.source === '/en/privacy/'; });
+    const termsRewrite = vercelCfg.rewrites.filter(function (r) { return r.source === '/terms/'; });
+    if (assert(
+      privacyRewrite.length === 1 && privacyRewrite[0].destination === '/en/privacy.html' &&
+        termsRewrite.length === 1 && termsRewrite[0].destination === '/terms.html',
+      'vercel.json: rewrite slash → .html for privacy and terms'
+    )) passed++;
+    else failed++;
+  } else if (vercelCfg) {
+    if (assert(false, 'vercel.json: rewrites parse')) passed++;
+    else failed++;
+  }
+  const serveJsonRaw = readFile(path.join(__dirname, '..', 'serve.json'));
+  let serveCfg = null;
+  try { serveCfg = serveJsonRaw ? JSON.parse(serveJsonRaw) : null; } catch (_) { serveCfg = null; }
+  if (assert(
+    serveCfg &&
+      serveCfg.cleanUrls === false &&
+      Array.isArray(serveCfg.rewrites) &&
+      serveCfg.rewrites.some(function (r) { return r.source === '/en/privacy/' && r.destination === '/en/privacy.html'; }) &&
+      serveCfg.rewrites.some(function (r) { return r.source === '/terms/' && r.destination === '/terms.html'; }),
+    'serve.json: slash rewrites, no cleanUrls'
+  )) passed++;
+  else failed++;
 
   // --- OG/Twitter preview image contract (root) ---
   if (assert(assertOgImageContracts(html, PROD_OG_IMAGE_URL), `index.html naudoja OG paveikslą ${PROD_OG_IMAGE_URL} (su width/height/alt)`)) passed++;
@@ -389,22 +442,34 @@ function run() {
     'en/privacy.html turi grįžimo nuorodą ir neberodo LT jungiklio'
   )) passed++;
   else failed++;
+  if (enPrivacyHtml && assert(
+    enPrivacyHtml.includes('href="/styles/tokens.css"') &&
+      enPrivacyHtml.includes('href="/favicon.svg"') &&
+      enPrivacyHtml.includes('href="/terms/#paid-pdf-license"'),
+    'en/privacy.html: root-absolute assets and /terms/# hash links'
+  )) passed++;
+  else failed++;
   if (ltPrivacyHtml && assert(
     assertPageSeoContracts(ltPrivacyHtml, {
       canonical: `${PROD_ORIGIN}${PROD_BASE}/lt/privatumas.html`,
       lt: `${PROD_ORIGIN}${PROD_BASE}/lt/privatumas.html`,
-      en: `${PROD_ORIGIN}${PROD_BASE}/en/privacy.html`,
-      xDefault: `${PROD_ORIGIN}${PROD_BASE}/en/privacy.html`
+      en: `${PROD_ORIGIN}${PROD_BASE}/en/privacy/`,
+      xDefault: `${PROD_ORIGIN}${PROD_BASE}/en/privacy/`
     }),
     'lt/privatumas.html SEO kontraktas atitinka production host/path'
   )) passed++;
   else failed++;
+  if (ltPrivacyHtml && assert(
+    ltPrivacyHtml.includes('href="/en/privacy/"'),
+    'lt/privatumas.html: English switcher uses /en/privacy/'
+  )) passed++;
+  else failed++;
   if (enPrivacyHtml && assert(
     assertPageSeoContracts(enPrivacyHtml, {
-      canonical: `${PROD_ORIGIN}${PROD_BASE}/en/privacy.html`,
+      canonical: `${PROD_ORIGIN}${PROD_BASE}/en/privacy/`,
       lt: `${PROD_ORIGIN}${PROD_BASE}/lt/privatumas.html`,
-      en: `${PROD_ORIGIN}${PROD_BASE}/en/privacy.html`,
-      xDefault: `${PROD_ORIGIN}${PROD_BASE}/en/privacy.html`
+      en: `${PROD_ORIGIN}${PROD_BASE}/en/privacy/`,
+      xDefault: `${PROD_ORIGIN}${PROD_BASE}/en/privacy/`
     }),
     'en/privacy.html SEO kontraktas atitinka production host/path'
   )) passed++;
@@ -499,23 +564,24 @@ function run() {
     else failed++;
     if (assert(
       enHtml.includes('id="heroCtaBrief"') &&
-      enHtml.includes('View kits') &&
-      enHtml.includes('Start the builder') &&
+      enHtml.includes('See pricing') &&
+      enHtml.includes('Build my prompt') &&
       /id="heroCtaSpine"[^>]*href="#creative-brief"|href="#creative-brief"[^>]*id="heroCtaSpine"/.test(enHtml) &&
       !enHtml.includes('Start with Prompt 1') &&
       !enHtml.includes('Start your first workflow') &&
+      !enHtml.includes('Start the builder') &&
       enHtml.includes('id="heroTrustPill1"') &&
-      enHtml.includes('4 workflows free') &&
-      enHtml.includes('Brief builder included') &&
-      enHtml.includes('Full kit from $3.99') &&
+      enHtml.includes('Free to start') &&
+      enHtml.includes('No sign-up') &&
+      enHtml.includes('Reusable workflows') &&
       enHtml.includes('id="heroProof"') &&
-      enHtml.includes('4 workflows after the kits') &&
+      enHtml.includes('Free below — no account.') &&
       enHtml.includes('hero-diagram') &&
       enHtml.includes('hero-sample') &&
       enHtml.includes('hero-sample-image') &&
       enHtml.includes('hero-diagram__card--photo') &&
       enHtml.includes('brief-sample-satori.png') &&
-      enHtml.includes('From the brief builder') &&
+      enHtml.includes('From brief → image prompt') &&
       !enHtml.includes('hero-diagram__outputs') &&
       !enHtml.includes('cycle-stepper') &&
       !enHtml.includes('cmo-provider-hub') &&
@@ -571,6 +637,87 @@ function run() {
     )) passed++;
     else failed++;
     if (assert(!ltHtml.includes('id="creative-brief"'), 'lt/index.html: NE-turi #creative-brief')) passed++;
+    else failed++;
+
+    // --- Spine display number ≠ internal id (Improve is display 4 / #prompt5) ---
+    if (assert(
+      !html.includes("setText('#prompt1Recommended', 'Start here')") &&
+      !html.includes('function renderEditHints') &&
+      !html.includes('function renderPromptTags') &&
+      !html.includes('initPromptCollapse') &&
+      !html.includes('initPdfPreviewLightbox') &&
+      html.includes('promptDataById') &&
+      html.includes('/^prompt(\\d+)$/') &&
+      !/enPromptPre\[num\s*-\s*1\]/.test(html),
+      'index.html: spine locale keys by pre.id; dead renderEditHints/Tags/collapse/lightbox gone'
+    )) passed++;
+    else failed++;
+    {
+      const p5 = enHtml.indexOf('id="prompt5"');
+      const articleStart = p5 === -1 ? -1 : enHtml.lastIndexOf('<article class="prompt"', p5);
+      const titleNear = p5 === -1 ? -1 : enHtml.lastIndexOf('Daily analysis (Action→Decision)', p5);
+      const number4Near = articleStart === -1 ? -1 : enHtml.indexOf('<div class="number">4</div>', articleStart);
+      if (assert(
+        p5 !== -1 &&
+        articleStart !== -1 &&
+        titleNear > articleStart &&
+        titleNear < p5 &&
+        number4Near > articleStart &&
+        number4Near < p5 &&
+        enHtml.includes('Workflow 1 of 4') &&
+        !enHtml.includes("setText('#prompt1Recommended', 'Start here')"),
+        'en/index.html: Improve card is display 4 + #prompt5 Daily analysis; Workflow 1 of 4'
+      )) passed++;
+      else failed++;
+    }
+
+    const rememberHits = (enHtml.match(/Remember to replace/g) || []).length;
+    const ecoListMatch = enHtml.match(/<ul class="ecosystem-strip-list"[^>]*>([\s\S]*?)<\/ul>/);
+    const ecoLiCount = ecoListMatch ? (ecoListMatch[1].match(/<li\b/g) || []).length : 0;
+    const ecoListInner = ecoListMatch ? ecoListMatch[1] : '';
+    if (assert(
+      html.includes('id="footerSignoff"') &&
+      html.includes('id="footerPlaceholderHint"') &&
+      html.includes('id="footer-product-link"') &&
+      !html.includes("qa('.footer p')") &&
+      !enHtml.includes("qa('.footer p')") &&
+      !html.includes('footP[0]') &&
+      !enHtml.includes('footP[0]') &&
+      !html.includes('footH3') &&
+      !enHtml.includes('footH3') &&
+      html.includes("q('.footer > h3')") &&
+      rememberHits === 0 &&
+      !enHtml.includes('id="footerSignoff"') &&
+      !enHtml.includes('id="footerPlaceholderHint"') &&
+      !enHtml.includes('Go win your market') &&
+      !/<div class="tags" role="list">/.test(enHtml) &&
+      ltHtml.includes('id="footerSignoff"') &&
+      !/\bid="footerSignoff"[^>]*\bhidden\b/.test(ltHtml) &&
+      ltHtml.includes('Sėkmės rinkodaroje'),
+      'EN footer: workbook chrome stripped; LT sign-off stays visible; no p-index overwrite'
+    )) passed++;
+    else failed++;
+    if (assert(
+      ecoLiCount === 1 &&
+      ecoListInner.includes('promptanatomy.app') &&
+      !ecoListInner.includes('t.me/prompt_anatomy') &&
+      !ecoListInner.includes('mailto:info@promptanatomy.app') &&
+      enHtml.includes('id="community"') &&
+      enHtml.includes('t.me/prompt_anatomy') &&
+      enHtml.includes('class="footer-email"') &&
+      enHtml.includes('mailto:info@promptanatomy.app') &&
+      !enHtml.includes('<p class="cmo-footer-crosslink"') &&
+      enHtml.includes('ecosystem-strip-related') &&
+      enHtml.includes('href="https://ditreneris.github.io/leader/en/"'),
+      'EN: ecosystem methodology only; Telegram in community; email in footer; one Leader related'
+    )) passed++;
+    else failed++;
+    if (assert(
+      !enHtml.includes('Training material') &&
+      /<div class="copyright">[\s\S]*?href="\/en\/privacy\/"/.test(enHtml) &&
+      enHtml.includes('Tomas Staniulis. All rights reserved.'),
+      'EN copyright: no Training material; Privacy href /en/privacy/'
+    )) passed++;
     else failed++;
 
     // --- v1: sister-site adoption (context block + rules + expected output) ---
@@ -704,7 +851,8 @@ function run() {
     `${PROD_ORIGIN}${PROD_BASE}/lt/`,
     `${PROD_ORIGIN}${PROD_BASE}/en/`,
     `${PROD_ORIGIN}${PROD_BASE}/lt/privatumas.html`,
-    `${PROD_ORIGIN}${PROD_BASE}/en/privacy.html`
+    `${PROD_ORIGIN}${PROD_BASE}/en/privacy/`,
+    `${PROD_ORIGIN}${PROD_BASE}/terms/`
   ];
   if (assert(robotsTxt !== null && robotsTxt.includes(`Sitemap: ${expectedSitemapUrl}`), 'robots.txt rodo teisingą sitemap URL')) passed++;
   else failed++;
@@ -723,7 +871,7 @@ function run() {
     else failed++;
     if (assert(sitemapXml.includes('<lastmod>'), 'sitemap.xml: lastmod entries')) passed++;
     else failed++;
-    if (assert(sitemapXml.includes('/terms.html'), 'sitemap.xml: terms.html URL')) passed++;
+    if (assert(sitemapXml.includes('/terms/'), 'sitemap.xml: /terms/ URL')) passed++;
     else failed++;
     for (const loc of expectedSitemapLocs) {
       if (assert(sitemapXml.includes(`<loc>${loc}</loc>`), `sitemap.xml turi URL: ${loc}`)) passed++;
@@ -799,6 +947,13 @@ function run() {
       !enHtmlForCommerce.includes('pdf-comparison-table') &&
       !enHtmlForCommerce.includes('pdf-storefront-compare'),
       'en/index.html: comparison table not rendered (path cut)'
+    )) passed++;
+    else failed++;
+    if (assert(
+      /class="pdf-storefront-trust"[\s\S]*?href="\/en\/privacy\/"/.test(enHtmlForCommerce) &&
+      !enHtmlForCommerce.includes('../en/privacy.html') &&
+      /class="pdf-storefront-trust"[\s\S]*?href="\/terms\/#paid-pdf-license"/.test(enHtmlForCommerce),
+      'en/index.html: storefront trust Privacy /en/privacy/; Team license /terms/'
     )) passed++;
     else failed++;
     if (assert(enHtmlForCommerce.includes('class="pdf-card"'), 'en/index.html: bent viena .pdf-card')) passed++;
@@ -904,6 +1059,13 @@ function run() {
   if (termsHtml) {
     if (assert(termsHtml.includes('id="paid-pdf-license"'), 'terms.html: yra #paid-pdf-license sekcija')) passed++;
     else failed++;
+    if (assert(
+      termsHtml.includes('href="https://promptanatomy.space/terms/"') &&
+        termsHtml.includes('href="/styles/tokens.css"') &&
+        termsHtml.includes('href="/en/privacy/"'),
+      'terms.html: canonical /terms/; root-absolute assets; Privacy /en/privacy/'
+    )) passed++;
+    else failed++;
     if (assert(termsHtml.includes('14-day'), 'terms.html: paminėtas 14-day refund')) passed++;
     else failed++;
     if (assert(termsHtml.includes('promptanatomy.space'), 'terms.html: rodomas tikrasis host (promptanatomy.space)')) passed++;
@@ -912,11 +1074,32 @@ function run() {
     else failed++;
   }
 
+  const publicPrivacyIndex = readFile(path.join(__dirname, '..', 'public', 'en', 'privacy', 'index.html'));
+  const publicTermsIndex = readFile(path.join(__dirname, '..', 'public', 'terms', 'index.html'));
+  if (assert(
+    publicPrivacyIndex !== null &&
+      publicPrivacyIndex.includes('id="paid-pdf-data"') &&
+      publicPrivacyIndex.includes('Stripe'),
+    'public/en/privacy/index.html: Pages slash index + paid-pdf-data / Stripe'
+  )) passed++;
+  else failed++;
+  if (assert(
+    publicTermsIndex !== null && publicTermsIndex.includes('id="paid-pdf-license"'),
+    'public/terms/index.html: Pages slash index + paid-pdf-license'
+  )) passed++;
+  else failed++;
+
   const comingSoonHtml = readFile(COMING_SOON_PATH);
   if (assert(comingSoonHtml !== null, 'coming-soon.html: failas egzistuoja')) passed++;
   else failed++;
   if (comingSoonHtml) {
     if (assert(/<meta name="robots" content="noindex/.test(comingSoonHtml), 'coming-soon.html: noindex robots meta')) passed++;
+    else failed++;
+    if (assert(
+      comingSoonHtml.includes('href="/terms/#paid-pdf-license"') &&
+        comingSoonHtml.includes('href="/en/privacy/"'),
+      'coming-soon.html: legal links use slash URLs'
+    )) passed++;
     else failed++;
     if (assert(comingSoonHtml.includes('$3.99') && comingSoonHtml.includes('$8.99'), 'coming-soon.html: rodo $3.99 / $8.99 kainas')) passed++;
     else failed++;
@@ -945,11 +1128,22 @@ function run() {
   const manifestJson = readFile(path.join(__dirname, '..', 'manifest.webmanifest'));
   const notFoundHtml = readFile(path.join(__dirname, '..', '404.html'));
 
+  if (assert(llmsTxt !== null && llmsTxt.includes('/en/privacy/') && llmsTxt.includes('/terms/'), 'llms.txt: Policies slash URLs')) passed++;
+  else failed++;
   if (assert(llmsTxt !== null && llmsTxt.includes('Plan → Create → Check → Improve'), 'llms.txt: cycle summary')) passed++;
   else failed++;
   if (assert(llmsTxt !== null && llmsTxt.includes('#cmo-safety') && llmsTxt.includes('#pdf-storefront'), 'llms.txt: hash hubs #cmo-safety + #pdf-storefront')) passed++;
   else failed++;
   if (assert(llmsTxt !== null && llmsTxt.includes('#pro-contents'), 'llms.txt: hash hub #pro-contents')) passed++;
+  else failed++;
+  if (assert(
+    llmsTxt !== null &&
+    llmsTxt.indexOf('#creative-brief') !== -1 &&
+    llmsTxt.indexOf('#block1') !== -1 &&
+    llmsTxt.indexOf('#creative-brief') < llmsTxt.indexOf('#block1') &&
+    !llmsTxt.includes('start spine'),
+    'llms.txt: tool-first hubs — #creative-brief before #block1'
+  )) passed++;
   else failed++;
   if (assert(llmsFullTxt !== null && llmsFullTxt.includes('10 prompts'), 'llms-full.txt: prompt digest')) passed++;
   else failed++;
@@ -1015,6 +1209,23 @@ function run() {
         (/<a[^>]*id="navPricing"[^>]*href="#pdf-storefront"/.test(enHtmlForCommerce) ||
           /<a[^>]*href="#pdf-storefront"[^>]*id="navPricing"/.test(enHtmlForCommerce)),
       'en/index.html: sticky site nav exposes Pricing without scroll'
+    )) passed++;
+    else failed++;
+    if (assert(
+      (function () {
+        const start = enHtmlForCommerce.indexOf('<header class="header">');
+        const end = enHtmlForCommerce.indexOf('</header>', start);
+        if (start === -1 || end === -1) return false;
+        const headerChunk = enHtmlForCommerce.slice(start, end);
+        const siteNav = enHtmlForCommerce.indexOf('id="siteNav"');
+        return siteNav !== -1 && headerChunk.indexOf('id="siteNav"') === -1 && siteNav < start;
+      })(),
+      'en/index.html: #siteNav is a sibling above .header, not inside it'
+    )) passed++;
+    else failed++;
+    if (assert(
+      ltHtmlForCommerce && !ltHtmlForCommerce.includes('id="siteNav"'),
+      'lt/index.html: NE-turi #siteNav'
     )) passed++;
     else failed++;
     if (assert(

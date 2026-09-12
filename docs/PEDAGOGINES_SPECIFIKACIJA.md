@@ -67,7 +67,7 @@
 
 ## 5. Vartotojo kelionė (žingsniai)
 
-1. **Atėjimas** → Hero brief-builder sample (EN primary: Start the builder → `#creative-brief`; secondary: View kits → `#pdf-storefront`).
+1. **Atėjimas** → Hero brief-builder sample (EN primary: Build my prompt → `#creative-brief`; secondary: See pricing → `#pdf-storefront`).
 2. **Use now** – EN `#creative-brief` (`#cb-builder` open).
 3. **Kits** – 2 PDF cards (Starter + Complete); Pro = text link.
 4. **Library** – prompts 1, 2, 3, 5 (display 1–4: Plan / Create / Check / Improve). Progress 0/4. `#cmo-context` closed, prie Prompt 1.

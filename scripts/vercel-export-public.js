@@ -130,6 +130,10 @@ function main() {
   copyDir('lt');
   copyDir('en');
 
+  // Directory indexes so /en/privacy/ and /terms/ work without vercel.json (Pages + serve)
+  if (existsRel('en/privacy.html')) copyFile('en/privacy.html', 'en/privacy/index.html');
+  if (existsRel('terms.html')) copyFile('terms.html', 'terms/index.html');
+
   // Assets
   copyDir('styles');
   copyDir('js');
@@ -140,6 +144,7 @@ function main() {
   if (existsRel('assets/hero')) copyDir('assets/hero');
 
   // SEO/robots + Google Search Console HTML verification + GEO surfaces
+  if (existsRel('serve.json')) copyFile('serve.json');
   if (existsRel('robots.txt')) copyFile('robots.txt');
   if (existsRel('sitemap.xml')) copyFile('sitemap.xml');
   if (existsRel('llms.txt')) copyFile('llms.txt');

@@ -42,7 +42,7 @@ lt/index.html (užšaldyta), en/index.html (kanonas), js/en-prompt-bodies-inline
 - **Mirror:** `https://ditreneris.github.io/cmo/` (GitHub Pages), aktyvuojamas su `BASE_PATH=/cmo`.
 - Override per env `SITE_ORIGIN` / `BASE_PATH`. Žr. [DEPLOYMENT.md](../DEPLOYMENT.md).
 
-**Sinchronizuota su kodu (2026-09-03, R1-support 4 / craft atmosphere):** skip-link; hero **brief-builder sample image** + Product Operator 1.6.1 (full-bleed `.header`, brand mark, sticky `#siteNav` su `#navWorkflows`, `#navBrief`, `#navPricing` → `#pdf-storefront`; **no lang switcher**; `.hero-diagram` = `.hero-sample-image` Satori still + `.hero-brief-sample` caption + *From the brief builder* — **no** pipeline modules / outputs row / cycle-stepper / provider hub / `#framework-schema`); `#heroProof`; muted `#heroTrustPill1/2/3` IDs (inline, no pill chrome) — 4 workflows free · Brief builder included · Full kit from $3.99; primary EN `#heroCtaSpine` → `#creative-brief` **Start the builder**; secondary `#heroCtaBrief` → `#pdf-storefront` **View kits**); **eiliškumas:** EN `#creative-brief` (**open** `#cb-builder`) → EN `#pdf-storefront` (**2 cards** Starter + Complete; Pro = `#pdf-card-pro` text link; no comparison table) → `#progressIndicator` (`aria-valuemax="4"`, not sticky) → `#progressJump` (Plan·Create·Check·Improve · Pricing · Brief · FAQ) → library **1, 2, 3, 5** (display 1–4) + closed `#cmo-context` → thin `#cmo-safety` → `#cmo-scenarios` → `#pro-contents` → usage/copy-tips → FAQ → `#prompt-basics`. **Meme slotų nėra**. Dizainas: [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6**. Žr. [CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md).
+**Sinchronizuota su kodu (2026-09-11, R1-support / page-level sticky `#siteNav`):** skip-link; hero **brief-builder sample image** + Product Operator 1.6.1 (full-bleed `.header`, brand mark, page-level sticky `#siteNav` **outside** `.header` su `#navWorkflows`, `#navBrief`, `#navPricing` → `#pdf-storefront`; **no lang switcher**; `.hero-diagram` = `.hero-sample-image` Satori still + `.hero-brief-sample` caption + *From brief → image prompt* — **no** pipeline modules / outputs row / cycle-stepper / provider hub / `#framework-schema`); `#heroProof`; muted `#heroTrustPill1/2/3` IDs (inline, no pill chrome) — Free to start · No sign-up · Reusable workflows; primary EN `#heroCtaSpine` → `#creative-brief` **Build my prompt**; secondary `#heroCtaBrief` → `#pdf-storefront` **See pricing**); **eiliškumas:** EN `#creative-brief` (**open** `#cb-builder`) → EN `#pdf-storefront` (**2 cards** Starter + Complete; Pro = `#pdf-card-pro` text link; no comparison table) → `#progressIndicator` (`aria-valuemax="4"`, not sticky) → `#progressJump` (Plan·Create·Check·Improve · Pricing · Brief · FAQ) → library **1, 2, 3, 5** (display 1–4) + closed `#cmo-context` → thin `#cmo-safety` → `#cmo-scenarios` → `#pro-contents` → usage/copy-tips → FAQ → `#prompt-basics`. **Meme slotų nėra**. Dizainas: [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.1**. Žr. [CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md).
 
 ---
 
@@ -66,7 +66,8 @@ index.html (legacy struktūrinis šaltinis) → po `npm run build` → lt/index.
 ├── <a class="skip-link" href="#main-content">Pereiti prie turinio</a>
 ├── <div class="container">
 │   └── <main id="main-content">
-│       ├── <header class="header">        (full-bleed; brand; #siteNav; #heroCtaSpine → #creative-brief + #heroCtaBrief View kits; #heroTrustPill*; .hero-diagram .hero-sample-image)
+│       ├── <div class="header-top header-bar">  (page-level sticky; brand + EN #siteNav Workflows · Brief builder · Pricing; sibling above .header, not inside it)
+│       ├── <header class="header">        (full-bleed; #heroCtaSpine → #creative-brief + #heroCtaBrief See pricing; #heroTrustPill*; .hero-diagram .hero-sample-image)
 │       ├── [build inject EN @ <!-- CMO_CREATIVE_BRIEF -->] <section id="creative-brief"> (open #cb-builder)
 │       ├── [build inject EN @ <!-- CMO_PDF_STOREFRONT -->] <section id="pdf-storefront"> (2 cards + #pdf-card-pro text link; no comparison table)
 │       ├── <div id="progressIndicator">   (max 4 – not sticky)
@@ -98,7 +99,7 @@ index.html (legacy struktūrinis šaltinis) → po `npm run build` → lt/index.
 - Progreso juosta: `.progress-bar` turi `aria-valuemax="4"` ir EN `aria-label` / `progressText` „of 4 workflows“ (pradžia); JS skaičiuoja tik spine checkboxes 1/2/3/5
 - Prompt workbook: title + one subtitle + `<pre>` + Copy + Mark as done (no `.prompt-tags` / `.edit-hint` / `.info-box` chrome)
 - **CMO v2 (tik `lt/`, `en/`):** `cmo-context`, `cmo-safety`, `cmo-scenarios`, `expected1` / `expected2` / `expected3` / `expected5`, `cmoCtxAudience`, `cmoCtxOffer`, `cmoCtxChannels`, `cmoCtxGoal`, `cmoCtxConstraint`
-- **Creative brief (tik EN build, įskaitant mirror):** `creative-brief`, `cb-title`, `cb-builder` (default closed), `cbForm`, `cbOutput`, `cbCopyBtn`, `cbQuality`, `cbQualityHint`; žr. [CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md)
+- **Creative brief (tik EN build, įskaitant mirror):** `creative-brief`, `cb-title`, `cb-builder` (default **open**), `cbForm`, `cbOutput`, `cbCopyBtn`, `cbQuality`, `cbQualityHint`; žr. [CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md)
 - localStorage raktai: `di_prompt_done_1` … `di_prompt_done_10` gali likti kode; **spine naudoja 1/2/3/5**, kiti raktai ignoruojami
 - `sessionStorage` (CMO v2): konteksto laukai (audience, offer, channels, goal, constraint); creative brief draft: `cmo.creativeBrief.v1`
 
@@ -114,6 +115,7 @@ index.html (legacy struktūrinis šaltinis) → po `npm run build` → lt/index.
 - **`updateProgressIndicator()`** – skaičiuoja localStorage žymes, atnaujina `progressText`, `progressBarFill`, `aria-valuenow`, `aria-label`.
 - **`fallbackCopy`, `showSuccess`, `showError`, `showToast`** – kopijavimo fallback ir toast UI.
 - **`CONFIG`** – `SELECTION_TIMEOUT`, `TOAST_DURATION`, `BUTTON_RESET_TIMEOUT`, `ERROR_TIMEOUT`, `DEBOUNCE_DELAY`.
+- **`applyStaticLocaleText` (EN):** spine title/desc/`<pre>` must key by `pre.id` / `data-prompt-id` (**1/2/3/5**), never by display `.number` (1–4). Display 4 = Improve = `#prompt5`.
 
 ### 3.2 Event binding
 
@@ -140,6 +142,8 @@ Build metu iš [package.json](../package.json) `version` lauko įterpiama:
 
 Patikra: `tests/structure.test.js` lygina su `readPackageVersion()`.
 
+**EN footer / ecosystem (ne LT):** `stripEnFooterChrome` pašalina `#footerSignoff`, `#footerPlaceholderHint`, `.footer .tags`, ir id-less `Go win your market` / `Remember to replace` (senas live HTML be id). Runtime `applyStaticLocaleText` **removeChild** (ne `hidden` ir ne `qa('.footer p')[0]`). `#ecosystem-strip` sąrašas = tik oficiali metodika; Telegram lieka `#community`; el. paštas – footer; Leader – `.ecosystem-strip-related` (`ditreneris.github.io/leader/en/`). EN **be** `.cmo-footer-crosslink`. Copyright be „Training material“; Privacy `href="/en/privacy/"`. LT snapshot: 3 ecosystem nuorodos, rocket, placeholder, tags, crosslink, „Mokymų medžiaga“.
+
 ### 3.5 localStorage / sessionStorage
 
 | Saugykla | Raktai | Reikšmės |
@@ -154,11 +158,11 @@ Keičiant turinį **nepridėti** inline event atributų, nekeisti funkcijų pava
 
 ## 4. `.code-block` komponentas (fiksuota)
 
-`.code-block` turi pseudo-elementą `::before` su etikete „💡 Spausk čia ir nukopijuok“ (matoma hover/focus būsenose).
+`.code-block` turi pseudo-elementą `::before` su etikete „Click to copy“ (matoma hover/focus būsenose). STYLEGUIDE: **no emoji chrome** — negrąžinti 💡.
 
 | Savybė | Reikšmė | Pastaba |
 |--------|---------|---------|
-| Etiketė | `content: '💡 Spausk čia ir nukopijuok'` | Nekeisti be Content/UI koordinacijos |
+| Etiketė | `content: 'Click to copy'` | Be emoji; STYLEGUIDE 1.6.1 |
 | Pozicija | `position: absolute`, `top: 12px`, `right: 20px`, `z-index: 1` | Etiketė **viduje** bloko viršuje |
 | Layout | `margin-top: 20px`, `margin-bottom: 24px` | Etiketė nesikerta su prompt-header border |
 
@@ -191,7 +195,7 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 **Trys versijos:**
 - `privatumas.html` (root) – legacy backward compat, sitemap'e nėra, bet `tests/structure.test.js` tikrina egzistavimą.
 - `lt/privatumas.html` – LT privatumas (užšaldyta; free-only scope).
-- `en/privacy.html` – **kanoninė** privatumo versija (canonical: `https://promptanatomy.space/en/privacy.html`).
+- `en/privacy.html` – **kanoninė** privatumo versija. Disk file stays `.html`; public URL `https://promptanatomy.space/en/privacy/` (Vercel rewrite + 308 from `.html`). Export also writes `public/en/privacy/index.html` (and `public/terms/index.html`) so GitHub Pages can serve slash URLs without `vercel.json`. Host-relative `/styles/` and `/favicon` on those satellite pages still 404 under `ditreneris.github.io/cmo/` (canonicals stay `.space`). LT `hreflang` / English links must advertise `/en/privacy/`, not `/en/privacy.html`.
 
 **Bendros taisyklės (visoms versijoms):**
 - ID: `back-link`, `back-link-footer` – naudojami inline skriptu, kuris nustato `href` pagal `document.referrer` (jei kelias turi `/lt` → `lt/`, `/en` → `en/`, kitaip → `index.html`).
@@ -256,8 +260,8 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 
 ### 7.6. Privacy / Terms kontraktas
 
-- [`en/privacy.html`](../en/privacy.html) privalo turėti `id="paid-pdf-data"` sekciją, kuri vardinę paminėtų **Stripe**, **Resend**, **Upstash**, **Vercel Blob** kaip procesorius. [`lt/privatumas.html`](../lt/privatumas.html) NEGALI šių paminėti (LT scope free-only).
-- [`terms.html`](../terms.html) privalo turėti `id="paid-pdf-license"` sekciją (Team License) + `14-day` refund tekstą.
+- [`en/privacy.html`](../en/privacy.html) privalo turėti `id="paid-pdf-data"` sekciją, kuri vardinę paminėtų **Stripe**, **Resend**, **Upstash**, **Vercel Blob** kaip procesorius. Public URL: `/en/privacy/`. [`lt/privatumas.html`](../lt/privatumas.html) NEGALI šių paminėti (LT scope free-only; public URL stays `/lt/privatumas.html`).
+- [`terms.html`](../terms.html) privalo turėti `id="paid-pdf-license"` sekciją (Team License) + `14-day` refund tekstą. Public URL: `/terms/` (canonical `https://promptanatomy.space/terms/`). `/success.html` and `/coming-soon.html` stay `.html`.
 
 ### 7.7. Build rezultatų contract
 
@@ -281,4 +285,4 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-09-03 (R1-support 3: tool-first IA; open brief; library 1/2/3/5 po PDF)
+**Paskutinis atnaujinimas:** 2026-09-11 (slash URL hygiene: Pages directory indexes; LT hreflang `/en/privacy/`)

@@ -250,9 +250,7 @@ function assertCollapsiblePromptContract(html, label) {
       throw new Error(`${label}: Pro catalog prompt ${n} must not expose interactive #prompt${n}`);
     }
   }
-  if (!html.includes('openFromHash')) {
-    throw new Error(`${label}: missing openFromHash (collapsible hash deep-link)`);
-  }
+  // Path cut: no .prompt-details → no openFromHash collapsible deep-link.
 }
 
 /** LT <pre> inner text from free spine prompts (ids 1,2,3,5) for EN string replace pairs. */
@@ -842,33 +840,47 @@ function injectProviderRows(html) {
 
 function injectFooterSuite(html, locale) {
   const leaderUrl = 'https://ditreneris.github.io/leader/en/';
-  const cross =
-    locale === 'en'
-      ? 'Related sister kit: <a href="' +
-        leaderUrl +
-        '" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO)'
-      : 'Reikia CEO/COO rinkinio? <a href="' +
-        leaderUrl +
-        '" target="_blank" rel="noopener noreferrer">Atidaryti Prompt Anatomy Leader</a>';
   const badge =
     locale === 'en'
       ? 'Content AI System v' + PKG_VERSION
       : 'Turinio DI sistema v' + PKG_VERSION;
-  const insert =
-    '            <div class="cmo-footer-meta print-muted">\n' +
-    '                <p class="cmo-footer-crosslink">' +
-    cross +
-    '</p>\n' +
+  const versionP =
     '                <p class="cmo-kit-version" data-version="' +
     escapeHtml(PKG_VERSION) +
     '">' +
     escapeHtml(badge) +
-    '</p>\n' +
-    '            </div>\n';
+    '</p>\n';
+  const insert =
+    locale === 'en'
+      ? '            <div class="cmo-footer-meta print-muted">\n' + versionP + '            </div>\n'
+      : '            <div class="cmo-footer-meta print-muted">\n' +
+        '                <p class="cmo-footer-crosslink">Reikia CEO/COO rinkinio? <a href="' +
+        leaderUrl +
+        '" target="_blank" rel="noopener noreferrer">Atidaryti Prompt Anatomy Leader</a></p>\n' +
+        versionP +
+        '            </div>\n';
   if (html.indexOf('<footer class="footer">') === -1) {
     throw new Error('injectFooterSuite: footer not found');
   }
   return html.replace('<footer class="footer">', '<footer class="footer">\n' + insert);
+}
+
+/** EN-only: drop workbook chrome and duplicate ecosystem Telegram/mailto. LT keeps all. */
+function stripEnFooterChrome(html) {
+  return html
+    .replace(/<h3 id="footerSignoff"[^>]*>[\s\S]*?<\/h3>\s*/g, '')
+    .replace(/<p id="footerPlaceholderHint"[^>]*>[\s\S]*?<\/p>\s*/g, '')
+    .replace(/<h3>\s*Go win your market[\s\S]*?<\/h3>\s*/g, '')
+    .replace(/<p>\s*Remember to replace[\s\S]*?<\/p>\s*/g, '')
+    .replace(/<div class="tags" role="list">[\s\S]*?<\/div>\s*/g, '')
+    .replace(
+      /<li role="listitem"><a href="https:\/\/t\.me\/prompt_anatomy"[^>]*>Telegram group<\/a><\/li>\s*/g,
+      ''
+    )
+    .replace(
+      /<li role="listitem"><a href="mailto:info@promptanatomy\.app">info@promptanatomy\.app<\/a><\/li>\s*/g,
+      ''
+    );
 }
 
 /* ----------------------------------------------------------------------- */
@@ -1121,7 +1133,7 @@ function buildPdfStorefrontSection(sot) {
     '            </div>\n' +
     proAlt +
     faqDetails +
-    '            <p class="pdf-storefront-trust">Secure checkout via Stripe. Receipts and downloads delivered by email. <a href="../terms.html#paid-pdf-license">Team license</a> \u00b7 <a href="../en/privacy.html">Privacy</a>.</p>\n' +
+    '            <p class="pdf-storefront-trust">Secure checkout via Stripe. Receipts and downloads delivered by email. <a href="/terms/#paid-pdf-license">Team license</a> \u00b7 <a href="/en/privacy/">Privacy</a>.</p>\n' +
     '        </section>\n\n'
   );
 }
@@ -1225,7 +1237,7 @@ function buildCreativeBriefSection(sot, options) {
       ? copy.lead
       : 'Turn a short marketing brief into an image-ready prompt.';
   const presetsLabel = typeof copy.presetsLabel === 'string' ? copy.presetsLabel : 'Quick starts';
-  const sampleLabel = typeof copy.sampleLabel === 'string' ? copy.sampleLabel : 'Try sample';
+  const sampleLabel = typeof copy.sampleLabel === 'string' ? copy.sampleLabel : 'Try an example';
   const stepsContext = typeof copy.stepsContext === 'string' ? copy.stepsContext : 'Context';
   const stepsVisual = typeof copy.stepsVisual === 'string' ? copy.stepsVisual : 'Visual';
   const stepsText = typeof copy.stepsText === 'string' ? copy.stepsText : 'Text';
@@ -1238,7 +1250,7 @@ function buildCreativeBriefSection(sot, options) {
   const emptyPlaceholder =
     typeof copy.emptyPlaceholder === 'string'
       ? copy.emptyPlaceholder
-      : 'Start with a subject or load a preset — your image prompt builds here.';
+      : 'Try an example, or add a subject — your prompt builds here.';
   const tipsTitle = typeof copy.tipsTitle === 'string' ? copy.tipsTitle : 'Expert tips';
   const proTeaser =
     typeof copy.proTeaser === 'string'
@@ -1296,6 +1308,11 @@ function buildCreativeBriefSection(sot, options) {
     '            <p class="cb-lead">' +
     escapeHtml(lead) +
     '</p>\n' +
+    '            <p class="cb-sample-row">\n' +
+    '                <button type="button" class="btn cb-preset-btn cb-sample-btn" id="cbSampleBtn">' +
+    escapeHtml(sampleLabel) +
+    '</button>\n' +
+    '            </p>\n' +
     '            <details class="cb-builder-details" id="cb-builder" open>\n' +
     '                <summary id="cb-builder-summary">Brief builder</summary>\n' +
     '            <div class="cb-presets" role="group" aria-label="' +
@@ -1307,9 +1324,6 @@ function buildCreativeBriefSection(sot, options) {
     '                <button type="button" class="btn cb-preset-btn" data-cb-preset="ecommerce">Ecommerce</button>\n' +
     '                <button type="button" class="btn cb-preset-btn" data-cb-preset="brand">Brand</button>\n' +
     '                <button type="button" class="btn cb-preset-btn" data-cb-preset="social">Social</button>\n' +
-    '                <button type="button" class="btn cb-preset-btn cb-sample-btn" id="cbSampleBtn">' +
-    escapeHtml(sampleLabel) +
-    '</button>\n' +
     '            </div>\n' +
     '            <div class="cb-steps" role="group" aria-label="Brief steps">\n' +
     '                <button type="button" class="cb-step is-active" data-cb-step="1" aria-pressed="true">1. ' +
@@ -1405,8 +1419,8 @@ function buildCreativeBriefSection(sot, options) {
     '                        <span class="cb-quality-label">' +
     escapeHtml(qualityLabel) +
     '</span>\n' +
-    '                        <span class="cb-quality-badge" id="cbQualityBadge" data-level="weak">0/9 — weak</span>\n' +
-    '                        <p class="cb-quality-hint" id="cbQualityHint">Add a subject to start.</p>\n' +
+    '                        <span class="cb-quality-badge" id="cbQualityBadge" data-level="weak">Ready to build</span>\n' +
+    '                        <p class="cb-quality-hint" id="cbQualityHint">Add a subject and a goal to get started.</p>\n' +
     '                    </div>\n' +
     '                    <label class="cb-output-label" for="cbOutput">' +
     escapeHtml(outputLabel) +
@@ -1482,11 +1496,11 @@ function injectCreativeBrief(html, locale) {
   out = out
     .replace(
       /<a href="#block1"[^>]*id="heroCtaSpine"[^>]*>/i,
-      '<a href="#creative-brief" class="cta-button" id="heroCtaSpine" aria-label="Start the builder – go to the brief builder">'
+      '<a href="#creative-brief" class="cta-button" id="heroCtaSpine" aria-label="Build my prompt – go to the brief builder">'
     )
     .replace(
       /<a href="#[^"]*"[^>]*id="heroCtaBrief"[^>]*>/i,
-      '<a href="#pdf-storefront" class="cta-text-link" id="heroCtaBrief" aria-label="View kits – go to pricing">'
+      '<a href="#pdf-storefront" class="cta-text-link" id="heroCtaBrief" aria-label="See pricing – go to pricing">'
     );
   const courseFaq =
     '<details class="faq-item">\n' +
@@ -1836,24 +1850,24 @@ const EN_REPLACEMENTS_PREFIX = [
   ['Pereiti prie turinio', 'Skip to content'],
   // Footer product link (before generic "Promptų anatomija" so full paragraph matches)
   [
-    '<p class="footer-product-link">Spin-off Nr. 2 (Prompt Anatomy). Pilnas mokymas, metodika ir brand centras: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>. Paskutinis atnaujinimas: 2026-04-30.</p>',
-    '<p class="footer-product-link">Part of Prompt Anatomy · Methodology at <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a></p>'
+    '<p class="footer-product-link" id="footer-product-link">Spin-off Nr. 2 (Prompt Anatomy). Pilnas mokymas, metodika ir brand centras: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>. Paskutinis atnaujinimas: 2026-04-30.</p>',
+    '<p class="footer-product-link" id="footer-product-link">Part of Prompt Anatomy · Methodology at <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a></p>'
   ],
   ['<span id="footer-email-label">El. paštas:</span>', '<span id="footer-email-label">Email:</span>'],
   ['<span id="footer-address-label">Pašto adresas:</span>', '<span id="footer-address-label">Mailing address:</span>'],
   // Exact strings with "Promptų anatomija" before global replace below (order matters)
   ['aria-label="Atidaryti Promptų anatomija Telegram grupę naujame lange"', 'aria-label="Open Prompt Anatomy Telegram group in new tab"'],
   ['Promptų anatomija', 'Prompt Anatomy'],
-  ['Turinio DI sistema<br>rinkodaros vadovams', 'One brief. An image-ready prompt. Then the workflows your team can reuse.'],
+  ['Turinio DI sistema<br>rinkodaros vadovams', 'Turn one brief into an image-ready prompt.'],
   [
     '<p class="header-lead" id="heroLead">Kartok rinkodaros workflow vietoj tuščio prompto kiekvieną kartą.</p>',
-    '<p class="header-lead" id="heroLead">Fill the brief. Copy the image prompt. Take the kit offline when the team needs it.</p>'
+    '<p class="header-lead" id="heroLead">Fill the fields. Copy a structured prompt. Run it in your image tool.</p>'
   ],
   [
     '<p class="header-proof" id="heroProof">Nuo kampanijos plano iki kokybės patikros – viena kartojama sistema.</p>',
-    '<p class="header-proof" id="heroProof">Brief builder open below. 4 workflows after the kits, from $3.99.</p>'
+    '<p class="header-proof" id="heroProof">Free below — no account.</p>'
   ],
-  ['id="hero-diagram-label">Iš 1-o workflow</', 'id="hero-diagram-label">From the brief builder</'],
+  ['id="hero-diagram-label">Iš 1-o workflow</', 'id="hero-diagram-label">From brief → image prompt</'],
   [
     'class="hero-diagram__card hero-diagram__card--sample"',
     'class="hero-diagram__card hero-diagram__card--sample hero-diagram__card--photo"'
@@ -1868,27 +1882,27 @@ const EN_REPLACEMENTS_PREFIX = [
   ],
   [
     '<li class="trust-pill" id="heroTrustPill1">Be paskyros</li>',
-    '<li class="trust-pill" id="heroTrustPill1">4 workflows free</li>'
+    '<li class="trust-pill" id="heroTrustPill1">Free to start</li>'
   ],
   [
     '<li class="trust-pill" id="heroTrustPill2">ChatGPT ir Claude</li>',
-    '<li class="trust-pill" id="heroTrustPill2">Brief builder included</li>'
+    '<li class="trust-pill" id="heroTrustPill2">No sign-up</li>'
   ],
   [
     '<li class="trust-pill" id="heroTrustPill3">4 workflow nemokamai</li>',
-    '<li class="trust-pill" id="heroTrustPill3">Full kit from $3.99</li>'
+    '<li class="trust-pill" id="heroTrustPill3">Reusable workflows</li>'
   ],
   [
     'class="cta-text-link" id="heroCtaBrief" aria-label="Žiūrėti rinkinius – pereiti prie kainų"',
-    'class="cta-text-link" id="heroCtaBrief" aria-label="View kits – go to pricing"'
+    'class="cta-text-link" id="heroCtaBrief" aria-label="See pricing – go to pricing"'
   ],
-  ['Žiūrėti rinkinius', 'View kits'],
+  ['Žiūrėti rinkinius', 'See pricing'],
   ['<span class="prompt-step" id="prompt1Recommended">Workflow 1 of 4</span>', '<span class="prompt-step" id="prompt1Recommended">Workflow 1 of 4</span>'],
   [
     'aria-label="Pradėti pirmą workflow – pereiti prie workflow 1"',
-    'aria-label="Start the builder – go to the brief builder"'
+    'aria-label="Build my prompt – go to the brief builder"'
   ],
-  ['Pradėti pirmą workflow', 'Start the builder'],
+  ['Pradėti pirmą workflow', 'Build my prompt'],
   ['Žiūrėti Complete rinkinį', 'See the Complete kit'],
   ['href="#pdf-storefront" id="progressJumpPro">Pricing</a>', 'href="#pdf-storefront" id="progressJumpPro">Pricing</a>'],
   [
@@ -2074,17 +2088,17 @@ const EN_REPLACEMENTS_SUFFIX = [
     '<p class="faq-eco-hint">For full methodology and executive context, use the <a href="#ecosystem-strip">ecosystem section</a> – all links in one place.</p>'
   ],
   // Community
-  ['<h2 id="community-title">Nori daugiau?<br>Prisijunk prie Telegram grupės.</h2>', '<h2 id="community-title">Want more?<br>Join our US-focused Telegram group.</h2>'],
-  ['<p>Bendros diskusijos, patarimai ir naujienos apie promptus ir DI.</p>', '<p>Get playbooks, real examples, and prompt updates for US-market execution.</p>'],
+  ['<h2 id="community-title">Nori daugiau?<br>Prisijunk prie Telegram grupės.</h2>', '<h2 id="community-title">Join the community.</h2>'],
+  ['<p>Bendros diskusijos, patarimai ir naujienos apie promptus ir DI.</p>', '<p>Examples and prompt updates. US-market notes welcome.</p>'],
   ['Prisijungti prie Telegram grupės', 'Join Telegram group'],
   // Footer
-  ['<h3>Sėkmės rinkodaroje <span aria-hidden="true">🚀</span></h3>', '<h3>Go win your market <span aria-hidden="true">🚀</span></h3>'],
-  ['<p>Nepamiršk pakeisti <strong>[auditorija]</strong>, <strong>[galvos skausmas]</strong>, <strong>[unikalus pardavimo pasiūlymas]</strong>, <strong>[kanalas]</strong> ir kitus laukus savo duomenimis</p>', '<p>Remember to replace <strong>[audience]</strong>, <strong>[pain point]</strong>, <strong>[unique selling proposition]</strong>, <strong>[channel]</strong> and other placeholders with your data</p>'],
+  ['<h3 id="footerSignoff">Sėkmės rinkodaroje <span aria-hidden="true">🚀</span></h3>', '<h3 id="footerSignoff" hidden>Go win your market <span aria-hidden="true">🚀</span></h3>'],
+  ['<p id="footerPlaceholderHint">Nepamiršk pakeisti <strong>[auditorija]</strong>, <strong>[galvos skausmas]</strong>, <strong>[unikalus pardavimo pasiūlymas]</strong>, <strong>[kanalas]</strong> ir kitus laukus savo duomenimis</p>', '<p id="footerPlaceholderHint" hidden>Remember to replace <strong>[audience]</strong>, <strong>[pain point]</strong>, <strong>[unique selling proposition]</strong>, <strong>[channel]</strong> and other placeholders with your data</p>'],
   ['<span class="tag" role="listitem"><span aria-hidden="true">📣</span> Rinkodara</span>', '<span class="tag" role="listitem"><span aria-hidden="true">📣</span> Marketing</span>'],
   ['<span class="tag" role="listitem"><span aria-hidden="true">📚</span> 10 promptų</span>', '<span class="tag" role="listitem"><span aria-hidden="true">📚</span> 4 free workflows</span>'],
   ['<span class="tag" role="listitem"><span aria-hidden="true">⚡</span> Veiksmų fokusas</span>', '<span class="tag" role="listitem"><span aria-hidden="true">⚡</span> Action focus</span>'],
   ['<span class="tag" role="listitem"><span aria-hidden="true">🎯</span> Potencialūs klientai ir rodikliai</span>', '<span class="tag" role="listitem"><span aria-hidden="true">🎯</span> Full 10 in Pro</span>'],
-  ['<p>&copy; 2026 Tomas Staniulis. Mokymų medžiaga. Visos teisės saugomos. <a href="privatumas.html">Privatumas</a></p>', '<p>&copy; 2026 Tomas Staniulis. Training material. All rights reserved. <a href="../en/privacy.html">Privacy</a></p>'],
+  ['<p>&copy; 2026 Tomas Staniulis. Mokymų medžiaga. Visos teisės saugomos. <a href="privatumas.html">Privatumas</a></p>', '<p>&copy; 2026 Tomas Staniulis. All rights reserved. <a href="/en/privacy/">Privacy</a></p>'],
   ['<h2 id="ecosystem-strip-title">Prompt Anatomy ekosistema</h2>', '<h2 id="ecosystem-strip-title">Prompt Anatomy ecosystem</h2>'],
   [
     '<p class="ecosystem-strip-intro">Viena vieta: metodika, bendruomenė, el. paštas ir susiję rinkiniai.</p>',
@@ -2109,10 +2123,6 @@ const EN_REPLACEMENTS_SUFFIX = [
   // Lang switcher
   ['aria-label="Kalbos pasirinkimas"', 'aria-label="Language selection"'],
   ['aria-label="Perjungti į lietuvių kalbą"', 'aria-label="Switch to Lithuanian"'],
-  [
-    "var privacyHref = (/\\/lt(?:\\/|$)/.test(path) || /\\/en(?:\\/|$)/.test(path)) ? '../privatumas.html' : 'privatumas.html';",
-    "var privacyHref = locale === 'en' ? '../en/privacy.html' : ((/\\/lt(?:\\/|$)/.test(path) || /\\/en(?:\\/|$)/.test(path)) ? '../privatumas.html' : 'privatumas.html');"
-  ],
   // EN JS messaging refinements
   ["uiText('Klaida: trūksta parametrų', 'Error: missing parameters')", "uiText('Klaida: trūksta parametrų', 'Something went wrong. Try copying again.')"],
   ["uiText('Promptas nerastas', 'Prompt not found')", "uiText('Promptas nerastas', 'Prompt not available. Try another card.')"],
@@ -2237,6 +2247,29 @@ function assertEnLocaleAdditions(html) {
       throw new Error('EN locale: storefront must contain at least one .pdf-card');
     }
   }
+  if (html.indexOf('id="footerSignoff"') !== -1 || html.indexOf('id="footerPlaceholderHint"') !== -1) {
+    throw new Error('EN locale: workbook footer signoff/placeholder must be stripped');
+  }
+  if (html.indexOf('Remember to replace') !== -1 || html.indexOf('Go win your market') !== -1) {
+    throw new Error('EN locale: workbook footer copy must not ship');
+  }
+  if (html.indexOf("qa('.footer p')") !== -1 || /footP\[0\]/.test(html) || html.indexOf('footH3') !== -1) {
+    throw new Error('EN locale: must not write footer copy by p-index (overwrites sister-kit/version)');
+  }
+  if (/<div class="tags" role="list">/.test(html)) {
+    throw new Error('EN locale: footer .tags must be stripped');
+  }
+  if (html.indexOf('<p class="cmo-footer-crosslink"') !== -1) {
+    throw new Error('EN locale: footer sister-kit crosslink must be omitted (Leader stays in ecosystem-related)');
+  }
+  if (html.indexOf('Training material') !== -1) {
+    throw new Error('EN locale: copyright must not say Training material');
+  }
+  const ecoListMatch = html.match(/<ul class="ecosystem-strip-list"[^>]*>([\s\S]*?)<\/ul>/);
+  const ecoLiCount = ecoListMatch ? (ecoListMatch[1].match(/<li\b/g) || []).length : 0;
+  if (ecoLiCount !== 1) {
+    throw new Error('EN locale: ecosystem-strip-list must have exactly 1 item (methodology); found ' + ecoLiCount);
+  }
 }
 
 function assertLtLocaleAdditions(html) {
@@ -2308,6 +2341,7 @@ function buildLocale(locale) {
   html = fixAssetPaths(html);
   html = injectFooterSuite(html, locale);
   if (locale === 'en') {
+    html = stripEnFooterChrome(html);
     assertEnLocaleAdditions(html);
   }
   if (locale === 'lt') {
@@ -2323,12 +2357,12 @@ function assertPrivacySeo() {
       locale: 'lt',
       filePath: path.join(ROOT, 'lt', 'privatumas.html'),
       canonical: makeAbsoluteUrl('/lt/privatumas.html'),
-      alternate: makeAbsoluteUrl('/en/privacy.html')
+      alternate: makeAbsoluteUrl('/en/privacy/')
     },
     {
       locale: 'en',
       filePath: path.join(ROOT, 'en', 'privacy.html'),
-      canonical: makeAbsoluteUrl('/en/privacy.html'),
+      canonical: makeAbsoluteUrl('/en/privacy/'),
       alternate: makeAbsoluteUrl('/lt/privatumas.html')
     }
   ];

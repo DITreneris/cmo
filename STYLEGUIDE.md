@@ -45,7 +45,7 @@ Skalė: caption 12 → small 14 → body 17 → bodyLg 18 → title 1.35rem → 
 
 **Glossary:** Prompt Anatomy = brand; Content AI System = product; **workflow** = free library unit (display 1–4 = IDs 1/2/3/5); **prompt** = copyable body; **brief** = **primary** free tool; **Pro kit** = full 10 offline.
 
-1. Hero: logo + sticky `#siteNav` (Workflows · Brief builder · Pricing); **no lang switcher**; H1 once; `#heroProof` with free→paid anchor; trust IDs `#heroTrustPill1/2/3` as one muted inline row (no pill chrome); primary `#heroCtaSpine` **Start the builder** → `#creative-brief`; `#heroCtaBrief` **View kits** text link → `#pdf-storefront`; `.hero-diagram` = **sample image** (`.hero-sample-image`) + prompt caption *From the brief builder* — no pipeline modules / outputs row  
+1. Hero: logo + page-level sticky `#siteNav` (Workflows · Brief builder · Pricing; sibling of `.header`, not hero-clipped); **no lang switcher**; H1 once; `#heroProof` *Free below — no account.*; trust IDs `#heroTrustPill1/2/3` as one muted inline row (no pill chrome); primary `#heroCtaSpine` **Build my prompt** → `#creative-brief`; `#heroCtaBrief` **See pricing** text link → `#pdf-storefront`; `.hero-diagram` = **sample image** (`.hero-sample-image`) + prompt caption *From brief → image prompt* — no pipeline modules / outputs row  
 2. **Use now:** EN `#creative-brief` (`#cb-builder` **open**)  
 3. `#pdf-storefront` — 2 cards (Starter + Complete); Pro = text link  
 4. Progress of 4 + jump (Plan·Create·Check·Improve · Pricing · Brief · FAQ; **not** sticky)  
@@ -97,8 +97,8 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 
 - **Hero fonas:** `--hero-bg` – šiltas gold radial ant popieriaus (`#F6F1E8` → `#EDE4D4`); **full-bleed** (ne kortelė).
 - **CTA:** `--cta-bg` gold gradient; ink text; `--shadow-cta` restrained.
-- **CTA kontraktas:** primary `#heroCtaSpine` → `#creative-brief` (EN: **Start the builder**); secondary `#heroCtaBrief` **View kits** → `#pdf-storefront`. LT primary lieka `#block1`.
-- **Vizualas:** `.hero-diagram` – navy card ~38rem with `.hero-sample-image` (Satori still) + `<pre class="hero-brief-sample">` caption *From the brief builder*. **Not** pipeline modules; **not** PDF cover; no H1 restatement inside the card. Breakout 1120–1200px. `/lt/` keeps the 30-day table.
+- **CTA kontraktas:** primary `#heroCtaSpine` → `#creative-brief` (EN: **Build my prompt**); secondary `#heroCtaBrief` **See pricing** → `#pdf-storefront`. LT primary lieka `#block1`.
+- **Vizualas:** `.hero-diagram` – navy card ~38rem with `.hero-sample-image` (Satori still) + `<pre class="hero-brief-sample">` caption *From brief → image prompt*. **Not** pipeline modules; **not** PDF cover; no H1 restatement inside the card. Breakout 1120–1200px. `/lt/` keeps the 30-day table.
 - Eyebrow ≠ subhead (no duplicate message). Trust IDs stay (`#heroTrustPill1/2/3`) as muted inline text. Pro/offline lives in FAQ/storefront, not hero. Lang switcher is utility (no gold active state).
 
 ---

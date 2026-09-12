@@ -18,7 +18,7 @@
 | **Brief** | **Primary** free tool `#creative-brief` (open `#cb-builder`; hero CTA) |
 | **Pro kit** | Full **10** offline |
 
-**Hero trust chips:** 4 workflows free · Brief builder included · Full kit from $3.99 (free/paid boundary visible above the fold).  
+**Hero trust chips:** Free to start · No sign-up · Reusable workflows (price lives on `#pdf-storefront`, not the hero).  
 **Number story (FAQ/storefront):** Free: 4 workflows + brief. Pro: full 10 offline.  
 **Method (one process):** Plan → Create → Check → Improve.  
 **Usage (one sentence):** Copy → paste into ChatGPT or Claude.

@@ -27,23 +27,23 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 ### Funkcionalumas
 
 - [ ] **Kopijavimas (spine):** Promptai 1, 2, 3, 5 – Copy → DI; kontekstas + taisyklės prepend'inamos. `#pro-contents` 4/6–10 – katalogas be copy, CTA į Complete kit.
-- [ ] **EN UX tool-first:** hero primary → `#creative-brief` (open builder); secondary View kits → `#pdf-storefront`; 2 kortelės (Starter + Complete); Pro = tekstinė nuoroda; library 1/2/3/5 (display 1–4) po kits; `#cb-builder` **open**; progress of 4; 0 meme slotų; Stripe kainos/linkai nepakitę.
+- [ ] **EN UX tool-first:** hero primary → `#creative-brief` (open builder); secondary See pricing → `#pdf-storefront`; 2 kortelės (Starter + Complete); Pro = tekstinė nuoroda; library 1/2/3/5 (display 1–4) po kits; `#cb-builder` **open**; progress of 4; 0 meme slotų; Stripe kainos/linkai nepakitę.
 - [ ] **CMO kontekstas:** Užpildyti `#cmo-context` laukus → kopijuoti promptą → įklijuotas tekstas turi konteksto bloką ir „TAISYKLĖS (privalomos)" / „RULES (non-negotiable)".
 - [ ] **Scenarijai:** `#cmo-scenarios` skirtukai veikia (klaviatūra: rodyklės); kopijavimas iš scenarijaus į clipboard.
 - [ ] **Safety blokas:** `#cmo-safety` recenzento promptas kopijuojasi.
 - [ ] **Progresas:** „Pažymėjau kaip atlikau" – varnelė įrašoma; perkrovus puslapį – progresas išsaugotas (localStorage).
 - [ ] **Skip link:** Tab iki „Praleisti į turinį" – Enter – fokusas pereina į pagrindinį turinį.
-- [ ] **Privatumas:** Veikia `lt/privatumas.html` ir `en/privacy.html`; rodomos teisingos canonical/hreflang žymos.
+- [ ] **Privatumas:** Veikia `lt/privatumas.html` ir public `/en/privacy/`; rodomos teisingos canonical/hreflang žymos (LT `hreflang="en"` = `/en/privacy/`, ne `.html`). Post-deploy: `curl -I https://promptanatomy.space/en/privacy.html` → 308 Location `/en/privacy/`.
 
 ### Prieinamumas (a11y)
 
 - [ ] **Klaviatūra:** Navigacija Tab, Enter, Esc – veikia be įstrigimo.
 - [ ] **Focus:** Matomas focus (pvz. focus-visible) ant mygtukų ir nuorodų.
-- [ ] **Pa11y:** CI bėga į `/en/` (kanonas), `/lt/` (smoke), privacy. Lokaliai release QA: `npx pa11y http://localhost:3000/en/ --standard WCAG2AA --ignore "warning"`.
+- [ ] **Pa11y:** CI bėga į `/en/` (kanonas), `/lt/` (smoke), `/en/privacy/` per `npx serve public` **be** `-s`. Lokaliai release QA: `npx serve public -l 3000` tada `npx pa11y http://127.0.0.1:3000/en/ --standard WCAG2AA --ignore "warning"`. Ne `serve -s .` — `/en/privacy/` tada gali nukristi į root `index.html`.
 
 ### UX path cut (EN kanonas, DS 1.6.1)
 
-- [ ] **Hero:** full-bleed warm paper; brand mark; sticky `#siteNav` = Workflows / Brief builder / Pricing; primary = Start the builder (`#heroCtaSpine` → `#creative-brief`); secondary = View kits (`#heroCtaBrief`); `#heroProof` su free→paid anchor; trust IDs `#heroTrustPill1/2/3` as inline muted text; `.hero-diagram` = Satori sample **image** + prompt caption (*From the brief builder* — **no** outputs row / tagline / cycle-stepper); quiet usage strip; nėra mini-prompt demo, hero Telegram nuorodos ar lang switcher.
+- [ ] **Hero:** full-bleed warm paper; brand mark; page-level sticky `#siteNav` (not hero-clipped) = Workflows / Brief builder / Pricing; primary = Build my prompt (`#heroCtaSpine` → `#creative-brief`); secondary = See pricing (`#heroCtaBrief`); `#heroProof` *Free below — no account.*; trust IDs `#heroTrustPill1/2/3` as inline muted text; `.hero-diagram` = Satori sample **image** + prompt caption (*From brief → image prompt* — **no** outputs row / tagline / cycle-stepper); quiet usage strip; nėra mini-prompt demo, hero Telegram nuorodos ar lang switcher.
 - [ ] **Type:** Fraunces display (hero H1 only) + Source Sans 3 UI (ne Inter); body ~17px; prose ne full-bleed wall.
 - [ ] **Executive summary:** `#executive-summary.objectives--skim` – quiet usage sentence only; claims = 4 workflows + brief (ne „100 assets / 45 min“).
 - [ ] **Instructions:** `#copy-tips` as optional `<details>`; **no** `#framework-schema` / provider hub.
@@ -141,4 +141,4 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - [QA_STANDARTAS.md](QA_STANDARTAS.md) – QA kriterijai ir nuoroda į spinoff01  
 - [DEPLOYMENT.md](../DEPLOYMENT.md) – kaip deploy ir kad po deploy būtų testuojama gyvai  
 
-**Paskutinis atnaujinimas:** 2026-09-02
+**Paskutinis atnaujinimas:** 2026-09-11

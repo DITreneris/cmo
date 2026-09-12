@@ -35,13 +35,37 @@ test.describe('static site smoke', () => {
     expect(errors).toEqual([]);
   });
 
+  test('en/ Improve stays prompt 5 after locale JS', async ({ page }) => {
+    await page.goto('/en/');
+    const card = page.locator('article.prompt').filter({ has: page.locator('#prompt5') });
+    await expect(card.locator('.prompt-title')).toHaveText(/Daily analysis/i);
+    await expect(card.locator('.number')).toHaveText('4');
+    await expect(page.locator('#prompt5')).toContainText(/performance analyst/i);
+    await expect(page.locator('#prompt5')).not.toContainText(/30-second script/i);
+    await expect(page.locator('#prompt1Recommended')).toHaveText(/Workflow 1 of 4/i);
+  });
+
+  test('en/ footer has no workbook chrome and keeps entity + community', async ({ page }) => {
+    await page.goto('/en/');
+    await expect(page.locator('#footerSignoff')).toHaveCount(0);
+    await expect(page.locator('#footerPlaceholderHint')).toHaveCount(0);
+    await expect(page.locator('.footer .tags')).toHaveCount(0);
+    await expect(page.locator('.footer > h3')).toHaveCount(0);
+    await expect(page.locator('.cmo-footer-crosslink')).toHaveCount(0);
+    await expect(page.locator('.cmo-kit-version')).toBeVisible();
+    await expect(page.locator('#footer-product-link')).toBeVisible();
+    await expect(page.locator('#community')).toBeVisible();
+    await expect(page.getByText(/Remember to replace/)).toHaveCount(0);
+    await expect(page.locator('.ecosystem-strip-list li')).toHaveCount(1);
+  });
+
   test('lt/ mirror loads', async ({ page }) => {
     await page.goto('/lt/');
     await expect(page.locator('#main-content')).toBeVisible();
   });
 
-  test('terms.html renders the team license anchor', async ({ page }) => {
-    await page.goto('/terms.html#paid-pdf-license');
+  test('terms/ renders the team license anchor', async ({ page }) => {
+    await page.goto('/terms/#paid-pdf-license');
     await expect(page.locator('#paid-pdf-license')).toBeVisible();
     await expect(page.getByText(/Team license/i).first()).toBeVisible();
   });
@@ -54,8 +78,8 @@ test.describe('static site smoke', () => {
     await expect(page.getByText(/\$8\.99/)).toBeVisible();
   });
 
-  test('en/privacy.html lists paid PDF processors', async ({ page }) => {
-    await page.goto('/en/privacy.html');
+  test('en/privacy/ lists paid PDF processors', async ({ page }) => {
+    await page.goto('/en/privacy/');
     await expect(page.locator('#paid-pdf-data')).toBeVisible();
     for (const processor of ['Stripe', 'Resend', 'Upstash', 'Vercel Blob']) {
       await expect(page.locator('body')).toContainText(processor);
