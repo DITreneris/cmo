@@ -1161,6 +1161,27 @@ function run() {
     else failed++;
     if (assert(!enHtmlForCommerce.includes('aggregateRating'), 'en/index.html: no fake aggregateRating')) passed++;
     else failed++;
+    if (assert(enHtmlForCommerce.includes('"validFrom":"2026-'), 'en/index.html: Offer validFrom (merchant listing)')) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('"@type":"OfferShippingDetails"'), 'en/index.html: Offer shippingDetails')) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('"@type":"ShippingDeliveryTime"'), 'en/index.html: shippingDetails deliveryTime')) passed++;
+    else failed++;
+  }
+
+  if (sot && sot.geo && sot.commerce && Array.isArray(sot.commerce.products)) {
+    const allHavePriceValidFrom = sot.commerce.products.every(function (p) {
+      return typeof p.priceValidFrom === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(p.priceValidFrom);
+    });
+    if (assert(allHavePriceValidFrom, 'sot.json: every product has ISO priceValidFrom')) passed++;
+    else failed++;
+    const validFromBeforeUntil = sot.commerce.products.every(function (p) {
+      return p.priceValidFrom.slice(0, 10) <= String(sot.geo.priceValidUntil).slice(0, 10);
+    });
+    if (assert(validFromBeforeUntil, 'sot.json: priceValidFrom <= geo.priceValidUntil')) passed++;
+    else failed++;
+    if (assert(Array.isArray(sot.geo.merchantCountries) && sot.geo.merchantCountries.length > 0, 'sot.json: geo.merchantCountries')) passed++;
+    else failed++;
   }
 
   if (sot && sot.brand) {

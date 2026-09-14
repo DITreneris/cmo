@@ -24,7 +24,8 @@
     "operatorTwitter": "https://x.com/prompt_anatomy"
   },
   "geo": {
-    "priceValidUntil": "2027-12-31"
+    "priceValidUntil": "2027-12-31",
+    "merchantCountries": ["US", "GB", "DE", "FR", "LT"]
   },
   "copy": {
     "creativeBrief": {
@@ -172,6 +173,7 @@
         "ctaLabel": "Get Starter · $3.99",
         "priceUsd": 3.99,
         "priceCents": 399,
+        "priceValidFrom": "2026-05-17T00:00:00+00:00",
         "compareAtUsd": 7.99,
         "pages": 14,
         "format": "PDF (Letter, English)",
@@ -198,6 +200,7 @@
         "ctaLabel": "Get Pro · $8.99",
         "priceUsd": 8.99,
         "priceCents": 899,
+        "priceValidFrom": "2026-05-17T00:00:00+00:00",
         "compareAtUsd": 17.99,
         "pages": 30,
         "format": "PDF + Markdown companion",
@@ -225,6 +228,7 @@
         "ctaLabel": "Get Complete · $10.99",
         "priceUsd": 10.99,
         "priceCents": 1099,
+        "priceValidFrom": "2026-05-31T00:00:00+00:00",
         "compareAtUsd": 12.98,
         "pages": 44,
         "format": "2 PDFs (Starter 14p + Pro 30p)",
