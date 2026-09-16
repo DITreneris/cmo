@@ -41,7 +41,7 @@ Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-
 | [index.html](../index.html) `applyStaticLocaleText` | EN runtime FAQ/hero strings — must sync with `frontFaq` / inject |
 | [scripts/geo-surfaces.js](../scripts/geo-surfaces.js) | robots, sitemap, llms (+ hash hubs), 404, manifest, JSON-LD |
 | [scripts/check-prod-health.js](../scripts/check-prod-health.js) | Production fulfillment-health + IndexNow key (`npm run check:prod`) |
-| [js/va-track.js](../js/va-track.js) | Named conversion events (no PII) |
+| [js/va-track.js](../js/va-track.js) | Named conversion events (no PII; `click_checkout` + `sku`) |
 | [api/_lib/fulfillment.js](../api/_lib/fulfillment.js) | Stripe fulfillment |
 | [success.html](../success.html), [terms.html](../terms.html) | Hand-edit; sync trust address with SOT |
 
@@ -98,7 +98,9 @@ Emitted by [scripts/geo-surfaces.js](../scripts/geo-surfaces.js) on every build:
 
 **JTBD SSOT:** `sot.frontFaq` / `brand-seo` / `storefrontHead` — on `/en/` only; no extra landing hubs by default ([AGENTS.md](../AGENTS.md) §10.11–13).
 
-**Forbidden:** `aggregateRating` / fake Review schema; `SoftwareApplication` login product; inventing ROI/stack stats as claims.
+**Merchant listing `Offer`:** `validFrom` = `product.priceValidFrom` (real price-effective date per SKU, ISO 8601 with offset); `priceValidUntil` = `geo.priceValidUntil` and must stay in the future. `shippingDetails` describes the digital download: `shippingRate` 0 USD, `handlingTime` / `transitTime` 0 days. `geo.merchantCountries` feeds both `shippingDestination` and `hasMerchantReturnPolicy.applicableCountry` (max 50 countries) — widen it there, not in `scripts/geo-surfaces.js`.
+
+**Forbidden:** `aggregateRating` / fake Review schema; `SoftwareApplication` login product; inventing ROI/stack stats as claims. Search Console warns about missing `aggregateRating` / `review` on all 3 Products — that is expected, not a bug to fix.
 
 IndexNow: the **real signal** is `npm run seo:indexnow` after a **Vercel** production deploy (primary host). GitHub Pages `seo:indexnow:diff` on `main` is non-blocking and is not sufficient. `npm run check:prod` asserts the hosted `{INDEXNOW_KEY}.txt` file.
 

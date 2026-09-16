@@ -275,17 +275,32 @@ function buildJsonLdGraph(sot, siteOrigin, brandSeo) {
   });
 
   const products = (sot.commerce && sot.commerce.products) || [];
+  const merchantCountries = (sot.geo && sot.geo.merchantCountries) || ['US'];
   const productNodes = products.map(function (p) {
     const offer = {
       '@type': 'Offer',
       priceCurrency: 'USD',
       price: Number(p.priceUsd).toFixed(2),
+      validFrom: p.priceValidFrom,
       priceValidUntil: sot.geo && sot.geo.priceValidUntil ? sot.geo.priceValidUntil : '2027-12-31',
       availability: 'https://schema.org/InStock',
       url: siteOrigin + '/en/#pdf-storefront',
+      // Digital download: no carrier, no shipping fee, link emailed the same minute.
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'USD' },
+        shippingDestination: merchantCountries.map(function (country) {
+          return { '@type': 'DefinedRegion', addressCountry: country };
+        }),
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' },
+          transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' }
+        }
+      },
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
-        applicableCountry: 'US',
+        applicableCountry: merchantCountries,
         returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
         merchantReturnDays: 14,
         returnMethod: 'https://schema.org/ReturnByMail',

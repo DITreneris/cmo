@@ -2797,16 +2797,6 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                     syncBarForPrompt('prompt1');
                 })();
 
-                document.addEventListener('click', function (event) {
-                    var target = event.target;
-                    if (!target || !target.closest) return;
-                    var cta = target.closest('.pdf-card-cta[data-product-id="starter"]');
-                    if (!cta) return;
-                    if (typeof window.trackEvent === 'function') {
-                        window.trackEvent('click_starter');
-                    }
-                });
-
             });
         })();
     </script>

@@ -502,6 +502,22 @@ function run() {
   const vaTrackJs = path.join(__dirname, '..', 'js', 'va-track.js');
   if (assert(fs.existsSync(vaTrackJs), 'js/va-track.js egzistuoja')) passed++;
   else failed++;
+  const vaTrackSrc = readFile(vaTrackJs);
+  if (assert(
+    vaTrackSrc &&
+      vaTrackSrc.includes("trackEvent('click_checkout'") &&
+      vaTrackSrc.includes('starter: true') &&
+      vaTrackSrc.includes('bundle: true') &&
+      vaTrackSrc.includes('pro: true') &&
+      vaTrackSrc.includes('ALLOWED_SKU') &&
+      !/payload\.data\s*=\s*data/.test(vaTrackSrc),
+    'js/va-track.js: click_checkout su sku enum (be PII)'
+  )) passed++;
+  else failed++;
+  if (assert(!html.includes("trackEvent('click_starter')"), 'index.html nebedubliuoja click_starter')) passed++;
+  else failed++;
+  if (assert(enHtml !== null && !enHtml.includes("trackEvent('click_starter')"), 'en/index.html nebedubliuoja click_starter')) passed++;
+  else failed++;
   if (assert(html.includes('src="js/va-track.js"'), 'index.html įtraukia js/va-track.js')) passed++;
   else failed++;
   if (assert(enHtml !== null && enHtml.includes('src="../js/va-track.js"'), 'en/index.html – santykinis kelias į va-track.js')) passed++;
@@ -1160,6 +1176,27 @@ function run() {
     if (assert(enHtmlForCommerce.includes('"@type":"Product"'), 'en/index.html: Product schema')) passed++;
     else failed++;
     if (assert(!enHtmlForCommerce.includes('aggregateRating'), 'en/index.html: no fake aggregateRating')) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('"validFrom":"2026-'), 'en/index.html: Offer validFrom (merchant listing)')) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('"@type":"OfferShippingDetails"'), 'en/index.html: Offer shippingDetails')) passed++;
+    else failed++;
+    if (assert(enHtmlForCommerce.includes('"@type":"ShippingDeliveryTime"'), 'en/index.html: shippingDetails deliveryTime')) passed++;
+    else failed++;
+  }
+
+  if (sot && sot.geo && sot.commerce && Array.isArray(sot.commerce.products)) {
+    const allHavePriceValidFrom = sot.commerce.products.every(function (p) {
+      return typeof p.priceValidFrom === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(p.priceValidFrom);
+    });
+    if (assert(allHavePriceValidFrom, 'sot.json: every product has ISO priceValidFrom')) passed++;
+    else failed++;
+    const validFromBeforeUntil = sot.commerce.products.every(function (p) {
+      return p.priceValidFrom.slice(0, 10) <= String(sot.geo.priceValidUntil).slice(0, 10);
+    });
+    if (assert(validFromBeforeUntil, 'sot.json: priceValidFrom <= geo.priceValidUntil')) passed++;
+    else failed++;
+    if (assert(Array.isArray(sot.geo.merchantCountries) && sot.geo.merchantCountries.length > 0, 'sot.json: geo.merchantCountries')) passed++;
     else failed++;
   }
 

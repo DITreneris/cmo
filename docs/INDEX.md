@@ -20,7 +20,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0–�
 |---------|----------|
 | Naujas projekte | [README.md](../README.md) (**EN**, GitHub) → tada šį indeksą |
 | Orchestrator / prioritetai | [roadmap.md](../roadmap.md) (R1–R4 + Audit mapping) + [todo.md](../todo.md) (aktyvus R1 Stripe; R1-support leftovers) + [AGENTS.md](../AGENTS.md) §0.2 |
-| AI agentas (Cursor ir kt.) | [.cursorrules](../.cursorrules) + [AGENTS.md](../AGENTS.md) (§0.1 free surface, §0.2 roadmap, §10 lessons incl. JTBD/GEO + §10.14–21 R1-support) + [AGENT_SOT.md](AGENT_SOT.md) + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 |
+| AI agentas (Cursor ir kt.) | [.cursorrules](../.cursorrules) + [AGENTS.md](../AGENTS.md) (§0.1 free surface, §0.2 roadmap, §10 lessons incl. JTBD/GEO + §10.14–22 R1-support) + [AGENT_SOT.md](AGENT_SOT.md) + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 |
 | Keiti tik angliškus tekstus / promptus (kanonas) | [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0 + [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + [`BULLET_PROOF_PROMPTS.md`](BULLET_PROOF_PROMPTS.md) |
 | Keiti LT (retas snapshot refresh) | Orchestrator scope + [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §4 |
 | Keiti EN promptų `<pre>` turinį | [`../data/en-prompt-bodies.json`](../data/en-prompt-bodies.json) → `npm run build` |
@@ -29,6 +29,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0–�
 | **Keiti mokamą PDF tarpinę (kainos, license, Stripe)** | [`config/sot.json`](../config/sot.json) + [`LEGACY_GOLDEN_STANDARD.md` §7](LEGACY_GOLDEN_STANDARD.md); architektūra: [`memo_pdf.md`](../memo_pdf.md) (**reference**, ne go-live pirmas žingsnis) |
 | **Pridėti / atnaujinti PDF turinį** | Operator-local [`docs/pdf-source/*.html`](pdf-source/README.md) (gitignored) → `npm run pdf:export` (14/30 page-count gate). Covers stay in `assets/pdf-covers/`. |
 | **Pozicionavimas / pasiūlymo architektūra** | [`docs/PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) + [`docs/OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md) |
+| **Marketing article (publish draft)** | [`docs/articles/content-ai-system.md`](articles/content-ai-system.md) — EN piece for LinkedIn / blog. Not live `/en/` copy. |
 | **EN creative brief builder (`#creative-brief`)** | Po hero, prieš `#pdf-storefront` (`#cb-builder` open) — [`docs/CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md) + [`config/sot.json`](../config/sot.json) `copy.creativeBrief` + [`js/creative-brief.js`](../js/creative-brief.js) |
 | **Įvesti live Stripe / R1 go-live** | [docs/GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md) (komandų seka) → [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) (Dashboard + env SSOT) → [`config/sot.json`](../config/sot.json) + [todo.md](../todo.md) + [DEPLOYMENT.md §2.5](../DEPLOYMENT.md). `memo_pdf` = reference only |
 | **Produkto roadmap** | [roadmap.md](../roadmap.md) — Ambition A→E→light B→C |
