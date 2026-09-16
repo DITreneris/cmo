@@ -32,7 +32,7 @@ This document tracks visual identity alignment with the Prompt Anatomy brand hub
 | `favicon.svg` | **Derivative** of mother `frontend/public/favicon.svg` | Same lightning mark; ink `#0B1320` + gold `#CFA73A` (replaces legacy teal `#008579`) |
 | `favicon-*.png`, `apple-touch-icon.png`, `android-chrome-*.png` | Generated: `npm run icons:export` | From local SVG |
 | `site.webmanifest` | Local; `theme_color` `#0B1320` | `short_name`: PA Library |
-| `og.png` | Generated: `npm run generate:og` | Product subline from `brand-seo.json`; colors from `design-tokens.json` |
+| `og.png` | Generated: `npm run generate:og` | Job headline + free-surface subline from `brand-seo.json` `ogVisual` (no price); colors from `design-tokens.json` |
 | Mother `og-image.png` | Reference only | `.app` social preview; not copied to `.space` |
 
 ---

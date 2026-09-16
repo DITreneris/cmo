@@ -417,6 +417,15 @@ function run() {
     'en/index.html – brand SEO alt (be MVP CMO Kit / 45 min slogan)'
   )) passed++;
   else failed++;
+  if (brandSeo && assert(
+    brandSeo.ogVisual &&
+      !JSON.stringify(brandSeo.ogVisual).includes('$') &&
+      !brandSeo.ogImageAlt.includes('$') &&
+      !/\d+\.\d{2}/.test(JSON.stringify(brandSeo.ogVisual)) &&
+      !/\d+\.\d{2}/.test(brandSeo.ogImageAlt),
+    'OG visual/alt must not mention price'
+  )) passed++;
+  else failed++;
   if (enHtml && brandSeo && assert(
     enHtml.includes('<title>' + brandSeo.title + '</title>'),
     'en/index.html – brand SEO title iš config/brand-seo.json'
