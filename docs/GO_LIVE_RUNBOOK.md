@@ -85,7 +85,7 @@ Pages workflow ping is non-blocking and is not the primary signal.
 
 ## Analytics (optional, not R1 exit)
 
-Enable **Vercel Web Analytics** on the project dashboard so `copy_prompt_1`, `open_brief`, `click_starter`, and `success_download` appear. Snippet injects only into `public/` HTML.
+Enable **Vercel Web Analytics** on the project dashboard so `copy_prompt_1`, `open_brief`, `click_checkout` (`data.sku` = `starter` \| `bundle` \| `pro`), and `success_download` appear. Snippet injects only into `public/` HTML. MCP: `dataset=events`, `by=eventName` or `by=eventData/sku`.
 
 ---
 

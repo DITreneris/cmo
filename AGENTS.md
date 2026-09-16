@@ -1,7 +1,7 @@
 # Agentų Sistemos Modelis – Apžvalga
 
 **Projektas:** DI Promptų Biblioteka (Turinio DI sistema – CMO rinkinys)  
-**Šio dokumento versija:** 1.5.7 (EN kanonas; tool-first CEO IA; atidarytas brief; 2 storefront kortelės; DS 1.6.1; JTBD/GEO; R1-support 4; root `/` → `/en/`; LT užšaldyta)  
+**Šio dokumento versija:** 1.5.8 (EN kanonas; tool-first CEO IA; `click_checkout` visoms SKU; atidarytas brief; 2 storefront kortelės; DS 1.6.1; JTBD/GEO; R1-support 4; root `/` → `/en/`; LT užšaldyta)  
 **Kalba:** LT
 
 ---
@@ -222,7 +222,8 @@ Keičiant **turinį** – atsakingas Content Agent; keičiant **struktūrą arba
 19. **Gold is surface, not text.** STYLEGUIDE **1.6.1**: gold ≈ CTA fill, selected/focus ring, left-edge / border accents. Link and body `color` = `--color-text-primary` (ink). Gold-on-light as link text fails WCAG AA (~2.17:1). Do not treat this as Audit P2 (full inline-`<style>` deletion) — that stays parked with template migration.
 20. **Ecosystem demotion.** `#ecosystem-strip` is methodology + quiet Leader related. Telegram lives in `#community`; email lives in the footer. Do not re-add mailbox/Telegram into the strip. Leader and other kits stay quiet related lines, not equal CTAs next to Pricing. Intro copy may state that checkout stays on this page.
 21. **Root never negotiates LT.** `/` → `/en/` in [`vercel.json`](vercel.json) and `redirectRootToLocale`. Do not restore `Accept-Language: .*lt.*` or `prefersLithuanianBrowser()`. `/lt/` is archive — direct URL only. Lithuanian Windows/Chrome would otherwise land on the frozen snapshot (no storefront).
+22. **Vercel events = visos SKU.** Project **cmo** / `promptanatomy.space`. First-use = `open_brief`, not `copy_prompt_1`. Checkout = `click_checkout` + `data.sku` (`starter` \| `bundle` \| `pro`) in [`js/va-track.js`](js/va-track.js). Do not restore `click_starter` (it hid Complete/Pro). No PII, no PostHog dual-write, no Web Analytics Plus. MCP: `dataset=events`, `by=eventName` or `by=eventData/sku` (`count` has no bounce %). Purchase truth = Stripe webhook, not `success_download`. After `npm test`, restore `lt/index.html` if locale build stripped the dead handler (LT freeze).
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-09-11 (v1.5.7 – tool-first CEO IA; docs hygiene: R3 exit = open brief; Commerce SSOT stack)
+**Paskutinis atnaujinimas:** 2026-09-16 (v1.5.8 – Vercel `click_checkout` visoms SKU)

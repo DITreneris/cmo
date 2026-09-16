@@ -55,7 +55,7 @@ Copy/ops only. Do not reopen path-cut decisions.
 
 - [x] **Footer / BRAND_SYNC:** shipped EN footer is “Methodology at promptanatomy.app”. Docs match code. Never send checkout to `.app`.
 - [x] **Bundle saving:** state `$12.98` separately vs `$10.99` together — copy only, **no** comparison table on page. *(2026-09-03: `compareAtUsd` 12.98 + `separately $12.98` price line)*
-- [x] **Analytics (Orchestrator decide):** Vercel Web Analytics events `copy_prompt_1` / `open_brief` / `click_starter` / `success_download` (`js/va-track.js`). Enable the dashboard toggle. Not R1 exit.
+- [x] **Analytics (Orchestrator decide):** Vercel Web Analytics events `copy_prompt_1` / `open_brief` / `click_checkout` (`sku`: starter \| bundle \| pro) / `success_download` (`js/va-track.js`). Enable the dashboard toggle. Not R1 exit.
 - [x] **Root → /en/:** no Accept-Language / navigator.language dump to frozen `/lt/` (2026-09-03). `/lt/` remains direct-URL archive only.
 
 ## R1-support 4 — craft atmosphere (2026-09-03)

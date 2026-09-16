@@ -502,6 +502,22 @@ function run() {
   const vaTrackJs = path.join(__dirname, '..', 'js', 'va-track.js');
   if (assert(fs.existsSync(vaTrackJs), 'js/va-track.js egzistuoja')) passed++;
   else failed++;
+  const vaTrackSrc = readFile(vaTrackJs);
+  if (assert(
+    vaTrackSrc &&
+      vaTrackSrc.includes("trackEvent('click_checkout'") &&
+      vaTrackSrc.includes('starter: true') &&
+      vaTrackSrc.includes('bundle: true') &&
+      vaTrackSrc.includes('pro: true') &&
+      vaTrackSrc.includes('ALLOWED_SKU') &&
+      !/payload\.data\s*=\s*data/.test(vaTrackSrc),
+    'js/va-track.js: click_checkout su sku enum (be PII)'
+  )) passed++;
+  else failed++;
+  if (assert(!html.includes("trackEvent('click_starter')"), 'index.html nebedubliuoja click_starter')) passed++;
+  else failed++;
+  if (assert(enHtml !== null && !enHtml.includes("trackEvent('click_starter')"), 'en/index.html nebedubliuoja click_starter')) passed++;
+  else failed++;
   if (assert(html.includes('src="js/va-track.js"'), 'index.html įtraukia js/va-track.js')) passed++;
   else failed++;
   if (assert(enHtml !== null && enHtml.includes('src="../js/va-track.js"'), 'en/index.html – santykinis kelias į va-track.js')) passed++;

@@ -41,7 +41,7 @@ Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-
 | [index.html](../index.html) `applyStaticLocaleText` | EN runtime FAQ/hero strings — must sync with `frontFaq` / inject |
 | [scripts/geo-surfaces.js](../scripts/geo-surfaces.js) | robots, sitemap, llms (+ hash hubs), 404, manifest, JSON-LD |
 | [scripts/check-prod-health.js](../scripts/check-prod-health.js) | Production fulfillment-health + IndexNow key (`npm run check:prod`) |
-| [js/va-track.js](../js/va-track.js) | Named conversion events (no PII) |
+| [js/va-track.js](../js/va-track.js) | Named conversion events (no PII; `click_checkout` + `sku`) |
 | [api/_lib/fulfillment.js](../api/_lib/fulfillment.js) | Stripe fulfillment |
 | [success.html](../success.html), [terms.html](../terms.html) | Hand-edit; sync trust address with SOT |
 
