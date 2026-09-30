@@ -57,14 +57,25 @@ Fix high/critical before release. Document exceptions in CHANGELOG if deferred.
 - [api/stripe-webhook.js](../api/stripe-webhook.js) — raw body + Stripe signature verification.
 - Idempotent fulfillment via Redis — duplicate webhooks must not double-send email.
 - Shared Stripe account status mapping:
-  - `ignored` (unknown / foreign product) → **200** (stop retries)
-  - `fulfilled` / `already_fulfilled` / `not_paid` → **200**
+  - `ignored` (unknown / foreign product, partial refund, or refund with no CMO record) → **200** (stop retries)
+  - `fulfilled` / `already_fulfilled` / `not_paid` / `revoked` → **200**
   - `locked` (Redis NX contention) → **503** (Stripe retries)
 - Product identity order: CMO `price.id` → optional `payment_link` allowlist → `metadata.product` (metadata alone is vetoed when line items carry a foreign price id). Never match on dollar amount.
+- Endpoint in Stripe Dashboard must be `https://www.promptanatomy.space/api/stripe-webhook`. Apex returns 307; Stripe does not follow it. Subscribe `checkout.session.completed`, `checkout.session.async_payment_succeeded`, and `charge.refunded`.
+- A full refund (`charge.refunded` with `refunded: true`) sets fulfillment `revoked` when a `fulfillment-by-pi:` index exists (purchases after this deploy). That stops new success-page links and rejects existing email tokens. A partial refund does not revoke. A replay of the checkout event does not send another email.
+
+## Download links
+
+- Email links stay valid for 7 days and are reusable.
+- `GET /api/download-link` re-mints a 15-minute link for 24 hours after `fulfilledAt`. Older records with no `fulfilledAt` still re-mint.
+- Rate limit: 120 requests / 10 minutes per IP, 30 mints / hour per Checkout session. Over the limit → **429**.
+- Revoked or closed re-mint → **403** with a generic error. Public download routes do not return `detail`.
+- Download URL host follows `SITE_URL` when set. Otherwise only `promptanatomy.space`, `www.promptanatomy.space`, `localhost`, and `127.0.0.1`.
+- `pro-md` is allowed only when the purchase includes the Markdown companion (Pro and Complete).
 
 ## Follow-up cron
 
-- [api/fulfillment-followup.js](../api/fulfillment-followup.js) — when `FULFILLMENT_FOLLOWUP_ENABLED=1`, `CRON_SECRET` is **required** and must match `Authorization: Bearer …` (otherwise **401**).
+- [api/fulfillment-followup.js](../api/fulfillment-followup.js) — `CRON_SECRET` is **required on every call** and must match `Authorization: Bearer …` (timing-safe compare, otherwise **401**). Set the env var in Vercel or the daily cron returns 401. `FULFILLMENT_FOLLOWUP_ENABLED=1` still decides whether emails send. Due jobs are listed with Redis `SCAN`, not `KEYS`.
 
 ---
 

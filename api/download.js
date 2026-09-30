@@ -27,10 +27,7 @@ module.exports = async function handler(req, res) {
 
   const missing = listMissingFulfillmentEnv();
   if (missing.length) {
-    return res.status(500).json({
-      error: 'Fulfillment is not configured',
-      detail: missing
-    });
+    return res.status(500).json({ error: 'Fulfillment is not configured' });
   }
 
   const token =
@@ -45,9 +42,11 @@ module.exports = async function handler(req, res) {
   try {
     resolved = await resolveDownload(token);
   } catch (error) {
-    const message = error && error.message ? String(error.message) : 'Invalid token';
+    const message = error && error.message ? String(error.message) : '';
+    console.error('[download] token rejected:', message);
     const status = /expired/i.test(message) ? 410 : 403;
-    return res.status(status).json({ error: message });
+    const errorText = status === 410 ? 'Download link has expired' : 'Download link is not valid';
+    return res.status(status).json({ error: errorText });
   }
 
   let payload;
@@ -55,10 +54,7 @@ module.exports = async function handler(req, res) {
     payload = await loadProductPdf(resolved.product);
   } catch (error) {
     console.error('[download] PDF load failed:', error && error.message);
-    return res.status(503).json({
-      error: 'PDF temporarily unavailable',
-      detail: error && error.message ? String(error.message) : 'unknown'
-    });
+    return res.status(503).json({ error: 'PDF temporarily unavailable' });
   }
 
   res.setHeader('Content-Type', payload.contentType || 'application/pdf');

@@ -115,6 +115,16 @@ if (typeof fulfillment.getSiteUrl === 'function') {
     typeof fallback === 'string' && /^https:\/\/promptanatomy\.space\/?$/.test(fallback),
     'getSiteUrl falls back to https://promptanatomy.space when SITE_URL is unset'
   );
+  const evil = fulfillment.getSiteUrl('https://evil.example/phish');
+  check(
+    typeof evil === 'string' && !/evil\.example/.test(evil) && /^https:\/\/promptanatomy\.space\/?$/.test(evil),
+    'getSiteUrl ignores a non-allowlisted origin when SITE_URL is unset'
+  );
+  const wwwOrigin = fulfillment.getSiteUrl('https://www.promptanatomy.space/');
+  check(
+    wwwOrigin === 'https://www.promptanatomy.space',
+    'getSiteUrl keeps an allowlisted www origin when SITE_URL is unset'
+  );
   if (SAVED_SITE_URL !== undefined) process.env.SITE_URL = SAVED_SITE_URL;
 }
 
@@ -134,13 +144,23 @@ check(
   /result\.status\s*===\s*['"]locked['"]/.test(webhookSrc) && /status\(503\)/.test(webhookSrc),
   'stripe-webhook returns 503 for locked (Stripe retries)'
 );
+check(
+  /charge\.refunded/.test(webhookSrc) && /revokeFulfillmentByCharge/.test(webhookSrc),
+  'stripe-webhook handles charge.refunded on its own branch'
+);
+check(
+  /fulfillCheckoutSession/.test(webhookSrc) && /CHECKOUT_EVENTS/.test(webhookSrc),
+  'checkout events still call fulfillCheckoutSession'
+);
 
 const followupSrc = readText(FOLLOWUP_PATH);
 check(
-  /FULFILLMENT_FOLLOWUP_ENABLED\s*===\s*['"]1['"]/.test(followupSrc) &&
-    /CRON_SECRET/.test(followupSrc) &&
-    /status\(401\)/.test(followupSrc),
-  'fulfillment-followup requires CRON_SECRET when follow-ups enabled (401)'
+  /CRON_SECRET/.test(followupSrc) &&
+    /timingSafeEqual/.test(followupSrc) &&
+    /status\(401\)/.test(followupSrc) &&
+    !/FULFILLMENT_FOLLOWUP_ENABLED/.test(followupSrc) &&
+    !/detail:\s*['"]CRON_SECRET/.test(followupSrc),
+  'fulfillment-followup requires CRON_SECRET on every call (401, timing-safe)'
 );
 
 const dlSrc = readText(DOWNLOAD_PATH);
@@ -159,6 +179,49 @@ check(
   /productIncludesMdCompanion/.test(getDownloadFn) && /pro-md/.test(getDownloadFn),
   'getDownloadUrlBySessionId mints pro-md when companion asset exists'
 );
+check(/REMINT_CLOSED/.test(getDownloadFn), 'getDownloadUrlBySessionId closes re-mint after the window');
+check(/REVOKED/.test(fulfillmentSrc), 'revoked fulfillment is a distinct download-link error');
+check(
+  !/\.concat\(\s*\[\s*['"]pro-md['"]\s*\]\s*\)/.test(fulfillmentSrc),
+  'resolveDownload does not append pro-md to every purchase'
+);
+check(!/redis\.keys\(/.test(fulfillmentSrc), 'follow-up lookup does not use redis.keys');
+check(/redis\.scan\(/.test(fulfillmentSrc), 'follow-up lookup uses redis.scan');
+check(
+  /status === ['"]revoked['"]/.test(fulfillmentSrc),
+  'revoked fulfillment is terminal in fulfillCheckoutSession'
+);
+if (typeof fulfillment.allowedProductIdsForFulfillment === 'function') {
+  const starterAllowed = fulfillment.allowedProductIdsForFulfillment({
+    productId: 'starter',
+    deliverProductIds: ['starter']
+  });
+  check(
+    starterAllowed.indexOf('starter') !== -1 && starterAllowed.indexOf('pro-md') === -1,
+    'starter allowlist excludes pro-md'
+  );
+  const proAllowed = fulfillment.allowedProductIdsForFulfillment({
+    productId: 'pro',
+    deliverProductIds: ['pro']
+  });
+  check(
+    proAllowed.indexOf('pro') !== -1 && proAllowed.indexOf('pro-md') !== -1,
+    'pro allowlist includes pro-md'
+  );
+  const bundleAllowed = fulfillment.allowedProductIdsForFulfillment({
+    productId: 'bundle',
+    deliverProductIds: ['starter', 'pro']
+  });
+  check(bundleAllowed.indexOf('pro-md') !== -1, 'bundle allowlist includes pro-md');
+}
+const successSrc = readText(path.join(ROOT, 'success.html'));
+check(/\/api\/download-link/.test(successSrc), 'success.html calls /api/download-link');
+check(
+  /isSafeDownloadHref/.test(successSrc) && /indexOf\('\/api\/download'\) === 0/.test(successSrc),
+  'success.html accepts a relative /api/download href'
+);
+check(!/\bdetail:/.test(readText(DOWNLOAD_PATH)), 'download route does not return error detail');
+check(!/\bdetail:/.test(readText(DOWNLOAD_LINK_PATH)), 'download-link route does not return error detail');
 check(
   typeof fulfillment.getProductFromSession === 'function',
   'fulfillment exports getProductFromSession (shared-account isolation)'

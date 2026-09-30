@@ -37,7 +37,7 @@ Paste the printed `ENV=url` lines into Vercel → Production → Environment Var
 
 ## 4. Stripe Dashboard leftovers
 
-Do the remaining boxes in [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md#stripe-dashboard): success URL on **www**, webhook `https://www.promptanatomy.space/api/stripe-webhook`, `metadata.product`, `price_…` / `whsec_…`. Shared Stripe account: foreign SKUs must ACK as `ignored` (**200**, not 500); Redis lock contention must return **503** so Stripe retries.
+Do the remaining boxes in [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md#stripe-dashboard): success URL on **www**, webhook `https://www.promptanatomy.space/api/stripe-webhook` (not the apex host — it 307s and Stripe does not follow redirects), events `checkout.session.completed`, `checkout.session.async_payment_succeeded`, and `charge.refunded`, `metadata.product`, `price_…` / `whsec_…`. Set `CRON_SECRET` so `/api/fulfillment-followup` is not 401. Shared Stripe account: foreign SKUs must ACK as `ignored` (**200**, not 500); Redis lock contention must return **503** so Stripe retries. A full `charge.refunded` revokes download links only when this deploy stored `fulfillment-by-pi:` for that payment.
 
 ## 5. Local fulfillment probe
 

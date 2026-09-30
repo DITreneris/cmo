@@ -3,10 +3,23 @@
 /**
  * GET /api/fulfillment-followup
  * Vercel Cron: sends due Starter post-purchase follow-up emails (Day 3 / Day 7).
- * When FULFILLMENT_FOLLOWUP_ENABLED=1, CRON_SECRET is required (Bearer match → 401).
+ * CRON_SECRET is required on every call (Bearer match → 401), even when follow-ups are off.
  */
 
+const crypto = require('crypto');
 const { processDueFollowups, listMissingFulfillmentEnv } = require('./_lib/fulfillment');
+
+/**
+ * Compare SHA-256 digests so a length mismatch cannot skip the constant-time check.
+ * @param {string} authHeader
+ * @param {string} secret
+ * @returns {boolean}
+ */
+function bearerMatches(authHeader, secret) {
+  const expectedHash = crypto.createHash('sha256').update(`Bearer ${secret}`, 'utf8').digest();
+  const actualHash = crypto.createHash('sha256').update(String(authHeader || ''), 'utf8').digest();
+  return crypto.timingSafeEqual(expectedHash, actualHash);
+}
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET' && req.method !== 'POST') {
@@ -14,21 +27,9 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const followupsEnabled = process.env.FULFILLMENT_FOLLOWUP_ENABLED === '1';
   const cronSecret = process.env.CRON_SECRET;
-  if (followupsEnabled) {
-    if (!cronSecret) {
-      return res.status(401).json({ error: 'Unauthorized', detail: 'CRON_SECRET required' });
-    }
-    const auth = req.headers.authorization || '';
-    if (auth !== `Bearer ${cronSecret}`) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-  } else if (cronSecret) {
-    const auth = req.headers.authorization || '';
-    if (auth !== `Bearer ${cronSecret}`) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
+  if (!cronSecret || !bearerMatches(req.headers.authorization || '', cronSecret)) {
+    return res.status(401).json({ error: 'Unauthorized' });
   }
 
   const missing = listMissingFulfillmentEnv();
