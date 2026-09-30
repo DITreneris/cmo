@@ -244,8 +244,8 @@ Koreguojant `.code-block` ar `.prompt` CSS – patikrinti `tests/design-system-s
 
 | Route | HTTP | Specifikuotas elgesys |
 |-------|------|----------------------|
-| `/api/stripe-webhook` | POST | `bodyParser: false` (raw body); validuoja `Stripe-Signature`; idempotent per Redis lock + `fulfillment:cs_*` būseną; pasirašo download token, įrašo metaduomenis su 7 d. TTL, siunčia Resend laišką. |
-| `/api/download-link` | GET `?session_id=...` | Polling endpoint success.html'ui. 200 + `{ url, downloadUrl, downloads[] }` jei paruošta (`url === downloadUrl`; `downloads` – vienas įrašas per failą, bundle = Starter + Pro); 202 jei vis dar fulfillment'as; 404 jei session nežinoma; 500 server klaidoms. Jokios autentikacijos – tik per session_id. |
+| `/api/stripe-webhook` | POST | `bodyParser: false` (raw body); validuoja `Stripe-Signature`; idempotent per Redis lock + `fulfillment:cs_*` būseną; pasirašo download token, įrašo metaduomenis su 7 d. TTL, siunčia Resend laišką. `charge.refunded` (pilnas refund) → `revoked`, jei yra `fulfillment-by-pi:`. Checkout kelias lieka atskiras (`ignored` → 200, `locked` → 503). |
+| `/api/download-link` | GET `?session_id=...` | Polling endpoint success.html'ui. 200 + `{ url, downloadUrl, downloads[] }` jei paruošta (`url === downloadUrl`; `downloads` – vienas įrašas per failą, bundle = Starter + Pro); 202 jei vis dar fulfillment'as; 403 jei `revoked` arba 24 val. re-mint langas uždarytas; 404 jei session nežinoma; 429 jei IP ar session limitas; 500 server klaidoms. Jokio `detail`. Jokios autentikacijos – tik per session_id. |
 | `/api/download` | GET `?t=<signed>` | Validuoja HMAC parašą + Redis token metaduomenis; load'ina PDF iš `PDF_CMO_*_SOURCE_URL` (Vercel Blob private URL); siunčia bytes su `Cache-Control: private, no-store`; suvartoja `download-token:jti` (single-use). |
 | `/api/fulfillment-health` | GET | Vieša sveikatos patikra. JSON: `{ ok, redis: "PONG"\|null, missing: [env], siteUrl }`. Jokios autentikacijos. |
 

@@ -18,7 +18,8 @@ const {
   assertFulfillmentConfigured,
   fulfillCheckoutSession,
   listMissingFulfillmentEnv,
-  getSiteUrl
+  getSiteUrl,
+  revokeFulfillmentByCharge
 } = require('./_lib/fulfillment');
 
 module.exports.config = {
@@ -27,10 +28,11 @@ module.exports.config = {
   }
 };
 
-const RELEVANT_EVENTS = new Set([
+const CHECKOUT_EVENTS = new Set([
   'checkout.session.completed',
   'checkout.session.async_payment_succeeded'
 ]);
+const REFUND_EVENT = 'charge.refunded';
 
 function getStripe() {
   if (!process.env.STRIPE_SECRET_KEY) {
@@ -102,7 +104,7 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  if (!RELEVANT_EVENTS.has(event.type)) {
+  if (!CHECKOUT_EVENTS.has(event.type) && event.type !== REFUND_EVENT) {
     return res.status(200).json({ received: true, ignored: event.type });
   }
 
@@ -127,8 +129,29 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  const session = event.data && event.data.object ? event.data.object : null;
-  const sessionId = session && session.id ? session.id : null;
+  const object = event.data && event.data.object ? event.data.object : null;
+
+  if (event.type === REFUND_EVENT) {
+    try {
+      const result = await revokeFulfillmentByCharge(object);
+      const payload = {
+        received: true,
+        eventType: event.type,
+        fulfillment: result.status
+      };
+      if (result.sessionId) payload.sessionId = result.sessionId;
+      if (result.reason) payload.reason = result.reason;
+      return res.status(200).json(payload);
+    } catch (error) {
+      console.error('[stripe-webhook] refund revoke error:', error && error.stack ? error.stack : error);
+      return res.status(500).json({
+        error: 'Fulfillment failed',
+        detail: error && error.message ? String(error.message) : 'unknown'
+      });
+    }
+  }
+
+  const sessionId = object && object.id ? object.id : null;
   if (!sessionId) {
     return res.status(400).json({ error: 'Event has no session id' });
   }

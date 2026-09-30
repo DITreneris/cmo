@@ -71,6 +71,22 @@
             var MAX_ATTEMPTS = 30;
             var INITIAL_DELAY_MS = 1500;
 
+            function isSafeDownloadHref(href) {
+                if (!href || typeof href !== 'string') return false;
+                if (href.charAt(0) === '/' && href.indexOf('/api/download') === 0 && href.indexOf('//') !== 0) {
+                    return true;
+                }
+                try {
+                    var url = new URL(href, window.location.href);
+                    if ((url.pathname || '').indexOf('/api/download') !== 0) return false;
+                    var host = url.hostname.toLowerCase();
+                    if (host === window.location.hostname.toLowerCase()) return true;
+                    return host === 'promptanatomy.space' || host === 'www.promptanatomy.space';
+                } catch (err) {
+                    return false;
+                }
+            }
+
             function poll(delay) {
                 attempts++;
                 setTimeout(function () {
@@ -83,7 +99,7 @@
                             if (resp.status === 200) {
                                 return resp.json().then(function (json) {
                                     var href = json && (json.downloadUrl || json.url);
-                                    if (href) {
+                                    if (href && isSafeDownloadHref(href)) {
                                         downloadBtn.href = href;
                                         var extras = json.downloads && json.downloads.length ? json.downloads : [];
                                         var oldExtras = downloadArea.querySelectorAll('a[data-extra-download]');
@@ -94,7 +110,7 @@
                                             var after = downloadBtn;
                                             for (var j = 1; j < extras.length; j++) {
                                                 var item = extras[j];
-                                                if (!item || !item.url) continue;
+                                                if (!item || !item.url || !isSafeDownloadHref(item.url)) continue;
                                                 var extra = document.createElement('a');
                                                 extra.className = 'satellite-back';
                                                 extra.setAttribute(

@@ -30,6 +30,18 @@ const IN_PAGE_DOWNLOAD_TOKEN_TTL_SECONDS = Number(
 const REDIS_STATE_TTL_SECONDS = Number(
   process.env.FULFILLMENT_STATE_TTL_SECONDS || 60 * 60 * 24 * 90
 );
+/** Success-page re-mint window. Email tokens keep DOWNLOAD_TOKEN_TTL_SECONDS. */
+const IN_PAGE_REMINT_WINDOW_SECONDS = 60 * 60 * 24;
+const DOWNLOAD_LINK_IP_LIMIT = 120;
+const DOWNLOAD_LINK_IP_WINDOW_SECONDS = 60 * 10;
+const DOWNLOAD_LINK_MINT_LIMIT = 30;
+const DOWNLOAD_LINK_MINT_WINDOW_SECONDS = 60 * 60;
+const DOWNLOAD_URL_HOSTS = {
+  'promptanatomy.space': true,
+  'www.promptanatomy.space': true,
+  localhost: true,
+  '127.0.0.1': true
+};
 
 const PRODUCTS = {
   starter: {
@@ -392,11 +404,87 @@ async function releaseLock(key) {
   await getRedis().del(key);
 }
 
+function codedError(code, message) {
+  const error = new Error(message);
+  error.code = code;
+  return error;
+}
+
+function originHostAllowed(origin) {
+  try {
+    const url = new URL(origin);
+    return !!DOWNLOAD_URL_HOSTS[url.hostname.toLowerCase()];
+  } catch (_error) {
+    return false;
+  }
+}
+
 function getSiteUrl(origin) {
   if (process.env.SITE_URL) return process.env.SITE_URL.replace(/\/$/, '');
-  if (origin) return origin.replace(/\/$/, '');
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  if (origin && originHostAllowed(origin)) return String(origin).replace(/\/$/, '');
+  if (process.env.VERCEL_URL) {
+    const vercelOrigin = `https://${process.env.VERCEL_URL}`;
+    if (originHostAllowed(vercelOrigin)) return vercelOrigin.replace(/\/$/, '');
+  }
   return 'https://promptanatomy.space';
+}
+
+function paymentIntentIdFrom(value) {
+  if (!value) return null;
+  if (typeof value === 'string') return value;
+  if (typeof value === 'object' && value.id) return String(value.id);
+  return null;
+}
+
+/**
+ * @param {string} key
+ * @param {number} limit
+ * @param {number} windowSeconds
+ * @returns {Promise<boolean>}
+ */
+async function consumeRateLimit(key, limit, windowSeconds) {
+  const redis = getRedis();
+  const count = Number(await redis.incr(key));
+  if (count === 1) {
+    await redis.expire(key, windowSeconds);
+  }
+  return count <= limit;
+}
+
+/**
+ * @param {string} ip
+ * @returns {Promise<boolean>}
+ */
+async function consumeDownloadLinkIpLimit(ip) {
+  const safe = String(ip || 'unknown').replace(/[^a-zA-Z0-9.:_-]/g, '').slice(0, 80) || 'unknown';
+  return consumeRateLimit(
+    `ratelimit:download-link-ip:${safe}`,
+    DOWNLOAD_LINK_IP_LIMIT,
+    DOWNLOAD_LINK_IP_WINDOW_SECONDS
+  );
+}
+
+/**
+ * Products this purchase may download. pro-md only when the kit includes the companion.
+ * @param {{ productId?: string, deliverProductIds?: string[] }} fulfillment
+ * @returns {string[]}
+ */
+function allowedProductIdsForFulfillment(fulfillment) {
+  const purchase = fulfillment ? getProductById(fulfillment.productId) : null;
+  const base =
+    fulfillment &&
+    Array.isArray(fulfillment.deliverProductIds) &&
+    fulfillment.deliverProductIds.length
+      ? fulfillment.deliverProductIds.slice()
+      : purchase
+        ? [purchase.id]
+        : fulfillment && fulfillment.productId
+          ? [fulfillment.productId]
+          : [];
+  if (productIncludesMdCompanion(purchase) && base.indexOf('pro-md') === -1) {
+    base.push('pro-md');
+  }
+  return base;
 }
 
 function getLocalPdfPath(product) {
@@ -637,6 +725,9 @@ async function fulfillCheckoutSession(stripe, sessionId, origin) {
 
   const fulfillmentKey = `fulfillment:${session.id}`;
   const existing = await redisGetJson(fulfillmentKey);
+  if (existing && existing.status === 'revoked') {
+    return { status: 'revoked', sessionId };
+  }
   if (existing && existing.status === 'fulfilled') {
     return { status: 'already_fulfilled', sessionId };
   }
@@ -649,6 +740,9 @@ async function fulfillCheckoutSession(stripe, sessionId, origin) {
 
   try {
     const lockedExisting = await redisGetJson(fulfillmentKey);
+    if (lockedExisting && lockedExisting.status === 'revoked') {
+      return { status: 'revoked', sessionId };
+    }
     if (lockedExisting && lockedExisting.status === 'fulfilled') {
       return { status: 'already_fulfilled', sessionId };
     }
@@ -659,6 +753,7 @@ async function fulfillCheckoutSession(stripe, sessionId, origin) {
       if (deliverable) await assertProductAssetAvailable(deliverable);
     }
     const email = getCustomerEmail(session);
+    const paymentIntentId = paymentIntentIdFrom(session.payment_intent);
     const downloadLinks = await buildDownloadLinksForProduct(
       session.id,
       product,
@@ -666,6 +761,13 @@ async function fulfillCheckoutSession(stripe, sessionId, origin) {
       origin
     );
     const now = new Date().toISOString();
+    if (paymentIntentId) {
+      await redisSetJson(
+        `fulfillment-by-pi:${paymentIntentId}`,
+        { sessionId: session.id },
+        REDIS_STATE_TTL_SECONDS
+      );
+    }
 
     await redisSetJson(
       fulfillmentKey,
@@ -675,6 +777,7 @@ async function fulfillCheckoutSession(stripe, sessionId, origin) {
         productId: product.id,
         deliverProductIds: deliverIds,
         email,
+        paymentIntentId: paymentIntentId,
         createdAt: now
       },
       REDIS_STATE_TTL_SECONDS
@@ -690,6 +793,7 @@ async function fulfillCheckoutSession(stripe, sessionId, origin) {
         productId: product.id,
         deliverProductIds: deliverIds,
         email,
+        paymentIntentId: paymentIntentId,
         fulfilledAt: new Date().toISOString()
       },
       REDIS_STATE_TTL_SECONDS
@@ -725,10 +829,7 @@ async function resolveDownload(token) {
   if (!fulfillment || fulfillment.status !== 'fulfilled') {
     throw new Error('Purchase has not been fulfilled.');
   }
-  const allowed =
-    Array.isArray(fulfillment.deliverProductIds) && fulfillment.deliverProductIds.length
-      ? fulfillment.deliverProductIds.concat(['pro-md'])
-      : [fulfillment.productId, 'pro-md'];
+  const allowed = allowedProductIdsForFulfillment(fulfillment);
   if (allowed.indexOf(product.id) === -1) {
     throw new Error('Purchase has not been fulfilled.');
   }
@@ -755,10 +856,31 @@ async function getDownloadUrlBySessionId(sessionId, origin) {
 
   const fulfillment = await redisGetJson(`fulfillment:${sessionId}`);
   if (!fulfillment) {
-    throw new Error('Unknown checkout session.');
+    throw codedError('UNKNOWN_SESSION', 'Unknown checkout session.');
+  }
+  if (fulfillment.status === 'revoked') {
+    throw codedError('REVOKED', 'Download link was revoked.');
   }
   if (fulfillment.status !== 'fulfilled') {
     return { status: 'processing' };
+  }
+  if (fulfillment.fulfilledAt) {
+    const fulfilledMs = Date.parse(fulfillment.fulfilledAt);
+    if (
+      Number.isFinite(fulfilledMs) &&
+      Date.now() - fulfilledMs > IN_PAGE_REMINT_WINDOW_SECONDS * 1000
+    ) {
+      throw codedError('REMINT_CLOSED', 'In-page download window has closed.');
+    }
+  }
+
+  const mintAllowed = await consumeRateLimit(
+    `ratelimit:download-mint:${sessionId}`,
+    DOWNLOAD_LINK_MINT_LIMIT,
+    DOWNLOAD_LINK_MINT_WINDOW_SECONDS
+  );
+  if (!mintAllowed) {
+    throw codedError('RATE_LIMIT', 'Too many download links.');
   }
 
   const product = getProductById(fulfillment.productId);
@@ -871,8 +993,7 @@ async function processDueFollowups() {
   if (!process.env.FULFILLMENT_FROM_EMAIL || !process.env.RESEND_API_KEY) {
     throw new Error('Follow-up email is not configured.');
   }
-  const redis = getRedis();
-  const keys = await redis.keys('followup:*');
+  const keys = await listFollowupKeys();
   const now = Math.floor(Date.now() / 1000);
   let processed = 0;
   for (const key of keys) {
@@ -895,6 +1016,66 @@ async function processDueFollowups() {
   return { ok: true, processed };
 }
 
+/**
+ * Full refund (charge.refunded === true) marks the CMO fulfillment revoked.
+ * Partial refunds and unknown payment intents are ignored so other products
+ * on the shared Stripe account, and purchases from before the index existed, keep working.
+ * @param {object} charge
+ * @returns {Promise<{ status: string, sessionId?: string, reason?: string }>}
+ */
+async function revokeFulfillmentByCharge(charge) {
+  if (!charge || typeof charge !== 'object') {
+    return { status: 'ignored', reason: 'not_a_charge' };
+  }
+  if (charge.refunded !== true) {
+    return { status: 'ignored', reason: 'partial_refund' };
+  }
+  const paymentIntentId = paymentIntentIdFrom(charge.payment_intent);
+  if (!paymentIntentId) {
+    return { status: 'ignored', reason: 'no_payment_intent' };
+  }
+  const index = await redisGetJson(`fulfillment-by-pi:${paymentIntentId}`);
+  const sessionId = index && index.sessionId ? index.sessionId : null;
+  if (!sessionId) {
+    return { status: 'ignored', reason: 'unknown_payment' };
+  }
+  const fulfillment = await redisGetJson(`fulfillment:${sessionId}`);
+  if (!fulfillment) {
+    return { status: 'ignored', reason: 'unknown_payment' };
+  }
+  if (fulfillment.status === 'revoked') {
+    return { status: 'already_revoked', sessionId };
+  }
+  await redisSetJson(
+    `fulfillment:${sessionId}`,
+    Object.assign({}, fulfillment, {
+      status: 'revoked',
+      revokedAt: new Date().toISOString()
+    }),
+    REDIS_STATE_TTL_SECONDS
+  );
+  return { status: 'revoked', sessionId };
+}
+
+async function listFollowupKeys() {
+  const redis = getRedis();
+  const keys = [];
+  let cursor = '0';
+  let guard = 0;
+  do {
+    guard += 1;
+    if (guard > 50) break;
+    const reply = await redis.scan(cursor, { match: 'followup:*', count: 100 });
+    const next = Array.isArray(reply) ? reply[0] : '0';
+    const batch = Array.isArray(reply) ? reply[1] : [];
+    cursor = String(next);
+    if (Array.isArray(batch)) {
+      for (let i = 0; i < batch.length; i++) keys.push(batch[i]);
+    }
+  } while (cursor !== '0');
+  return keys;
+}
+
 module.exports = {
   PRODUCTS,
   FULFILLMENT_REQUIRED_ENV,
@@ -908,5 +1089,8 @@ module.exports = {
   maskEmail,
   getSiteUrl,
   getProductFromSession,
-  processDueFollowups
+  processDueFollowups,
+  revokeFulfillmentByCharge,
+  allowedProductIdsForFulfillment,
+  consumeDownloadLinkIpLimit
 };
