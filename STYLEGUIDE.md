@@ -1,7 +1,7 @@
 # DI Promptų Biblioteka – stiliaus gidas (Spin-off Nr. 2)
 
-**Versija:** 1.6.1  
-**Data:** 2026-09-03  
+**Versija:** 1.6.2  
+**Data:** 2026-09-30  
 **Kalba:** LT  
 **Kryptis:** Product Operator (warm paper atmosphere; Fraunces **only** hero H1; Source Sans 3 product UI; JetBrains Mono prompts)
 
@@ -9,7 +9,7 @@ Spin-off Nr. 2 (Rinkodaros vadovo turinio DI sistema) naudoja **Prompt Anatomy**
 
 ---
 
-## 0. DS 1.6.1 – Product Operator (atmosphere)
+## 0. DS 1.6.2 – Product Operator (atmosphere)
 
 ### 0.1 Principai
 
@@ -18,7 +18,7 @@ Spin-off Nr. 2 (Rinkodaros vadovo turinio DI sistema) naudoja **Prompt Anatomy**
 - Trys paviršiai: `page` | `panel` | `accent` – ne kiekviena sekcija = kortelė; open lieka open.
 - Hero = full-bleed warm paper; pirmas viewport = brand + H1 + viena eilutė + tool-first CTA + **sample output image** (Satori still + prompt caption — not pipeline modules, not prompt-only).
 - Gold ≈ **5%**: primary CTA fill, selected/focus ring, surface/border accents – **never** body text or link `color` (use ink `--color-text-primary`; gold fails WCAG AA as text on light).
-- Elevations: **0** (border only) + **1** (subtle); optional stronger shadow tik `.hero-diagram`.
+- Elevations: **0** (border only) + **1** (subtle). `.hero-diagram` uses the same family, only slightly deeper. Primary CTA shadow is none.
 - Radii: **8 / 12 / 16** only; pill tik status labels.
 - Skaitomumas: body 17px, prose `max-width: 70ch`.
 - Anti-patternai: emoji chrome, trust pills as chrome, `border: 3px`, blanket `font-weight: 800`, Inter-as-display, card-every-section, serif on builder/prompt/instructions, gold-everywhere, dual CSS for same component.
@@ -95,10 +95,11 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 
 ## 2. Hero ir diagram
 
-- **Hero fonas:** `--hero-bg` – šiltas gold radial ant popieriaus (`#F6F1E8` → `#EDE4D4`); **full-bleed** (ne kortelė).
-- **CTA:** `--cta-bg` gold gradient; ink text; `--shadow-cta` restrained.
-- **CTA kontraktas:** primary `#heroCtaSpine` → `#creative-brief` (EN: **Build my prompt**); secondary `#heroCtaBrief` **See pricing** → `#pdf-storefront`. LT primary lieka `#block1`.
-- **Vizualas:** `.hero-diagram` – navy card ~38rem with `.hero-sample-image` (Satori still) + `<pre class="hero-brief-sample">` caption *From brief → image prompt*. **Not** pipeline modules; **not** PDF cover; no H1 restatement inside the card. Breakout 1120–1200px. `/lt/` keeps the 30-day table.
+- **Hero fonas:** `--hero-bg` – šiltas popierius (`#F6F1E8` → `#EDE4D4`) su labai silpnu gold radial (4% alpha); **full-bleed** (ne kortelė). Sticky juosta naudoja tą patį `--hero-bg`.
+- **CTA:** `--cta-bg` solid `#CFA73A`; hover solid `#E8B93C`; ink text; `--shadow-cta` none.
+- **CTA kontraktas:** primary `#heroCtaSpine` → `#creative-brief` (EN: **Build my prompt**); secondary `#heroCtaBrief` **See pricing** → `#pdf-storefront`, text link (no fill). From 481px the two sit in one row, vertically centered; below that they stack. LT primary lieka `#block1`.
+- **Nav:** Workflows · Brief builder · Pricing share one resting style. Pricing has no gold chip.
+- **Vizualas:** `.hero-diagram` – navy card max **460px** (`28.75rem`) with a square `.hero-sample-image` (Satori still) + `<pre class="hero-brief-sample">` caption at 14px / line-height 1.5, card padding 20px. Label uses `--color-hero-diagram-muted` `#A8B5C7`. **Not** pipeline modules; **not** PDF cover; no H1 restatement inside the card. `/lt/` keeps the 30-day table.
 - Eyebrow ≠ subhead (no duplicate message). Trust IDs stay (`#heroTrustPill1/2/3`) as muted inline text. Pro/offline lives in FAQ/storefront, not hero. Lang switcher is utility (no gold active state).
 
 ---
@@ -117,7 +118,7 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 
 ### 4.1 Mygtukai
 
-- **Primary CTA:** `var(--cta-bg)`, `border-radius: 12px` (`--radius-md`).
+- **Primary CTA:** solid `var(--cta-bg)`, `border-radius: 12px` (`--radius-md`), no drop shadow.
 - **Secondary:** outline ink.
 - Brief presets: **neutral** chips; selected = gold.
 
@@ -151,8 +152,8 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 
 - Elevation 0: border, no shadow  
 - Elevation 1: `0 8px 24px rgba(15, 23, 42, 0.06)`  
-- `--shadow-hero-diagram`: stronger, diagram only  
-- CTA: ink-tinted, restrained  
+- `--shadow-hero-diagram`: `0 8px 24px rgba(15, 23, 42, 0.08)`, diagram only  
+- CTA: none  
 
 ### 4.8 Motion budget (max 2–3)
 
@@ -220,7 +221,8 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 - **1.5** – Editorial Operator (serif on section titles; PDF cover hero)  
 - **1.6** – Product Operator: serif=hero H1; hero workflow diagram; gold/shadow/radius restraint; dual CSS kill; compact how-it-works  
 - **1.6.1** – Atmosphere: warm paper (`#F6F1E8`); EN hero = Satori sample image + prompt caption; builder output pane = navy studio; Complete card visual weight  
+- **1.6.2** – Flatter paper radial; solid gold CTA; diagram shadow in the elevation-1 family; sample card 460px; caption 14/1.5; secondary link beside the primary on desktop; nav links share one resting style  
 
 ---
 
-*Atnaujinta 2026-09-03 – DS 1.6.1 Product Operator (atmosphere).*
+*Atnaujinta 2026-09-30 – DS 1.6.2 Product Operator (atmosphere).*

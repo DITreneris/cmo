@@ -77,7 +77,7 @@
             font-size: var(--font-size-body);
         }
 
-        /* ===== HEADER (geometry lives in components.css DS 1.6.1) ===== */
+        /* ===== HEADER (geometry lives in components.css DS 1.6.2) ===== */
         .header-badges {
             display: flex;
             flex-wrap: wrap;
@@ -198,15 +198,6 @@
             font-weight: 500;
         }
 
-        .header-cta {
-            margin-top: 24px;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
         .header-cta-note {
             margin: 0;
             max-width: 100%;
@@ -241,7 +232,6 @@
 
         .cta-button:hover {
             background: var(--cta-hover);
-            transform: translateY(-1px);
             box-shadow: var(--shadow-cta-hover);
         }
 
@@ -994,7 +984,6 @@
 
         .btn:hover {
             background: var(--cta-hover);
-            transform: translateY(-1px);
             box-shadow: var(--shadow-cta-hover);
         }
 
@@ -2244,45 +2233,48 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 var faqSummaries = qa('#faq .faq-items--primary .faq-item summary');
                 var faqAnswers = qa('#faq .faq-items--primary .faq-item p');
                 var faqSummaryTexts = [
-                    'Is this for beginners?',
+                    'How do we keep AI content on brand across a team?',
                     'Do I need all 10 prompts?',
                     'Why is this better than random prompts?'
                 ];
                 var faqAnswerTexts = [
-                    'Yes, if you fill placeholders with your real context — then copy, paste, and run.',
+                    'Fill one context block — audience, offer, channels, goal, and constraint — plus the non-negotiable rules. Those ride with every Copy. Share that filled block with your team. The browser copy is session-only; the kits hold the reuse method.',
                     'No. Free: 4 workflows (prompts 1, 2, 3, 5) plus the creative brief builder. The Pro kit lists the rest — full META/INPUT/OUTPUT bodies offline (full 10).',
-                    'You get a repeatable Plan → Create → Check → Improve workflow with clear fields and evaluation — structured prompting, not prompt gambling.'
+                    'You get a Plan → Create → Check → Improve sequence with clear fields and a review, so the next run is not a fresh generic chat.'
                 ];
                 faqSummaries.forEach(function(item, i) { if (faqSummaryTexts[i]) item.textContent = faqSummaryTexts[i]; });
                 faqAnswers.forEach(function(item, i) { if (faqAnswerTexts[i]) item.textContent = faqAnswerTexts[i]; });
                 var faqMoreSummaries = qa('.faq-more-details .faq-item summary');
                 var faqMoreAnswers = qa('.faq-more-details .faq-item p');
                 var faqMoreSummaryTexts = [
-                    'How much time daily?',
+                    'What should go in the context block?',
                     'What is the creative brief builder?',
                     'Is this a course or a tool?',
                     'Why use this instead of more AI tools?',
-                    'How do you protect brand voice before publishing?',
+                    'How do we review AI content before we publish?',
                     'Who is this for?',
-                    'How is this different from prompt templates?',
+                    'How is this different from a prompt library?',
                     'Does this work for B2B SaaS, services, and ecommerce?'
                 ];
                 var faqMoreAnswerTexts = [
-                    '20–30 minutes is enough if you run Create → Check → Improve.',
-                    'A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT or Ideogram. No account. It demonstrates the same tool-building idea Pro teaches for teams.',
+                    'Audience, offer, channels, this month\'s goal, and one constraint, plus three rules: no generic advice, no invented numbers or testimonials, and a usable next action. Set them in the marketing context block.',
+                    'A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT or Ideogram. No account. It locks subject, style, light, and space for type. It does not keep a person, logo, or package identical across a campaign. Use ChatGPT for a fast draft and Ideogram when the ad needs readable text. It demonstrates the same tool-building idea Pro teaches for teams.',
                     'A copy-paste Content AI System you can use immediately — not a long course. Free spine + brief in the browser; depth offline in the kits.',
                     'It is a portable prompt system you run on ChatGPT or Claude — not another SaaS seat. Structured workflows replace random chats and reduce tool sprawl.',
-                    'Set session context and non-negotiable rules, then run the pre-publish safety reviewer to check facts, tone, legal/trust risk, and CTA ownership before you ship.',
+                    'Run the pre-publish safety reviewer to check facts, tone, legal/trust risk, and who owns the CTA.',
                     'CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence.',
-                    'You get a sequence, clear fields, evaluation, and a KPI loop — not a one-off output.',
-                    'Yes. Swap the audience, offer, channels, and metrics — the structure stays the same.'
+                    'A library is a pile of prompts. This is context, four workflows, then a review before you ship.',
+                    'Yes. Swap the audience, offer, channels, and metrics — the structure stays the same. That is how you adapt a market. This is not a translation product.'
                 ];
-                var faqBrandVoiceHtml = 'Set session context and non-negotiable rules, then run the <a href="#cmo-safety">pre-publish safety reviewer</a> to check facts, tone, legal/trust risk, and CTA ownership before you ship.';
+                var faqContextHtml = 'Audience, offer, channels, this month\'s goal, and one constraint, plus three rules: no generic advice, no invented numbers or testimonials, and a usable next action. Set them in the <a href="#cmo-context">marketing context block</a>.';
+                var faqReviewHtml = 'Run the <a href="#cmo-safety">pre-publish safety reviewer</a> to check facts, tone, legal/trust risk, and who owns the CTA.';
                 faqMoreSummaries.forEach(function(item, i) { if (faqMoreSummaryTexts[i]) item.textContent = faqMoreSummaryTexts[i]; });
                 faqMoreAnswers.forEach(function(item, i) {
                     if (!faqMoreAnswerTexts[i]) return;
-                    if (faqMoreSummaryTexts[i] === 'How do you protect brand voice before publishing?') {
-                        item.innerHTML = faqBrandVoiceHtml;
+                    if (faqMoreSummaryTexts[i] === 'What should go in the context block?') {
+                        item.innerHTML = faqContextHtml;
+                    } else if (faqMoreSummaryTexts[i] === 'How do we review AI content before we publish?') {
+                        item.innerHTML = faqReviewHtml;
                     } else {
                         item.textContent = faqMoreAnswerTexts[i];
                     }

@@ -49,7 +49,7 @@ Contract: [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5.
 ## Stack
 
 - Semantic HTML5, WCAG 2 AA (skip link, ARIA, keyboard)
-- Design system **1.6.1** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)): `design-tokens.json` → `tokens.css` → `components.css` → `utilities.css`
+- Design system **1.6.2** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)): `design-tokens.json` → `tokens.css` → `components.css` → `utilities.css`
 - Vanilla JS (no framework): copy, progress, CMO context (`sessionStorage`), brief builder
 - Fonts: Fraunces (hero H1 only), Source Sans 3 (UI), JetBrains Mono (prompts)
 - Build: Node scripts (locale pages, OG, favicons, `public/` export). Paid PDF HTML is **operator-local** (gitignored) — see [docs/pdf-source/README.md](docs/pdf-source/README.md)

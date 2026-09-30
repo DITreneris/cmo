@@ -13,7 +13,7 @@
 |--------|--------|
 | Public product | **EN canonical** — `/en/` (`hreflang x-default`) |
 | Free EN surface | **Tool-first:** hero → open `#creative-brief` → `#pdf-storefront` (2 cards) → library **1,2,3,5** (display 1–4) → `#cmo-safety` → `#cmo-scenarios` → `#pro-contents`; progress **of 4**; **0** meme slots |
-| Design system | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.1** Product Operator (Fraunces hero H1; Source Sans 3 UI; JetBrains Mono; warm paper; hero sample image) |
+| Design system | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.2** Product Operator (Fraunces hero H1; Source Sans 3 UI; JetBrains Mono; warm paper; hero sample image) |
 | Pro / data SSOT | Still **10** prompt bodies (`data/en-prompt-bodies.json`); registry `freeInteractive: ["1","2","3","5"]` |
 | LT | **Frozen tester snapshot** — `/lt/` shipped; **not** negotiated from `/` (`Accept-Language` / `navigator.language`); build strips `#creative-brief` + `#heroCtaBrief`; no active dev without Orchestrator scope |
 | Commerce | EN-only on `promptanatomy.space`; mirror omits `#pdf-storefront` (`MIRROR_NOTE=1`); free brief **does** ship on mirror |
@@ -31,7 +31,7 @@ Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-
 | Edit (source) | Generated / do not hand-edit |
 |---------------|------------------------------|
 | [index.html](../index.html) (DOM structure) | `lt/index.html`, `en/index.html` via build |
-| [styles/design-tokens.json](../styles/design-tokens.json), [styles/*.css](../styles/) | Shared LT/EN CSS; DS 1.6.1 in STYLEGUIDE |
+| [styles/design-tokens.json](../styles/design-tokens.json), [styles/*.css](../styles/) | Shared LT/EN CSS; DS 1.6.2 in STYLEGUIDE |
 | [data/en-*.json](../data/) | EN prompt bodies (10), expected, scenarios — **build input**, not a public URL |
 | [data/cmo-prompt-registry.json](../data/cmo-prompt-registry.json) | Prompt TOC + `freeInteractive` spine ids |
 | [docs/pdf-source/README.md](pdf-source/README.md) | Paid PDF HTML is operator-local (gitignored); covers stay in `assets/pdf-covers/` |
@@ -90,7 +90,7 @@ Emitted by [scripts/geo-surfaces.js](../scripts/geo-surfaces.js) on every build:
 |------|---------|
 | `robots.txt` | Per-AI-bot allow/disallow; `/api/` blocked for default `*` |
 | `sitemap.xml` | `lastmod`, `xmlns:image`, `/en/`, `/lt/`, terms |
-| `llms.txt` / `llms-full.txt` | AI-friendly site map + `/en/#…` hash hubs (`#block1`, `#creative-brief`, `#cmo-safety`, `#pro-contents`, `#faq`, `#pdf-storefront`, `#prompt-basics`); full-10 digest = **Pro/system**, not free interactive claim |
+| `llms.txt` / `llms-full.txt` | AI-friendly site map + `/en/#…` hash hubs (`#block1`, `#cmo-context`, `#creative-brief`, `#cmo-safety`, `#pro-contents`, `#faq`, `#pdf-storefront`, `#prompt-basics`); `#cmo-context` sits after `#block1`; full-10 digest = **Pro/system**, not free interactive claim |
 | `{INDEXNOW_KEY}.txt` | IndexNow verification |
 | `404.html` | EN noindex → `/en/` |
 | `manifest.webmanifest` | PWA-lite, `start_url: /en/` |
@@ -129,6 +129,6 @@ Pa11y (CI): `/lt/`, `/en/`, privacy pages.
 - [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) — structure contract
 - [PRODUCT-POSITIONING.md](PRODUCT-POSITIONING.md) — paid layer copy
 - [BRAND_SYNC.md](BRAND_SYNC.md) — mother brand tokens + QW1b entity footer
-- [STYLEGUIDE.md](../STYLEGUIDE.md) — DS **1.6.1** Product Operator
+- [STYLEGUIDE.md](../STYLEGUIDE.md) — DS **1.6.2** Product Operator
 - [security.md](security.md) — headers, CSP, secrets
 - [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) — Stripe go-live (R1)

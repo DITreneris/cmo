@@ -1,5 +1,8 @@
 # CMO AI Content System — full prompt digest (Pro / offline kits)
 
+Brand context, four workflows (Plan → Create → Check → Improve), and a pre-publish review.
+Free on /en/. Full 10 META/INPUT/OUTPUT bodies are the Pro kit.
+
 Cycle: Plan → Create → Check → Improve
 
 Free /en/: creative brief builder + 4 core interactive prompts (1, 2, 3, 5).

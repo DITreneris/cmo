@@ -14,8 +14,8 @@
 | **Verslas ir procesai** | [AGENTS.md](../AGENTS.md) | Agentų rolės, workflow (Content, Curriculum, UI/UX, QA, Orchestrator) |
 | **Kodas ir turinys** | [docs/LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) | Ką galima keisti keičiant turinį; HTML/JS struktūra; CMO v2 kontraktas |
 | **LT/EN** | [docs/MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) | **EN kanonas**; `/lt/` užšaldyta testeriams; build routing |
-| **Dizainas** | [STYLEGUIDE.md](../STYLEGUIDE.md) | DS **1.6.1** Product Operator: tipografija, šiltas popierius, hero sample image, anti-patternai |
-| **Brand sync** | [docs/BRAND_SYNC.md](BRAND_SYNC.md) | Mother gold/ink/favicon; spin-off DS 1.6.1 warm paper |
+| **Dizainas** | [STYLEGUIDE.md](../STYLEGUIDE.md) | DS **1.6.2** Product Operator: tipografija, šiltas popierius, hero sample image, anti-patternai |
+| **Brand sync** | [docs/BRAND_SYNC.md](BRAND_SYNC.md) | Mother gold/ink/favicon; spin-off DS 1.6.2 warm paper |
 | **Kokybė** | [docs/QA_STANDARTAS.md](QA_STANDARTAS.md) | QA kriterijai, komandos (`npm test`, pa11y) |
 | **Testavimas** | [docs/TESTAVIMAS.md](TESTAVIMAS.md) | Gyvo testavimo scenarijai ir žurnalas |
 | **Taisyklės** | [.cursorrules](../.cursorrules) | Kokybė, a11y, commit formatas |
@@ -43,7 +43,7 @@
 | [.cursorrules](../.cursorrules) | Kokybė, a11y, dokumentacijos taisyklės | QA + Orchestrator | Taisyklių pakeitimai, nauji reikalavimai |
 | [CHANGELOG.md](../CHANGELOG.md) | Versijų pakeitimų istorija (Keep a Changelog, SemVer) | Kiekvienas (pagal pakeitimą) | Kiekvienas release ir reikšmingi pakeitimai |
 | [DEPLOYMENT.md](../DEPLOYMENT.md) | Primary (Vercel) + mirror (GitHub Pages), BASE_PATH, troubleshooting | QA / Orchestrator | Platforma, URL, post-deploy |
-| [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema **1.6.1** (Product Operator): spalvos, tipografija, šiltas popierius, hero sample image | UI/UX | Dizaino pakeitimai, tokenų atnaujinimai |
+| [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema **1.6.2** (Product Operator): spalvos, tipografija, šiltas popierius, hero sample image | UI/UX | Dizaino pakeitimai, tokenų atnaujinimai |
 | [docs/LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) | Atskaitos kontraktas (HTML/JS struktūra, CMO v2, BASE_PATH) | QA / Orchestrator | Struktūros pakeitimai, CMO v2 plėtra |
 | [docs/PRODUCT-POSITIONING.md](PRODUCT-POSITIONING.md) | Mokamo sluoksnio pozicionavimas (CMO AI Content System, Use · Build · Install, ką teigiame / ko ne) + §4 JTBD search-intent language | Commerce / Content | Pavadinimų, pakopų, pozicionavimo, EN JTBD copy pakeitimai |
 | [docs/articles/content-ai-system.md](articles/content-ai-system.md) | Publishable EN marketing article (draft). Not live `/en/` copy. | Content | After positioning, price, or free-surface claim changes |
@@ -85,7 +85,7 @@
 | [config/brand-seo.json](../config/brand-seo.json) | SEO title, description, OG alt ir OG vizualo tekstai | Content / UI/UX | Keičiant social preview ar `<title>` |
 | [docs/BRAND_SYNC.md](BRAND_SYNC.md) | Mother repo SHA, spalvų map, favicon/OG sync procedūra | UI/UX | Po mother brand pakeitimo |
 | [styles/design-tokens.json](../styles/design-tokens.json) | Dizaino tokenų vienas šaltinis (smoke assert vs `tokens.css`) | UI/UX + QA | Keičiant semantinius / type / shadow tokenus |
-| [styles/tokens.css](../styles/tokens.css), [styles/components.css](../styles/components.css), [styles/utilities.css](../styles/utilities.css) | CSS sluoksniai; components – DS 1.6.1 hero/surfaces authoritative layer | UI/UX | Keičiant komponentų vizualiką, hero, paviršius |
+| [styles/tokens.css](../styles/tokens.css), [styles/components.css](../styles/components.css), [styles/utilities.css](../styles/utilities.css) | CSS sluoksniai; components – DS 1.6.2 hero/surfaces authoritative layer | UI/UX | Keičiant komponentų vizualiką, hero, paviršius |
 | [scripts/build-locale-pages.js](../scripts/build-locale-pages.js) | Generuoja lt/en + inject CMO v2 blokus + EN_REPLACEMENTS | QA / Orchestrator | LT/EN replace sąrašas, BASE_PATH, canonical/hreflang, CMO v2 inject |
 | [scripts/generate-og.js](../scripts/generate-og.js) | OG paveikslo (1200×630, SVG → PNG) generavimas | UI/UX + QA | Keičiant OG maketą; po pakeitimo `tests/structure.test.js` OG kontraktai |
 | [scripts/vercel-export-public.js](../scripts/vercel-export-public.js) | Vercel statinio output kopijavimas į `public/` + analytics inject | QA / Orchestrator | Keičiant Vercel deploy artefakto sudėtį |

@@ -1,15 +1,16 @@
-# Prompt Anatomy · 30-day Content AI System
+# Prompt Anatomy · Content AI System
 
-> Fill a brief, copy an image-ready prompt, then run 4 free Plan → Create → Check → Improve workflows. Offline kits from $3.99.
+> Set brand context, run 4 workflows, and review before you publish. Free in the browser. Kits from $3.99.
 
 ## Free library
-- https://promptanatomy.space/en/ — creative brief builder + 4 core Plan → Create → Check → Improve workflows; full 10 prompts in Pro kit
+- https://promptanatomy.space/en/ — brand context, 4 Plan → Create → Check → Improve workflows, and a pre-publish review; full 10 prompts in the Pro kit
 
 ## On this page
 - https://promptanatomy.space/en/#creative-brief — creative brief builder
 - https://promptanatomy.space/en/#pdf-storefront — Use · Build · Install kits
 - https://promptanatomy.space/en/#block1 — library workflow 1
-- https://promptanatomy.space/en/#cmo-safety — pre-publish safety
+- https://promptanatomy.space/en/#cmo-context — marketing context block used on every Copy
+- https://promptanatomy.space/en/#cmo-safety — pre-publish review before you ship
 - https://promptanatomy.space/en/#pro-contents — Pro catalog (prompts 4, 6–10)
 - https://promptanatomy.space/en/#faq — FAQ
 - https://promptanatomy.space/en/#prompt-basics — structured prompting

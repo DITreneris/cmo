@@ -1510,7 +1510,7 @@ function injectCreativeBrief(html, locale) {
       courseFaq,
       '<details class="faq-item" id="faq-creative-brief">\n' +
         '                    <summary>What is the creative brief builder?</summary>\n' +
-        '                    <p>A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT or Ideogram. No account. It demonstrates the same tool-building idea Pro teaches for teams.</p>\n' +
+        '                    <p>A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT or Ideogram. No account. It locks subject, style, light, and space for type. It does not keep a person, logo, or package identical across a campaign. Use ChatGPT for a fast draft and Ideogram when the ad needs readable text. It demonstrates the same tool-building idea Pro teaches for teams.</p>\n' +
         '                </details>\n' +
         '                ' +
         courseFaq
@@ -1526,8 +1526,8 @@ function injectCreativeBrief(html, locale) {
       '                    <p>It is a portable prompt system you run on ChatGPT or Claude — not another SaaS seat. Structured workflows replace random chats and reduce tool sprawl.</p>\n' +
       '                </details>\n' +
       '                <details class="faq-item" id="faq-brand-voice">\n' +
-      '                    <summary>How do you protect brand voice before publishing?</summary>\n' +
-      '                    <p>Set session context and non-negotiable rules, then run the <a href="#cmo-safety">pre-publish safety reviewer</a> to check facts, tone, legal/trust risk, and CTA ownership before you ship.</p>\n' +
+      '                    <summary>How do we review AI content before we publish?</summary>\n' +
+      '                    <p>Run the <a href="#cmo-safety">pre-publish safety reviewer</a> to check facts, tone, legal/trust risk, and who owns the CTA.</p>\n' +
       '                </details>\n' +
       '                ' +
       whoFaq;
@@ -2046,10 +2046,10 @@ const EN_REPLACEMENTS_SUFFIX = [
   ['aria-label="Kopijuoti promptą 5 į darbinių atmintinę"', 'aria-label="Copy prompt 5 to clipboard"'],
   // FAQ
   ['Dažniausi klausimai', 'Frequently asked questions'],
-  ['<summary>Ar tinka pradedančiajam?</summary>', '<summary>Is this for beginners?</summary>'],
+  ['<summary>Ar tinka pradedančiajam?</summary>', '<summary>How do we keep AI content on brand across a team?</summary>'],
   [
     '<p>Taip, jei pildai laukus savo situacija, ne bendrais žodžiais.</p>',
-    '<p>Yes, if you fill placeholders with your real context — then copy, paste, and run.</p>'
+    '<p>Fill one context block — audience, offer, channels, goal, and constraint — plus the non-negotiable rules. Those ride with every Copy. Share that filled block with your team. The browser copy is session-only; the kits hold the reuse method.</p>'
   ],
   ['<summary>Ar būtina naudoti visus 10?</summary>', '<summary>Do I need all 10 prompts?</summary>'],
   [
@@ -2059,10 +2059,13 @@ const EN_REPLACEMENTS_SUFFIX = [
   ['<summary>Kuo tai geriau nei random promptas?</summary>', '<summary>Why is this better than random prompts?</summary>'],
   [
     '<p>Čia turi nuoseklią seką, aiškų tikslą ir vertinimą.</p>',
-    '<p>You get a repeatable Plan → Create → Check → Improve workflow with clear fields and evaluation — structured prompting, not prompt gambling.</p>'
+    '<p>You get a Plan → Create → Check → Improve sequence with clear fields and a review, so the next run is not a fresh generic chat.</p>'
   ],
-  ['<summary>Kiek laiko skirti kasdien?</summary>', '<summary>How much time daily?</summary>'],
-  ['<p>20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“.</p>', '<p>20–30 minutes is enough if you run Create → Check → Improve.</p>'],
+  ['<summary>Kiek laiko skirti kasdien?</summary>', '<summary>What should go in the context block?</summary>'],
+  [
+    '<p>20–30 min pakanka, jei dirbi ciklu „Kurk → Tikrink → Tobulink“.</p>',
+    '<p>Audience, offer, channels, this month\'s goal, and one constraint, plus three rules: no generic advice, no invented numbers or testimonials, and a usable next action. Set them in the <a href="#cmo-context">marketing context block</a>.</p>'
+  ],
   ['<summary>Ar tai kursas ar įrankis?</summary>', '<summary>Is this a course or a tool?</summary>'],
   [
     '<p>Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk).</p>',
@@ -2073,15 +2076,15 @@ const EN_REPLACEMENTS_SUFFIX = [
     '<p>CMO, rinkodaros vadovams, produktų/augimo komandoms ir vadovams, kuriems reikia greito, pakartojamo turinio ciklo.</p>',
     '<p>CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence.</p>'
   ],
-  ['<summary>Kuo skiriasi nuo promptų šablonų?</summary>', '<summary>How is this different from prompt templates?</summary>'],
+  ['<summary>Kuo skiriasi nuo promptų šablonų?</summary>', '<summary>How is this different from a prompt library?</summary>'],
   [
     '<p>Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą.</p>',
-    '<p>You get a sequence, clear fields, evaluation, and a KPI loop — not a one-off output.</p>'
+    '<p>A library is a pile of prompts. This is context, four workflows, then a review before you ship.</p>'
   ],
   ['<summary>Ar tinka B2B SaaS, paslaugoms ir e. komercijai?</summary>', '<summary>Does this work for B2B SaaS, services, and ecommerce?</summary>'],
   [
     '<p>Taip. Tiesiog pakeisk auditoriją, pasiūlymą, kanalus ir metrikas – struktūra išlieka ta pati.</p>',
-    '<p>Yes. Swap the audience, offer, channels, and metrics — the structure stays the same.</p>'
+    '<p>Yes. Swap the audience, offer, channels, and metrics — the structure stays the same. That is how you adapt a market. This is not a translation product.</p>'
   ],
   [
     '<p class="faq-eco-hint">Pilnai metodikai ir vadovų kontekstui naudok <a href="#ecosystem-strip">ekosistemos skiltį</a> – ten suvestos nuorodos.</p>',
