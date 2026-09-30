@@ -2,7 +2,7 @@
 
 **Status:** Not scheduled. Separate Orchestrator scope. Includes UX Conversion Audit **P2** (collapse remaining inline `<style>` + `!important` in `components.css`) — that is engineering debt, **not** R2 GEO.
 
-Minimum dual-CSS strip (hero card / 1160px container / pill trust / leftover switcher chrome from root `index.html` `<style>`) shipped as R1-support; DS 1.6.1 in `components.css` is the one source for that chrome. Full inline deletion + `templates/index-source.html` epic still deferred.
+Minimum dual-CSS strip (hero card / 1160px container / pill trust / leftover switcher chrome from root `index.html` `<style>`) shipped as R1-support; DS 1.6.2 in `components.css` is the one source for that chrome. Full inline deletion + `templates/index-source.html` epic still deferred.
 
 ## Problem
 

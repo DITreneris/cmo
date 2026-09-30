@@ -24,6 +24,19 @@ function assert(condition, msg) {
   }
 }
 
+/**
+ * @param {string} css
+ * @param {string} name
+ * @param {string} value
+ * @param {string} msg
+ */
+function assertCustomProp(css, name, value, msg) {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = css.match(new RegExp(escaped + '\\s*:\\s*([^;]+);'));
+  const actual = match ? match[1].trim().toLowerCase() : '';
+  assert(actual === String(value).trim().toLowerCase(), msg + ' (got ' + (actual || 'missing') + ')');
+}
+
 function run() {
   const html = read(INDEX);
   const ltHtml = read(LT_INDEX);
@@ -85,8 +98,44 @@ function run() {
 
   const ctaShadow = tokenJson.shadow && tokenJson.shadow.cta;
   assert(Boolean(ctaShadow), 'design-tokens.json missing shadow.cta');
-  assert(tokensCss.includes(ctaShadow.split(',')[0].trim()) || tokensCss.includes('rgba(11, 19, 32'),
-    'tokens.css CTA shadow should be ink-tinted (synced with design-tokens.json)');
+  assert(
+    tokensCss.includes('--shadow-cta: ' + ctaShadow) || tokensCss.includes('--shadow-cta:' + ctaShadow),
+    'tokens.css --shadow-cta must match design-tokens.json shadow.cta'
+  );
+  const ctaBg = tokensCss.match(/--cta-bg:\s*([^;]+);/);
+  assert(
+    ctaBg && !/linear-gradient/i.test(ctaBg[1]) && /#cfa73a/i.test(ctaBg[1]),
+    'DS 1.6.2: --cta-bg must be solid #CFA73A'
+  );
+  assertCustomProp(
+    tokensCss,
+    '--color-hero-diagram-muted',
+    tokenJson.hero && tokenJson.hero.diagramMuted,
+    'tokens.css --color-hero-diagram-muted must match design-tokens.json hero.diagramMuted'
+  );
+  assertCustomProp(
+    tokensCss,
+    '--shadow-hero-diagram',
+    tokenJson.shadow && tokenJson.shadow.heroDiagram,
+    'tokens.css --shadow-hero-diagram must match design-tokens.json shadow.heroDiagram'
+  );
+  assertCustomProp(
+    tokensCss,
+    '--cta-hover',
+    tokenJson.color && tokenJson.color.brand && tokenJson.color.brand.primaryHover,
+    'tokens.css --cta-hover must match design-tokens.json brand.primaryHover'
+  );
+  assertCustomProp(
+    tokensCss,
+    '--shadow-cta-hover',
+    tokenJson.shadow && tokenJson.shadow.ctaHover,
+    'tokens.css --shadow-cta-hover must match design-tokens.json shadow.ctaHover'
+  );
+  assert(!componentsCss.includes('#navPricing'), 'DS 1.6.2: components.css must not style #navPricing');
+  assert(
+    /@media \(min-width: 481px\) \{\s*\.header-cta \{\s*flex-direction: row;/.test(componentsCss),
+    'DS 1.6.2: desktop .header-cta is a row'
+  );
 
   assert(!/\.prompt\s*\{[^}]*border:\s*3px/s.test(componentsCss), 'components.css .prompt must not use border: 3px');
   assert(!/\.code-block\s*\{[^}]*border:\s*3px/s.test(componentsCss), 'components.css .code-block must not use border: 3px');
@@ -161,6 +210,18 @@ function run() {
   const styleClose = styleBeforeTokens.indexOf('</style>', styleOpen);
   assert(styleOpen !== -1 && styleClose !== -1, 'index.html missing large <style> before tokens.css');
   const inlineSheet = styleBeforeTokens.slice(styleOpen, styleClose);
+  assert(
+    !/\.header-cta\s*\{[^}]*flex-direction/.test(inlineSheet),
+    'inline <style> must not set .header-cta flex-direction'
+  );
+  assert(
+    !/\.btn:hover\s*\{[^}]*translateY/.test(inlineSheet),
+    'inline .btn:hover must not translateY'
+  );
+  assert(
+    !/\.cta-button:hover\s*\{[^}]*translateY/.test(inlineSheet),
+    'inline .cta-button:hover must not translateY'
+  );
   assert(
     !/\.header\s*\{[^}]*border-radius:\s*(20px|16px)/.test(inlineSheet),
     'inline <style> must not restate .header card border-radius 20px/16px'

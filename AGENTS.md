@@ -1,7 +1,7 @@
 # Agentų Sistemos Modelis – Apžvalga
 
 **Projektas:** DI Promptų Biblioteka (Turinio DI sistema – CMO rinkinys)  
-**Šio dokumento versija:** 1.5.8 (EN kanonas; tool-first CEO IA; `click_checkout` visoms SKU; atidarytas brief; 2 storefront kortelės; DS 1.6.1; JTBD/GEO; R1-support 4; root `/` → `/en/`; LT užšaldyta)  
+**Šio dokumento versija:** 1.5.8 (EN kanonas; tool-first CEO IA; `click_checkout` visoms SKU; atidarytas brief; 2 storefront kortelės; DS 1.6.2; JTBD/GEO; R1-support 4; root `/` → `/en/`; LT užšaldyta)  
 **Kalba:** LT
 
 ---
@@ -173,7 +173,7 @@ Prieš PR įsitikinti, kad `npm test` praeina. A11y: CI tikrina `/lt/` ir `/en/`
 - [.cursorrules](.cursorrules) – Cursor: kokybė, a11y, dokumentacija, commit formatas
 - [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) – dokumentų inventorius ir atsakomybės
 - [docs/LEGACY_GOLDEN_STANDARD.md](docs/LEGACY_GOLDEN_STANDARD.md) – golden standard (struktūra, ID, JS API, CMO v2, checklist)
-- [STYLEGUIDE.md](STYLEGUIDE.md) – dizaino sistema **1.6.1** (Product Operator, warm paper)
+- [STYLEGUIDE.md](STYLEGUIDE.md) – dizaino sistema **1.6.2** (Product Operator, warm paper)
 - [docs/MULTILINGUAL_STRUCTURE.md](docs/MULTILINGUAL_STRUCTURE.md) – EN kanonas, LT freeze ([§0](docs/MULTILINGUAL_STRUCTURE.md))
 - [docs/BULLET_PROOF_PROMPTS.md](docs/BULLET_PROOF_PROMPTS.md) – promptų META/INPUT/OUTPUT standartas
 - [docs/PEDAGOGINES_SPECIFIKACIJA.md](docs/PEDAGOGINES_SPECIFIKACIJA.md) – pedagogika ir auditorija
@@ -193,7 +193,7 @@ Keičiant **turinį** – atsakingas Content Agent; keičiant **struktūrą arba
 | 1 | **Orchestrator** | Prioritizuoja užduotį, nustato scope | [roadmap.md](roadmap.md), [todo.md](todo.md), [CHANGELOG.md](CHANGELOG.md) | Užduočių eilė pagal R1–R4 |
 | 2 | **Curriculum** | Nustato spine/teaser ribą, seka, mokymosi tikslus | Scope; `freeInteractive` registry | Specifikacija: ką keisti free vs Pro |
 | 3 | **Content** | Redaguoja turinį **EN kanonui** (`data/en-*.json`, teaser copy, EN build, JTBD FAQ/meta); **privalo laikytis** LEGACY + PRODUCT-POSITIONING §4. **LT nekeičia** be snapshot refresh | Specifikacija | EN tekstai; `frontFaq` ↔ visible FAQ ↔ `applyStaticLocaleText`; nekeičia spine ID kontrakto |
-| 4 | **UI/UX** | Tool-first hero, DS **1.6.1** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)), open brief before PDF, library 1/2/3/5 after kits, a11y – ne META bodies; **nekuria** naujų SEO hub route'ų be Curriculum/Orchestrator | Reikalavimai; LEGACY; STYLEGUIDE 1.6.1 | CSS/HTML; 0 meme slots; hero sample image; surfaces page/panel/accent |
+| 4 | **UI/UX** | Tool-first hero, DS **1.6.2** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)), open brief before PDF, library 1/2/3/5 after kits, a11y – ne META bodies; **nekuria** naujų SEO hub route'ų be Curriculum/Orchestrator | Reikalavimai; LEGACY; STYLEGUIDE 1.6.2 | CSS/HTML; 0 meme slots; hero sample image; surfaces page/panel/accent |
 | 5 | **Commerce** | Mokama PDF tarpinė: `docs/pdf-source/*.html`, [`config/sot.json`](config/sot.json), fulfillment, kainos. Tik EN, `promptanatomy.space`. Free copy: spine ≠ full 10 interactive | Stripe / Resend / Blob — go-live: [GO_LIVE_RUNBOOK](docs/GO_LIVE_RUNBOOK.md) → [MUST_TODO_STRIPE](MUST_TODO_STRIPE.md); architecture: [memo_pdf.md](memo_pdf.md) | SOT + PDF + storefront; SOT `comparisonTable` unused on page |
 | 6 | **QA** | `npm test`, `test:fulfillment-config`, `test:e2e`, pa11y; diff vs LEGACY. **Free surface:** open `#creative-brief` virš PDF; 2 matomos kortelės + Pro text link; library **1/2/3/5** po storefront; progress of 4; 0 memes; 0 `.prompt--teaser`. **GEO:** `frontFaq >= 8`, `llms.txt` hubs, no free-10 claim. **Commerce:** (a) LT be kainų/storefront/Stripe; (b) MIRROR_NOTE=1 be storefront; (c) `assertNoPaidPdfsLeaked()`. | Diff, LEGACY, docs | pass / grąžinti |
 
@@ -219,7 +219,7 @@ Keičiant **turinį** – atsakingas Content Agent; keičiant **struktūrą arba
 16. **Audit P ≠ roadmap R.** UX Conversion Audit **P0–P3** is not Ambition **R1–R4**. Shipped P0/P1 = **R1-support**; 2 cards = **R1-support 2**; tool-first IA = **R1-support 3** (does **not** exit R1). Audit P3 live drills = the same R1 Stripe boxes in [todo.md](todo.md) / [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md). Rejected: render `comparisonTable`, dual-primary CTA, delete Pro SKU, redefine „įrankis“ as Prompt 1. Hero brief-builder sample **is** allowed (not the old “fat pipeline diagram”). Open `#cb-builder` **is** canon.
 17. **Offer math must agree on the card.** Bundle `compareAtUsd` = Starter + Pro (`3.99 + 8.99 = 12.98`). Build renders bundle as `separately $…`, not `was $…`. Never ship a bullet that says `$12.98` while the price line says `was $19.99`. Stripe `priceUsd` / Payment Links stay unchanged unless Commerce opens a price PR.
 18. **Footer entity ≠ checkout.** EN `.footer-product-link` = `Part of Prompt Anatomy · Methodology at promptanatomy.app` ([BRAND_SYNC.md](docs/BRAND_SYNC.md), [language-guidelines-en-lt.md](docs/language-guidelines-en-lt.md)). Checkout is `buy.stripe.com` on `promptanatomy.space`. Do not restore “Training & checkout → .app” — that re-teaches the visitor that purchase lives elsewhere.
-19. **Gold is surface, not text.** STYLEGUIDE **1.6.1**: gold ≈ CTA fill, selected/focus ring, left-edge / border accents. Link and body `color` = `--color-text-primary` (ink). Gold-on-light as link text fails WCAG AA (~2.17:1). Do not treat this as Audit P2 (full inline-`<style>` deletion) — that stays parked with template migration.
+19. **Gold is surface, not text.** STYLEGUIDE **1.6.2**: gold ≈ CTA fill, selected/focus ring, left-edge / border accents. Link and body `color` = `--color-text-primary` (ink). Gold-on-light as link text fails WCAG AA (~2.17:1). Do not treat this as Audit P2 (full inline-`<style>` deletion) — that stays parked with template migration.
 20. **Ecosystem demotion.** `#ecosystem-strip` is methodology + quiet Leader related. Telegram lives in `#community`; email lives in the footer. Do not re-add mailbox/Telegram into the strip. Leader and other kits stay quiet related lines, not equal CTAs next to Pricing. Intro copy may state that checkout stays on this page.
 21. **Root never negotiates LT.** `/` → `/en/` in [`vercel.json`](vercel.json) and `redirectRootToLocale`. Do not restore `Accept-Language: .*lt.*` or `prefersLithuanianBrowser()`. `/lt/` is archive — direct URL only. Lithuanian Windows/Chrome would otherwise land on the frozen snapshot (no storefront).
 22. **Vercel events = visos SKU.** Project **cmo** / `promptanatomy.space`. First-use = `open_brief`, not `copy_prompt_1`. Checkout = `click_checkout` + `data.sku` (`starter` \| `bundle` \| `pro`) in [`js/va-track.js`](js/va-track.js). Do not restore `click_starter` (it hid Complete/Pro). No PII, no PostHog dual-write, no Web Analytics Plus. MCP: `dataset=events`, `by=eventName` or `by=eventData/sku` (`count` has no bounce %). Purchase truth = Stripe webhook, not `success_download`. After `npm test`, restore `lt/index.html` if locale build stripped the dead handler (LT freeze).

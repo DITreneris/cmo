@@ -41,7 +41,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - [ ] **Focus:** Matomas focus (pvz. focus-visible) ant mygtukų ir nuorodų.
 - [ ] **Pa11y:** CI bėga į `/en/` (kanonas), `/lt/` (smoke), `/en/privacy/` per `npx serve public` **be** `-s`. Lokaliai release QA: `npx serve public -l 3000` tada `npx pa11y http://127.0.0.1:3000/en/ --standard WCAG2AA --ignore "warning"`. Ne `serve -s .` — `/en/privacy/` tada gali nukristi į root `index.html`.
 
-### UX path cut (EN kanonas, DS 1.6.1)
+### UX path cut (EN kanonas, DS 1.6.2)
 
 - [ ] **Hero:** full-bleed warm paper; brand mark; page-level sticky `#siteNav` (not hero-clipped) = Workflows / Brief builder / Pricing; primary = Build my prompt (`#heroCtaSpine` → `#creative-brief`); secondary = See pricing (`#heroCtaBrief`); `#heroProof` *Free below — no account.*; trust IDs `#heroTrustPill1/2/3` as inline muted text; `.hero-diagram` = Satori sample **image** + prompt caption (*From brief → image prompt* — **no** outputs row / tagline / cycle-stepper); quiet usage strip; nėra mini-prompt demo, hero Telegram nuorodos ar lang switcher.
 - [ ] **Type:** Fraunces display (hero H1 only) + Source Sans 3 UI (ne Inter); body ~17px; prose ne full-bleed wall.
@@ -137,7 +137,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 ## 4. Susiję
 
 - [BULLET_PROOF_PROMPTS.md](BULLET_PROOF_PROMPTS.md) – promptų kokybės standartas (META/INPUT/OUTPUT, bullet-proof)
-- [STYLEGUIDE.md](../STYLEGUIDE.md) – DS **1.6.1** Product Operator (visual QA)
+- [STYLEGUIDE.md](../STYLEGUIDE.md) – DS **1.6.2** Product Operator (visual QA)
 - [QA_STANDARTAS.md](QA_STANDARTAS.md) – QA kriterijai ir nuoroda į spinoff01  
 - [DEPLOYMENT.md](../DEPLOYMENT.md) – kaip deploy ir kad po deploy būtų testuojama gyvai  
 

@@ -48,7 +48,7 @@ The ladder is a maturity progression: **use the system → build your own tools 
 
 ## 4. Language from search intent (JTBD)
 
-Buyer searches often say *AI marketing workflow*, *content operating system*, *brand voice guardrails*, or *structured prompting*. Use that language as **job framing** on `/en/` (hero, FAQ, storefront, GEO).
+Buyer searches often say *AI marketing workflow*, *content operating system*, *brand voice guardrails*, or *structured prompting*. Use that language as **job framing** on `/en/` (hero, FAQ, storefront, GEO). The cited jobs on this page are brand context, reusable workflows, and a pre-publish review.
 
 - Public product name stays **Content AI System** (H1, slogan, SKU family).
 - Soft **content operating system** is fine for Bundle / storefront Install framing.

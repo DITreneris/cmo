@@ -1163,6 +1163,15 @@ function run() {
   else failed++;
   if (assert(
     llmsTxt !== null &&
+    llmsTxt.includes('#cmo-context') &&
+    llmsTxt.indexOf('#block1') !== -1 &&
+    llmsTxt.indexOf('#cmo-context') > llmsTxt.indexOf('#block1') &&
+    llmsTxt.indexOf('#creative-brief') < llmsTxt.indexOf('#cmo-context'),
+    'llms.txt: #cmo-context hub after #block1 and after #creative-brief'
+  )) passed++;
+  else failed++;
+  if (assert(
+    llmsTxt !== null &&
     llmsTxt.indexOf('#creative-brief') !== -1 &&
     llmsTxt.indexOf('#block1') !== -1 &&
     llmsTxt.indexOf('#creative-brief') < llmsTxt.indexOf('#block1') &&
@@ -1171,6 +1180,13 @@ function run() {
   )) passed++;
   else failed++;
   if (assert(llmsFullTxt !== null && llmsFullTxt.includes('10 prompts'), 'llms-full.txt: prompt digest')) passed++;
+  else failed++;
+  if (assert(
+    llmsFullTxt !== null &&
+    llmsFullTxt.includes('pre-publish review') &&
+    !/free interactive 10/i.test(llmsFullTxt),
+    'llms-full.txt: system lead, not free interactive 10'
+  )) passed++;
   else failed++;
   if (assert(indexNowTxt !== null && indexNowTxt.trim() === INDEXNOW_KEY, 'IndexNow key file hosted')) passed++;
   else failed++;
@@ -1218,6 +1234,11 @@ function run() {
     else failed++;
     const frontFaqBlob = JSON.stringify(sot.frontFaq);
     if (assert(!/Midjourney/i.test(frontFaqBlob) && !/Pro teasers/i.test(frontFaqBlob), 'sot.json: frontFaq has no Midjourney / Pro teasers')) passed++;
+    else failed++;
+    if (assert(
+      !/How much time daily/.test(frontFaqBlob) && !/20–30 minutes/.test(frontFaqBlob),
+      'sot.json: frontFaq has no time-saved daily answer'
+    )) passed++;
     else failed++;
     if (enHtmlForCommerce) {
       if (assert(!/Midjourney/i.test(enHtmlForCommerce) && !/Pro teasers/i.test(enHtmlForCommerce), 'en/index.html: no Midjourney / Pro teasers')) passed++;

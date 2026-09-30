@@ -807,12 +807,15 @@ body.sticky-bar-visible {
   transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn:hover,
-.cta-button:hover,
 .cta-button-outline:hover,
 .community-cta-primary:hover,
 .community-cta-secondary:hover {
   transform: translateY(-1px);
+}
+
+.btn:hover,
+.cta-button:hover {
+  transform: none;
 }
 
 .btn.success {
@@ -2352,19 +2355,6 @@ pre.code-text {
   outline-offset: var(--focus-ring-offset);
 }
 
-#navPricing {
-  color: var(--color-brand-dark);
-  background: rgba(207, 167, 58, 0.16);
-}
-
-.header-cta {
-  margin-top: var(--space-6);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-3);
-}
-
 .header-cta .cta-button {
   font-size: 1.0625rem;
   font-weight: 600;
@@ -2580,6 +2570,14 @@ pre.code-text {
   gap: var(--space-3);
 }
 
+@media (min-width: 481px) {
+  .header-cta {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+
 .badge {
   font-weight: 600;
   text-transform: none;
@@ -2667,7 +2665,7 @@ pre.code-text {
   border-top: 1px solid var(--color-border-default);
 }
 
-/* ===== DS 1.6 Product Operator – shell, diagram, prompt chrome, brief ===== */
+/* ===== DS 1.6.2 Product Operator – shell, diagram, prompt chrome, brief ===== */
 
 .container {
   max-width: var(--shell-max);
@@ -2771,7 +2769,7 @@ pre.code-text {
 .hero-diagram {
   margin: 0;
   width: 100%;
-  max-width: 38rem;
+  max-width: 28.75rem;
 }
 
 .hero-diagram__card {
@@ -2783,13 +2781,15 @@ pre.code-text {
   color: var(--color-text-inverse);
 }
 
-.hero-diagram__label {
+.header .hero-diagram__label {
   margin: 0 0 var(--space-3);
   font-size: var(--font-size-caption);
   font-weight: 700;
   letter-spacing: 0.06em;
+  line-height: 1.4;
   text-transform: uppercase;
   color: var(--color-hero-diagram-muted);
+  opacity: 1;
 }
 
 .hero-diagram__pipeline {
@@ -2818,7 +2818,7 @@ pre.code-text {
 }
 
 .hero-diagram__card--photo {
-  padding: var(--space-3);
+  padding: var(--space-5);
 }
 
 .hero-sample-image {
@@ -2838,11 +2838,11 @@ pre.code-text {
 }
 
 pre.hero-brief-sample {
-  margin: var(--space-3) var(--space-2) var(--space-1);
+  margin: var(--space-4) 0 0;
   white-space: pre-wrap;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  line-height: 1.4;
+  font-size: var(--font-size-small);
+  line-height: 1.5;
   color: #cbd5e1;
 }
 

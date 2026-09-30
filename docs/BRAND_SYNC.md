@@ -6,7 +6,7 @@
 
 This document tracks visual identity alignment with the Prompt Anatomy brand hub (`promptanatomy.app`). Product copy and SEO for `.space` live in [`config/brand-seo.json`](../config/brand-seo.json).
 
-**Spin-off DS (web UI):** [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.1** Product Operator — Fraunces **hero H1 only** + Source Sans 3 product UI + JetBrains Mono prompts; full-bleed **warm paper** hero + navy sample card (grammar adapted from sister [DITreneris/blog](https://github.com/DITreneris/blog); not blog Inter / dark hub). Mother sync owns **gold + ink + favicon mark**; page/hero atmosphere (warm paper `#F6F1E8`) is a spin-off decision. Shared CSS warms `/lt/` paper without changing LT HTML.
+**Spin-off DS (web UI):** [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.2** Product Operator — Fraunces **hero H1 only** + Source Sans 3 product UI + JetBrains Mono prompts; full-bleed **warm paper** hero + navy sample card (grammar adapted from sister [DITreneris/blog](https://github.com/DITreneris/blog); not blog Inter / dark hub). Mother sync owns **gold + ink + favicon mark**; page/hero atmosphere (warm paper `#F6F1E8`) is a spin-off decision. Shared CSS warms `/lt/` paper without changing LT HTML.
 
 ---
 
@@ -28,7 +28,7 @@ This document tracks visual identity alignment with the Prompt Anatomy brand hub
 
 | Asset | Source | Notes |
 |-------|--------|-------|
-| `styles/design-tokens.json` | Mother colors + spin-off type/shadow/space (DS 1.6.1) | Single source for CSS + OG; smoke asserts sync vs `tokens.css` |
+| `styles/design-tokens.json` | Mother colors + spin-off type/shadow/space (DS 1.6.2) | Single source for CSS + OG; smoke asserts sync vs `tokens.css` |
 | `favicon.svg` | **Derivative** of mother `frontend/public/favicon.svg` | Same lightning mark; ink `#0B1320` + gold `#CFA73A` (replaces legacy teal `#008579`) |
 | `favicon-*.png`, `apple-touch-icon.png`, `android-chrome-*.png` | Generated: `npm run icons:export` | From local SVG |
 | `site.webmanifest` | Local; `theme_color` `#0B1320` | `short_name`: PA Library |
@@ -68,6 +68,6 @@ Checkout stays on `promptanatomy.space` through the product cards and their live
 
 ## Related docs
 
-- [STYLEGUIDE.md](../STYLEGUIDE.md) — web design system **1.6.1** (Product Operator)
+- [STYLEGUIDE.md](../STYLEGUIDE.md) — web design system **1.6.2** (Product Operator)
 - [DOCUMENTATION.md](DOCUMENTATION.md) — file inventory
 - [AGENTS.md](../AGENTS.md) — locale policy (EN canon)

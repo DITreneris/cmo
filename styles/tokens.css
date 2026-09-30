@@ -1,4 +1,4 @@
-/* Design tokens – Prompt Anatomy Product Operator (DS 1.6.1 atmosphere).
+/* Design tokens – Prompt Anatomy Product Operator (DS 1.6.2 atmosphere).
    Source of truth: styles/design-tokens.json (asserted by design-system-smoke). */
 
 :root {
@@ -27,17 +27,17 @@
   --color-semantic-error: #e53e3e;
   --color-border-default: #e0d6c6;
 
-  /* Shadows: elevation 0 = none; elevation 1 = restrained; diagram optional stronger */
+  /* Shadows: elevation 0 = none; elevation 1 = restrained; diagram in the same family */
   --shadow-elevation-0: none;
   --shadow-elevation-1: 0 8px 24px rgba(15, 23, 42, 0.06);
   --shadow-elevation-2: 0 8px 24px rgba(15, 23, 42, 0.06);
   --shadow-elevation-hero: none;
-  --shadow-cta: 0 4px 12px rgba(11, 19, 32, 0.1);
-  --shadow-cta-hover: 0 6px 16px rgba(11, 19, 32, 0.12);
+  --shadow-cta: none;
+  --shadow-cta-hover: none;
   --shadow-modal: 0 20px 60px rgba(11, 19, 32, 0.16);
   --shadow-soft: none;
   --shadow-raised: 0 8px 24px rgba(15, 23, 42, 0.06);
-  --shadow-hero-diagram: 0 16px 40px rgba(11, 19, 32, 0.22);
+  --shadow-hero-diagram: 0 8px 24px rgba(15, 23, 42, 0.08);
 
   /* Typography – Product Operator (serif = hero H1 only in components) */
   --font-display: Fraunces, Georgia, 'Times New Roman', serif;
@@ -58,7 +58,7 @@
   --measure-prose: 70ch;
 
   /* Hero atmosphere (full-bleed warm paper) */
-  --hero-bg: radial-gradient(circle at 50% 18%, rgba(255, 196, 0, 0.12), transparent 58%),
+  --hero-bg: radial-gradient(circle at 50% 18%, rgba(255, 196, 0, 0.04), transparent 58%),
     linear-gradient(180deg, #f6f1e8 0%, #ede4d4 100%);
   --hero-ink: #0b1320;
   --hero-muted: #475569;
@@ -71,7 +71,7 @@
   --color-hero-diagram-border: rgba(148, 163, 184, 0.2);
   --color-hero-diagram-line: rgba(148, 163, 184, 0.55);
   --color-hero-diagram-module: #111827;
-  --color-hero-diagram-muted: #9ca3af;
+  --color-hero-diagram-muted: #a8b5c7;
 
   /* Spacing */
   --space-1: 4px;
@@ -117,9 +117,9 @@
   --accent-dark: var(--color-brand-dark);
   --accent-dark-hover: var(--color-brand-dark-hover);
 
-  --cta-bg: linear-gradient(135deg, #e8b93c 0%, #cfa73a 52%, #b8922f 100%);
+  --cta-bg: #cfa73a;
   --cta-text: #0b1320;
-  --cta-hover: linear-gradient(135deg, #f0c94a 0%, #d4ad3d 52%, #c29a30 100%);
+  --cta-hover: #e8b93c;
 
   --tertiary: var(--color-brand-tertiary);
   --tertiary-dark: #0f5132;
