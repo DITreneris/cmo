@@ -64,6 +64,8 @@ Mother contract: [DITreneris/promptanatomy `docs/sibling_memo.md`](https://githu
 
 Checkout stays on `promptanatomy.space` through the product cards and their live Stripe Payment Links. The `.app` footer link is methodology / brand context only.
 
+The header lockup follows the hub brand manual §3: navy tile, gold bolt, split wordmark at weight 900. English pages say Prompt / Anatomy. The Lithuanian source says Promptų / Anatomija, and LT `og:site_name` matches. The footer line stays “Methodology at” because kit checkout is on this host.
+
 ---
 
 ## Related docs

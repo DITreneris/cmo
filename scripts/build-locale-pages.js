@@ -1777,7 +1777,7 @@ function insertSeo(html, locale) {
     `<meta property="og:title" content="${title}">`,
     `<meta property="og:description" content="${description}">`,
     `<meta property="og:url" content="${canonical}">`,
-    `<meta property="og:site_name" content="Prompt Anatomy">`,
+    `<meta property="og:site_name" content="${locale === 'lt' ? 'Promptų Anatomija' : 'Prompt Anatomy'}">`,
     `<meta property="og:locale" content="${ogLocale}">`,
     `<meta property="og:image" content="${ogImageUrl}">`,
     '<meta property="og:image:width" content="1200">',
@@ -1857,6 +1857,8 @@ const EN_REPLACEMENTS_PREFIX = [
   ['<span id="footer-address-label">Pašto adresas:</span>', '<span id="footer-address-label">Mailing address:</span>'],
   // Exact strings with "Promptų anatomija" before global replace below (order matters)
   ['aria-label="Atidaryti Promptų anatomija Telegram grupę naujame lange"', 'aria-label="Open Prompt Anatomy Telegram group in new tab"'],
+  ['<span class="header-brand-name-lead">Promptų</span>', '<span class="header-brand-name-lead">Prompt</span>'],
+  ['<span class="header-brand-name-accent">Anatomija</span>', '<span class="header-brand-name-accent">Anatomy</span>'],
   ['Promptų anatomija', 'Prompt Anatomy'],
   ['Turinio DI sistema<br>rinkodaros vadovams', 'Turn one brief into an image-ready prompt.'],
   [

@@ -817,6 +817,22 @@ function run() {
     )) passed++;
     else failed++;
     if (assert(
+      enHtml.includes('<span class="header-brand-name-lead">Prompt</span>') &&
+        enHtml.includes('<span class="header-brand-name-accent">Anatomy</span>') &&
+        enHtml.includes('class="header-brand-tile"') &&
+        enHtml.includes('content="Prompt Anatomy"'),
+      'en/index.html: split lockup Prompt / Anatomy and og:site_name'
+    )) passed++;
+    else failed++;
+    if (ltHtml && assert(
+      ltHtml.includes('<span class="header-brand-name-lead">Promptų</span>') &&
+        ltHtml.includes('<span class="header-brand-name-accent">Anatomija</span>') &&
+        ltHtml.includes('content="Promptų Anatomija"') &&
+        !ltHtml.includes('<span class="header-brand-name-lead">Prompt</span>'),
+      'lt/index.html: split lockup Promptų / Anatomija and og:site_name'
+    )) passed++;
+    else failed++;
+    if (assert(
       !enHtml.includes('Spin-off No. 2'),
       'en/index.html: nėra Spin-off No. 2 (entity footer kanonas)'
     )) passed++;

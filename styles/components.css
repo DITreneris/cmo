@@ -2436,11 +2436,11 @@ pre.code-text {
 .header-brand {
   margin: 0 0 var(--space-3);
   font-family: var(--font-ui);
-  font-size: var(--font-size-small);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--hero-ink);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-brand-dark);
 }
 
 .header-brand-mark {
@@ -2449,10 +2449,41 @@ pre.code-text {
   gap: var(--space-2);
 }
 
-.header-brand-mark img {
-  width: 28px;
-  height: 28px;
+.header-brand-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--color-brand-dark);
+  color: var(--color-brand-primary);
+  border: 1px solid rgb(255 255 255 / 0.10);
+}
+
+.header-brand-tile svg {
   display: block;
+}
+
+.header-brand-name-lead,
+.header-brand-name-accent {
+  font-weight: 900;
+}
+
+.header-brand-name-lead {
+  color: var(--color-brand-dark);
+}
+
+.header-brand-name-accent {
+  color: var(--color-brand-primary);
+}
+
+@media (min-width: 640px) {
+  .header-brand-tile {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .header-grid {

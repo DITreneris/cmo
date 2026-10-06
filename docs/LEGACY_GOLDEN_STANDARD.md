@@ -66,7 +66,7 @@ index.html (legacy struktūrinis šaltinis) → po `npm run build` → lt/index.
 ├── <a class="skip-link" href="#main-content">Pereiti prie turinio</a>
 ├── <div class="container">
 │   └── <main id="main-content">
-│       ├── <div class="header-top header-bar">  (page-level sticky; brand + EN #siteNav Workflows · Brief builder · Pricing; sibling above .header, not inside it)
+│       ├── <div class="header-top header-bar">  (page-level sticky; split lockup Prompt/Anatomy or Promptų/Anatomija + tile; EN #siteNav Workflows · Brief builder · Pricing; sibling above .header, not inside it)
 │       ├── <header class="header">        (full-bleed; #heroCtaSpine → #creative-brief + #heroCtaBrief See pricing; #heroTrustPill*; .hero-diagram .hero-sample-image)
 │       ├── [build inject EN @ <!-- CMO_CREATIVE_BRIEF -->] <section id="creative-brief"> (open #cb-builder)
 │       ├── [build inject EN @ <!-- CMO_PDF_STOREFRONT -->] <section id="pdf-storefront"> (2 cards + #pdf-card-pro text link; no comparison table)
