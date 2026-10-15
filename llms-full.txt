@@ -21,4 +21,4 @@ Full 10 META/INPUT/OUTPUT bodies: Pro kit.
 9. META: You are an SEO content strategist. Goal: build a topic cluster (1 pillar + 8 subtopics) for organic growth.
 10. META: You are a marketing operations strategist. Goal: build one control-center plan covering content, repurposing, testing, and weekly priorities.
 
-Interactive free layer: https://promptanatomy.space/en/
+Interactive free layer: https://www.promptanatomy.space/en/

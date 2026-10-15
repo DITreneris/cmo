@@ -89,7 +89,7 @@ Privalomi (žr. [.env.example](.env.example)):
 - [x] `FULFILLMENT_FROM_EMAIL` (verified Resend sender, pvz. `info@promptanatomy.app`)
 - [x] `UPSTASH_REDIS_REST_URL`
 - [x] `UPSTASH_REDIS_REST_TOKEN`
-- [x] `SITE_URL=https://promptanatomy.space`
+- [ ] `SITE_URL=https://www.promptanatomy.space` — kode fallback lieka apex, kol Production env neperrašytas. Webhook ir success URL jau www. Po pakeitimo perdeployinti, kad laiško nuorodos nešoktų per apex 307.
 - [x] `PDF_CMO_STARTER_SOURCE_URL`
 - [x] `PDF_CMO_PRO_SOURCE_URL`
 - [x] `BLOB_READ_WRITE_TOKEN`

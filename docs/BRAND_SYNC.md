@@ -57,7 +57,7 @@ Mother contract: [DITreneris/promptanatomy `docs/sibling_memo.md`](https://githu
 
 | Surface | Rule |
 |---------|------|
-| EN `/en/` `.footer-product-link` | `Part of Prompt Anatomy · Methodology at promptanatomy.app` |
+| EN `/en/` `.footer-product-link` | `Part of Prompt Anatomy. This page is the Content AI System: META, INPUT, OUTPUT, then Plan → Create → Check → Improve. The course on promptanatomy.app is a separate product.` |
 | Href | `https://www.promptanatomy.app/?utm_source=space&utm_medium=entity_footer&utm_campaign=ecosystem` |
 | LT | Frozen — keep legacy spin-off line until Orchestrator snapshot refresh |
 | Scope | Footer entity line only; not storefront CTAs, checkout routing, or a new promo component |

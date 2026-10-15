@@ -18,7 +18,7 @@
 
 - **Turinys:** [`data/en-prompt-bodies.json`](../data/en-prompt-bodies.json), [`data/en-prompt-expected.json`](../data/en-prompt-expected.json), [`data/en-scenarios.json`](../data/en-scenarios.json), [`scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) `EN_REPLACEMENTS` / `applyStaticLocaleText` EN šakos.
 - **Struktūra / UX / Commerce:** [`en/index.html`](../en/index.html) (build output), root [`index.html`](../index.html) DOM kontraktas (Legacy), [`docs/pdf-source/`](../docs/pdf-source/), [`config/sot.json`](../config/sot.json) – visada EN scope.
-- **SEO kanonas:** `https://promptanatomy.space/en/` ir `hreflang x-default` → `/en/` (patvirtina `tests/structure.test.js`).
+- **SEO kanonas:** `https://www.promptanatomy.space/en/` ir `hreflang x-default` → `/en/` (patvirtina `tests/structure.test.js`). Apex 307s į www.
 
 ### Kas NEKEIČIAMA (LT freeze)
 
@@ -61,7 +61,7 @@ Root [`index.html`](../index.html) vis dar yra **struktūrinis build šaltinis**
   - `lt/index.html` (užšaldyta snapshot)
   - `en/index.html` (kanonas)
 - Build metu canonical/hreflang URL sudaromi iš:
-  - `SITE_ORIGIN` (default: `https://promptanatomy.space`)
+  - `SITE_ORIGIN` (default: `https://www.promptanatomy.space`)
   - `BASE_PATH` (default: tuščia eilutė – šaknis)
 - **Kanoninis vartotojo kelias:** `/en/` (primary ir mirror, su atitinkamu `BASE_PATH`).
 

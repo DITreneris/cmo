@@ -6,6 +6,12 @@ Formatas pagal [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), versija
 
 ## [Unreleased]
 
+### Pakeista
+- **[UI/Content] Canonical host is www (Ambition A / R1-support):** `SITE_ORIGIN` default, sitemap, `llms.txt`, JSON-LD, and privacy/terms/success canonicals use `https://www.promptanatomy.space`. Apex still 307s there; Stripe webhook and Payment Link success URL stay on www. `/en` and `/lt` 308 to the trailing slash. EN footer says this page is the Content AI System (META, INPUT, OUTPUT, Plan → Create → Check → Improve) and that the course on promptanatomy.app is a separate product. The rework line and the prompt-library FAQ no longer claim a result the page cannot show. LT body copy stays. Production `SITE_URL` still needs the operator to set www. Does not exit R1. No SemVer bump.
+
+### Prideta
+- **[Docs] Content AI System citation brief:** [`docs/ai-citation-content-ai-system.md`](docs/ai-citation-content-ai-system.md) records the 2026-10-15 Gemini, Perplexity, and Claude answers and the canon to cite instead (META / INPUT / OUTPUT, Plan → Create → Check → Improve). Not live `/en/` copy. Does not exit R1. No SemVer bump.
+
 ## [1.10.0] - 2026-10-15
 
 ### Pakeista

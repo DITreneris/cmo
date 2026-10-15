@@ -3,7 +3,7 @@
   "brand": {
     "publicName": "Prompt Anatomy",
     "slogan": "Content AI System for marketing leaders",
-    "logoUrl": "https://promptanatomy.space/android-chrome-512x512.png",
+    "logoUrl": "https://www.promptanatomy.space/android-chrome-512x512.png",
     "knowsAbout": [
       "brand voice guardrails",
       "pre-publish content review",
@@ -114,7 +114,7 @@
     },
     {
       "q": "How is this different from a prompt library?",
-      "a": "A library is a pile of prompts. This is context, four workflows, then a review before you ship."
+      "a": "A library stores prompts. This adds shared context, four workflows, and a review before you ship."
     },
     {
       "q": "Does this work for B2B SaaS, services, and ecommerce?",
@@ -123,7 +123,7 @@
   ],
   "site": {
     "host": "promptanatomy.space",
-    "siteUrl": "https://promptanatomy.space",
+    "siteUrl": "https://www.promptanatomy.space",
     "primary": "vercel",
     "mirror": {
       "host": "ditreneris.github.io/cmo",
