@@ -87,12 +87,13 @@
 | [styles/design-tokens.json](../styles/design-tokens.json) | Dizaino tokenų vienas šaltinis (smoke assert vs `tokens.css`) | UI/UX + QA | Keičiant semantinius / type / shadow tokenus |
 | [styles/tokens.css](../styles/tokens.css), [styles/components.css](../styles/components.css), [styles/utilities.css](../styles/utilities.css) | CSS sluoksniai; components – DS 1.6.2 hero/surfaces authoritative layer | UI/UX | Keičiant komponentų vizualiką, hero, paviršius |
 | [scripts/build-locale-pages.js](../scripts/build-locale-pages.js) | Generuoja lt/en + inject CMO v2 blokus + EN_REPLACEMENTS | QA / Orchestrator | LT/EN replace sąrašas, BASE_PATH, canonical/hreflang, CMO v2 inject |
-| [scripts/generate-og.js](../scripts/generate-og.js) | OG paveikslo (1200×630, SVG → PNG) generavimas | UI/UX + QA | Keičiant OG maketą; po pakeitimo `tests/structure.test.js` OG kontraktai |
+| [scripts/generate-og.js](../scripts/generate-og.js) | OG paveikslo (1200×630, SVG → resvg → JPEG) generavimas | UI/UX + QA | Keičiant OG maketą; **bump** `ogImage.file` (`og-vN.jpg`) + `UPDATE_OG=1`; `tests/structure.test.js` OG kontraktai |
+| [assets/fonts/og/](../assets/fonts/og/) | OG kortelės šriftai (Fraunces, Source Sans 3; OFL) | UI/UX | Keičiant OG tipografiją |
 | [scripts/vercel-export-public.js](../scripts/vercel-export-public.js) | Vercel statinio output kopijavimas į `public/` + analytics inject | QA / Orchestrator | Keičiant Vercel deploy artefakto sudėtį |
 | [lt/index.html](../lt/index.html), [en/index.html](../en/index.html) | Generuojami locale puslapiai (`en/` kanonas; `lt/` užšaldyta) | (build output) | Po kiekvieno `npm run build` |
 | [js/en-prompt-bodies-inline.js](../js/en-prompt-bodies-inline.js) | Generuojamas iš `data/en-prompt-bodies.json` | (build output) | Po `npm run build` |
 | [public/](../public/) | Vercel deploy artefaktas (gitignored) | (build output) | Po `npm run build` |
-| [og.png](../og.png) | OG/Twitter preview (1200×630) | UI/UX (per generate-og) | `npm run build` arba `npm run generate:og` |
+| [og-v2.jpg](../og-v2.jpg) | OG/Twitter preview (1200×630); vardas iš `brand-seo.json` `ogImage.file` | UI/UX (per generate-og) | `npm run generate:og`; `og.png` – legacy, tik seniems share'ams |
 | [robots.txt](../robots.txt), [sitemap.xml](../sitemap.xml) | SEO crawler signalai | QA | Naujos sekcijos / lokelės |
 | [favicon.svg](../favicon.svg) | Favicon (derivative, ink + gold) | UI/UX | Brand atnaujinimas; žr. [BRAND_SYNC.md](BRAND_SYNC.md) |
 | [site.webmanifest](../site.webmanifest), `favicon-*.png`, `apple-touch-icon.png`, `android-chrome-*.png` | PWA / tab icons | UI/UX | `npm run icons:export` po SVG keitimo |

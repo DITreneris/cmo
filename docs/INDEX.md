@@ -71,7 +71,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0–�
 index.html (legacy struktūrinis šaltinis) + data/en-*.json (kanonas) + data/lt-*.json (užšaldyta)
     → npm run build
        1. scripts/export-favicons.js → favicon PNG pack
-       2. scripts/generate-og.js → og.png (1200×630; brand-seo + design-tokens)
+       2. scripts/generate-og.js → og-vN.jpg (1200×630; brand-seo ogImage/ogVisual + design-tokens + assets/fonts/og)
        3. scripts/build-locale-pages.js → lt/index.html, en/index.html, js/en-prompt-bodies-inline.js
           (inject: cmo-context, creative-brief EN, prompt-expected×4 spine, cmo-safety, cmo-scenarios, __CMO_COMPILE;
           `geo-surfaces.js` rašo robots/sitemap/llms/JSON-LD iš šio skripto)

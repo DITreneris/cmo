@@ -1761,7 +1761,8 @@ function insertSeo(html, locale) {
     locale === 'en'
       ? brandSeo.description
       : 'Prompt Anatomy archive snapshot. The canonical Content AI System product surface is the English page.';
-  const ogImageUrl = makeAbsoluteUrl('/og.png');
+  const ogImage = brandSeo.ogImage;
+  const ogImageUrl = makeAbsoluteUrl('/' + ogImage.file);
   const ogImageAlt =
     locale === 'en'
       ? brandSeo.ogImageAlt
@@ -1780,8 +1781,9 @@ function insertSeo(html, locale) {
     `<meta property="og:site_name" content="${locale === 'lt' ? 'Promptų Anatomija' : 'Prompt Anatomy'}">`,
     `<meta property="og:locale" content="${ogLocale}">`,
     `<meta property="og:image" content="${ogImageUrl}">`,
-    '<meta property="og:image:width" content="1200">',
-    '<meta property="og:image:height" content="630">',
+    `<meta property="og:image:type" content="${ogImage.type}">`,
+    `<meta property="og:image:width" content="${ogImage.width}">`,
+    `<meta property="og:image:height" content="${ogImage.height}">`,
     `<meta property="og:image:alt" content="${ogImageAlt}">`,
     '<meta name="twitter:card" content="summary_large_image">',
     `<meta name="twitter:title" content="${title}">`,

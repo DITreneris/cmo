@@ -117,7 +117,7 @@ function buildSitemapXml(siteOrigin, root) {
   const urls = [
     { loc: siteOrigin + '/', file: 'index.html', images: [] },
     { loc: siteOrigin + '/en/', file: 'en/index.html', images: [
-      siteOrigin + '/og.png',
+      siteOrigin + '/' + readBrandSeo().ogImage.file,
       siteOrigin + '/assets/pdf-covers/cmo-starter-cover.png',
       siteOrigin + '/assets/pdf-covers/cmo-pro-cover.png',
       siteOrigin + '/assets/pdf-covers/cmo-bundle-cover.png'
@@ -257,6 +257,13 @@ function buildManifest(siteOrigin, tokens) {
   ) + '\n';
 }
 
+/** Tik cover PNG. Preview vidiniai puslapiai nepatenka į Product.image. */
+function merchantProductImage(siteOrigin, coverPng) {
+  if (typeof coverPng !== 'string') return '';
+  if (!/^assets\/pdf-covers\/cmo-[a-z0-9-]+-cover\.png$/.test(coverPng)) return '';
+  return siteOrigin + '/' + coverPng;
+}
+
 function buildJsonLdGraph(sot, siteOrigin, brandSeo) {
   const orgId = siteOrigin + '/#organization';
   const websiteId = siteOrigin + '/#website';
@@ -311,7 +318,7 @@ function buildJsonLdGraph(sot, siteOrigin, brandSeo) {
         returnFees: 'https://schema.org/FreeReturn'
       }
     };
-    return {
+    const productNode = {
       '@type': 'Product',
       '@id': siteOrigin + '/#product-' + p.id,
       name: p.name,
@@ -320,6 +327,9 @@ function buildJsonLdGraph(sot, siteOrigin, brandSeo) {
       brand: { '@type': 'Brand', name: sot.brand.publicName },
       offers: offer
     };
+    const image = merchantProductImage(siteOrigin, p.coverPng);
+    if (image) productNode.image = image;
+    return productNode;
   });
 
   const graph = [

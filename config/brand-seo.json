@@ -1,10 +1,21 @@
 {
   "title": "Prompt Anatomy · Content AI System",
   "description": "Set brand context, run 4 workflows, and review before you publish. Free in the browser. Kits from $3.99.",
-  "ogImageAlt": "Prompt Anatomy – Content AI System. Brief builder and 4 free workflows.",
+  "ogImage": {
+    "file": "og-v2.jpg",
+    "type": "image/jpeg",
+    "width": 1200,
+    "height": 630
+  },
+  "ogImageAlt": "Prompt Anatomy: One brief. One powerful image prompt. Free AI image prompt builder with a leather handbag sample prompt.",
   "ogVisual": {
-    "eyebrow": "PROMPT ANATOMY",
-    "headline": "Build an image-ready prompt",
-    "subline": "Brief builder · 4 free workflows"
+    "headlineLines": ["One brief.", "One powerful", "image prompt."],
+    "badge": "Free AI Image Prompt Builder →",
+    "cardLabel": "Brief → image prompt",
+    "promptLines": [
+      "Luxury leather handbag, cinematic lighting,",
+      "light stone background, 1:1, premium tone."
+    ],
+    "domain": "promptanatomy.space"
   }
 }
