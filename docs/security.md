@@ -61,7 +61,7 @@ Fix high/critical before release. Document exceptions in CHANGELOG if deferred.
   - `fulfilled` / `already_fulfilled` / `not_paid` / `revoked` → **200**
   - `locked` (Redis NX contention) → **503** (Stripe retries)
 - Product identity order: CMO `price.id` → optional `payment_link` allowlist → `metadata.product` (metadata alone is vetoed when line items carry a foreign price id). Never match on dollar amount.
-- Endpoint in Stripe Dashboard must be `https://www.promptanatomy.space/api/stripe-webhook`. Apex returns 307; Stripe does not follow it. Subscribe `checkout.session.completed`, `checkout.session.async_payment_succeeded`, and `charge.refunded`.
+- Endpoint in Stripe Dashboard must be `https://www.promptanatomy.space/api/stripe-webhook`. Apex returns 307; Stripe does not follow it. Subscribe `checkout.session.completed` and `checkout.session.async_payment_succeeded`. Refunds are manual in the Dashboard; do not subscribe `charge.refunded` until there is real volume.
 - A full refund (`charge.refunded` with `refunded: true`) sets fulfillment `revoked` when a `fulfillment-by-pi:` index exists (purchases after this deploy). That stops new success-page links and rejects existing email tokens. A partial refund does not revoke. A replay of the checkout event does not send another email.
 
 ## Download links

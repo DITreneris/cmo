@@ -5,7 +5,7 @@
 **R1 ops SSOT:** [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md) (full env matrix — do not duplicate here)  
 **Operator sequence:** [docs/GO_LIVE_RUNBOOK.md](docs/GO_LIVE_RUNBOOK.md) (`pdf:upload-blob:dry` → upload → `check:fulfillment` → `check:prod`)  
 **UX Conversion Audit:** P0/P1 shipped 2026-09-03 as **R1-support** (does **not** count as R1 exit). Audit P0–P3 ≠ roadmap R1–R4.  
-**Last updated:** 2026-09-03 (R1-support 3: tool-first IA; R1 Stripe still open)
+**Last updated:** 2026-10-15 (R1 health green; live purchase still open)
 
 ---
 
@@ -15,12 +15,12 @@ Short boxes only; details live in MUST_TODO_STRIPE.
 
 This **is** Audit P3 “complete live purchase drills”. Do not open a separate UI task for it.
 
-- [ ] [PDF pipeline](MUST_TODO_STRIPE.md#pdf-pipeline) — [runbook](docs/GO_LIVE_RUNBOOK.md) steps 1–3: dry-run → `npm run pdf:upload-blob` → paste `PDF_CMO_*_SOURCE_URL` into Vercel Production
-- [ ] [Stripe Dashboard](MUST_TODO_STRIPE.md#stripe-dashboard) — success URL, webhook, `price_…` / `whsec_…` confirmed for all three SKUs
-- [ ] [Vercel Production env](MUST_TODO_STRIPE.md#vercel-production-env) — all keys from `.env.example`; Redeploy
-- [ ] [QA prieš release](MUST_TODO_STRIPE.md#qa-prieš-release) — `npm run check:fulfillment`; `npm run check:prod` → `{ ok: true, missing: [] }`
+- [x] [PDF pipeline](MUST_TODO_STRIPE.md#pdf-pipeline) — [runbook](docs/GO_LIVE_RUNBOOK.md) steps 1–3: dry-run → `npm run pdf:upload-blob` → paste `PDF_CMO_*_SOURCE_URL` into Vercel Production — 2026-10-15 `check:prod` `missing: []`, `blobConfigured=true`
+- [x] [Stripe Dashboard](MUST_TODO_STRIPE.md#stripe-dashboard) — success URL, webhook, `price_…` / `whsec_…` confirmed for all three SKUs. Refundai lieka rankomis; `charge.refunded` neprenumeruotas
+- [x] [Vercel Production env](MUST_TODO_STRIPE.md#vercel-production-env) — all keys from `.env.example`; Redeploy — 2026-10-15 tas pats `main` commit `e8a5961`, ne šis working tree
+- [x] [QA prieš release](MUST_TODO_STRIPE.md#qa-prieš-release) — `npm run check:fulfillment`; `npm run check:prod` → `{ ok: true, missing: [] }` — 2026-10-15 abu žali
 - [ ] Live purchase drill — Starter $3.99 → email ≤5 min → download; then Pro + Bundle; `success.html` poll
-- [ ] Commit + push → Vercel redeploy (after SOT/env complete); production build gate `REQUIRE_STRIPE_LINKS=1 npm run build` per [vercel.json](vercel.json)
+- [ ] Commit + push → Vercel redeploy (after SOT/env complete); production build gate `REQUIRE_STRIPE_LINKS=1 npm run build` per [vercel.json](vercel.json) — build gate jau `vercel.json`; šio UI working tree nekelti
 
 **R1 exit:** fulfillment health green + live Starter (then Pro/Bundle) proven. Then unlock R2.
 
@@ -60,12 +60,12 @@ Copy/ops only. Do not reopen path-cut decisions.
 
 ## R1-support 4 — craft atmosphere (2026-09-03)
 
-Does not replace Stripe ops. Does not count as R1 exit. DS 1.6.1, not 1.7.
+Does not replace Stripe ops. Does not count as R1 exit. Shipped then as DS 1.6.1. Current design system is **1.6.2** ([STYLEGUIDE.md](STYLEGUIDE.md)). Do not bump to 1.7 without Orchestrator.
 
 - [x] Warm paper tokens (`#F6F1E8`); EN hero = Satori sample image + prompt caption
 - [x] Builder output pane navy studio; `.cb-tool-silhouette` removed
 - [x] Complete card visual weight (2 cards stay)
-- [x] Tests + STYLEGUIDE 1.6.1 / LEGACY / CHANGELOG sync
+- [x] Tests + STYLEGUIDE 1.6.1 / LEGACY / CHANGELOG sync *(1.6.2 followed; do not roll the guide back to 1.6.1)*
 
 ## R1-support 3 — tool-first IA (2026-09-03)
 

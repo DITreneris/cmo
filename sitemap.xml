@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://promptanatomy.space/</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://promptanatomy.space/en/</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <image:image>
-      <image:loc>https://promptanatomy.space/og.png</image:loc>
+      <image:loc>https://promptanatomy.space/og-v2.jpg</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://promptanatomy.space/assets/pdf-covers/cmo-starter-cover.png</image:loc>
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://promptanatomy.space/lt/</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://promptanatomy.space/lt/privatumas.html</loc>

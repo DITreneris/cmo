@@ -168,6 +168,9 @@ function main() {
   ]) {
     if (existsRel(icon)) copyFile(icon);
   }
+  const ogFile = JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'brand-seo.json'), 'utf8')).ogImage.file;
+  if (existsRel(ogFile)) copyFile(ogFile);
+  // Senas URL lieka, kad anksčiau pasidalintos nuorodos negautų 404 (immutable cache).
   if (existsRel('og.png')) copyFile('og.png');
 
   // GitHub Pages helper; harmless on Vercel

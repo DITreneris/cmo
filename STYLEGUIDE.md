@@ -1,7 +1,7 @@
 # DI Promptų Biblioteka – stiliaus gidas (Spin-off Nr. 2)
 
 **Versija:** 1.6.2  
-**Data:** 2026-09-30  
+**Data:** 2026-10-15  
 **Kalba:** LT  
 **Kryptis:** Product Operator (warm paper atmosphere; Fraunces **only** hero H1; Source Sans 3 product UI; JetBrains Mono prompts)
 
@@ -45,7 +45,7 @@ Skalė: caption 12 → small 14 → body 17 → bodyLg 18 → title 1.35rem → 
 
 **Glossary:** Prompt Anatomy = brand; Content AI System = product; **workflow** = free library unit (display 1–4 = IDs 1/2/3/5); **prompt** = copyable body; **brief** = **primary** free tool; **Pro kit** = full 10 offline.
 
-1. Hero: logo + page-level sticky `#siteNav` (Workflows · Brief builder · Pricing; sibling of `.header`, not hero-clipped); **no lang switcher**; H1 once; `#heroProof` *Free below — no account.*; trust IDs `#heroTrustPill1/2/3` as one muted inline row (no pill chrome); primary `#heroCtaSpine` **Build my prompt** → `#creative-brief`; `#heroCtaBrief` **See pricing** text link → `#pdf-storefront`; `.hero-diagram` = **sample image** (`.hero-sample-image`) + prompt caption *From brief → image prompt* — no pipeline modules / outputs row  
+1. Hero: header lockup (36/40px navy tile, gold bolt, split wordmark at weight 900 — EN Prompt / Anatomy, LT source Promptų / Anatomija; [BRAND_SYNC.md](docs/BRAND_SYNC.md)) + page-level sticky `#siteNav` (Workflows · Brief builder · Pricing; sibling of `.header`, not hero-clipped); **no lang switcher**; H1 once; `#heroProof` *Free below — no account.*; trust IDs `#heroTrustPill1/2/3` as one muted inline row (no pill chrome); primary `#heroCtaSpine` **Build my prompt** → `#creative-brief`; `#heroCtaBrief` **See pricing** text link → `#pdf-storefront`; `.hero-diagram` = **sample image** (`.hero-sample-image`) + prompt caption *From brief → image prompt* — no pipeline modules / outputs row  
 2. **Use now:** EN `#creative-brief` (`#cb-builder` **open**)  
 3. `#pdf-storefront` — 2 cards (Starter + Complete); Pro = text link  
 4. Progress of 4 + jump (Plan·Create·Check·Improve · Pricing · Brief · FAQ; **not** sticky)  
@@ -118,9 +118,10 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 
 ### 4.1 Mygtukai
 
-- **Primary CTA:** solid `var(--cta-bg)`, `border-radius: 12px` (`--radius-md`), no drop shadow.
+- **Primary CTA:** solid `var(--cta-bg)`, `border-radius: 12px` (`--radius-md`), no drop shadow, compact operator proportions (`.btn` `padding: 0.65rem 1.25rem`, `font-size: 0.9375rem`, `min-height: 44px`).
 - **Secondary:** outline ink.
 - Brief presets: **neutral** chips; selected = gold.
+- Disclosures (`<details>/<summary>`): `list-style: none` su `+`/`−` mono indikatoriumi; jokių dubliuotų vidinių antraščių.
 
 ### 4.2 Badge / chips
 
@@ -134,7 +135,8 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 
 ### 4.4 Code block
 
-- Border 1px; focus brand primary.
+- Border 1px (`--color-surface-subtle`); `.code-text` `14px` (`0.875rem`), `line-height: 1.6`; neutral ink border on hover (no `#fffbeb` glow); focus brand primary.
+- `.prompt-footer`: `1px` border-top, horizontal flex row (`Copy` + `Mark as done` vienoje eilutėje).
 
 ### 4.5 Icons
 
@@ -221,8 +223,8 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 - **1.5** – Editorial Operator (serif on section titles; PDF cover hero)  
 - **1.6** – Product Operator: serif=hero H1; hero workflow diagram; gold/shadow/radius restraint; dual CSS kill; compact how-it-works  
 - **1.6.1** – Atmosphere: warm paper (`#F6F1E8`); EN hero = Satori sample image + prompt caption; builder output pane = navy studio; Complete card visual weight  
-- **1.6.2** – Flatter paper radial; solid gold CTA; diagram shadow in the elevation-1 family; sample card 460px; caption 14/1.5; secondary link beside the primary on desktop; nav links share one resting style  
+- **1.6.2** – Flatter paper radial; solid gold CTA; diagram shadow in the elevation-1 family; sample card 460px; caption 14/1.5; secondary link beside the primary on desktop; nav links share one resting style. Header lockup (navy tile, split wordmark, weight 900) shipped in the same line without a DS bump.
 
 ---
 
-*Atnaujinta 2026-09-30 – DS 1.6.2 Product Operator (atmosphere).*
+*Atnaujinta 2026-10-15 – DS 1.6.2 Product Operator (atmosphere + header lockup).*

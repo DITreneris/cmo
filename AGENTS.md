@@ -157,7 +157,7 @@ Prieš PR įsitikinti, kad `npm test` praeina. A11y: CI tikrina `/lt/` ir `/en/`
 1. Orchestrator → Curriculum: release scope ([CHANGELOG.md](CHANGELOG.md), aktyvūs PR tikslai).
 2. Orchestrator → Content / UI/UX: reikiai (jei yra).
 3. Orchestrator → QA: release validacija.
-4. QA: `npm test`, CHANGELOG atnaujintas (SemVer), rankinis QA **`/en/`** (naršyklės, mobilus, kopijavimas, a11y, Commerce jei taikoma).
+4. QA: `npm test`, `CHANGELOG.md` skyrius `## [Unreleased]` perkeltas į naują versiją (SemVer), rankinis QA **`/en/`** (naršyklės, mobilus, kopijavimas, a11y, Commerce jei taikoma).
 5. QA pass → tag (pvz. `v1.x.0`), deploy. QA fail → grąžinti Content/UI.
 
 ---
@@ -226,4 +226,4 @@ Keičiant **turinį** – atsakingas Content Agent; keičiant **struktūrą arba
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-09-16 (v1.5.8 – Vercel `click_checkout` visoms SKU)
+**Paskutinis atnaujinimas:** 2026-10-15 (v1.5.8 – release žurnalas = `## [Unreleased]`; DS kanonas lieka **1.6.2**)

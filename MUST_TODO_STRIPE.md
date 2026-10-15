@@ -33,8 +33,8 @@ Repo paruošta (SOT flip, testai, `vercel.json` build gate). **Prieš pirmą liv
 
 - [x] `npm install` → `npx playwright install chromium`
 - [x] `npm run pdf:export` — Starter **14 p.**, Pro **30 p.** (page-count gate)
-- [ ] `npm run pdf:upload-blob` → įklijuoti `PDF_CMO_*_SOURCE_URL` į Vercel Production (reikia `BLOB_READ_WRITE_TOKEN` iš Vercel Storage)
-- [ ] (Optional Pro) `PDF_CMO_PRO_MD_SOURCE_URL` jei Markdown companion Blob'e
+- [x] `npm run pdf:upload-blob` → įklijuoti `PDF_CMO_*_SOURCE_URL` į Vercel Production (reikia `BLOB_READ_WRITE_TOKEN` iš Vercel Storage) — 2026-10-15 `check:prod` žalias, `missing: []`, `blobConfigured=true`
+- [x] (Optional Pro) `PDF_CMO_PRO_MD_SOURCE_URL` jei Markdown companion Blob'e — raktas yra Production env
 
 ---
 
@@ -48,17 +48,17 @@ Repo paruošta (SOT flip, testai, `vercel.json` build gate). **Prieš pirmą liv
 | Pro $8.99 | https://buy.stripe.com/9B68wPamgc3rbJW11ufjG0c |
 | Complete Kit $10.99 | https://buy.stripe.com/eVqcN58e82sRdS4cKcfjG0d |
 
-- [ ] **CMO AI Content System · Starter** — Product + Price `$3.99` → `STRIPE_PRICE_CMO_STARTER_PDF`
-- [ ] **CMO AI Content System · Pro** — Product + Price `$8.99` → `STRIPE_PRICE_CMO_PRO_PDF`
-- [ ] **CMO AI Content System · Complete Kit** — Product + Price `$10.99` → `STRIPE_PRICE_CMO_BUNDLE_PDF`
-- [ ] Kiekvienam **Payment Link** — success URL:  
-  `https://www.promptanatomy.space/success.html?session_id={CHECKOUT_SESSION_ID}`
-- [ ] Kiekvienam **CMO Payment Link** metadata: `product=starter` | `pro` | `bundle` (izoliuoja nuo kitų SKU tame pačiame Stripe account)
-- [ ] Webhook: `https://www.promptanatomy.space/api/stripe-webhook`  
-  Events: `checkout.session.completed`, `checkout.session.async_payment_succeeded`. Shared account: svetimi pirkimai → `200` `ignored`, ne `500`. Lock contention → `503` (Stripe retry). Apex POST 307 sulaužo Stripe.
-- [ ] Stripe receipts ON (Settings → Customer emails → Successful payments)
-- [ ] Webhook signing secret → Vercel `STRIPE_WEBHOOK_SECRET`
-- [ ] Stripe product descriptions atitinka PDF (14 / 30 / 44 pages) — ne seni skaičiai
+- [x] **CMO AI Content System · Starter** — Product + Price `$3.99` → `STRIPE_PRICE_CMO_STARTER_PDF` — 2026-10-15 Payment Link `G0b` sutampa
+- [x] **CMO AI Content System · Pro** — Product + Price `$8.99` → `STRIPE_PRICE_CMO_PRO_PDF` — 2026-10-15 Payment Link `G0c` sutampa
+- [x] **CMO AI Content System · Complete Kit** — Product + Price `$10.99` → `STRIPE_PRICE_CMO_BUNDLE_PDF` — 2026-10-15 Payment Link `G0d`; Production env sutapatintas su gyva kaina
+- [x] Kiekvienam **Payment Link** — success URL:  
+  `https://www.promptanatomy.space/success.html?session_id={CHECKOUT_SESSION_ID}` — 2026-10-15 `after_completion=redirect`
+- [x] Kiekvienam **CMO Payment Link** metadata: `product=starter` | `pro` | `bundle` (izoliuoja nuo kitų SKU tame pačiame Stripe account) — 2026-10-15
+- [x] Webhook: `https://www.promptanatomy.space/api/stripe-webhook`  
+  Events: `checkout.session.completed`, `checkout.session.async_payment_succeeded`. **Refundai — rankomis Stripe Dashboard.** `charge.refunded` neprenumeruoti, kol klientų nėra. Shared account: svetimi pirkimai → `200` `ignored`, ne `500`. Lock contention → `503` (Stripe retry). Apex POST 307 sulaužo Stripe. — 2026-10-15 endpoint enabled
+- [ ] Stripe receipts ON (Settings → Customer emails → Successful payments) — API šito nustatymo nerodo
+- [x] Webhook signing secret → Vercel `STRIPE_WEBHOOK_SECRET` — raktas yra Production env
+- [x] Stripe product descriptions atitinka PDF (14 / 30 / 44 pages) — ne seni skaičiai — 2026-10-15
 
 ---
 
@@ -79,20 +79,20 @@ Repo paruošta (SOT flip, testai, `vercel.json` build gate). **Prieš pirmą liv
 
 Privalomi (žr. [.env.example](.env.example)):
 
-- [ ] `STRIPE_SECRET_KEY`
-- [ ] `STRIPE_WEBHOOK_SECRET`
-- [ ] `STRIPE_PRICE_CMO_STARTER_PDF`
-- [ ] `STRIPE_PRICE_CMO_PRO_PDF`
-- [ ] `STRIPE_PRICE_CMO_BUNDLE_PDF`
-- [ ] `DOWNLOAD_TOKEN_SECRET` (≥32 baitai)
-- [ ] `RESEND_API_KEY`
-- [ ] `FULFILLMENT_FROM_EMAIL` (verified Resend sender, pvz. `info@promptanatomy.app`)
-- [ ] `UPSTASH_REDIS_REST_URL`
-- [ ] `UPSTASH_REDIS_REST_TOKEN`
-- [ ] `SITE_URL=https://promptanatomy.space`
-- [ ] `PDF_CMO_STARTER_SOURCE_URL`
-- [ ] `PDF_CMO_PRO_SOURCE_URL`
-- [ ] `BLOB_READ_WRITE_TOKEN`
+- [x] `STRIPE_SECRET_KEY`
+- [x] `STRIPE_WEBHOOK_SECRET`
+- [x] `STRIPE_PRICE_CMO_STARTER_PDF`
+- [x] `STRIPE_PRICE_CMO_PRO_PDF`
+- [x] `STRIPE_PRICE_CMO_BUNDLE_PDF` — 2026-10-15 sutapatinta su gyva Complete kaina
+- [x] `DOWNLOAD_TOKEN_SECRET` (≥32 baitai)
+- [x] `RESEND_API_KEY`
+- [x] `FULFILLMENT_FROM_EMAIL` (verified Resend sender, pvz. `info@promptanatomy.app`)
+- [x] `UPSTASH_REDIS_REST_URL`
+- [x] `UPSTASH_REDIS_REST_TOKEN`
+- [x] `SITE_URL=https://promptanatomy.space`
+- [x] `PDF_CMO_STARTER_SOURCE_URL`
+- [x] `PDF_CMO_PRO_SOURCE_URL`
+- [x] `BLOB_READ_WRITE_TOKEN`
 
 Po env: **Redeploy** Production.
 
@@ -108,15 +108,15 @@ Stripe links vis dar tikrinami `build-locale-pages.js`. Pilnas `npm test` lieka 
 
 ## QA prieš release
 
-- [ ] `npm run check:fulfillment` — Redis PONG, env complete (Vercel Production env; lokaliai reikia `.env`)
-- [ ] `npm run check:prod` — `{ ok: true, missing: [] }` + IndexNow key file (po deploy + env)
+- [x] `npm run check:fulfillment` — Redis PONG, env complete (Vercel Production env; lokaliai reikia `.env`) — 2026-10-15
+- [x] `npm run check:prod` — `{ ok: true, missing: [] }` + IndexNow key file (po deploy + env) — 2026-10-15, po Production redeploy
 - [x] `/en/` — storefront: **2** kortelės (Starter + Complete) + Pro tekstinė nuoroda, live `buy.stripe.com` (ne `/coming-soon.html`) — **repo build patvirtinta**
 - [x] `/lt/` — **NĖRA** `#pdf-storefront`, kainų, `buy.stripe.com` — **structure tests**
 - [x] Mirror (`MIRROR_NOTE=1` build) — taip pat be storefront — **structure tests**
 - [ ] Stripe **live mode**: Starter, Pro, Bundle → el. laiškas per ≤5 min → download veikia
 - [ ] `success.html` — poll → „Download PDF“ per ~5 s
 - [ ] Webhook idempotency — pakartotinis delivery → `already_fulfilled`
-- [ ] `terms.html` `#paid-pdf-license` pasiekiamas (gyvai)
+- [x] `terms.html` `#paid-pdf-license` pasiekiamas (gyvai) — 2026-10-15 `https://www.promptanatomy.space/terms/` HTTP 200
 - [x] `npm run test:e2e` — live režime CTA branch
 - [x] Repo QA — [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md) `/en/` (CI)
 - [x] [CHANGELOG.md](CHANGELOG.md) 1.9.0 + SemVer

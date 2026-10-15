@@ -93,7 +93,7 @@
 ### Atnaujinimas
 
 - **Privaloma** atnaujinti dokumentaciją, kai keičiamas kodas.
-- **Release** = atnaujinti `CHANGELOG.md` (sekciją „Nereleisuota" → naują versiją su data) + `package.json` versija (SemVer).
+- **Release** = perkelti `CHANGELOG.md` skyrių `## [Unreleased]` į naują versiją `## [X.Y.Z] - YYYY-MM-DD` + `package.json` versija (SemVer). Naujus įrašus rašyti tik į `## [Unreleased]`. Senas `## [Nereleisuota]` juodraštis yra archyvas ir nebegalioja.
 - Dokumentų atsakomybės – [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md).
 - Breaking changes – aiškiai pažymėti CHANGELOG.
 
@@ -208,7 +208,7 @@ Prieš commit / PR:
 - [ ] Ar `npm test` praeina?
 - [ ] Ar yra error handling kritinėse vietose?
 - [ ] Ar dokumentacija atnaujinta ([docs/DOCUMENTATION.md](docs/DOCUMENTATION.md))?
-- [ ] Jei release – ar `CHANGELOG.md` atnaujintas (SemVer) ir versija atitinka?
+- [ ] Jei release – ar `## [Unreleased]` perkeltas į naują versiją ir `package.json` atitinka SemVer?
 - [ ] Ar a11y reikalavimai įvykdyti (Tab, ARIA, kontrastas)?
 - [ ] Ar nėra `console.log` production kode?
 - [ ] Ar commit pranešimas turi tinkamą prefiksą?
@@ -225,7 +225,7 @@ Prieš commit / PR:
 
 ---
 
-**Paskutinis atnaujinimas:** 2026-09-16  
+**Paskutinis atnaujinimas:** 2026-10-15  
 **Produkto kanonas:** `/en/` (EN) — Hero → open `#creative-brief` → 2 PDF cards → library 1/2/3/5 + `#pro-contents`; Pro owns full 10  
 **Dizaino sistema:** STYLEGUIDE **1.6.2** Product Operator  
 **Build šaltinis:** root `index.html` (legacy struktūra) → `lt/` (užšaldyta) + `en/` (kanonas)  

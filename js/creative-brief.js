@@ -140,7 +140,7 @@
   }
 
   var QUALITY_LABELS = {
-    weak: 'Ready to build',
+    weak: 'Just started',
     medium: 'Basic brief',
     good: 'Good brief',
     premium: 'Detailed brief'
@@ -228,7 +228,7 @@
     var level = getQualityLevel(filled);
     var missing = getHintMissing(data);
     if (qualityBadge) {
-      qualityBadge.textContent = QUALITY_LABELS[level] || 'Ready to build';
+      qualityBadge.textContent = QUALITY_LABELS[level] || 'Just started';
       qualityBadge.setAttribute('data-level', level);
     }
     if (qualityHint) {

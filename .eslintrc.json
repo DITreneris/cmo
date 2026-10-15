@@ -22,7 +22,7 @@
       "rules": { "no-console": "off" }
     },
     {
-      "files": ["api/**/*.js", "playwright.config.js"],
+      "files": ["api/**/*.js", "playwright.config.js", "playwright.visual.config.js"],
       "env": { "node": true, "es2022": true },
       "rules": { "no-console": "off" }
     }

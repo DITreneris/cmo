@@ -2,7 +2,7 @@
 
 **Paskirtis:** Vienas įėjimo taškas žmonėms ir AI agentams – ką skaityti pirmiausia pagal rolę ar užduotį. Kanoniniai kodas ir ribos: [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + `npm test`.
 
-**Paskutinis atnaujinimas:** 2026-09-11 (docs hygiene: Commerce SSOT seka; Active vs Reference/parked)
+**Paskutinis atnaujinimas:** 2026-10-15 (gyvas žurnalas = `## [Unreleased]`; DS kanonas **1.6.2**; repo-local skills nėra)
 
 ---
 
@@ -35,7 +35,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0–�
 | **Produkto roadmap** | [roadmap.md](../roadmap.md) — Ambition A→E→light B→C |
 | **GEO / SEO surfaces** | [docs/AGENT_SOT.md](AGENT_SOT.md) §5 + [`scripts/geo-surfaces.js`](../scripts/geo-surfaces.js) (`llms.txt` hash hubs) |
 | **EN JTBD messaging (search intent)** | [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 + [`config/sot.json`](../config/sot.json) `frontFaq` / `knowsAbout` / `storefrontHead` + [`config/brand-seo.json`](../config/brand-seo.json); FAQ triple sync ([AGENTS.md](../AGENTS.md) §10.13) — **ne** nauji `/en/ai-marketing-*` hub'ai |
-| Release / deploy | [CHANGELOG.md](../CHANGELOG.md) + [DEPLOYMENT.md](../DEPLOYMENT.md) + `npm test` |
+| Release / deploy | [CHANGELOG.md](../CHANGELOG.md) gyvas skyrius `## [Unreleased]` + [DEPLOYMENT.md](../DEPLOYMENT.md) + `npm test` |
 
 ---
 
@@ -71,7 +71,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0–�
 index.html (legacy struktūrinis šaltinis) + data/en-*.json (kanonas) + data/lt-*.json (užšaldyta)
     → npm run build
        1. scripts/export-favicons.js → favicon PNG pack
-       2. scripts/generate-og.js → og.png (1200×630; brand-seo + design-tokens)
+       2. scripts/generate-og.js → og-vN.jpg (1200×630; brand-seo ogImage/ogVisual + design-tokens + assets/fonts/og)
        3. scripts/build-locale-pages.js → lt/index.html, en/index.html, js/en-prompt-bodies-inline.js
           (inject: cmo-context, creative-brief EN, prompt-expected×4 spine, cmo-safety, cmo-scenarios, __CMO_COMPILE;
           `geo-surfaces.js` rašo robots/sitemap/llms/JSON-LD iš šio skripto)
@@ -139,7 +139,7 @@ index.html (legacy struktūrinis šaltinis) + data/en-*.json (kanonas) + data/lt
 | [memo_pdf.md](../memo_pdf.md) | Architecture reference (ne go-live pirmas žingsnis) |
 | [AGENTS.md](../AGENTS.md) | Agentų rolės, workflow, komandos |
 | [.cursorrules](../.cursorrules) | Cursor: kokybė, a11y, docs, commit |
-| [CHANGELOG.md](../CHANGELOG.md) | SemVer istorija |
+| [CHANGELOG.md](../CHANGELOG.md) | SemVer istorija. Gyvas skyrius tik `## [Unreleased]`. `## [Archyvas — juodraštis iki 1.5.0]` nebegalioja |
 | [DEPLOYMENT.md](../DEPLOYMENT.md) | Primary (Vercel) + mirror (GitHub Pages), BASE_PATH |
 | [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema **1.6.2** (Product Operator) |
 
@@ -149,7 +149,7 @@ index.html (legacy struktūrinis šaltinis) + data/en-*.json (kanonas) + data/lt
 
 ## 7. Cursor: taisyklės ir Skills
 
-- **Šiame repozitorijoje** kanonas: `.cursorrules` + `AGENTS.md` + `docs/` (ypač **Legacy** + šis **INDEX**).
+- **Šiame repozitorijoje** kanonas: `.cursorrules` + `AGENTS.md` + `docs/` (ypač **Legacy** + šis **INDEX**). Katalogo `.cursor/skills` **nėra** (sąmoningai; [AGENTS.md](../AGENTS.md) §10.6).
 - **Cursor Agent Skills** (pvz. PR babysit, split-to-PRs) yra vartotojo lygio įrankiai – jie **papildo**, bet **nepakeičia** šio projekto golden standard ir `npm test`. Jei Skill liečia dokumentaciją, po merge vis tiek atitikti [DOCUMENTATION.md](DOCUMENTATION.md) checklist.
 
 ---

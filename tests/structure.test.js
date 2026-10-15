@@ -22,7 +22,31 @@ const PACKAGE_JSON_PATH = path.join(__dirname, '..', 'package.json');
 const VERCEL_PATH = path.join(__dirname, '..', 'vercel.json');
 const PROD_ORIGIN = 'https://promptanatomy.space';
 const PROD_BASE = '';
-const PROD_OG_IMAGE_URL = `${PROD_ORIGIN}${PROD_BASE}/og.png`;
+const BRAND_SEO_PATH = path.join(__dirname, '..', 'config', 'brand-seo.json');
+const OG_IMAGE = JSON.parse(fs.readFileSync(BRAND_SEO_PATH, 'utf8')).ogImage;
+const OG_IMAGE_PATH = path.join(__dirname, '..', OG_IMAGE.file);
+const PROD_OG_IMAGE_URL = `${PROD_ORIGIN}${PROD_BASE}/${OG_IMAGE.file}`;
+const LEGACY_OG_IMAGE_URL = `${PROD_ORIGIN}${PROD_BASE}/og.png`;
+const OG_MAX_BYTES = 200 * 1024;
+
+/**
+ * Nuskaito JPEG matmenis iš SOF segmento (be papildomų priklausomybių).
+ * @param {Buffer} buf
+ * @returns {{ width: number, height: number } | null}
+ */
+function readJpegSize(buf) {
+  if (!buf || buf.length < 4 || buf[0] !== 0xff || buf[1] !== 0xd8) return null;
+  let i = 2;
+  while (i + 9 < buf.length) {
+    if (buf[i] !== 0xff) return null;
+    const marker = buf[i + 1];
+    const len = buf.readUInt16BE(i + 2);
+    const isSof = marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker);
+    if (isSof) return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+    i += 2 + len;
+  }
+  return null;
+}
 
 function readPackageVersion() {
   const raw = readFile(PACKAGE_JSON_PATH);
@@ -63,6 +87,8 @@ function assertPageSeoContracts(pageHtml, expected) {
 function assertOgImageContracts(pageHtml, expectedOgImageUrl) {
   return (
     pageHtml.includes(`<meta property="og:image" content="${expectedOgImageUrl}">`) &&
+    pageHtml.includes(`<meta property="og:image:type" content="${OG_IMAGE.type}">`) &&
+    !pageHtml.includes(LEGACY_OG_IMAGE_URL) &&
     pageHtml.includes('<meta property="og:image:width" content="1200">') &&
     pageHtml.includes('<meta property="og:image:height" content="630">') &&
     pageHtml.includes('<meta property="og:image:alt" content="') &&
@@ -424,6 +450,28 @@ function run() {
       !/\d+\.\d{2}/.test(JSON.stringify(brandSeo.ogVisual)) &&
       !/\d+\.\d{2}/.test(brandSeo.ogImageAlt),
     'OG visual/alt must not mention price'
+  )) passed++;
+  else failed++;
+
+  // --- OG share card failas (versijuotas URL dėl immutable cache) ---
+  const ogBuf = fs.existsSync(OG_IMAGE_PATH) ? fs.readFileSync(OG_IMAGE_PATH) : null;
+  const ogSize = readJpegSize(ogBuf);
+  if (assert(/^og-v\d+\.jpg$/.test(OG_IMAGE.file), `brand-seo ogImage.file versijuotas (og-vN.jpg): ${OG_IMAGE.file}`)) passed++;
+  else failed++;
+  if (assert(ogBuf !== null && ogBuf.length < OG_MAX_BYTES, `${OG_IMAGE.file} egzistuoja ir < 200 KB`)) passed++;
+  else failed++;
+  if (assert(
+    ogSize !== null && ogSize.width === OG_IMAGE.width && ogSize.height === OG_IMAGE.height,
+    `${OG_IMAGE.file} JPEG matmenys ${OG_IMAGE.width}×${OG_IMAGE.height}`
+  )) passed++;
+  else failed++;
+  const sitemapForOg = readFile(SITEMAP_PATH) || '';
+  const sotForOg = readFile(path.join(__dirname, '..', 'config', 'sot.json')) || '';
+  if (assert(
+    sitemapForOg.includes(`<image:loc>${PROD_OG_IMAGE_URL}</image:loc>`) &&
+      !sitemapForOg.includes(LEGACY_OG_IMAGE_URL) &&
+      !sotForOg.includes(LEGACY_OG_IMAGE_URL),
+    'sitemap.xml + sot.json nenaudoja seno /og.png'
   )) passed++;
   else failed++;
   if (enHtml && brandSeo && assert(
@@ -1223,6 +1271,18 @@ function run() {
     if (assert(enHtmlForCommerce.includes('"@type":"OfferShippingDetails"'), 'en/index.html: Offer shippingDetails')) passed++;
     else failed++;
     if (assert(enHtmlForCommerce.includes('"@type":"ShippingDeliveryTime"'), 'en/index.html: shippingDetails deliveryTime')) passed++;
+    else failed++;
+    const productImagesOk = ['starter', 'pro', 'bundle'].every(function (id) {
+      return enHtmlForCommerce.includes(
+        '"image":"https://promptanatomy.space/assets/pdf-covers/cmo-' + id + '-cover.png"'
+      );
+    });
+    if (assert(productImagesOk, 'en/index.html: Product image is the SKU cover PNG')) passed++;
+    else failed++;
+    if (assert(
+      !/"image":"[^"]*preview-/.test(enHtmlForCommerce),
+      'en/index.html: Product image is not a preview interior'
+    )) passed++;
     else failed++;
   }
 

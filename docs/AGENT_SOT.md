@@ -3,7 +3,7 @@
 **Purpose:** Single operational entry for Cursor agents and PR review: paths, build, deploy, commerce, GEO.  
 **Not a replacement for:** [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) (DOM/JS contract) or [AGENTS.md](../AGENTS.md) (roles/workflow).
 
-**Last updated:** 2026-09-10 (lean cut: PDF HTML gitignored; Pages artifact `public/`; `data/` not copied to `public/`)
+**Last updated:** 2026-10-15 (lessons §10.16–22; live changelog heading is `## [Unreleased]`)
 
 ---
 
@@ -22,7 +22,7 @@
 | Go-live checklist (R1 detail) | [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) — Ambition A ops SSOT |
 | JTBD / GEO messaging | Same `/en/` URL: `sot.frontFaq` + `brand-seo` + `storefrontHead` + `llms.txt` hash hubs. Product name stays **Content AI System** ([PRODUCT-POSITIONING.md](PRODUCT-POSITIONING.md) §4). No multi-page SEO hub farm without Orchestrator scope. R2 after R1 exit. |
 
-Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-surface + GEO + R1-support lessons: [AGENTS.md](../AGENTS.md) §10 (esp. 11–13, 16–20).
+Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-surface + GEO + R1-support lessons: [AGENTS.md](../AGENTS.md) §10 (esp. 11–13, 16–22). Repo-local Cursor skills are intentionally absent.
 
 ---
 
@@ -98,7 +98,7 @@ Emitted by [scripts/geo-surfaces.js](../scripts/geo-surfaces.js) on every build:
 
 **JTBD SSOT:** `sot.frontFaq` / `brand-seo` / `storefrontHead` — on `/en/` only; no extra landing hubs by default ([AGENTS.md](../AGENTS.md) §10.11–13).
 
-**Merchant listing `Offer`:** `validFrom` = `product.priceValidFrom` (real price-effective date per SKU, ISO 8601 with offset); `priceValidUntil` = `geo.priceValidUntil` and must stay in the future. `shippingDetails` describes the digital download: `shippingRate` 0 USD, `handlingTime` / `transitTime` 0 days. `geo.merchantCountries` feeds both `shippingDestination` and `hasMerchantReturnPolicy.applicableCountry` (max 50 countries) — widen it there, not in `scripts/geo-surfaces.js`.
+**Merchant listing `Offer`:** `validFrom` = `product.priceValidFrom` (real price-effective date per SKU, ISO 8601 with offset); `priceValidUntil` = `geo.priceValidUntil` and must stay in the future. `shippingDetails` describes the digital download: `shippingRate` 0 USD, `handlingTime` / `transitTime` 0 days. `geo.merchantCountries` feeds both `shippingDestination` and `hasMerchantReturnPolicy.applicableCountry` (max 50 countries) — widen it there, not in `scripts/geo-surfaces.js`. Each Product `image` is that SKU's `coverPng` (`https://promptanatomy.space/assets/pdf-covers/cmo-{id}-cover.png`). Googlebot may fetch it (`User-agent: *`). Do not point `image` at preview interiors or `og-v2.jpg`.
 
 **Forbidden:** `aggregateRating` / fake Review schema; `SoftwareApplication` login product; inventing ROI/stack stats as claims. Search Console warns about missing `aggregateRating` / `review` on all 3 Products — that is expected, not a bug to fix.
 

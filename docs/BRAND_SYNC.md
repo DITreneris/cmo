@@ -32,7 +32,8 @@ This document tracks visual identity alignment with the Prompt Anatomy brand hub
 | `favicon.svg` | **Derivative** of mother `frontend/public/favicon.svg` | Same lightning mark; ink `#0B1320` + gold `#CFA73A` (replaces legacy teal `#008579`) |
 | `favicon-*.png`, `apple-touch-icon.png`, `android-chrome-*.png` | Generated: `npm run icons:export` | From local SVG |
 | `site.webmanifest` | Local; `theme_color` `#0B1320` | `short_name`: PA Library |
-| `og.png` | Generated: `npm run generate:og` | Job headline + free-surface subline from `brand-seo.json` `ogVisual` (no price); colors from `design-tokens.json` |
+| `og-v2.jpg` | Generated: `npm run generate:og` | Filename = `brand-seo.json` `ogImage.file`. Layout (ported from operator reference `v002.png`): navy tile + bolt lockup, 74px Fraunces headline (*One brief. One powerful image prompt.*), gold badge *Free AI Image Prompt Builder →*, navy card with uppercase *BRIEF → IMAGE PROMPT* label, handbag sample (`assets/hero/brief-sample-satori.png`), and a prompt panel with a copy icon. Copy from `ogVisual` (no price); colors from `design-tokens.json`; fonts only from `assets/fonts/og/` (OFL, resvg, system fonts off). **Any visual change bumps the filename** (`og-v3.jpg`, …) because `*.jpg` / `*.png` are served `immutable` for 1 year. A square centre crop shows the end of the headline and the card edge; landscape previews (LinkedIn, X, Facebook, Slack) are the target. |
+| `og.png` | Legacy | Still exported to `public/` so old shares don't 404; no longer referenced |
 | Mother `og-image.png` | Reference only | `.app` social preview; not copied to `.space` |
 
 ---
@@ -44,7 +45,7 @@ When mother updates brand tokens or `frontend/public/favicon.svg`:
 1. Note new commit SHA on `main`.
 2. Compare mother `frontend/src/index.css` `@theme` → update [`styles/design-tokens.json`](../styles/design-tokens.json) and [`styles/tokens.css`](../styles/tokens.css) if needed.
 3. Reconcile [`favicon.svg`](../favicon.svg) geometry with mother SVG; run `npm run icons:export`.
-4. Run `npm run generate:og` and `npm run build`.
+4. If the OG card changes: bump `config/brand-seo.json` `ogImage.file`, then `npm run generate:og` and `npm run build`.
 5. Run `npm test`.
 6. Update **Pinned SHA** and date in this file.
 

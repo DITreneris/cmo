@@ -29,7 +29,7 @@ npm run build
 `npm run build` (žr. [package.json](package.json)) atlieka:
 
 1. `scripts/export-favicons.js` → favicon PNG pack.
-2. `scripts/generate-og.js` → `og.png` (1200×630).
+2. `scripts/generate-og.js` → `og-vN.jpg` (1200×630; failo vardas iš `config/brand-seo.json` `ogImage.file`).
 3. `scripts/build-locale-pages.js` → `lt/index.html`, `en/index.html`, `js/en-prompt-bodies-inline.js` (su default `BASE_PATH=''`); GEO emit (`robots` / `sitemap` / `llms`).
 4. `scripts/vercel-export-public.js` → `public/` (allowlist; **be** `data/` / `docs/` / `api/`; `@vercel/analytics` snippet'as tik į `public/` HTML).
 

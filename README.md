@@ -76,7 +76,7 @@ Contract: [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5.
 ├── tests/                     # structure, registry, design-system, a11y, fulfillment-config, e2e/
 ├── success.html, terms.html, coming-soon.html
 ├── vercel.json                # / → /en/; REQUIRE_STRIPE_LINKS=1 build
-├── package.json               # 1.9.0 — npm test, build, pdf:*, check:prod
+├── package.json               # 1.10.0 — npm test, build, pdf:*, check:prod
 └── docs/                      # INDEX, LEGACY, AGENT_SOT, GO_LIVE_RUNBOOK, …
 ```
 

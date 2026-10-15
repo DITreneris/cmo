@@ -87,12 +87,13 @@
 | [styles/design-tokens.json](../styles/design-tokens.json) | Dizaino tokenų vienas šaltinis (smoke assert vs `tokens.css`) | UI/UX + QA | Keičiant semantinius / type / shadow tokenus |
 | [styles/tokens.css](../styles/tokens.css), [styles/components.css](../styles/components.css), [styles/utilities.css](../styles/utilities.css) | CSS sluoksniai; components – DS 1.6.2 hero/surfaces authoritative layer | UI/UX | Keičiant komponentų vizualiką, hero, paviršius |
 | [scripts/build-locale-pages.js](../scripts/build-locale-pages.js) | Generuoja lt/en + inject CMO v2 blokus + EN_REPLACEMENTS | QA / Orchestrator | LT/EN replace sąrašas, BASE_PATH, canonical/hreflang, CMO v2 inject |
-| [scripts/generate-og.js](../scripts/generate-og.js) | OG paveikslo (1200×630, SVG → PNG) generavimas | UI/UX + QA | Keičiant OG maketą; po pakeitimo `tests/structure.test.js` OG kontraktai |
+| [scripts/generate-og.js](../scripts/generate-og.js) | OG paveikslo (1200×630, SVG → resvg → JPEG) generavimas | UI/UX + QA | Keičiant OG maketą; **bump** `ogImage.file` (`og-vN.jpg`) + `UPDATE_OG=1`; `tests/structure.test.js` OG kontraktai |
+| [assets/fonts/og/](../assets/fonts/og/) | OG kortelės šriftai (Fraunces, Source Sans 3; OFL) | UI/UX | Keičiant OG tipografiją |
 | [scripts/vercel-export-public.js](../scripts/vercel-export-public.js) | Vercel statinio output kopijavimas į `public/` + analytics inject | QA / Orchestrator | Keičiant Vercel deploy artefakto sudėtį |
 | [lt/index.html](../lt/index.html), [en/index.html](../en/index.html) | Generuojami locale puslapiai (`en/` kanonas; `lt/` užšaldyta) | (build output) | Po kiekvieno `npm run build` |
 | [js/en-prompt-bodies-inline.js](../js/en-prompt-bodies-inline.js) | Generuojamas iš `data/en-prompt-bodies.json` | (build output) | Po `npm run build` |
 | [public/](../public/) | Vercel deploy artefaktas (gitignored) | (build output) | Po `npm run build` |
-| [og.png](../og.png) | OG/Twitter preview (1200×630) | UI/UX (per generate-og) | `npm run build` arba `npm run generate:og` |
+| [og-v2.jpg](../og-v2.jpg) | OG/Twitter preview (1200×630); vardas iš `brand-seo.json` `ogImage.file` | UI/UX (per generate-og) | `npm run generate:og`; `og.png` – legacy, tik seniems share'ams |
 | [robots.txt](../robots.txt), [sitemap.xml](../sitemap.xml) | SEO crawler signalai | QA | Naujos sekcijos / lokelės |
 | [favicon.svg](../favicon.svg) | Favicon (derivative, ink + gold) | UI/UX | Brand atnaujinimas; žr. [BRAND_SYNC.md](BRAND_SYNC.md) |
 | [site.webmanifest](../site.webmanifest), `favicon-*.png`, `apple-touch-icon.png`, `android-chrome-*.png` | PWA / tab icons | UI/UX | `npm run icons:export` po SVG keitimo |
@@ -137,15 +138,18 @@
 | [tests/fulfillment-config.test.js](../tests/fulfillment-config.test.js) | PRODUCTS ⇆ SOT consistency, env probe, /api kontraktas | QA | Kainų pokyčiai, naujas API route |
 | [tests/e2e/smoke.spec.js](../tests/e2e/smoke.spec.js), [tests/e2e/checkout.spec.js](../tests/e2e/checkout.spec.js), [tests/e2e/creative-brief.spec.js](../tests/e2e/creative-brief.spec.js) | Playwright e2e: storefront, success polling, brief builder | QA | Naujas storefront / brief flow |
 | [playwright.config.js](../playwright.config.js) | Playwright runner config | QA | CI / runner pakeitimai |
+| [playwright.visual.config.js](../playwright.visual.config.js) | Local EN visual pass (Chromium, not CI) | QA | Viewport shots / benchmark |
+| [tests/visual/en-pass.spec.js](../tests/visual/en-pass.spec.js) | Section screenshots + overflow/CLS at 320/768/1024/1920 | QA | Naujas viewport arba sekcija |
+| [docs/visual/2026-10-15-en-visual.md](visual/2026-10-15-en-visual.md) | 2026-10-15 visual findings and benchmark read | QA | Kitas visual pass |
+| [serve.json](../serve.json) | Local `npx serve public` slash rewrites, including `/en/` and `/lt/` → `index.html` on Windows | QA | Privacy/terms/home public URL |
 | [vercel.json](../vercel.json) | `/` → `/en/`; 308 `/en/privacy.html` → `/en/privacy/` ir `/terms.html` → `/terms/`; rewrite slash → `.html`; export also writes `public/en/privacy/index.html` + `public/terms/index.html` (Pages); `buildCommand` = `REQUIRE_STRIPE_LINKS=1 npm run build`; Cache-Control `/api/*` ir `/success.html` (no-store). No `cleanUrls`. | Orchestrator / QA | Naujas dinaminis maršrutas |
-| [serve.json](../serve.json) | Local `npx serve public` slash rewrites (no 308) so e2e matches `.space` | QA | Privacy/terms public URL |
 
 ---
 
 ## 2. Kada ką atnaujinti
 
 - **Kodas keičiamas** → atnaujinti susijusią dokumentaciją (README, Legacy ir kt.). Žr. [.cursorrules](../.cursorrules) skyrių „Dokumentacijos valdymas".
-- **Release / deploy** → prieš deploy paleisti `npm run build`, kad būtų sugeneruoti atnaujinti `lt/`, `en/` ir `public/` failai. Būtina atnaujinti CHANGELOG: sekciją „Nereleisuota" perkelti į naują versiją `## [X.Y.Z] - YYYY-MM-DD`. Versijavimas – [Semantic Versioning](https://semver.org/).
+- **Release / deploy** → prieš deploy paleisti `npm run build`, kad būtų sugeneruoti atnaujinti `lt/`, `en/` ir `public/` failai. Gyvas žurnalas yra tik `CHANGELOG.md` skyrius `## [Unreleased]` (Keep a Changelog). Release jį perkelia į `## [X.Y.Z] - YYYY-MM-DD`. Versijavimas – [Semantic Versioning](https://semver.org/).
 - **PR:** prieš merge patikrinti, ar „Susiję dokumentai" (PR šablone) atnaujinti; jei release – ar CHANGELOG ir versija nurodyta.
 
 ---
@@ -153,7 +157,7 @@
 ## 3. CHANGELOG ir release taisyklė
 
 - **Formatas:** [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) – sekcijos: Prideta, Pakeista, Taisyta, Pašalinta, Deprecated, Saugumas. Datos – **YYYY-MM-DD** (ISO 8601).
-- **Release** = Git tag (pvz. `v1.0.0`) + CHANGELOG atnaujinimas („Nereleisuota" → `[X.Y.Z] - data`).
+- **Release** = Git tag (pvz. `v1.0.0`) + CHANGELOG atnaujinimas (`## [Unreleased]` → `## [X.Y.Z] - YYYY-MM-DD`). Skyrius `## [Archyvas — juodraštis iki 1.5.0]` nėra gyvas žurnalas.
 - Prieš release QA Agent tikrina: ar CHANGELOG atnaujintas ir ar versija atitinka pakeitimus (SemVer).
 
 ---
