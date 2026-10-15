@@ -173,6 +173,18 @@ function run() {
   assert(!componentsCss.includes('.cmo-provider-hub'), 'components.css must not keep dead .cmo-provider-hub');
   assert(!html.includes('🔒') && !html.includes('📖'), 'decorative emoji chrome must be removed from index.html markup');
   assert(!html.includes('💡') && !html.includes('📋'), 'emoji chrome (info/copy) must be removed from index.html markup');
+  assert(
+    !enHtml.includes('🔒') && !enHtml.includes('📖') && !enHtml.includes('💡') && !enHtml.includes('📋'),
+    'emoji chrome must be removed from en/index.html markup'
+  );
+  assert(
+    componentsCss.includes('.cb-panel > .cb-field:last-child:nth-child(odd of .cb-field)'),
+    'brief grid span must count .cb-field only, not the legend'
+  );
+  assert(componentsCss.includes('.btn:disabled'), 'disabled .btn must drop the gold primary fill');
+  assert(componentsCss.includes('max-width: 180px'), 'stacked pdf cover must stay readable below 520px');
+  assert(enHtml.includes('Just started'), 'empty brief badge must not say Ready to build');
+  assert(!enHtml.includes('Ready to build'), 'empty brief badge must not say Ready to build');
   assert(componentsCss.includes('.hero-diagram'), 'components.css missing .hero-diagram');
   assert(tokensCss.includes('--shadow-hero-diagram'), 'tokens.css missing --shadow-hero-diagram');
   assert(tokensCss.includes('--radius-xl: 16px') || tokensCss.includes('--radius-xl:16px'),

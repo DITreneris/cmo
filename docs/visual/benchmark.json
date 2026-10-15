@@ -1,0 +1,135 @@
+{
+  "date": "2026-10-15",
+  "browser": "chromium",
+  "note": "One local sample per page and viewport. Load and LCP are recorded only. CLS above 0.25 fails.",
+  "pages": [
+    {
+      "path": "/en/",
+      "width": 320,
+      "loadMs": 3107,
+      "lcpMs": 3004,
+      "cls": 0.019,
+      "overflowPx": 0
+    },
+    {
+      "path": "/en/",
+      "width": 768,
+      "loadMs": 871,
+      "lcpMs": 736,
+      "cls": 0,
+      "overflowPx": 0
+    },
+    {
+      "path": "/en/",
+      "width": 1024,
+      "loadMs": 390,
+      "lcpMs": 300,
+      "cls": 0.013,
+      "overflowPx": 0
+    },
+    {
+      "path": "/en/",
+      "width": 1920,
+      "loadMs": 366,
+      "lcpMs": 340,
+      "cls": 0.002,
+      "overflowPx": 0
+    },
+    {
+      "path": "/en/privacy/",
+      "width": 320,
+      "loadMs": 21,
+      "lcpMs": 64,
+      "cls": 0,
+      "overflowPx": 0
+    },
+    {
+      "path": "/en/privacy/",
+      "width": 768,
+      "loadMs": 52,
+      "lcpMs": 68,
+      "cls": 0,
+      "overflowPx": 0
+    },
+    {
+      "path": "/en/privacy/",
+      "width": 1024,
+      "loadMs": 56,
+      "lcpMs": 68,
+      "cls": 0,
+      "overflowPx": 0
+    },
+    {
+      "path": "/en/privacy/",
+      "width": 1920,
+      "loadMs": 27,
+      "lcpMs": 88,
+      "cls": 0,
+      "overflowPx": 0
+    },
+    {
+      "path": "/success.html",
+      "width": 320,
+      "loadMs": 56,
+      "lcpMs": 60,
+      "cls": 0.037,
+      "overflowPx": 0
+    },
+    {
+      "path": "/success.html",
+      "width": 768,
+      "loadMs": 47,
+      "lcpMs": 56,
+      "cls": 0.01,
+      "overflowPx": 0
+    },
+    {
+      "path": "/success.html",
+      "width": 1024,
+      "loadMs": 51,
+      "lcpMs": 60,
+      "cls": 0.01,
+      "overflowPx": 0
+    },
+    {
+      "path": "/success.html",
+      "width": 1920,
+      "loadMs": 35,
+      "lcpMs": 84,
+      "cls": 0.002,
+      "overflowPx": 0
+    },
+    {
+      "path": "/terms/",
+      "width": 320,
+      "loadMs": 67,
+      "lcpMs": 72,
+      "cls": 0,
+      "overflowPx": 0
+    },
+    {
+      "path": "/terms/",
+      "width": 768,
+      "loadMs": 52,
+      "lcpMs": 64,
+      "cls": 0,
+      "overflowPx": 0
+    },
+    {
+      "path": "/terms/",
+      "width": 1024,
+      "loadMs": 23,
+      "lcpMs": 76,
+      "cls": 0,
+      "overflowPx": 0
+    },
+    {
+      "path": "/terms/",
+      "width": 1920,
+      "loadMs": 59,
+      "lcpMs": 88,
+      "cls": 0,
+      "overflowPx": 0
+    }
+  ]
+}

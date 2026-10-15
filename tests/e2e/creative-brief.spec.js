@@ -6,6 +6,30 @@
 
 const { test, expect } = require('@playwright/test');
 
+/**
+ * Even field counts must stay in two columns. The legend is not a field.
+ * @param {import('@playwright/test').Page} page
+ * @returns {Promise<void>}
+ */
+async function expectEvenBriefRows(page) {
+  const rows = await page.evaluate(function () {
+    return Array.prototype.map.call(document.querySelectorAll('fieldset.cb-panel'), function (panel) {
+      var wasHidden = panel.hidden;
+      panel.hidden = false;
+      var fields = panel.querySelectorAll(':scope > .cb-field');
+      var last = fields[fields.length - 1];
+      var gridColumn = last ? getComputedStyle(last).gridColumn : '';
+      panel.hidden = wasHidden;
+      return { id: panel.id, count: fields.length, gridColumn: gridColumn };
+    });
+  });
+  rows.forEach(function (row) {
+    if (row.count % 2 === 0) {
+      expect(row.gridColumn, row.id).not.toMatch(/span 2|1\s*\/\s*-1/);
+    }
+  });
+}
+
 test.describe('creative brief builder', () => {
   test('en/ shows open #creative-brief; builder works without extra click', async ({ page }) => {
     await page.goto('/en/');
@@ -22,6 +46,10 @@ test.describe('creative brief builder', () => {
     expect(activeId).not.toBe('cbCampaignGoal');
 
     await expect(page.locator('#cbOutput')).toBeVisible();
+    await expect(page.locator('#cbCopyBtn')).toBeDisabled();
+    await expect(page.locator('#cbQualityBadge')).toHaveText('Just started');
+    await page.setViewportSize({ width: 1024, height: 768 });
+    await expectEvenBriefRows(page);
     await expect(page.locator('#cbPanelVisual')).toBeHidden();
     await expect(page.locator('#cbPanelText')).toBeHidden();
     await page.locator('[data-cb-step="2"]').click();

@@ -1,6 +1,10 @@
 {
   "cleanUrls": false,
   "rewrites": [
+    { "source": "/en", "destination": "/en/index.html" },
+    { "source": "/en/", "destination": "/en/index.html" },
+    { "source": "/lt", "destination": "/lt/index.html" },
+    { "source": "/lt/", "destination": "/lt/index.html" },
     { "source": "/en/privacy", "destination": "/en/privacy.html" },
     { "source": "/en/privacy/", "destination": "/en/privacy.html" },
     { "source": "/terms", "destination": "/terms.html" },

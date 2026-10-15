@@ -78,7 +78,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - [ ] **`/en/` storefront:** 2 kortelės + Pro text link; CTAs → live `buy.stripe.com` (ne `/coming-soon.html`)
 - [ ] **`/lt/`:** NĖRA `#pdf-storefront`, kainų, `buy.stripe.com`
 - [ ] **Mirror:** `MIRROR_NOTE=1` build — storefront omitted
-- [ ] **`npm run check:prod`:** `{ ok: true, missing: [] }` + IndexNow key file hosted
+- [x] **`npm run check:prod`:** `{ ok: true, missing: [] }` + IndexNow key file hosted — 2026-10-15, po Production redeploy
 - [ ] **Live purchase (Starter $3.99):** email ≤5 min, download veikia, webhook 200
 - [ ] **Live purchase (Pro / Bundle):** po Starter sėkmės
 
@@ -99,6 +99,30 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - **Rezultatas:** ✅ Visi kritiniai praeina | ⚠️ Problema: [aprašymas]
 - **Pastabos:** (neprivaloma)
 ```
+
+## 2026-10-15 – R1 health, dar ne pirkimas
+
+- **Testeris:** QA (repo)
+- **URL:** `https://www.promptanatomy.space` ir `https://promptanatomy.space`
+- **Naršyklė:** `npm run check:prod`, `npm run check:fulfillment` (ne Checkout)
+- **Rezultatas:** ⚠️ Health žalias (`missing: []`, Redis PONG, Blob įjungtas, IndexNow). Trijų Payment Link success URL rodo į `success.html?session_id={CHECKOUT_SESSION_ID}`, metadata `product` yra `starter` / `pro` / `bundle`. Webhook `www` įjungtas tik checkout įvykiams. Gyvo pirkimo nėra.
+- **Pastabos:** Refundai lieka rankomis Stripe Dashboard. `CRON_SECRET` neįdėtas — follow-up cron checkoutui nereikalingas. Production redeploy = tas pats `main` commit `e8a5961`, ne šis UI working tree. Starter $3.99, tada Pro ir Complete, dar neatlikti.
+
+## 2026-10-15 – EN visual Chromium pass (local)
+
+- **Testeris:** QA (repo)
+- **URL:** local `public/` after `npm run build` — `/en/`, `/en/privacy/`, `/terms/`, `/success.html`
+- **Naršyklė:** Playwright Chromium, 320 / 768 / 1024 / 1920
+- **Rezultatas:** ✅ Suite green (`npm run test:visual` is local-only; not CI). Three findings were fixed the same day — see the next entry.
+- **Pastabos:** Report [visual/2026-10-15-en-visual.md](visual/2026-10-15-en-visual.md). Baselines are Windows (`win32`). The three findings below were fixed the same day (sticky `[hidden]`, success label, 320 nav row).
+
+## 2026-10-15 – visual findings fixed
+
+- **Testeris:** QA (repo)
+- **URL:** local `/en/` + `/success.html`
+- **Naršyklė:** Playwright Chromium, 320 / 768
+- **Rezultatas:** ✅ Sticky bar hidden on the first screen; “Download your PDF” is white on navy; Pricing stays on the nav row at 320.
+- **Pastabos:** Snapshots refreshed for home 320, home 768, and success.
 
 ### Pavyzdys
 
@@ -141,4 +165,4 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - [QA_STANDARTAS.md](QA_STANDARTAS.md) – QA kriterijai ir nuoroda į spinoff01  
 - [DEPLOYMENT.md](../DEPLOYMENT.md) – kaip deploy ir kad po deploy būtų testuojama gyvai  
 
-**Paskutinis atnaujinimas:** 2026-09-11
+**Paskutinis atnaujinimas:** 2026-10-15

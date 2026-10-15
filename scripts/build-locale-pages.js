@@ -616,7 +616,7 @@ function buildScenarioStripSection(locale) {
     '                <button type="button" class="btn" data-prompt-id="cmo-scenario-brief" aria-label="' +
     escapeHtml(labels.copyBrief) +
     '">\n' +
-    '                    <span aria-hidden="true">📋</span>\n' +
+    (locale === 'en' ? '' : '                    <span aria-hidden="true">📋</span>\n') +
     '                    <span>' +
     escapeHtml(labels.copyBtn) +
     '</span>\n' +
@@ -1419,7 +1419,7 @@ function buildCreativeBriefSection(sot, options) {
     '                        <span class="cb-quality-label">' +
     escapeHtml(qualityLabel) +
     '</span>\n' +
-    '                        <span class="cb-quality-badge" id="cbQualityBadge" data-level="weak">Ready to build</span>\n' +
+    '                        <span class="cb-quality-badge" id="cbQualityBadge" data-level="weak">Just started</span>\n' +
     '                        <p class="cb-quality-hint" id="cbQualityHint">Add a subject and a goal to get started.</p>\n' +
     '                    </div>\n' +
     '                    <label class="cb-output-label" for="cbOutput">' +
@@ -1975,7 +1975,6 @@ const EN_REPLACEMENTS_PREFIX = [
   // Progress
   ['Panaudojai 0 iš 4 workflow', 'You used 0 of 4 workflows'],
   ['aria-label="Progresas: 0 iš 4 workflow"', 'aria-label="Progress: 0 of 4 workflows"'],
-  ['Žiūrėti Pro rinkinį', 'See Pro kit'],
   ['<h2 id="pro-contents-title">Dar 6 workflow Pro rinkinyje</h2>', '<h2 id="pro-contents-title">Also in the Pro kit</h2>'],
   [
     '<p class="pro-contents-lead" id="pro-contents-lead">Pilni promptų kūnai offline Pro rinkinyje.</p>',
