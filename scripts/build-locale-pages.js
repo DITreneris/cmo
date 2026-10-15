@@ -3,7 +3,7 @@
  * Also writes js/en-prompt-bodies-inline.js from data/en-prompt-bodies.json (single EN source).
  * LT = Lithuanian (default), EN = English (replacements applied; META LT taken from index <pre>).
  * Run: node scripts/build-locale-pages.js
- * Optional overrides: BASE_PATH and SITE_ORIGIN (defaults: CMO USA site at https://promptanatomy.space/, root path).
+ * Optional overrides: BASE_PATH and SITE_ORIGIN (defaults: CMO USA site at https://www.promptanatomy.space/, root path).
  */
 'use strict';
 
@@ -15,7 +15,7 @@ const { writeGeoSurfaces } = require('./geo-surfaces');
 const ROOT = path.join(__dirname, '..');
 const INDEX_PATH = path.join(ROOT, 'index.html');
 const DEFAULT_BASE_PATH = '';
-const DEFAULT_SITE_ORIGIN = 'https://promptanatomy.space';
+const DEFAULT_SITE_ORIGIN = 'https://www.promptanatomy.space';
 const BASE_PATH = (
   process.env.BASE_PATH !== undefined && process.env.BASE_PATH !== null
     ? String(process.env.BASE_PATH)
@@ -1461,7 +1461,7 @@ function buildCreativeBriefSection(sot, options) {
     '            <p class="cb-pro-teaser">' +
     escapeHtml(proTeaser) +
     (isMirror
-      ? ' <a href="https://promptanatomy.space/en/#pdf-storefront">CMO AI Content System kits</a></p>\n'
+      ? ' <a href="' + SITE_ORIGIN + '/en/#pdf-storefront">CMO AI Content System kits</a></p>\n'
       : ' <a href="#pdf-storefront">CMO AI Content System kits</a></p>\n') +
     '            <script src="js/creative-brief.js" defer></script>\n' +
     '        </section>\n\n'
@@ -1487,7 +1487,7 @@ function injectCreativeBrief(html, locale) {
       )
       .replace(
         'href="#pro-contents" id="progressJumpPro"',
-        'href="https://promptanatomy.space/en/#pdf-storefront" id="progressJumpPro"'
+        'href="' + SITE_ORIGIN + '/en/#pdf-storefront" id="progressJumpPro"'
       );
   }
   const sot = loadSot();
@@ -1853,7 +1853,7 @@ const EN_REPLACEMENTS_PREFIX = [
   // Footer product link (before generic "Promptų anatomija" so full paragraph matches)
   [
     '<p class="footer-product-link" id="footer-product-link">Spin-off Nr. 2 (Prompt Anatomy). Pilnas mokymas, metodika ir brand centras: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>. Paskutinis atnaujinimas: 2026-04-30.</p>',
-    '<p class="footer-product-link" id="footer-product-link">Part of Prompt Anatomy · Methodology at <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a></p>'
+    '<p class="footer-product-link" id="footer-product-link">Part of Prompt Anatomy. This page is the Content AI System: META, INPUT, OUTPUT, then Plan → Create → Check → Improve. The course on <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a> is a separate product.</p>'
   ],
   ['<span id="footer-email-label">El. paštas:</span>', '<span id="footer-email-label">Email:</span>'],
   ['<span id="footer-address-label">Pašto adresas:</span>', '<span id="footer-address-label">Mailing address:</span>'],
@@ -1940,7 +1940,7 @@ const EN_REPLACEMENTS_PREFIX = [
   ['Pakeisk <code>[auditorija]</code>, <code>[galvos skausmas]</code>, <code>[unikalus pardavimo pasiūlymas]</code>, <code>[kanalas]</code> ir kitus laukus savo duomenimis – ir gauk rezultatą', 'Replace <code>[audience]</code>, <code>[pain point]</code>, <code>[unique selling proposition]</code>, <code>[channel]</code>, and any city or budget placeholders with your real data'],
   ['<h2 id="what-is-prompt-title">Kas yra prompt?</h2>', '<h2 id="what-is-prompt-title">What is a prompt?</h2>'],
   ['Promptas yra aiški instrukcija DI įrankiui: ką daryti, kam daryti ir kokiu formatu grąžinti rezultatą.', 'A prompt is an engineered instruction — Context + Goal + Constraints + Format — not a one-line chat gamble.'],
-  ['Kuo promptas tikslesnis, tuo mažiau taisymų po pirmo atsakymo.', 'Engineered prompts cut rework after the first answer; random prompting is gambling.'],
+  ['Kuo promptas tikslesnis, tuo mažiau taisymų po pirmo atsakymo.', 'A structured prompt makes the gaps easier to see. You still check the answer.'],
   ['Kontekstas + Tikslas + Ribos + Formatas', 'Context + Goal + Constraints + Format'],
   ['Kas yra Prompt Anatomy?', 'What is Prompt Anatomy?'],
   ['Prompt Anatomy yra struktūra, kuri padeda rašyti promptus taip, kad rezultatas būtų nuoseklus ir pakartojamas.', 'Prompt Anatomy standardizes prompt structure so team outputs stay consistent and repeatable.'],
@@ -2082,7 +2082,7 @@ const EN_REPLACEMENTS_SUFFIX = [
   ['<summary>Kuo skiriasi nuo promptų šablonų?</summary>', '<summary>How is this different from a prompt library?</summary>'],
   [
     '<p>Čia turi seką, aiškius laukus, vertinimą ir KPI ciklą – ne vieną vienkartinį tekstą.</p>',
-    '<p>A library is a pile of prompts. This is context, four workflows, then a review before you ship.</p>'
+    '<p>A library stores prompts. This adds shared context, four workflows, and a review before you ship.</p>'
   ],
   ['<summary>Ar tinka B2B SaaS, paslaugoms ir e. komercijai?</summary>', '<summary>Does this work for B2B SaaS, services, and ecommerce?</summary>'],
   [

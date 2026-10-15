@@ -43,7 +43,7 @@ npm run build
 - **Build command:** `REQUIRE_STRIPE_LINKS=1 npm run build` (Stripe Payment Link gate locale build'e).
 - **Output directory:** `public`.
 - **Install command:** `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PUPPETEER_SKIP_DOWNLOAD=1 npm install`.
-- **Environment:** `BASE_PATH` neapibrėžta (default `''`), `SITE_ORIGIN=https://promptanatomy.space` (default).
+- **Environment:** `BASE_PATH` neapibrėžta (default `''`), `SITE_ORIGIN=https://www.promptanatomy.space` (default). Apex 307s to www; Stripe webhook stays on www.
 
 **Analytics:** `@vercel/analytics` snippet'as įterpiamas į `public/` HTML failus tik per export skriptą; norint matyti duomenis – įjungti Web Analytics Vercel dashboard'e.
 
@@ -81,7 +81,7 @@ npm run build
 ```yaml
 env:
   BASE_PATH: ''
-  SITE_ORIGIN: 'https://promptanatomy.space'
+  SITE_ORIGIN: 'https://www.promptanatomy.space'
 ```
 
 **Pastaba:** Jei norima, kad mirror'o HTML turėtų canonical/hreflang `https://ditreneris.github.io/cmo/...`, šios env reikšmes pakeisti į `BASE_PATH: '/cmo'` ir `SITE_ORIGIN: 'https://ditreneris.github.io'`. Dabartinė konfigūracija duoda primary canonical net ant mirror, kas SEO atžvilgiu nukreipia kreditą į `promptanatomy.space` – tai sąmoningas sprendimas. Mirror naudojamas kaip backup.

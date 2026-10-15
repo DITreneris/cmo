@@ -52,11 +52,11 @@ jobs:
         # MIRROR_NOTE=1 omits the EN paid-PDF storefront (#pdf-storefront)
         # from this build. Paid checkout, webhook, and downloads only run on
         # promptanatomy.space (Vercel) - never on the GitHub Pages mirror.
-        # Buyers always go to https://promptanatomy.space for purchases.
+        # Buyers always go to https://www.promptanatomy.space for purchases.
         run: npm run build
         env:
           BASE_PATH: ''
-          SITE_ORIGIN: 'https://promptanatomy.space'
+          SITE_ORIGIN: 'https://www.promptanatomy.space'
           MIRROR_NOTE: '1'
       - uses: actions/upload-pages-artifact@v4
         with:

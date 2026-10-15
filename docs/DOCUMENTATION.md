@@ -47,6 +47,7 @@
 | [docs/LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) | Atskaitos kontraktas (HTML/JS struktūra, CMO v2, BASE_PATH) | QA / Orchestrator | Struktūros pakeitimai, CMO v2 plėtra |
 | [docs/PRODUCT-POSITIONING.md](PRODUCT-POSITIONING.md) | Mokamo sluoksnio pozicionavimas (CMO AI Content System, Use · Build · Install, ką teigiame / ko ne) + §4 JTBD search-intent language | Commerce / Content | Pavadinimų, pakopų, pozicionavimo, EN JTBD copy pakeitimai |
 | [docs/articles/content-ai-system.md](articles/content-ai-system.md) | Publishable EN marketing article (draft). Not live `/en/` copy. | Content | After positioning, price, or free-surface claim changes |
+| [docs/ai-citation-content-ai-system.md](ai-citation-content-ai-system.md) | 2026-10-15 Gemini / Perplexity / Claude citation drift vs the Content AI System canon. Not live `/en/` copy. | Content | When answer engines repeat a false structure (6-block, 30-day title, AI OS) |
 | [docs/OFFER-ARCHITECTURE.md](OFFER-ARCHITECTURE.md) | Pasiūlymo architektūra (free vs paid matrica, funnel, copy cascade, regeneration komandos); GEO JTBD on `/en/` | Commerce | Produktų struktūros, copy šaltinių pakeitimai |
 | [docs/CREATIVE_BRIEF_BUILDER.md](CREATIVE_BRIEF_BUILDER.md) | EN free `#creative-brief` DOM kontraktas, SOT keys, out-of-scope | UI/UX / Content | Builder UI, SOT copy, e2e |
 | [docs/MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) | EN kanonas, LT freeze, path atitikmenys, build | Curriculum / QA / Orchestrator | Locale politika, `EN_REPLACEMENTS`, hreflang |

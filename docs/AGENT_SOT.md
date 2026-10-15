@@ -98,7 +98,7 @@ Emitted by [scripts/geo-surfaces.js](../scripts/geo-surfaces.js) on every build:
 
 **JTBD SSOT:** `sot.frontFaq` / `brand-seo` / `storefrontHead` — on `/en/` only; no extra landing hubs by default ([AGENTS.md](../AGENTS.md) §10.11–13).
 
-**Merchant listing `Offer`:** `validFrom` = `product.priceValidFrom` (real price-effective date per SKU, ISO 8601 with offset); `priceValidUntil` = `geo.priceValidUntil` and must stay in the future. `shippingDetails` describes the digital download: `shippingRate` 0 USD, `handlingTime` / `transitTime` 0 days. `geo.merchantCountries` feeds both `shippingDestination` and `hasMerchantReturnPolicy.applicableCountry` (max 50 countries) — widen it there, not in `scripts/geo-surfaces.js`. Each Product `image` is that SKU's `coverPng` (`https://promptanatomy.space/assets/pdf-covers/cmo-{id}-cover.png`). Googlebot may fetch it (`User-agent: *`). Do not point `image` at preview interiors or `og-v2.jpg`.
+**Merchant listing `Offer`:** `validFrom` = `product.priceValidFrom` (real price-effective date per SKU, ISO 8601 with offset); `priceValidUntil` = `geo.priceValidUntil` and must stay in the future. `shippingDetails` describes the digital download: `shippingRate` 0 USD, `handlingTime` / `transitTime` 0 days. `geo.merchantCountries` feeds both `shippingDestination` and `hasMerchantReturnPolicy.applicableCountry` (max 50 countries) — widen it there, not in `scripts/geo-surfaces.js`. Each Product `image` is that SKU's `coverPng` (`https://www.promptanatomy.space/assets/pdf-covers/cmo-{id}-cover.png`). Googlebot may fetch it (`User-agent: *`). Do not point `image` at preview interiors or `og-v2.jpg`.
 
 **Forbidden:** `aggregateRating` / fake Review schema; `SoftwareApplication` login product; inventing ROI/stack stats as claims. Search Console warns about missing `aggregateRating` / `review` on all 3 Products — that is expected, not a bug to fix.
 
@@ -112,7 +112,7 @@ Language/brand: [language-guidelines-en-lt.md](language-guidelines-en-lt.md).
 
 | Target | URL |
 |--------|-----|
-| Primary | https://promptanatomy.space/en/ |
+| Primary | https://www.promptanatomy.space/en/ |
 | Mirror | https://ditreneris.github.io/cmo/en/ (no storefront; artifact = `public/` only) |
 
 Post-deploy QA: [TESTAVIMAS.md](TESTAVIMAS.md) — **release acceptance on `/en/` only**.

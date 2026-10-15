@@ -20,7 +20,7 @@ const EN_PROMPT_BODIES_JSON = path.join(__dirname, '..', 'data', 'en-prompt-bodi
 const EN_PROMPT_INLINE_JS = path.join(__dirname, '..', 'js', 'en-prompt-bodies-inline.js');
 const PACKAGE_JSON_PATH = path.join(__dirname, '..', 'package.json');
 const VERCEL_PATH = path.join(__dirname, '..', 'vercel.json');
-const PROD_ORIGIN = 'https://promptanatomy.space';
+const PROD_ORIGIN = 'https://www.promptanatomy.space';
 const PROD_BASE = '';
 const BRAND_SEO_PATH = path.join(__dirname, '..', 'config', 'brand-seo.json');
 const OG_IMAGE = JSON.parse(fs.readFileSync(BRAND_SEO_PATH, 'utf8')).ogImage;
@@ -309,9 +309,17 @@ function run() {
   else failed++;
   if (vercelCfg && Array.isArray(vercelCfg.redirects)) {
     const ltDest = vercelCfg.redirects.filter(function (r) {
-      return String(r.destination || '').indexOf('/lt') !== -1;
+      return String(r.destination || '').indexOf('/lt') !== -1 && r.source !== '/lt';
     });
-    if (assert(ltDest.length === 0, 'vercel.json: no redirect destination /lt/')) passed++;
+    if (assert(ltDest.length === 0, 'vercel.json: no redirect into /lt/ except slash normalize')) passed++;
+    else failed++;
+    const enSlash = vercelCfg.redirects.filter(function (r) { return r.source === '/en'; });
+    const ltSlash = vercelCfg.redirects.filter(function (r) { return r.source === '/lt'; });
+    if (assert(
+      enSlash.length === 1 && enSlash[0].destination === '/en/' && enSlash[0].statusCode === 308 &&
+        ltSlash.length === 1 && ltSlash[0].destination === '/lt/' && ltSlash[0].statusCode === 308,
+      'vercel.json: 308 /en and /lt to trailing slash'
+    )) passed++;
     else failed++;
     const rootRedirects = vercelCfg.redirects.filter(function (r) { return r.source === '/'; });
     if (assert(
@@ -853,10 +861,11 @@ function run() {
     else failed++;
     if (assert(
       enHtml.includes('Part of Prompt Anatomy') &&
-        enHtml.includes('Methodology at') &&
+        enHtml.includes('The course on') &&
+        enHtml.includes('is a separate product') &&
         enHtml.includes('utm_source=space') &&
         enHtml.includes('utm_medium=entity_footer'),
-      'en/index.html: QW1b entity footer + UTM space'
+      'en/index.html: footer separates the kit from the course'
     )) passed++;
     else failed++;
     if (assert(
@@ -1149,7 +1158,7 @@ function run() {
     if (assert(termsHtml.includes('id="paid-pdf-license"'), 'terms.html: yra #paid-pdf-license sekcija')) passed++;
     else failed++;
     if (assert(
-      termsHtml.includes('href="https://promptanatomy.space/terms/"') &&
+      termsHtml.includes('href="' + PROD_ORIGIN + '/terms/"') &&
         termsHtml.includes('href="/styles/tokens.css"') &&
         termsHtml.includes('href="/en/privacy/"'),
       'terms.html: canonical /terms/; root-absolute assets; Privacy /en/privacy/'
@@ -1274,7 +1283,7 @@ function run() {
     else failed++;
     const productImagesOk = ['starter', 'pro', 'bundle'].every(function (id) {
       return enHtmlForCommerce.includes(
-        '"image":"https://promptanatomy.space/assets/pdf-covers/cmo-' + id + '-cover.png"'
+        '"image":"' + PROD_ORIGIN + '/assets/pdf-covers/cmo-' + id + '-cover.png"'
       );
     });
     if (assert(productImagesOk, 'en/index.html: Product image is the SKU cover PNG')) passed++;

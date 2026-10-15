@@ -8,7 +8,9 @@
     { "source": "/en/privacy.html", "destination": "/en/privacy/", "statusCode": 308 },
     { "source": "/en/privacy", "destination": "/en/privacy/", "statusCode": 308 },
     { "source": "/terms.html", "destination": "/terms/", "statusCode": 308 },
-    { "source": "/terms", "destination": "/terms/", "statusCode": 308 }
+    { "source": "/terms", "destination": "/terms/", "statusCode": 308 },
+    { "source": "/en", "destination": "/en/", "statusCode": 308 },
+    { "source": "/lt", "destination": "/lt/", "statusCode": 308 }
   ],
   "rewrites": [
     { "source": "/en/privacy/", "destination": "/en/privacy.html" },
