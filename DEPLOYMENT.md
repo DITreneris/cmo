@@ -113,7 +113,7 @@ Visi nustatomi per Vercel dashboard → Project → Settings → Environment Var
 | `BLOB_READ_WRITE_TOKEN` | `vercel_blob_rw_...` | Vercel → Storage → Blob → tokens |
 | `PDF_CMO_STARTER_SOURCE_URL` | `https://...vercel-storage.com/paid-pdfs/cmo-starter-...pdf` | `npm run pdf:upload-blob` output |
 | `PDF_CMO_PRO_SOURCE_URL` | `https://...vercel-storage.com/paid-pdfs/cmo-pro-...pdf` | `npm run pdf:upload-blob` output |
-| `SITE_URL` | `https://promptanatomy.space` | Konstanta |
+| `SITE_URL` | `https://www.promptanatomy.space` | Production env (laiško nuorodos). Be šio rakto kodas krenta į apex. |
 
 Opcionalūs (default'ai veikia):
 

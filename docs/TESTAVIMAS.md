@@ -41,18 +41,18 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - [ ] **Focus:** Matomas focus (pvz. focus-visible) ant mygtukų ir nuorodų.
 - [ ] **Pa11y:** CI bėga į `/en/` (kanonas), `/lt/` (smoke), `/en/privacy/` per `npx serve public` **be** `-s`. Lokaliai release QA: `npx serve public -l 3000` tada `npx pa11y http://127.0.0.1:3000/en/ --standard WCAG2AA --ignore "warning"`. Ne `serve -s .` — `/en/privacy/` tada gali nukristi į root `index.html`.
 
-### UX path cut (EN kanonas, DS 1.6.2)
+### UX path cut (EN kanonas, DS 1.8.0 §0.4)
 
-- [ ] **Hero:** full-bleed warm paper; brand mark; page-level sticky `#siteNav` (not hero-clipped) = Workflows / Brief builder / Pricing; primary = Build my prompt (`#heroCtaSpine` → `#creative-brief`); secondary = See pricing (`#heroCtaBrief`); `#heroProof` *Free below — no account.*; trust IDs `#heroTrustPill1/2/3` as inline muted text; `.hero-diagram` = Satori sample **image** + prompt caption (*From brief → image prompt* — **no** outputs row / tagline / cycle-stepper); quiet usage strip; nėra mini-prompt demo, hero Telegram nuorodos ar lang switcher.
+- [ ] **Hero:** full-bleed warm paper; brand mark; page-level sticky `#siteNav` (not hero-clipped) = Workflows / Brief builder / Pricing; primary = Build my prompt (`#heroCtaSpine` → `#creative-brief`); secondary = See pricing (`#heroCtaBrief`); `#heroLead` *Fill the fields. Copy the prompt. Paste it into your image tool.*; `#heroProof` *No account.* under that CTA pair; trust IDs `#heroTrustPill1/2/3` present and hidden; `.hero-diagram` = prompt `<pre>` above the Satori still (image max 58% of the card) + *Example image…* (*From brief → image prompt* — **no** outputs row / tagline / cycle-stepper); nėra usage juostos, mini-prompt demo, hero Telegram nuorodos ar lang switcher.
 - [ ] **Type:** Fraunces display (hero H1 only) + Source Sans 3 UI (ne Inter); body ~17px; prose ne full-bleed wall.
-- [ ] **Executive summary:** `#executive-summary.objectives--skim` – quiet usage sentence only; claims = 4 workflows + brief (ne „100 assets / 45 min“).
-- [ ] **Instructions:** `#copy-tips` as optional `<details>`; **no** `#framework-schema` / provider hub.
+- [ ] **Usage:** EN neturi `#executive-summary` ir `#copy-tips`. Kopijavimo sakinys lieka `#prompt1PathHint`.
+- [ ] **Instructions:** **no** `#framework-schema` / provider hub.
 - [ ] **CMO context:** closed `#cmo-context` **po** `#block1` (library zona po storefront/progress); forma `<details>`; kopijavimas prepend'ina kontekstą.
 - [ ] **Prompt 1 path hint:** `#prompt1PathHint` – Copy → paste into ChatGPT/Claude.
-- [ ] **Progress jump:** `#progressJump` 1·2·3·5 · Pricing · Brief · FAQ; Pricing = `#pdf-storefront`; Brief stripped on `/lt/`.
+- [ ] **Progress jump:** EN `#progressJump` is Plan · Create · Check · Improve. Pricing, Brief, and FAQ are not in that row. `/lt/` keeps Pricing and FAQ and strips Brief.
 - [ ] **Sticky bar (≤768px):** Po `#block1` pasirodo juosta; Kopijuoti / Kitas → veikia.
-- [ ] **FAQ:** 3 primary klausimai + `<details class="faq-more-details">`; title be „before you start“; JSON-LD pilnas (`frontFaq` ≥ 8).
-- [ ] **PDF storefront (EN):** 2 kortelės (Starter + Complete) + Pro text link, **no** comparison table; live `buy.stripe.com`; Buyer FAQ `<details>` closed default.
+- [ ] **FAQ:** vienas sąrašas iš 4 (kursas, grąžinimas, licencija, privatumas), kiekvienas su „+“, be `<details class="faq-more-details">`; JSON-LD = `frontFaq`.
+- [ ] **PDF storefront (EN):** 2 kortelės (Starter + Complete) + Pro text link, **no** comparison table; live `buy.stripe.com`; delivery line and Team license · Privacy; refund and license live in `#faq`.
 - [ ] **Free loop after kits:** library 1/2/3/5 → thin `#cmo-safety` → `#cmo-scenarios` → `#pro-contents` → FAQ → `#prompt-basics`.
 - [ ] **Meme:** 0 slotų gyvoje UI.
 
@@ -161,7 +161,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 ## 4. Susiję
 
 - [BULLET_PROOF_PROMPTS.md](BULLET_PROOF_PROMPTS.md) – promptų kokybės standartas (META/INPUT/OUTPUT, bullet-proof)
-- [STYLEGUIDE.md](../STYLEGUIDE.md) – DS **1.6.2** Product Operator (visual QA)
+- [STYLEGUIDE.md](../STYLEGUIDE.md) – DS **1.8.0** §0.4 Product Operator (visual QA)
 - [QA_STANDARTAS.md](QA_STANDARTAS.md) – QA kriterijai ir nuoroda į spinoff01  
 - [DEPLOYMENT.md](../DEPLOYMENT.md) – kaip deploy ir kad po deploy būtų testuojama gyvai  
 

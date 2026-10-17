@@ -967,10 +967,12 @@ function resolveCheckoutHref(sot, productId) {
 function buildPdfCard(sot, product) {
   const route = resolveCheckoutHref(sot, product.id);
   const priceText = '$' + Number(product.priceUsd).toFixed(2);
+  const compareClass = product.id === 'bundle' ? 'pdf-card-compare' : 'pdf-card-was';
+  const compareLabel = product.id === 'bundle' ? 'separately $' : 'was $';
   const compareText =
     product.compareAtUsd != null
-      ? '<span class="pdf-card-was">' +
-        (product.id === 'bundle' ? 'separately $' : 'was $') +
+      ? '<span class="' + compareClass + '">' +
+        compareLabel +
         Number(product.compareAtUsd).toFixed(2) +
         '</span>'
       : '';
@@ -987,7 +989,7 @@ function buildPdfCard(sot, product) {
   const recommendedBadge =
     product.id === 'bundle'
       ? '\n                <p class="pdf-card-badge" role="note">Best value</p>'
-      : '';
+      : '\n                <p class="pdf-card-badge pdf-card-badge--slot" aria-hidden="true">Best value</p>';
   const tierBadge = product.tierTag
     ? '\n                    <p class="pdf-card-tier" role="note">' + escapeHtml(product.tierTag) + '</p>'
     : '';
@@ -1055,7 +1057,7 @@ function buildProAltLink(sot) {
   const route = resolveCheckoutHref(sot, 'pro');
   const priceText = '$' + Number(pro.priceUsd).toFixed(2);
   return (
-    '            <p class="pdf-pro-alt" id="pdf-card-pro">Only need the Build kit? <a class="pdf-card-cta pdf-pro-alt-link" href="' +
+    '            <p class="pdf-pro-alt" id="pdf-card-pro">Need Pro on its own? <a class="pdf-card-cta pdf-pro-alt-link" href="' +
     escapeHtml(route.href) +
     '"' +
     (route.isPlaceholder ? '' : ' target="_blank" rel="noopener noreferrer"') +
@@ -1073,67 +1075,25 @@ function buildPdfStorefrontSection(sot) {
   const proAlt = buildProAltLink(sot);
   // Path cut: comparison table not rendered (SOT comparisonTable kept for later).
   const head = sot.commerce.storefrontHead || {};
-  const eyebrow = escapeHtml(head.eyebrow || 'Printable kits');
-  const title = escapeHtml(head.title || 'Take the kit offline');
-  const lead = escapeHtml(
-    head.lead ||
-      'Printable PDFs for marketing leaders. Same prompts as the free library, formatted for offline planning.'
-  );
-  const outcomeLine = head.outcomeLine
-    ? '                <p class="pdf-storefront-outcome">' + escapeHtml(head.outcomeLine) + '</p>\n'
-    : '';
-  const buyerFaq = Array.isArray(sot.buyerFaq)
-    ? sot.buyerFaq
-        .map(
-          (item) =>
-            '                <details class="faq-item">\n' +
-            '                    <summary>' +
-            escapeHtml(item.q) +
-            '</summary>\n' +
-            '                    <p>' +
-            escapeHtml(item.a) +
-            '</p>\n' +
-            '                </details>'
-        )
-        .join('\n')
-    : '';
+  const title = escapeHtml(head.title || 'Content AI System');
   const delivery = escapeHtml(
-    sot.commerce.deliveryPromise || 'Email delivery within 5 minutes.'
+    sot.commerce.deliveryPromise || 'The PDF arrives by email within 5 minutes.'
   );
-  const faqDetails = buyerFaq
-    ? '            <details class="pdf-storefront-details">\n' +
-      '                <summary class="pdf-storefront-details-summary">Buyer FAQ &amp; delivery details</summary>\n' +
-      '                <p class="pdf-storefront-delivery"><strong>Delivery:</strong> ' +
-      delivery +
-      '</p>\n' +
-      '            <div class="pdf-storefront-faq" aria-labelledby="pdf-storefront-faq-title">\n' +
-      '                <h3 id="pdf-storefront-faq-title" class="pdf-storefront-faq-title">Buyer FAQ</h3>\n' +
-      buyerFaq +
-      '\n' +
-      '            </div>\n' +
-      '            </details>\n'
-    : '';
+  const deliveryLine = '            <p class="pdf-storefront-delivery">' + delivery + '</p>\n';
 
   return (
     '        <section class="upgrade-section pdf-storefront no-print" id="pdf-storefront" aria-labelledby="pdf-storefront-title">\n' +
     '            <div class="pdf-storefront-teaser">\n' +
-    '                <p class="pdf-storefront-eyebrow">' +
-    eyebrow +
-    '</p>\n' +
     '                <h2 id="pdf-storefront-title">' +
     title +
     '</h2>\n' +
-    '                <p class="pdf-storefront-lead">' +
-    lead +
-    '</p>\n' +
-    outcomeLine +
     '            </div>\n' +
     '            <div class="pdf-storefront-grid" role="list">\n' +
     cards +
     '            </div>\n' +
     proAlt +
-    faqDetails +
-    '            <p class="pdf-storefront-trust">Secure checkout via Stripe. Receipts and downloads delivered by email. <a href="/terms/#paid-pdf-license">Team license</a> \u00b7 <a href="/en/privacy/">Privacy</a>.</p>\n' +
+    deliveryLine +
+    '            <p class="pdf-storefront-trust">Stripe checkout. <a href="/terms/#paid-pdf-license">Team license</a> \u00b7 <a href="/en/privacy/">Privacy</a>.</p>\n' +
     '        </section>\n\n'
   );
 }
@@ -1162,37 +1122,55 @@ function injectPdfStorefront(html, locale) {
 
 /* EN-only free Creative brief builder (#creative-brief). Ships on mirror too. */
 function buildCreativeBriefSelect(id, fieldKey, label, options, firstEmptyLabel) {
+  const labelId = id + '-label';
   const opts = [
-    '                        <option value="">' + escapeHtml(firstEmptyLabel) + '</option>'
+    '                            <option value="">' + escapeHtml(firstEmptyLabel) + '</option>'
   ].concat(
     options.map(function (opt) {
-      return '                        <option value="' + escapeHtml(opt) + '">' + escapeHtml(opt) + '</option>';
+      return '                            <option value="' + escapeHtml(opt) + '">' + escapeHtml(opt) + '</option>';
     })
   );
+  const choices = options
+    .map(function (opt) {
+      return (
+        '                            <button type="button" class="cb-choice" data-cb-choice="' +
+        escapeHtml(opt) +
+        '" aria-pressed="false">' +
+        escapeHtml(opt) +
+        '</button>'
+      );
+    })
+    .join('\n');
   /* name uses cb- prefix to avoid form-dup-name vs #cmo-context fields */
   const nameAttr = 'cb-' + fieldKey;
   return (
-    '                    <div class="cb-field">\n' +
-    '                        <label for="' +
-    id +
+    '                    <div class="cb-field cb-field--choices">\n' +
+    '                        <label id="' +
+    labelId +
     '">' +
     escapeHtml(label) +
     '</label>\n' +
+    '                        <div class="cb-choices" role="radiogroup" aria-labelledby="' +
+    labelId +
+    '">\n' +
+    choices +
+    '\n                        </div>\n' +
     '                        <select id="' +
     id +
     '" name="' +
     nameAttr +
-    '" data-cb-field="' +
+    '" class="cb-choice-value" data-cb-field="' +
     fieldKey +
-    '">\n' +
+    '" tabindex="-1" aria-hidden="true">\n' +
     opts.join('\n') +
     '\n                        </select>\n' +
     '                    </div>\n'
   );
 }
 
-function buildCreativeBriefTextField(id, fieldKey, label, placeholder, multiline) {
+function buildCreativeBriefTextField(id, fieldKey, label, placeholder, multiline, span) {
   const nameAttr = 'cb-' + fieldKey;
+  const fieldClass = span ? 'cb-field cb-field--span' : 'cb-field';
   const tag = multiline
     ? '                        <textarea id="' +
       id +
@@ -1213,7 +1191,9 @@ function buildCreativeBriefTextField(id, fieldKey, label, placeholder, multiline
       escapeHtml(placeholder) +
       '">\n';
   return (
-    '                    <div class="cb-field">\n' +
+    '                    <div class="' +
+    fieldClass +
+    '">\n' +
     '                        <label for="' +
     id +
     '">' +
@@ -1224,20 +1204,13 @@ function buildCreativeBriefTextField(id, fieldKey, label, placeholder, multiline
   );
 }
 
-function buildCreativeBriefSection(sot, options) {
-  const opts = options && typeof options === 'object' ? options : {};
-  const isMirror = !!opts.mirror;
+function buildCreativeBriefSection(sot) {
   const copy =
     sot.copy && sot.copy.creativeBrief && typeof sot.copy.creativeBrief === 'object'
       ? sot.copy.creativeBrief
       : {};
   const title = typeof copy.title === 'string' ? copy.title : 'Creative brief builder';
-  const lead =
-    typeof copy.lead === 'string'
-      ? copy.lead
-      : 'Turn a short marketing brief into an image-ready prompt.';
-  const presetsLabel = typeof copy.presetsLabel === 'string' ? copy.presetsLabel : 'Quick starts';
-  const sampleLabel = typeof copy.sampleLabel === 'string' ? copy.sampleLabel : 'Try an example';
+  const presetsLabel = typeof copy.presetsLabel === 'string' ? copy.presetsLabel : 'Try an example';
   const stepsContext = typeof copy.stepsContext === 'string' ? copy.stepsContext : 'Context';
   const stepsVisual = typeof copy.stepsVisual === 'string' ? copy.stepsVisual : 'Visual';
   const stepsText = typeof copy.stepsText === 'string' ? copy.stepsText : 'Text';
@@ -1251,25 +1224,8 @@ function buildCreativeBriefSection(sot, options) {
     typeof copy.emptyPlaceholder === 'string'
       ? copy.emptyPlaceholder
       : 'Try an example, or add a subject — your prompt builds here.';
-  const tipsTitle = typeof copy.tipsTitle === 'string' ? copy.tipsTitle : 'Expert tips';
-  const proTeaser =
-    typeof copy.proTeaser === 'string'
-      ? copy.proTeaser
-      : 'Want the method to build more tools like this for your team? See Pro below.';
-  const tips = Array.isArray(copy.tips) ? copy.tips : [];
   const tools =
     sot.creativeBrief && Array.isArray(sot.creativeBrief.tools) ? sot.creativeBrief.tools : [];
-
-  const tipItems = tips
-    .slice(0, 3)
-    .map(function (tip) {
-      const t = tip && typeof tip.title === 'string' ? tip.title : '';
-      const b = tip && typeof tip.body === 'string' ? tip.body : '';
-      return (
-        '                    <li><strong>' + escapeHtml(t) + ':</strong> ' + escapeHtml(b) + '</li>\n'
-      );
-    })
-    .join('');
 
   // Path cut: keep ChatGPT + Ideogram only (no tool-catalog wall).
   const slimTools = tools.filter(function (tool) {
@@ -1301,18 +1257,11 @@ function buildCreativeBriefSection(sot, options) {
 
   return (
     '<section class="upgrade-section creative-brief no-print" id="creative-brief" aria-labelledby="cb-title">\n' +
-    '            <p class="cb-eyebrow">Free browser builder</p>\n' +
+    '            <div class="cb-stage">\n' +
+    '            <div class="cb-stage-main">\n' +
     '            <h2 id="cb-title">' +
     escapeHtml(title) +
     '</h2>\n' +
-    '            <p class="cb-lead">' +
-    escapeHtml(lead) +
-    '</p>\n' +
-    '            <p class="cb-sample-row">\n' +
-    '                <button type="button" class="btn cb-preset-btn cb-sample-btn" id="cbSampleBtn">' +
-    escapeHtml(sampleLabel) +
-    '</button>\n' +
-    '            </p>\n' +
     '            <details class="cb-builder-details" id="cb-builder" open>\n' +
     '                <summary id="cb-builder-summary">Brief builder</summary>\n' +
     '            <div class="cb-presets" role="group" aria-label="' +
@@ -1321,9 +1270,9 @@ function buildCreativeBriefSection(sot, options) {
     '                <span class="cb-presets-label">' +
     escapeHtml(presetsLabel) +
     '</span>\n' +
-    '                <button type="button" class="btn cb-preset-btn" data-cb-preset="ecommerce">Ecommerce</button>\n' +
-    '                <button type="button" class="btn cb-preset-btn" data-cb-preset="brand">Brand</button>\n' +
-    '                <button type="button" class="btn cb-preset-btn" data-cb-preset="social">Social</button>\n' +
+    '                <button type="button" class="btn cb-preset-btn" data-cb-preset="ecommerce" aria-pressed="false">Ecommerce</button>\n' +
+    '                <button type="button" class="btn cb-preset-btn" data-cb-preset="brand" aria-pressed="false">Brand</button>\n' +
+    '                <button type="button" class="btn cb-preset-btn" data-cb-preset="social" aria-pressed="false">Social</button>\n' +
     '            </div>\n' +
     '            <div class="cb-steps" role="group" aria-label="Brief steps">\n' +
     '                <button type="button" class="cb-step is-active" data-cb-step="1" aria-pressed="true">1. ' +
@@ -1336,7 +1285,6 @@ function buildCreativeBriefSection(sot, options) {
     escapeHtml(stepsText) +
     '</button>\n' +
     '            </div>\n' +
-    '            <div class="cb-layout">\n' +
     '                <div class="cb-form" id="cbForm">\n' +
     '                    <fieldset class="cb-panel" data-cb-panel="1" id="cbPanelContext">\n' +
     '                        <legend class="cb-legend">Context</legend>\n' +
@@ -1347,7 +1295,7 @@ function buildCreativeBriefSection(sot, options) {
       ['Awareness', 'Engagement', 'Conversion'],
       'Select goal'
     ) +
-    buildCreativeBriefTextField('cbAudience', 'audience', 'Audience', 'e.g. US B2B marketing leaders') +
+    buildCreativeBriefTextField('cbAudience', 'audience', 'Audience', 'e.g. US B2B marketing leaders', false, true) +
     buildCreativeBriefSelect(
       'cbPlatform',
       'platform',
@@ -1370,6 +1318,7 @@ function buildCreativeBriefSection(sot, options) {
       'object',
       'Subject / object',
       'e.g. Leather handbag on light stone',
+      true,
       true
     ) +
     buildCreativeBriefSelect(
@@ -1406,7 +1355,7 @@ function buildCreativeBriefSection(sot, options) {
       ['1:1', '16:9', '9:16'],
       'Select ratio'
     ) +
-    buildCreativeBriefTextField('cbColor', 'color', 'Color palette', 'e.g. Warm golden tones') +
+    buildCreativeBriefTextField('cbColor', 'color', 'Color palette', 'e.g. Warm golden tones', false, true) +
     '                    </fieldset>\n' +
     '                    <fieldset class="cb-panel" data-cb-panel="3" id="cbPanelText" hidden>\n' +
     '                        <legend class="cb-legend">Text on image</legend>\n' +
@@ -1414,7 +1363,10 @@ function buildCreativeBriefSection(sot, options) {
     buildCreativeBriefTextField('cbCta', 'cta', 'Call to action', 'Optional CTA') +
     '                    </fieldset>\n' +
     '                </div>\n' +
+    '            </details>\n' +
+    '            </div>\n' +
     '                <div class="cb-output-wrap">\n' +
+    '                <div class="cb-output-sheet">\n' +
     '                    <div class="cb-quality" id="cbQuality" aria-live="polite">\n' +
     '                        <span class="cb-quality-label">' +
     escapeHtml(qualityLabel) +
@@ -1448,21 +1400,8 @@ function buildCreativeBriefSection(sot, options) {
     '                        </div>\n' +
     '                    </div>\n' +
     '                </div>\n' +
+    '                </div>\n' +
     '            </div>\n' +
-    '            <details class="cb-tips" id="cbTips">\n' +
-    '                <summary>' +
-    escapeHtml(tipsTitle) +
-    '</summary>\n' +
-    '                <ul>\n' +
-    tipItems +
-    '                </ul>\n' +
-    '            </details>\n' +
-    '            </details>\n' +
-    '            <p class="cb-pro-teaser">' +
-    escapeHtml(proTeaser) +
-    (isMirror
-      ? ' <a href="' + SITE_ORIGIN + '/en/#pdf-storefront">CMO AI Content System kits</a></p>\n'
-      : ' <a href="#pdf-storefront">CMO AI Content System kits</a></p>\n') +
     '            <script src="js/creative-brief.js" defer></script>\n' +
     '        </section>\n\n'
   );
@@ -1491,7 +1430,7 @@ function injectCreativeBrief(html, locale) {
       );
   }
   const sot = loadSot();
-  let out = html.replace(anchor, buildCreativeBriefSection(sot, { mirror: !!MIRROR_NOTE }));
+  let out = html.replace(anchor, buildCreativeBriefSection(sot));
   // Spine-first: ensure primary/secondary CTA classes after EN text replacements.
   out = out
     .replace(
@@ -1502,40 +1441,164 @@ function injectCreativeBrief(html, locale) {
       /<a href="#[^"]*"[^>]*id="heroCtaBrief"[^>]*>/i,
       '<a href="#pdf-storefront" class="cta-text-link" id="heroCtaBrief" aria-label="See pricing – go to pricing">'
     );
-  const courseFaq =
-    '<details class="faq-item">\n' +
-    '                    <summary>Is this a course or a tool?</summary>';
-  if (out.indexOf(courseFaq) !== -1 && out.indexOf('id="faq-creative-brief"') === -1) {
-    out = out.replace(
-      courseFaq,
-      '<details class="faq-item" id="faq-creative-brief">\n' +
-        '                    <summary>What is the creative brief builder?</summary>\n' +
-        '                    <p>A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT or Ideogram. No account. It locks subject, style, light, and space for type. It does not keep a person, logo, or package identical across a campaign. Use ChatGPT for a fast draft and Ideogram when the ad needs readable text. It demonstrates the same tool-building idea Pro teaches for teams.</p>\n' +
-        '                </details>\n' +
-        '                ' +
-        courseFaq
-    );
-  }
-  if (out.indexOf('id="faq-tool-sprawl"') === -1) {
-    const whoFaq =
-      '<details class="faq-item">\n' +
-      '                    <summary>Who is this for?</summary>';
-    const jtbdFaqs =
-      '<details class="faq-item" id="faq-tool-sprawl">\n' +
-      '                    <summary>Why use this instead of more AI tools?</summary>\n' +
-      '                    <p>It is a portable prompt system you run on ChatGPT or Claude — not another SaaS seat. Structured workflows replace random chats and reduce tool sprawl.</p>\n' +
+  if (locale === 'en' && out.indexOf('id="faq-refund"') === -1) {
+    const moreCloseRe = /<\/div>\r?\n\s*<\/details>\r?\n\s*<p class="faq-eco-hint">/;
+    const purchaseFaqs =
+      '<details class="faq-item" id="faq-refund">\n' +
+      '                    <summary>Can I get a refund?</summary>\n' +
+      '                    <p>Yes. 14-day no-questions refund. Reply to your Stripe receipt or email info@promptanatomy.app. We approve through Stripe and revoke the download link.</p>\n' +
       '                </details>\n' +
-      '                <details class="faq-item" id="faq-brand-voice">\n' +
-      '                    <summary>How do we review AI content before we publish?</summary>\n' +
-      '                    <p>Run the <a href="#cmo-safety">pre-publish safety reviewer</a> to check facts, tone, legal/trust risk, and who owns the CTA.</p>\n' +
+      '                <details class="faq-item" id="faq-team-license">\n' +
+      '                    <summary>What does the team license cover?</summary>\n' +
+      '                    <p>One in-house marketing team at one company. CMO + 1–4 directs, or one CMO equivalent. Print and share within that team. No agency, multi-brand, or training-resale rights without a separate license.</p>\n' +
       '                </details>\n' +
-      '                ' +
-      whoFaq;
-    if (out.indexOf(whoFaq) !== -1) {
-      out = out.replace(whoFaq, jtbdFaqs);
+      '                <details class="faq-item" id="faq-privacy">\n' +
+      '                    <summary>Will my data be sold or shared?</summary>\n' +
+      '                    <p>No. Stripe processes payment and Resend delivers the email — we store no marketing list and do not add you to one. Post-purchase tips are transactional only. See our privacy page.</p>\n' +
+      '                </details>\n' +
+      '                ';
+    if (!moreCloseRe.test(out)) {
+      throw new Error('EN locale: FAQ more-questions close not found');
+    }
+    out = out.replace(moreCloseRe, purchaseFaqs + '$&');
+    if (!moreCloseRe.test(out) && out.indexOf('id="faq-refund"') === -1) {
+      throw new Error('EN locale: refund FAQ was not inserted');
     }
   }
   return out;
+}
+
+/** EN jump is the cycle only. Dots sit between Plan, Create, Check, and Improve. */
+function stripEnUsageLayers(html) {
+  const ctaRe = /\s*<a class="btn" id="pro-contents-cta" href="#pdf-storefront">[\s\S]*?<\/a>/;
+  if (!ctaRe.test(html)) {
+    throw new Error('EN locale: #pro-contents-cta not found');
+  }
+  let out = html.replace(ctaRe, '');
+  const summaryRe = /\s*<section class="objectives objectives--skim" id="executive-summary"[\s\S]*?<\/section>/;
+  if (!summaryRe.test(out)) {
+    throw new Error('EN locale: #executive-summary not found');
+  }
+  out = out.replace(summaryRe, '');
+  const tipsRe = /\s*<section class="instructions" aria-labelledby="instructions-title">[\s\S]*?<\/section>/;
+  if (!tipsRe.test(out)) {
+    throw new Error('EN locale: #copy-tips section not found');
+  }
+  out = out.replace(tipsRe, '');
+  if (
+    out.indexOf('id="howItWorksLead"') !== -1 ||
+    out.indexOf('id="copy-tips"') !== -1 ||
+    out.indexOf('id="pro-contents-cta"') !== -1
+  ) {
+    throw new Error('EN locale: usage layers were not removed');
+  }
+  return out;
+}
+
+function flattenEnFaq(html) {
+  const moreRe =
+    /<details class="faq-more-details">\s*<summary>More questions<\/summary>\s*<div class="faq-items">([\s\S]*?)<\/div>\s*<\/details>/;
+  const more = html.match(moreRe);
+  if (!more) {
+    throw new Error('EN locale: FAQ more-questions wrapper not found');
+  }
+  const items = more[1].trim();
+  let out = html.replace(more[0], '');
+  const primaryRe = /(<div class="faq-items faq-items--primary">)([\s\S]*?)(\s*<\/div>)/;
+  if (!primaryRe.test(out)) {
+    throw new Error('EN locale: primary FAQ list not found');
+  }
+  out = out.replace(primaryRe, '$1$2\n' + items + '\n            $3');
+  if (out.indexOf('<details class="faq-more-details">') !== -1) {
+    throw new Error('EN locale: FAQ wrapper was not removed');
+  }
+  return out;
+}
+
+/** EN FAQ is the four questions the page does not already answer. */
+function trimEnFaq(html) {
+  const items = [
+    '<details class="faq-item">\n' +
+      '                    <summary>Is this a course or a tool?</summary>\n' +
+      '                    <p>This page is the Content AI System. You fill a brief, copy a prompt, and paste it into your own AI tool. It is not the course on promptanatomy.app. The paid kits are PDFs you download, not another login.</p>\n' +
+      '                </details>',
+    '<details class="faq-item" id="faq-refund">\n' +
+      '                    <summary>Can I get a refund?</summary>\n' +
+      '                    <p>Yes. 14-day no-questions refund. Reply to your Stripe receipt or email info@promptanatomy.app. We approve through Stripe and revoke the download link.</p>\n' +
+      '                </details>',
+    '<details class="faq-item" id="faq-team-license">\n' +
+      '                    <summary>What does the team license cover?</summary>\n' +
+      '                    <p>One in-house marketing team at one company. CMO + 1–4 directs, or one CMO equivalent. Print and share within that team. No agency, multi-brand, or training-resale rights without a separate license.</p>\n' +
+      '                </details>',
+    '<details class="faq-item" id="faq-privacy">\n' +
+      '                    <summary>Will my data be sold or shared?</summary>\n' +
+      '                    <p>No. Stripe processes payment and Resend delivers the email — we store no marketing list and do not add you to one. Post-purchase tips are transactional only. See our privacy page.</p>\n' +
+      '                </details>'
+  ].join('\n                ');
+  const primaryRe = /(<div class="faq-items faq-items--primary">)[\s\S]*?(\s*<\/div>)/;
+  if (!primaryRe.test(html)) {
+    throw new Error('EN locale: primary FAQ list not found for trim');
+  }
+  const out = html.replace(primaryRe, '$1\n                ' + items + '\n            $2');
+  const faq = out.match(/<section[^>]*id="faq"[\s\S]*?<\/section>/);
+  if (!faq) {
+    throw new Error('EN locale: #faq missing after trim');
+  }
+  if ((faq[0].match(/<details class="faq-item"/g) || []).length !== 4) {
+    throw new Error('EN locale: FAQ must be four questions');
+  }
+  return out;
+}
+
+function wrapEnTailPanel(html) {
+  const gap = '\\s*(?:<!--[\\s\\S]*?-->\\s*)*';
+  const re = new RegExp(
+    '(<details class="upgrade-section prompt-basics-details" id="prompt-basics">[\\s\\S]*?<\\/details>)' +
+      gap +
+      '(<section class="upgrade-section ecosystem-strip" id="ecosystem-strip"[\\s\\S]*?<\\/section>)' +
+      gap +
+      '(<section class="community" id="community"[\\s\\S]*?<\\/section>)'
+  );
+  if (!re.test(html)) {
+    throw new Error('EN locale: tail panel anchors not found');
+  }
+  return html.replace(
+    re,
+    '<div class="tail-panel">\n        $3\n        $2\n        $1\n        </div>'
+  );
+}
+
+function shapeEnLibraryChrome(html) {
+  const navMatch = html.match(/<nav class="progress-jump[^"]*" id="progressJump"[^>]*>[\s\S]*?<\/nav>/);
+  if (!navMatch) {
+    throw new Error('EN locale: #progressJump not found');
+  }
+  const nav = navMatch[0];
+  let next = nav.replace(
+    /(<a href="#block1">Plan<\/a>)\s*(<a href="#block2">Create<\/a>)\s*(<a href="#block3">Check<\/a>)\s*(<a href="#block5">Improve<\/a>)/,
+    '$1\n            <span class="progress-jump-sep" aria-hidden="true">·</span>\n            $2\n            <span class="progress-jump-sep" aria-hidden="true">·</span>\n            $3\n            <span class="progress-jump-sep" aria-hidden="true">·</span>\n            $4'
+  );
+  next = next.replace(
+    /\s*<span class="progress-jump-sep"[^>]*>·<\/span>\s*<a href="#pdf-storefront"[^>]*id="progressJumpPro"[^>]*>[\s\S]*?<\/a>\s*<span class="progress-jump-sep"[^>]*>·<\/span>\s*<a href="#creative-brief"[^>]*id="progressJumpCreative"[^>]*>[\s\S]*?<\/a>\s*<span class="progress-jump-sep"[^>]*>·<\/span>\s*<a href="#faq"[^>]*id="progressJumpFaq"[^>]*>[\s\S]*?<\/a>/,
+    ''
+  );
+  if (next === nav || next.indexOf('id="progressJumpPro"') !== -1 || next.indexOf('id="progressJumpCreative"') !== -1) {
+    throw new Error('EN locale: progress jump tail was not removed');
+  }
+  if ((next.match(/class="progress-jump-sep"/g) || []).length !== 3) {
+    throw new Error('EN locale: progress jump needs a dot between each cycle word');
+  }
+  html = html.replace(nav, next);
+  html = html.replace(/<p id="progressText">[^<]*<\/p>/, '<p id="progressText" hidden></p>');
+  html = html.replace(
+    /data-prompt-id="prompt1">\s*<span>Copy prompt<\/span>/,
+    'data-prompt-id="prompt1">\n<span>Copy Prompt 1</span>'
+  );
+  html = stripEnUsageLayers(html);
+  html = flattenEnFaq(html);
+  html = trimEnFaq(html);
+  html = wrapEnTailPanel(html);
+  return html;
 }
 
 function buildScenariosTabScript(locale) {
@@ -1853,7 +1916,7 @@ const EN_REPLACEMENTS_PREFIX = [
   // Footer product link (before generic "Promptų anatomija" so full paragraph matches)
   [
     '<p class="footer-product-link" id="footer-product-link">Spin-off Nr. 2 (Prompt Anatomy). Pilnas mokymas, metodika ir brand centras: <a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">promptanatomy.app</a>. Paskutinis atnaujinimas: 2026-04-30.</p>',
-    '<p class="footer-product-link" id="footer-product-link">Part of Prompt Anatomy. This page is the Content AI System: META, INPUT, OUTPUT, then Plan → Create → Check → Improve. The course on <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a> is a separate product.</p>'
+    '<p class="footer-product-link" id="footer-product-link">Part of Prompt Anatomy. This page is the Content AI System. The course on <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a> is a separate product.</p>'
   ],
   ['<span id="footer-email-label">El. paštas:</span>', '<span id="footer-email-label">Email:</span>'],
   ['<span id="footer-address-label">Pašto adresas:</span>', '<span id="footer-address-label">Mailing address:</span>'],
@@ -1862,14 +1925,14 @@ const EN_REPLACEMENTS_PREFIX = [
   ['<span class="header-brand-name-lead">Promptų</span>', '<span class="header-brand-name-lead">Prompt</span>'],
   ['<span class="header-brand-name-accent">Anatomija</span>', '<span class="header-brand-name-accent">Anatomy</span>'],
   ['Promptų anatomija', 'Prompt Anatomy'],
-  ['Turinio DI sistema<br>rinkodaros vadovams', 'Turn one brief into an image-ready prompt.'],
+  ['Turinio DI sistema<br>rinkodaros vadovams', 'Content AI System'],
   [
     '<p class="header-lead" id="heroLead">Kartok rinkodaros workflow vietoj tuščio prompto kiekvieną kartą.</p>',
-    '<p class="header-lead" id="heroLead">Fill the fields. Copy a structured prompt. Run it in your image tool.</p>'
+    '<p class="header-lead" id="heroLead">Fill the fields. Copy the prompt. Paste it into your image tool.</p>'
   ],
   [
     '<p class="header-proof" id="heroProof">Nuo kampanijos plano iki kokybės patikros – viena kartojama sistema.</p>',
-    '<p class="header-proof" id="heroProof">Free below — no account.</p>'
+    '<p class="header-proof" id="heroProof">No account.</p>'
   ],
   ['id="hero-diagram-label">Iš 1-o workflow</', 'id="hero-diagram-label">From brief → image prompt</'],
   [
@@ -1878,7 +1941,7 @@ const EN_REPLACEMENTS_PREFIX = [
   ],
   [
     '<table class="hero-sample">\n                                <caption class="visually-hidden">30 dienų turinio plano pavyzdys</caption>\n                                <thead>\n                                    <tr><th>Diena</th><th>Kanalas</th><th>Tema</th></tr>\n                                </thead>\n                                <tbody>\n                                    <tr><td>01</td><td>LinkedIn</td><td>DI klaidos, kurias kartoja komandos</td></tr>\n                                    <tr><td>02</td><td>LinkedIn</td><td>Agentų ROI – trumpas case</td></tr>\n                                    <tr><td>03</td><td>X</td><td>Promptinimo gija</td></tr>\n                                    <tr><td>04</td><td>Email</td><td>Savaitės cadence</td></tr>\n                                    <tr><td>05</td><td>LinkedIn</td><td>Brand guardrails</td></tr>\n                                </tbody>\n                            </table>',
-    '<picture>\n                                <source type="image/webp" srcset="../assets/hero/brief-sample-satori.webp">\n                                <img class="hero-sample hero-sample-image" src="../assets/hero/brief-sample-satori.png" width="640" height="640" alt="Luxury leather handbag on light stone with cinematic lighting and clean negative space for a headline." decoding="async" fetchpriority="high">\n                            </picture>\n                            <pre class="hero-brief-sample">Luxury leather handbag on light stone,\ncinematic lighting, clean negative space for headline,\n1:1, LinkedIn, premium tone.</pre>'
+    '<pre class="hero-brief-sample">Professional marketing visual, cognac leather handbag on travertine. Warm directional sunlight, ultra-detailed, highest quality, professional composition, Aspect ratio: 1:1. Created for marketing purpose: awareness, targeting B2B marketers on LinkedIn. Mood: premium.</pre>\n                            <picture>\n                                <source type="image/webp" srcset="../assets/hero/brief-sample-satori.webp">\n                                <img class="hero-sample hero-sample-image" src="../assets/hero/brief-sample-satori.png" width="640" height="640" alt="Cognac leather handbag on light stone in warm directional light." decoding="async" fetchpriority="high">\n                            </picture>\n                            <p class="hero-diagram__example">Example image, made in an image tool from a prompt like this.</p>'
   ],
   [
     'Sample output of workflow 1 — a 30-day content plan.',
@@ -1886,22 +1949,25 @@ const EN_REPLACEMENTS_PREFIX = [
   ],
   [
     '<li class="trust-pill" id="heroTrustPill1">Be paskyros</li>',
-    '<li class="trust-pill" id="heroTrustPill1">Free to start</li>'
+    '<li class="trust-pill" id="heroTrustPill1"></li>'
   ],
   [
     '<li class="trust-pill" id="heroTrustPill2">ChatGPT ir Claude</li>',
-    '<li class="trust-pill" id="heroTrustPill2">No sign-up</li>'
+    '<li class="trust-pill" id="heroTrustPill2"></li>'
   ],
   [
     '<li class="trust-pill" id="heroTrustPill3">4 workflow nemokamai</li>',
-    '<li class="trust-pill" id="heroTrustPill3">Reusable workflows</li>'
+    '<li class="trust-pill" id="heroTrustPill3"></li>'
   ],
   [
     'class="cta-text-link" id="heroCtaBrief" aria-label="Žiūrėti rinkinius – pereiti prie kainų"',
     'class="cta-text-link" id="heroCtaBrief" aria-label="See pricing – go to pricing"'
   ],
   ['Žiūrėti rinkinius', 'See pricing'],
-  ['<span class="prompt-step" id="prompt1Recommended">Workflow 1 of 4</span>', '<span class="prompt-step" id="prompt1Recommended">Workflow 1 of 4</span>'],
+  ['<span class="prompt-step" id="prompt1Recommended">Workflow 1 of 4</span>', '<span class="prompt-step" id="prompt1Recommended">Prompt 1 of 4</span>'],
+  ['<span class="prompt-step">Workflow 2 of 4</span>', '<span class="prompt-step">Prompt 2 of 4</span>'],
+  ['<span class="prompt-step">Workflow 3 of 4</span>', '<span class="prompt-step">Prompt 3 of 4</span>'],
+  ['<span class="prompt-step">Workflow 4 of 4</span>', '<span class="prompt-step">Prompt 4 of 4</span>'],
   [
     'aria-label="Pradėti pirmą workflow – pereiti prie workflow 1"',
     'aria-label="Build my prompt – go to the brief builder"'
@@ -1922,7 +1988,7 @@ const EN_REPLACEMENTS_PREFIX = [
     '<p class="usage-strip" id="howItWorksLead">Kopijuok → įklijuok į ChatGPT arba Claude.</p>',
     '<p class="usage-strip" id="howItWorksLead">Copy → paste into ChatGPT or Claude.</p>'
   ],
-  ['<summary id="prompt-basics-summary">Promptų pagrindai (1 min)</summary>', '<summary id="prompt-basics-summary">Prompt basics (1 min)</summary>'],
+  ['<summary id="prompt-basics-summary">Promptų pagrindai (1 min)</summary>', '<summary id="prompt-basics-summary">What a prompt is</summary>'],
   ['aria-label="Greita navigacija per promptus"', 'aria-label="Quick jump between prompts"'],
   ['<a href="#faq" id="progressJumpFaq">DUK</a>', '<a href="#faq" id="progressJumpFaq">FAQ</a>'],
   ['<p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Promptas</p>', '<p class="sticky-prompt-bar-label" id="stickyPromptBarLabel">Prompt</p>'],
@@ -1975,8 +2041,8 @@ const EN_REPLACEMENTS_PREFIX = [
   ['<summary>Daugiau klausimų</summary>', '<summary>More questions</summary>'],
   // FAQPage JSON-LD is emitted from sot.frontFaq + buyerFaq in geo-surfaces.js — do not keep a second 8-item blob here.
   // Progress
-  ['Panaudojai 0 iš 4 workflow', 'You used 0 of 4 workflows'],
-  ['aria-label="Progresas: 0 iš 4 workflow"', 'aria-label="Progress: 0 of 4 workflows"'],
+  ['Panaudojai 0 iš 4 workflow', ''],
+  ['aria-label="Progresas: 0 iš 4 workflow"', 'aria-label="Progress: 0 of 4 prompts"'],
   ['<h2 id="pro-contents-title">Dar 6 workflow Pro rinkinyje</h2>', '<h2 id="pro-contents-title">Also in the Pro kit</h2>'],
   [
     '<p class="pro-contents-lead" id="pro-contents-lead">Pilni promptų kūnai offline Pro rinkinyje.</p>',
@@ -2072,7 +2138,7 @@ const EN_REPLACEMENTS_SUFFIX = [
   ['<summary>Ar tai kursas ar įrankis?</summary>', '<summary>Is this a course or a tool?</summary>'],
   [
     '<p>Tai interaktyvi promptų biblioteka + framework. Gali naudoti iškart (kopijuok → įklijuok → paleisk).</p>',
-    '<p>A copy-paste Content AI System you can use immediately — not a long course. Free spine + brief in the browser; depth offline in the kits.</p>'
+    '<p>This page is the Content AI System. You fill a brief, copy a prompt, and paste it into your own AI tool. It is not the course on promptanatomy.app. The paid kits are PDFs you download, not another login.</p>'
   ],
   ['<summary>Kam tai skirta?</summary>', '<summary>Who is this for?</summary>'],
   [
@@ -2094,8 +2160,8 @@ const EN_REPLACEMENTS_SUFFIX = [
     '<p class="faq-eco-hint">For full methodology and executive context, use the <a href="#ecosystem-strip">ecosystem section</a> – all links in one place.</p>'
   ],
   // Community
-  ['<h2 id="community-title">Nori daugiau?<br>Prisijunk prie Telegram grupės.</h2>', '<h2 id="community-title">Join the community.</h2>'],
-  ['<p>Bendros diskusijos, patarimai ir naujienos apie promptus ir DI.</p>', '<p>Examples and prompt updates. US-market notes welcome.</p>'],
+  ['<h2 id="community-title">Nori daugiau?<br>Prisijunk prie Telegram grupės.</h2>', '<h2 id="community-title">Join the Telegram group.</h2>'],
+  ['<p>Bendros diskusijos, patarimai ir naujienos apie promptus ir DI.</p>', '<p>Prompt examples and updates.</p>'],
   ['Prisijungti prie Telegram grupės', 'Join Telegram group'],
   // Footer
   ['<h3 id="footerSignoff">Sėkmės rinkodaroje <span aria-hidden="true">🚀</span></h3>', '<h3 id="footerSignoff" hidden>Go win your market <span aria-hidden="true">🚀</span></h3>'],
@@ -2105,18 +2171,18 @@ const EN_REPLACEMENTS_SUFFIX = [
   ['<span class="tag" role="listitem"><span aria-hidden="true">⚡</span> Veiksmų fokusas</span>', '<span class="tag" role="listitem"><span aria-hidden="true">⚡</span> Action focus</span>'],
   ['<span class="tag" role="listitem"><span aria-hidden="true">🎯</span> Potencialūs klientai ir rodikliai</span>', '<span class="tag" role="listitem"><span aria-hidden="true">🎯</span> Full 10 in Pro</span>'],
   ['<p>&copy; 2026 Tomas Staniulis. Mokymų medžiaga. Visos teisės saugomos. <a href="privatumas.html">Privatumas</a></p>', '<p>&copy; 2026 Tomas Staniulis. All rights reserved. <a href="/en/privacy/">Privacy</a></p>'],
-  ['<h2 id="ecosystem-strip-title">Prompt Anatomy ekosistema</h2>', '<h2 id="ecosystem-strip-title">Prompt Anatomy ecosystem</h2>'],
+  ['<h2 id="ecosystem-strip-title">Prompt Anatomy ekosistema</h2>', '<h2 id="ecosystem-strip-title">The method</h2>'],
   [
     '<p class="ecosystem-strip-intro">Viena vieta: metodika, bendruomenė, el. paštas ir susiję rinkiniai.</p>',
-    '<p class="ecosystem-strip-intro">Methodology and community. Checkout stays on this page.</p>'
+    '<p class="ecosystem-strip-intro">Read the method on promptanatomy.app.</p>'
   ],
   [
     '<p class="ecosystem-strip-related">Susijęs: <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO rinkinys)</p>',
-    '<p class="ecosystem-strip-related">Related: <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO kit)</p>'
+    '<p class="ecosystem-strip-related">Related: <a href="https://promptanatomy.ceo/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a></p>'
   ],
   [
     '<li role="listitem"><a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Oficiali metodika (promptanatomy.app)</a></li>',
-    '<li role="listitem"><a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Official methodology (promptanatomy.app)</a></li>'
+    '<li role="listitem"><a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Read the method on promptanatomy.app</a></li>'
   ],
   [
     '<li role="listitem"><a href="https://t.me/prompt_anatomy" target="_blank" rel="noopener noreferrer">Telegram grupė</a></li>',
@@ -2229,8 +2295,8 @@ function assertEnLocaleAdditions(html) {
   if (html.indexOf('js/creative-brief.js') === -1 && html.indexOf('../js/creative-brief.js') === -1) {
     throw new Error('EN locale: missing creative-brief.js script');
   }
-  if (html.indexOf('id="progressJumpCreative"') === -1) {
-    throw new Error('EN locale: missing #progressJumpCreative link');
+  if (html.indexOf('id="progressJumpCreative"') !== -1 && /<nav class="progress-jump[^"]*" id="progressJump"[\s\S]*?id="progressJumpCreative"[\s\S]*?<\/nav>/.test(html)) {
+    throw new Error('EN locale: #progressJump must not include #progressJumpCreative');
   }
   if (MIRROR_NOTE) {
     if (html.indexOf('id="pdf-storefront"') !== -1) {
@@ -2348,6 +2414,7 @@ function buildLocale(locale) {
   html = injectFooterSuite(html, locale);
   if (locale === 'en') {
     html = stripEnFooterChrome(html);
+    html = shapeEnLibraryChrome(html);
     assertEnLocaleAdditions(html);
   }
   if (locale === 'lt') {

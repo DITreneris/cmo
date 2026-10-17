@@ -35,7 +35,7 @@ Before merge on EN-facing files:
 rg -i "spin-off|biblioteka|prompt.?library" en/ terms.html success.html
 ```
 
-Violations must be removed. EN footer hub line names the Content AI System (META, INPUT, OUTPUT, Plan → Create → Check → Improve) and says the course on promptanatomy.app is a separate product, not “Spin-off”. Checkout stays on `promptanatomy.space` through Stripe; `.app` is methodology / brand context only.
+Violations must be removed. EN footer hub line says this page is the Content AI System and that the course on promptanatomy.app is a separate product, not “Spin-off”. Do not list META, INPUT, OUTPUT or Plan → Create → Check → Improve there. Checkout stays on `promptanatomy.space` through Stripe; `.app` is the course, not the checkout.
 
 ---
 

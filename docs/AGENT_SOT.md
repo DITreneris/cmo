@@ -3,7 +3,7 @@
 **Purpose:** Single operational entry for Cursor agents and PR review: paths, build, deploy, commerce, GEO.  
 **Not a replacement for:** [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) (DOM/JS contract) or [AGENTS.md](../AGENTS.md) (roles/workflow).
 
-**Last updated:** 2026-10-15 (lessons §10.16–22; live changelog heading is `## [Unreleased]`)
+**Last updated:** 2026-10-17 (lesson §10.23; live picture is STYLEGUIDE **1.8.0** §0.4; product SemVer **1.11.0**; new changelog lines go under `## [Unreleased]`)
 
 ---
 
@@ -13,7 +13,7 @@
 |--------|--------|
 | Public product | **EN canonical** — `/en/` (`hreflang x-default`) |
 | Free EN surface | **Tool-first:** hero → open `#creative-brief` → `#pdf-storefront` (2 cards) → library **1,2,3,5** (display 1–4) → `#cmo-safety` → `#cmo-scenarios` → `#pro-contents`; progress **of 4**; **0** meme slots |
-| Design system | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.2** Product Operator (Fraunces hero H1; Source Sans 3 UI; JetBrains Mono; warm paper; hero sample image) |
+| Design system | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.8.0** §0.4 Product Operator (Fraunces hero H1; Source Sans 3 UI; JetBrains Mono; warm paper; hero sample; one-line `#pro-contents`; `.tail-panel`) |
 | Pro / data SSOT | Still **10** prompt bodies (`data/en-prompt-bodies.json`); registry `freeInteractive: ["1","2","3","5"]` |
 | LT | **Frozen tester snapshot** — `/lt/` shipped; **not** negotiated from `/` (`Accept-Language` / `navigator.language`); build strips `#creative-brief` + `#heroCtaBrief`; no active dev without Orchestrator scope |
 | Commerce | EN-only on `promptanatomy.space`; mirror omits `#pdf-storefront` (`MIRROR_NOTE=1`); free brief **does** ship on mirror |
@@ -22,7 +22,7 @@
 | Go-live checklist (R1 detail) | [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) — Ambition A ops SSOT |
 | JTBD / GEO messaging | Same `/en/` URL: `sot.frontFaq` + `brand-seo` + `storefrontHead` + `llms.txt` hash hubs. Product name stays **Content AI System** ([PRODUCT-POSITIONING.md](PRODUCT-POSITIONING.md) §4). No multi-page SEO hub farm without Orchestrator scope. R2 after R1 exit. |
 
-Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-surface + GEO + R1-support lessons: [AGENTS.md](../AGENTS.md) §10 (esp. 11–13, 16–22). Repo-local Cursor skills are intentionally absent.
+Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-surface + GEO + R1-support lessons: [AGENTS.md](../AGENTS.md) §10 (esp. 11–13, 16–23). Repo-local Cursor skills are intentionally absent.
 
 ---
 
@@ -31,7 +31,7 @@ Locale policy: [MULTILINGUAL_STRUCTURE.md](MULTILINGUAL_STRUCTURE.md) §0. Free-
 | Edit (source) | Generated / do not hand-edit |
 |---------------|------------------------------|
 | [index.html](../index.html) (DOM structure) | `lt/index.html`, `en/index.html` via build |
-| [styles/design-tokens.json](../styles/design-tokens.json), [styles/*.css](../styles/) | Shared LT/EN CSS; DS 1.6.2 in STYLEGUIDE |
+| [styles/design-tokens.json](../styles/design-tokens.json), [styles/*.css](../styles/) | Shared LT/EN CSS; live DS **1.8.0** in STYLEGUIDE §0.4 |
 | [data/en-*.json](../data/) | EN prompt bodies (10), expected, scenarios — **build input**, not a public URL |
 | [data/cmo-prompt-registry.json](../data/cmo-prompt-registry.json) | Prompt TOC + `freeInteractive` spine ids |
 | [docs/pdf-source/README.md](pdf-source/README.md) | Paid PDF HTML is operator-local (gitignored); covers stay in `assets/pdf-covers/` |
@@ -94,7 +94,7 @@ Emitted by [scripts/geo-surfaces.js](../scripts/geo-surfaces.js) on every build:
 | `{INDEXNOW_KEY}.txt` | IndexNow verification |
 | `404.html` | EN noindex → `/en/` |
 | `manifest.webmanifest` | PWA-lite, `start_url: /en/` |
-| EN JSON-LD `@graph` | WebSite, Organization, Person, FAQPage (`frontFaq`+`buyerFaq`), 3× Product |
+| EN JSON-LD `@graph` | WebSite, Organization, Person, FAQPage (`frontFaq` only), 3× Product |
 
 **JTBD SSOT:** `sot.frontFaq` / `brand-seo` / `storefrontHead` — on `/en/` only; no extra landing hubs by default ([AGENTS.md](../AGENTS.md) §10.11–13).
 
@@ -129,6 +129,6 @@ Pa11y (CI): `/lt/`, `/en/`, privacy pages.
 - [LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) — structure contract
 - [PRODUCT-POSITIONING.md](PRODUCT-POSITIONING.md) — paid layer copy
 - [BRAND_SYNC.md](BRAND_SYNC.md) — mother brand tokens + QW1b entity footer
-- [STYLEGUIDE.md](../STYLEGUIDE.md) — DS **1.6.2** Product Operator
+- [STYLEGUIDE.md](../STYLEGUIDE.md) — DS **1.8.0** §0.4 Product Operator
 - [security.md](security.md) — headers, CSP, secrets
 - [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) — Stripe go-live (R1)

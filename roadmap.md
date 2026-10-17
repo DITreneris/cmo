@@ -4,7 +4,7 @@
 **Active tracker:** [todo.md](todo.md)  
 **Ops detail (R1):** [MUST_TODO_STRIPE.md](MUST_TODO_STRIPE.md)  
 **Agent contract:** [AGENTS.md](AGENTS.md) §0.2  
-**Last updated:** 2026-09-11
+**Last updated:** 2026-10-17 (`frontFaq` exit = the four visible questions)
 
 **Verdict:** Close production commerce first; then GEO on one URL; then one more browser-local tool; then deepen offline Install kits. Do not open SaaS or a multi-kit catalog until R1 converts.
 
@@ -44,7 +44,7 @@ flowchart LR
 | **Goal** | Stronger discovery on the **same** `/en/` URL — FAQ, `llms.txt` hubs, IndexNow signal |
 | **Owner** | Content (+ QA for schema/claims) |
 | **Entry** | R1 exit (cash register boringly works) |
-| **Exit** | `frontFaq` maintained (≥8); hash hubs accurate; IndexNow post-deploy used; no invented ROI/stats; no new SEO hub routes |
+| **Exit** | `frontFaq` stays the four visible questions (course, refund, license, privacy); hash hubs accurate; IndexNow post-deploy used; no invented ROI/stats; no new SEO hub routes |
 | **Primary docs** | [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5, [docs/PRODUCT-POSITIONING.md](docs/PRODUCT-POSITIONING.md) §4, [AGENTS.md](AGENTS.md) §10.11–13 |
 | **Kill if** | No attributable AI/search visits after sustained GEO work — reallocate to conversion on `/en/` |
 

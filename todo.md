@@ -60,7 +60,7 @@ Copy/ops only. Do not reopen path-cut decisions.
 
 ## R1-support 4 — craft atmosphere (2026-09-03)
 
-Does not replace Stripe ops. Does not count as R1 exit. Shipped then as DS 1.6.1. Current design system is **1.6.2** ([STYLEGUIDE.md](STYLEGUIDE.md)). Do not bump to 1.7 without Orchestrator.
+Does not replace Stripe ops. Does not count as R1 exit. Shipped then as DS 1.6.1. Current design system is **1.8.0** ([STYLEGUIDE.md](STYLEGUIDE.md) §0.4), shipped with SemVer 1.11.0. Do not roll the guide back to 1.7.0 or 1.6.2.
 
 - [x] Warm paper tokens (`#F6F1E8`); EN hero = Satori sample image + prompt caption
 - [x] Builder output pane navy studio; `.cb-tool-silhouette` removed

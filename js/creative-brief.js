@@ -99,7 +99,6 @@
   var formRoot = document.getElementById('cbForm');
   var outputEl = document.getElementById('cbOutput');
   var copyBtn = document.getElementById('cbCopyBtn');
-  var sampleBtn = document.getElementById('cbSampleBtn');
   var qualityBadge = document.getElementById('cbQualityBadge');
   var qualityHint = document.getElementById('cbQualityHint');
   var charCount = document.getElementById('cbCharCount');
@@ -131,6 +130,48 @@
         el.value = data[key] == null ? '' : String(data[key]);
       }
     });
+    syncFieldChrome();
+  }
+
+  function syncChoiceChrome() {
+    section.querySelectorAll('.cb-field--choices').forEach(function (field) {
+      var select = field.querySelector('select[data-cb-field]');
+      if (!select) return;
+      var value = select.value;
+      field.querySelectorAll('.cb-choice').forEach(function (btn) {
+        btn.setAttribute('aria-pressed', btn.getAttribute('data-cb-choice') === value ? 'true' : 'false');
+      });
+    });
+  }
+
+  function syncStepChrome() {
+    section.querySelectorAll('.cb-panel').forEach(function (panel) {
+      var n = panel.getAttribute('data-cb-panel');
+      var fields = panel.querySelectorAll('[data-cb-field]');
+      var filled = 0;
+      Array.prototype.forEach.call(fields, function (el) {
+        if (isFilled(el.value)) filled += 1;
+      });
+      var complete = n === '3' ? filled > 0 : fields.length > 0 && filled === fields.length;
+      var step = section.querySelector('.cb-step[data-cb-step="' + n + '"]');
+      if (step) step.classList.toggle('is-complete', complete);
+    });
+  }
+
+  function syncPresetChrome(id) {
+    section.querySelectorAll('[data-cb-preset]').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', btn.getAttribute('data-cb-preset') === id ? 'true' : 'false');
+    });
+  }
+
+  function syncFieldChrome() {
+    getFieldEls().forEach(function (el) {
+      var field = el.closest('.cb-field');
+      if (!field) return;
+      field.classList.toggle('is-filled', isFilled(el.value));
+    });
+    syncChoiceChrome();
+    syncStepChrome();
   }
 
   function countFilledTracked(data) {
@@ -270,6 +311,7 @@
     if (charCount) charCount.textContent = text.length + ' characters';
     syncCopyEnabled(text);
     updateQuality(data);
+    syncFieldChrome();
     saveDraft(data, text);
   }
 
@@ -416,6 +458,7 @@
     suppressDraft = false;
     if (outputEl) outputEl.value = buildImagePrompt(preset);
     updateOutput();
+    syncPresetChrome(id);
     showStep(1, true);
     trackBriefUse();
   }
@@ -434,8 +477,8 @@
     if (!shouldFocus) return;
     var panel = section.querySelector('.cb-panel[data-cb-panel="' + n + '"]');
     if (panel) {
-      var focusable = panel.querySelector('input, select, textarea');
-      if (focusable) focusable.focus();
+      var focusable = panel.querySelector('input:not([type="hidden"]), textarea, .cb-choice');
+      if (focusable) focusable.focus({ preventScroll: true });
     }
   }
 
@@ -464,11 +507,15 @@
     });
   }
 
-  if (sampleBtn) {
-    sampleBtn.addEventListener('click', function () {
-      applyPreset('brand');
+  section.querySelectorAll('.cb-choice').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var field = btn.closest('.cb-field');
+      var select = field && field.querySelector('select[data-cb-field]');
+      if (!select) return;
+      select.value = btn.getAttribute('data-cb-choice') || '';
+      select.dispatchEvent(new Event('change', { bubbles: true }));
     });
-  }
+  });
 
   section.querySelectorAll('[data-cb-preset]').forEach(function (btn) {
     btn.addEventListener('click', function () {

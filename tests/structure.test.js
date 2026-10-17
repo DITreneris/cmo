@@ -624,7 +624,7 @@ function run() {
     if (assert(
       enHtml.includes('What is a prompt?') &&
       enHtml.includes('What is Prompt Anatomy?') &&
-      enHtml.includes('Plan → Create → Check → Improve'),
+      enHtml.includes('A prompt is an engineered instruction'),
       'en/index.html: upgrade aiškinamieji blokai EN kalba'
     )) passed++;
     else failed++;
@@ -652,11 +652,28 @@ function run() {
       !enHtml.includes('Start your first workflow') &&
       !enHtml.includes('Start the builder') &&
       enHtml.includes('id="heroTrustPill1"') &&
-      enHtml.includes('Free to start') &&
-      enHtml.includes('No sign-up') &&
-      enHtml.includes('Reusable workflows') &&
-      enHtml.includes('id="heroProof"') &&
-      enHtml.includes('Free below — no account.') &&
+      enHtml.includes('id="heroTrustPill2"') &&
+      enHtml.includes('id="heroTrustPill3"') &&
+      !enHtml.includes('Subject, light, format') &&
+      !enHtml.includes('Copy, then paste') &&
+      !enHtml.includes('The picture is made elsewhere') &&
+      enHtml.includes('<h1>Content AI System</h1>') &&
+      enHtml.includes("setText('.header h1', 'Content AI System');") &&
+      !enHtml.includes('Content AI System for Marketing Leaders') &&
+      !enHtml.includes('Turn one brief into an image-ready prompt.') &&
+      !enHtml.includes('One brief. An image-ready prompt. Then the workflows your team can reuse.') &&
+      !enHtml.includes('Build a 30-day Content AI System your team can reuse') &&
+      enHtml.includes('id="heroLead">Fill the fields. Copy the prompt. Paste it into your image tool.</p>') &&
+      enHtml.includes("setText('#heroLead', 'Fill the fields. Copy the prompt. Paste it into your image tool.');") &&
+      !enHtml.includes('<span>Name</span><span>Copy</span><span>Paste</span>') &&
+      !enHtml.includes('Name the subject, light, and format.') &&
+      enHtml.includes('id="heroProof">No account.</p>') &&
+      enHtml.includes("setText('#heroProof', 'No account.');") &&
+      !enHtml.includes('The builder on this page is open') &&
+      !enHtml.includes('clean negative space for a headline') &&
+      enHtml.includes('alt="Cognac leather handbag on light stone in warm directional light."') &&
+      enHtml.includes('hero-diagram__example') &&
+      enHtml.includes('Example image, made in an image tool from a prompt like this.') &&
       enHtml.includes('hero-diagram') &&
       enHtml.includes('hero-sample') &&
       enHtml.includes('hero-sample-image') &&
@@ -668,10 +685,15 @@ function run() {
       !enHtml.includes('cmo-provider-hub') &&
       !enHtml.includes('id="framework-schema"') &&
       !enHtml.includes('id="progressJumpSafety"') &&
-      enHtml.includes('id="progressJumpCreative"') &&
-      enHtml.includes('Copy → paste into ChatGPT or Claude') &&
+      !enHtml.includes('id="howItWorksLead"') &&
+      !enHtml.includes('id="executive-summary"') &&
+      !enHtml.includes('id="copy-tips"') &&
+      !enHtml.includes('id="pro-contents-cta"') &&
+      !enHtml.includes("setText('#howItWorksLead'") &&
+      !enHtml.includes("setText('#pro-contents-cta'") &&
       !enHtml.includes('id="howItWorksCta"') &&
-      enHtml.includes('You used 0 of 4 workflows') &&
+      enHtml.includes('<p id="progressText" hidden></p>') &&
+      !enHtml.includes('You used 0 of 4 workflows') &&
       assertSpinePrimaryHero(enHtml) &&
       assertSpineFirstOrder(enHtml, 'id="creative-brief"') &&
       enHtml.includes('id="pro-contents"') &&
@@ -684,12 +706,24 @@ function run() {
       'en/index.html: tool-first CEO IA — open brief → 2 kits → library 1/2/3/5 + FAQ'
     )) passed++;
     else failed++;
-    if (assert(
-      /href="#pdf-storefront"\s+id="progressJumpPro"/.test(enHtml) ||
-        /id="progressJumpPro"[^>]*href="#pdf-storefront"/.test(enHtml),
-      'en/index.html: progressJumpPro uses Pricing link to #pdf-storefront'
-    )) passed++;
-    else failed++;
+    {
+      const jumpNav = enHtml.match(/<nav class="progress-jump[^"]*" id="progressJump"[^>]*>[\s\S]*?<\/nav>/);
+      const jumpHtml = jumpNav ? jumpNav[0] : '';
+      const jumpSeps = (jumpHtml.match(/class="progress-jump-sep"/g) || []).length;
+      if (assert(
+        jumpHtml.includes('>Plan</a>') &&
+          jumpHtml.includes('>Create</a>') &&
+          jumpHtml.includes('>Check</a>') &&
+          jumpHtml.includes('>Improve</a>') &&
+          jumpSeps === 3 &&
+          !jumpHtml.includes('progressJumpPro') &&
+          !jumpHtml.includes('progressJumpCreative') &&
+          !jumpHtml.includes('>Pricing</a>') &&
+          !jumpHtml.includes('>FAQ</a>'),
+        'en/index.html: progress jump is Plan · Create · Check · Improve'
+      )) passed++;
+      else failed++;
+    }
     if (assert(
       ltHtml &&
       !ltHtml.includes('id="heroCtaBrief"') &&
@@ -707,7 +741,6 @@ function run() {
       enHtml.includes('id="cbOutput"') &&
       enHtml.includes('id="cbQuality"') &&
       enHtml.includes('data-cb-preset="ecommerce"') &&
-      enHtml.includes('id="progressJumpCreative"') &&
       enHtml.includes('id="cb-builder"') &&
       /id="cb-builder"[^>]*\bopen\b/.test(enHtml) &&
       enHtml.includes('Brief builder') &&
@@ -745,9 +778,11 @@ function run() {
         titleNear < p5 &&
         number4Near > articleStart &&
         number4Near < p5 &&
-        enHtml.includes('Workflow 1 of 4') &&
+        enHtml.includes('Prompt 1 of 4') &&
+        enHtml.includes('>Copy Prompt 1</span>') &&
+        !enHtml.includes('Workflow 1 of 4') &&
         !enHtml.includes("setText('#prompt1Recommended', 'Start here')"),
-        'en/index.html: Improve card is display 4 + #prompt5 Daily analysis; Workflow 1 of 4'
+        'en/index.html: Improve card is display 4 + #prompt5 Daily analysis; Prompt 1 of 4'
       )) passed++;
       else failed++;
     }
@@ -789,7 +824,8 @@ function run() {
       enHtml.includes('mailto:info@promptanatomy.app') &&
       !enHtml.includes('<p class="cmo-footer-crosslink"') &&
       enHtml.includes('ecosystem-strip-related') &&
-      enHtml.includes('href="https://ditreneris.github.io/leader/en/"'),
+      enHtml.includes('href="https://promptanatomy.ceo/"') &&
+      !enHtml.includes('ditreneris.github.io/leader'),
       'EN: ecosystem methodology only; Telegram in community; email in footer; one Leader related'
     )) passed++;
     else failed++;
@@ -855,16 +891,19 @@ function run() {
     )) passed++;
     else failed++;
     if (assert(
-      enHtml.includes('href="https://ditreneris.github.io/leader/en/"'),
+      enHtml.includes('href="https://promptanatomy.ceo/"') &&
+      !enHtml.includes('ditreneris.github.io/leader'),
       'en/index.html: kryžminė nuoroda į Leader rinkinį'
     )) passed++;
     else failed++;
     if (assert(
       enHtml.includes('Part of Prompt Anatomy') &&
+        enHtml.includes('This page is the Content AI System.') &&
         enHtml.includes('The course on') &&
         enHtml.includes('is a separate product') &&
         enHtml.includes('utm_source=space') &&
-        enHtml.includes('utm_medium=entity_footer'),
+        enHtml.includes('utm_medium=entity_footer') &&
+        !enHtml.includes('META, INPUT, OUTPUT, then Plan'),
       'en/index.html: footer separates the kit from the course'
     )) passed++;
     else failed++;
@@ -1035,6 +1074,8 @@ function run() {
           bundleBlock &&
           bundleBlock[0].includes('$10.99') &&
           bundleBlock[0].includes('separately $12.98') &&
+          bundleBlock[0].includes('pdf-card-compare') &&
+          !bundleBlock[0].includes('pdf-card-was') &&
           !bundleBlock[0].includes('was $19.99')
         );
       })(),
@@ -1313,9 +1354,7 @@ function run() {
   if (sot && sot.brand) {
     if (assert(sot.brand.publicName === 'Prompt Anatomy', 'sot.json: brand.publicName')) passed++;
     else failed++;
-    if (assert(Array.isArray(sot.frontFaq) && sot.frontFaq.length >= 8, 'sot.json: frontFaq >= 8 for GEO JTBD')) passed++;
-    else failed++;
-    if (assert(Array.isArray(sot.frontFaq) && sot.frontFaq.length === 11, 'sot.json: frontFaq length === 11 (visible EN FAQ)')) passed++;
+    if (assert(Array.isArray(sot.frontFaq) && sot.frontFaq.length === 4, 'sot.json: frontFaq length === 4 (visible EN FAQ)')) passed++;
     else failed++;
     const frontFaqBlob = JSON.stringify(sot.frontFaq);
     if (assert(!/Midjourney/i.test(frontFaqBlob) && !/Pro teasers/i.test(frontFaqBlob), 'sot.json: frontFaq has no Midjourney / Pro teasers')) passed++;
@@ -1343,9 +1382,11 @@ function run() {
       else failed++;
     }
     if (assert(
-      html.includes('ChatGPT or Ideogram') &&
-        !/ChatGPT, Ideogram, Midjourney/.test(html),
-      'index.html applyStaticLocaleText: brief FAQ is Ideogram, not Midjourney'
+      html.includes('Is this a course or a tool?') &&
+        html.includes('Will my data be sold or shared?') &&
+        !html.includes('What is the creative brief builder?') &&
+        !/Midjourney/.test(html),
+      'index.html applyStaticLocaleText: FAQ is the four questions, not the brief lecture'
     )) passed++;
     else failed++;
   }
@@ -1387,7 +1428,14 @@ function run() {
       'en/index.html: does not claim free interactive 10'
     )) passed++;
     else failed++;
-    if (assert(enHtmlForCommerce.includes('id="faq-tool-sprawl"') && enHtmlForCommerce.includes('id="faq-brand-voice"'), 'en/index.html: JTBD FAQ ids')) passed++;
+    if (assert(
+      enHtmlForCommerce.includes('id="faq-refund"') &&
+        enHtmlForCommerce.includes('id="faq-team-license"') &&
+        enHtmlForCommerce.includes('id="faq-privacy"') &&
+        !enHtmlForCommerce.includes('id="faq-tool-sprawl"') &&
+        !enHtmlForCommerce.includes('id="faq-brand-voice"'),
+      'en/index.html: FAQ is course, refund, license, privacy'
+    )) passed++;
     else failed++;
   }
 

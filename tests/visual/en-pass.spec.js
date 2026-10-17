@@ -230,7 +230,6 @@ for (const vp of VIEWPORTS) {
     // Section sits inside a closed details; the summary is the visible control.
     await expect(page.locator('details.cmo-scenarios-details')).toHaveScreenshot('en-cmo-scenarios-' + vp.name + '.png');
     await expect(page.locator('#pro-contents')).toHaveScreenshot('en-pro-contents-' + vp.name + '.png');
-    await expect(page.locator('#executive-summary')).toHaveScreenshot('en-executive-summary-' + vp.name + '.png');
     await expect(page.locator('#faq')).toHaveScreenshot('en-faq-' + vp.name + '.png');
     await expect(page.locator('#prompt-basics')).toHaveScreenshot('en-prompt-basics-' + vp.name + '.png');
     await expect(page.locator('#ecosystem-strip')).toHaveScreenshot('en-ecosystem-' + vp.name + '.png');
