@@ -2,7 +2,7 @@
 
 **Paskirtis:** Vienas įėjimo taškas žmonėms ir AI agentams – ką skaityti pirmiausia pagal rolę ar užduotį. Kanoniniai kodas ir ribos: [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md) + `npm test`.
 
-**Paskutinis atnaujinimas:** 2026-10-15 (gyvas žurnalas = `## [Unreleased]`; DS kanonas **1.6.2**; repo-local skills nėra)
+**Paskutinis atnaujinimas:** 2026-10-17 (paskutinė versija **1.11.0**; nauji įrašai tik `## [Unreleased]`; DS kanonas **1.8.0** §0.4; repo-local skills nėra)
 
 ---
 
@@ -47,7 +47,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0–�
 | **Orchestrator** | [roadmap.md](../roadmap.md), [todo.md](../todo.md), [AGENTS.md](../AGENTS.md) §0.2, [DOCUMENTATION.md](DOCUMENTATION.md), [CHANGELOG.md](../CHANGELOG.md) | Prioritetai R1–R4, scope |
 | **Curriculum** | [`PEDAGOGINES_SPECIFIKACIJA.md`](PEDAGOGINES_SPECIFIKACIJA.md), [`OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md), registry `freeInteractive` | Free spine 1/2/3/5 vs Pro full 10; **EN** `data/en-*.json` |
 | **Content** | [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md), [`BULLET_PROOF_PROMPTS.md`](BULLET_PROOF_PROMPTS.md), [`PEDAGOGINES_SPECIFIKACIJA.md`](PEDAGOGINES_SPECIFIKACIJA.md), [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md) §4 | Spine bodies + teaser copy + JTBD FAQ/meta; [`data/en-*.json`](../data/); SOT `frontFaq`; root [`index.html`](../index.html) `applyStaticLocaleText` |
-| **UI/UX** | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.6.2**, [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md), [`CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md), [`BRAND_SYNC.md`](BRAND_SYNC.md) | Product Operator; tool-first CEO IA (hero → open brief → 2 kits → library 1/2/3/5); surfaces; `styles/*`; **0** meme slots |
+| **UI/UX** | [STYLEGUIDE.md](../STYLEGUIDE.md) **1.8.0** §0.4, [`LEGACY_GOLDEN_STANDARD.md`](LEGACY_GOLDEN_STANDARD.md), [`CREATIVE_BRIEF_BUILDER.md`](CREATIVE_BRIEF_BUILDER.md), [`BRAND_SYNC.md`](BRAND_SYNC.md) | Product Operator; tool-first CEO IA (hero → open brief → 2 kits → library 1/2/3/5); `.tail-panel`; one-line `#pro-contents`; **0** meme slots |
 | **Commerce** (v1.6.0+) | [todo.md](../todo.md) R1 → [GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md) → [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md); [`PRODUCT-POSITIONING.md`](PRODUCT-POSITIONING.md), [`OFFER-ARCHITECTURE.md`](OFFER-ARCHITECTURE.md), [`LEGACY_GOLDEN_STANDARD.md` §7](LEGACY_GOLDEN_STANDARD.md), [DEPLOYMENT.md §2.5](../DEPLOYMENT.md); [`memo_pdf.md`](../memo_pdf.md) = architecture reference | [`config/sot.json`](../config/sot.json), operator-local [`docs/pdf-source/`](pdf-source/README.md), [`api/`](../api/), [`success.html`](../success.html), [`terms.html`](../terms.html). Tik EN, tik `promptanatomy.space`. R4 Install po R1. |
 | **QA** | [docs/QA_STANDARTAS.md](QA_STANDARTAS.md), [docs/TESTAVIMAS.md](TESTAVIMAS.md), [DOCUMENTATION.md](DOCUMENTATION.md) | `npm test`, `tests/*.test.js`, [`tests/fulfillment-config.test.js`](../tests/fulfillment-config.test.js), [`tests/e2e/`](../tests/e2e/), [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) |
 
@@ -61,7 +61,7 @@ Pilna politika: [`MULTILINGUAL_STRUCTURE.md`](MULTILINGUAL_STRUCTURE.md) §0–�
 | Pakeisti CMO v2 konteksto / scenarijų / safety bloką | Redaguoti [`data/en-*.json`](../data/) + build; LT JSON – tik snapshot refresh scope. |
 | Pakeisti EN UI tekstus | [`scripts/build-locale-pages.js`](../scripts/build-locale-pages.js) `EN_REPLACEMENTS` + root `applyStaticLocaleText` EN šakos. |
 | Pakeisti EN FAQ / JTBD GEO copy | Sync **trys** vietos: `sot.frontFaq` + build inject/`EN_REPLACEMENTS` + `applyStaticLocaleText` FAQ arrays; meta → `brand-seo.json`. Žr. AGENTS §10.11–13. |
-| Pakeisti dizainą | STYLEGUIDE **1.6.2** + `design-tokens.json` / `styles/*`; po pakeitimų `npm test` (design-system + a11y smoke). |
+| Pakeisti dizainą | STYLEGUIDE **1.8.0** §0.4 + `design-tokens.json` / `styles/*`; po pakeitimų `npm test` (design-system + a11y smoke). |
 | Pakeisti struktūrą (nauja sekcija, JS API) | QA + sąmoningas **Legacy** atnaujinimas; išplėsti `tests/structure.test.js` jei reikia kontrakto. |
 
 ---
@@ -142,7 +142,7 @@ index.html (legacy struktūrinis šaltinis) + data/en-*.json (kanonas) + data/lt
 | [.cursorrules](../.cursorrules) | Cursor: kokybė, a11y, docs, commit |
 | [CHANGELOG.md](../CHANGELOG.md) | SemVer istorija. Gyvas skyrius tik `## [Unreleased]`. `## [Archyvas — juodraštis iki 1.5.0]` nebegalioja |
 | [DEPLOYMENT.md](../DEPLOYMENT.md) | Primary (Vercel) + mirror (GitHub Pages), BASE_PATH |
-| [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema **1.6.2** (Product Operator) |
+| [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema **1.8.0** (Product Operator; gyvas paveikslas §0.4) |
 
 **Pastaba:** Kontaktų forma / Google Apps Script / atsiliepimų schema **NEBĖRA** (pašalinta 2026-05-15). Produktas duomenų nerinkia – tik kopijavimas + localStorage progresas.
 

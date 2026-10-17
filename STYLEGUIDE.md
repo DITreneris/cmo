@@ -1,7 +1,7 @@
 # DI Promptų Biblioteka – stiliaus gidas (Spin-off Nr. 2)
 
-**Versija:** 1.6.2  
-**Data:** 2026-10-15  
+**Versija:** 1.8.0  
+**Data:** 2026-10-17  
 **Kalba:** LT  
 **Kryptis:** Product Operator (warm paper atmosphere; Fraunces **only** hero H1; Source Sans 3 product UI; JetBrains Mono prompts)
 
@@ -9,14 +9,14 @@ Spin-off Nr. 2 (Rinkodaros vadovo turinio DI sistema) naudoja **Prompt Anatomy**
 
 ---
 
-## 0. DS 1.6.2 – Product Operator (atmosphere)
+## 0. DS 1.8.0 – Product Operator (composition)
 
 ### 0.1 Principai
 
 - **Viena gramatika:** warm paper shell + serif tik hero H1 + navy product diagram (ne ebook cover, ne cool slate).
 - Tipografija: Fraunces = marketing H1; visa produkto UI = Source Sans 3. Inter nenaudojamas.
 - Trys paviršiai: `page` | `panel` | `accent` – ne kiekviena sekcija = kortelė; open lieka open.
-- Hero = full-bleed warm paper; pirmas viewport = brand + H1 + viena eilutė + tool-first CTA + **sample output image** (Satori still + prompt caption — not pipeline modules, not prompt-only).
+- Hero = full-bleed warm paper. Nuo 900px scena neužpildo viewport: brand + H1 + viena eilutė + tool-first CTA + **sample output image**, tada 72px to paties popieriaus (Satori still + prompt caption — not pipeline modules, not prompt-only).
 - Gold ≈ **5%**: primary CTA fill, selected/focus ring, surface/border accents – **never** body text or link `color` (use ink `--color-text-primary`; gold fails WCAG AA as text on light).
 - Elevations: **0** (border only) + **1** (subtle). `.hero-diagram` uses the same family, only slightly deeper. Primary CTA shadow is none.
 - Radii: **8 / 12 / 16** only; pill tik status labels.
@@ -37,7 +37,7 @@ Skalė: caption 12 → small 14 → body 17 → bodyLg 18 → title 1.35rem → 
 
 | Klasė / map | Naudojimas |
 |-------------|------------|
-| `surface-page` / open | how-it-works (`#executive-summary`), instructions (if kept slim), FAQ, ecosystem, footer, community |
+| `surface-page` / open | FAQ yra vienas 4 klausimų sąrašas ant puslapio popieriaus. EN `.tail-panel` yra kortelė ir skaito iš viršaus: Telegramo antraštė, vienas sakinys, kontūro mygtukas, viena metodikos nuoroda, tylesnis Leader, apačioje „What a prompt is“. Poraštė lieka už tos kortelės, ant to paties popieriaus. |
 | `surface-panel` | `.prompt`, progress, storefront, system-map |
 | `surface-accent` | `#cmo-context`, `#creative-brief`, `#cmo-safety`, `#cmo-scenarios` (gold left edge **sparingly**) |
 
@@ -45,12 +45,12 @@ Skalė: caption 12 → small 14 → body 17 → bodyLg 18 → title 1.35rem → 
 
 **Glossary:** Prompt Anatomy = brand; Content AI System = product; **workflow** = free library unit (display 1–4 = IDs 1/2/3/5); **prompt** = copyable body; **brief** = **primary** free tool; **Pro kit** = full 10 offline.
 
-1. Hero: header lockup (36/40px navy tile, gold bolt, split wordmark at weight 900 — EN Prompt / Anatomy, LT source Promptų / Anatomija; [BRAND_SYNC.md](docs/BRAND_SYNC.md)) + page-level sticky `#siteNav` (Workflows · Brief builder · Pricing; sibling of `.header`, not hero-clipped); **no lang switcher**; H1 once; `#heroProof` *Free below — no account.*; trust IDs `#heroTrustPill1/2/3` as one muted inline row (no pill chrome); primary `#heroCtaSpine` **Build my prompt** → `#creative-brief`; `#heroCtaBrief` **See pricing** text link → `#pdf-storefront`; `.hero-diagram` = **sample image** (`.hero-sample-image`) + prompt caption *From brief → image prompt* — no pipeline modules / outputs row  
-2. **Use now:** EN `#creative-brief` (`#cb-builder` **open**)  
+1. Hero, from `900px`: the scene does not stretch to the viewport. It holds the lockup, H1, `#heroLead`, the CTA pair, *No account.*, and the sample, then ends 72px later on the same paper, with no divider. Header lockup (36/40px navy tile, gold bolt, split wordmark at weight 900 — EN Prompt / Anatomy, LT source Promptų / Anatomija; [BRAND_SYNC.md](docs/BRAND_SYNC.md)) + page-level sticky `#siteNav` (Workflows · Brief builder · Pricing; sibling of `.header`, not hero-clipped); **no lang switcher**; H1 once, *Content AI System*; `#heroLead` is *Fill the fields. Copy the prompt. Paste it into your image tool.*; trust IDs `#heroTrustPill1/2/3` stay in the DOM and are hidden; `#heroCtaSpine` **Build my prompt**; `#heroCtaBrief` **See pricing** text link → `#pdf-storefront`; `#heroProof` is *No account.* under that pair; `.hero-diagram` is the builder prompt in paper color above the sample (gold left edge on the label, image at most 58% of the card, *From brief → image prompt*). From `900px` the brief card and `#pdf-storefront` share that shell. Storefront is two equal cards (cover on top, quiet Use/Install line). Starter keeps struck `was`. Complete uses `pdf-card-compare` (`separately $12.98`). `#pro-contents` is one quiet line of six names; the jobs stay in the DOM and are visually hidden; ids `#block4` and `#block6`–`#block10` stay. There is no gold button back to pricing. The close is one `.tail-panel`. The footer sits outside it.  
+2. **Use now:** EN `#creative-brief` (`#cb-builder` **open**). From `900px` an open builder is one viewport (`.cb-stage`).  
 3. `#pdf-storefront` — 2 cards (Starter + Complete); Pro = text link  
-4. Progress of 4 + jump (Plan·Create·Check·Improve · Pricing · Brief · FAQ; **not** sticky)  
+4. Progress of 4 + jump (Plan · Create · Check · Improve only; **not** sticky). Pricing, Brief, and FAQ are not in that row.  
 5. Library: prompts 1, 2, 3, 5 (display 1–4) + closed `#cmo-context` → `#cmo-safety` → `#cmo-scenarios` → `#pro-contents`  
-6. Usage strip + copy tips (demoted) → FAQ → `#prompt-basics` → rest  
+6. FAQ is one list of four (course, refund, license, privacy). `#prompt-basics` is the last row inside `.tail-panel`. EN has no `#executive-summary` and no `#copy-tips`.  
 
 Tool-first: primary `#heroCtaSpine` → `#creative-brief`. Do not put Prompt 1 before the builder. No top status pills.
 
@@ -99,8 +99,8 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 - **CTA:** `--cta-bg` solid `#CFA73A`; hover solid `#E8B93C`; ink text; `--shadow-cta` none.
 - **CTA kontraktas:** primary `#heroCtaSpine` → `#creative-brief` (EN: **Build my prompt**); secondary `#heroCtaBrief` **See pricing** → `#pdf-storefront`, text link (no fill). From 481px the two sit in one row, vertically centered; below that they stack. LT primary lieka `#block1`.
 - **Nav:** Workflows · Brief builder · Pricing share one resting style. Pricing has no gold chip.
-- **Vizualas:** `.hero-diagram` – navy card max **460px** (`28.75rem`) with a square `.hero-sample-image` (Satori still) + `<pre class="hero-brief-sample">` caption at 14px / line-height 1.5, card padding 20px. Label uses `--color-hero-diagram-muted` `#A8B5C7`. **Not** pipeline modules; **not** PDF cover; no H1 restatement inside the card. `/lt/` keeps the 30-day table.
-- Eyebrow ≠ subhead (no duplicate message). Trust IDs stay (`#heroTrustPill1/2/3`) as muted inline text. Pro/offline lives in FAQ/storefront, not hero. Lang switcher is utility (no gold active state).
+- **Vizualas:** `.hero-diagram` – navy card. From 900px the card fills the hero column; below that the diagram cap stays **460px** (`28.75rem`). Inside the card the order is the label (2px gold left edge, text still `--color-hero-diagram-muted` `#A8B5C7`), `<pre class="hero-brief-sample">` in `--color-surface-page` (14px / line-height 1.5), then a square `.hero-sample-image` at most **58%** of the card width, then `.hero-diagram__example`. Card padding 20px. **Not** pipeline modules; **not** PDF cover; no H1 restatement inside the card. `/lt/` keeps the 30-day table.
+- Eyebrow ≠ subhead (no duplicate message). Trust IDs stay (`#heroTrustPill1/2/3`) and are hidden on EN so they do not restate the lead. Pro/offline lives in FAQ/storefront, not hero. Lang switcher is utility (no gold active state).
 
 ---
 
@@ -224,7 +224,9 @@ Legacy alias – **ne naudoti oranžinės `#c75515`**.
 - **1.6** – Product Operator: serif=hero H1; hero workflow diagram; gold/shadow/radius restraint; dual CSS kill; compact how-it-works  
 - **1.6.1** – Atmosphere: warm paper (`#F6F1E8`); EN hero = Satori sample image + prompt caption; builder output pane = navy studio; Complete card visual weight  
 - **1.6.2** – Flatter paper radial; solid gold CTA; diagram shadow in the elevation-1 family; sample card 460px; caption 14/1.5; secondary link beside the primary on desktop; nav links share one resting style. Header lockup (navy tile, split wordmark, weight 900) shipped in the same line without a DS bump.
+- **1.7.0** – First EN composition stamp. Later bullets in that working tree still described a viewport-filling hero and a `#pro-contents` grid.
+- **1.8.0** – Corrected EN composition, shipped with SemVer 1.11.0: from 900px the hero ends 72px later on the page paper; the open brief is one viewport; two equal storefront cards; `#pro-contents` is one line of six names; the close is `.tail-panel`; the footer sits outside it. Copy tips are gone.
 
 ---
 
-*Atnaujinta 2026-10-15 – DS 1.6.2 Product Operator (atmosphere + header lockup).*
+*Atnaujinta 2026-10-17 – DS 1.8.0 Product Operator (EN composition).*

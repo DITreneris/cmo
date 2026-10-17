@@ -42,7 +42,7 @@ test.describe('static site smoke', () => {
     await expect(card.locator('.number')).toHaveText('4');
     await expect(page.locator('#prompt5')).toContainText(/performance analyst/i);
     await expect(page.locator('#prompt5')).not.toContainText(/30-second script/i);
-    await expect(page.locator('#prompt1Recommended')).toHaveText(/Workflow 1 of 4/i);
+    await expect(page.locator('#prompt1Recommended')).toHaveText(/Prompt 1 of 4/i);
   });
 
   test('en/ footer has no workbook chrome and keeps entity + community', async ({ page }) => {

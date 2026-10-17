@@ -18,18 +18,20 @@
 | **Brief** | **Primary** free tool `#creative-brief` (open `#cb-builder`; hero CTA) |
 | **Pro kit** | Full **10** offline |
 
-**Hero trust chips:** Free to start · No sign-up · Reusable workflows (price lives on `#pdf-storefront`, not the hero).  
+**Hero trust:** `#heroTrustPill1/2/3` stay in the DOM and are hidden on EN. `#heroProof` is *No account.* Price stays on `#pdf-storefront` via *See pricing*.  
 **Number story (FAQ/storefront):** Free: 4 workflows + brief. Pro: full 10 offline.  
 **Method (one process):** Plan → Create → Check → Improve.  
-**Usage (one sentence):** Copy → paste into ChatGPT or Claude.
+**Usage (one sentence):** lives on `#prompt1PathHint` (*Copy Prompt 1 → paste into ChatGPT or Claude*). EN has no separate usage strip.
 
 | Layer | Surface | Format | Promise |
 |-------|---------|--------|---------|
 | Free | EN library (`/en/`) | Interactive spine + Pro contents catalog, progress of 4 workflows | 4 free workflows (prompts 1,2,3,5) + safety + brief; 4/6–10 in `#pro-contents` (not fake prompt cards); no sign-up |
 | Free | `#creative-brief` (EN) | Browser-only creative brief builder | Assemble an image-ready prompt; copy / open image tools; ships on mirror too |
-| Starter (Use) | `#pdf-storefront` card | 14-page PDF | Solo 30-day plan, offline, printable |
+| Starter (Use) | `#pdf-storefront` card | 14-page PDF | Marketing lead, 30-day plan, offline, printable |
 | Pro (Build) | text link under cards (`#pdf-card-pro`) | 30-page PDF + Markdown | Full prompt bodies — **not** a third grid card |
 | Bundle (Install / Complete) | `#pdf-storefront` card (Best value) | 2 PDFs, one checkout | Team system; `$10.99` vs separately `$12.98` |
+
+Use / Build / Install stay in SOT. On the card the tier word is a quiet line under the subtitle, not a dark chip. `#pro-contents` is one quiet line of six names, not a worksheet and not a grid.
 
 The **open brief builder** sits **above** the two kits. Library 1/2/3/5 (display 1–4) + `#pro-contents` sit **below**. The paid layer never appears on the LT site or the GitHub Pages mirror (commerce is EN-only, primary host only). `#creative-brief` is free and **does** ship on the mirror. 2-card UI ≠ deleting the Pro SKU.
 

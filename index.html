@@ -78,7 +78,7 @@
             font-size: var(--font-size-body);
         }
 
-        /* ===== HEADER (geometry lives in components.css DS 1.6.2) ===== */
+        /* ===== HEADER (geometry lives in components.css DS 1.8.0) ===== */
         .header-badges {
             display: flex;
             flex-wrap: wrap;
@@ -1856,54 +1856,19 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                     ctaSpine.setAttribute('href', '#creative-brief');
                     setLabel(ctaSpine, 'Build my prompt – go to the brief builder');
                 }
-                setText('.header h1', 'Turn one brief into an image-ready prompt.');
-                setText('#heroLead', 'Fill the fields. Copy a structured prompt. Run it in your image tool.');
-                setText('#heroProof', 'Free below — no account.');
+                setText('.header h1', 'Content AI System');
+                setText('#heroLead', 'Fill the fields. Copy the prompt. Paste it into your image tool.');
+                setText('#heroProof', 'No account.');
                 var heroCaption = q('.hero-diagram__caption');
                 if (heroCaption) heroCaption.textContent = 'Sample output of the brief builder — an image-ready prompt.';
-                setText('#heroTrustPill1', 'Free to start');
-                setText('#heroTrustPill2', 'No sign-up');
-                setText('#heroTrustPill3', 'Reusable workflows');
 
-                setText('#executive-summary-title', 'How to use');
-                setText('#howItWorksLead', 'Copy → paste into ChatGPT or Claude.');
-                setText('#prompt-basics-summary', 'Prompt basics (1 min)');
+                setText('#prompt-basics-summary', 'What a prompt is');
                 var progJump = el('progressJump');
                 if (progJump) progJump.setAttribute('aria-label', 'Quick jump between prompts');
-                setText('#progressJumpPro', 'Pricing');
-                var pricingJump = el('progressJumpPro');
-                if (pricingJump) pricingJump.setAttribute('href', '#pdf-storefront');
-                setText('#progressJumpCreative', 'Brief');
-                setText('#progressJumpFaq', 'FAQ');
                 setText('#stickyPromptBarCopyText', 'Copy');
                 setLabel('#stickyPromptBarCopy', 'Copy current prompt');
                 setText('#stickyPromptBarNext', 'Next →');
-                var instrTitle = el('instructions-title');
-                if (instrTitle) {
-                    var spanNote = instrTitle.querySelector('.prompt-time');
-                    if (spanNote) {
-                        setLabel(spanNote, 'Estimated time: 3–5 min per step');
-                        spanNote.textContent = '~3–5 min';
-                    }
-                    // summary text node before .prompt-time
-                    var firstText = null;
-                    for (var ti = 0; ti < instrTitle.childNodes.length; ti++) {
-                        if (instrTitle.childNodes[ti].nodeType === 3 && instrTitle.childNodes[ti].textContent.trim()) {
-                            firstText = instrTitle.childNodes[ti];
-                            break;
-                        }
-                    }
-                    if (firstText) firstText.textContent = 'Copy tips ';
-                    else if (!spanNote) instrTitle.textContent = 'Copy tips';
-                }
                 setText('#prompt1PathHint', 'Copy Prompt 1 → paste into ChatGPT or Claude.');
-                var instrOl = qa('.instructions ol li');
-                if (instrOl.length >= 4) {
-                    instrOl[0].textContent = 'Select a prompt and click it to auto-select the text';
-                    instrOl[1].innerHTML = 'Click <strong>"Copy prompt"</strong> or <code>Ctrl+C</code> / <code>Cmd+C</code>';
-                    instrOl[2].textContent = 'Paste into ChatGPT, Claude or another AI tool';
-                    instrOl[3].textContent = 'Replace [audience], [pain point], [unique selling proposition], [channel], and any city or budget placeholders with your real data';
-                }
 
                 setText('#what-is-prompt-title', 'What is a prompt?');
                 var promptExpl = qa('#what-is-prompt p');
@@ -1928,23 +1893,22 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 ];
                 anatomyLi.forEach(function(item, i) { if (anatomyTexts[i]) item.textContent = anatomyTexts[i]; });
                 var progressText = el('progressText');
-                if (progressText) progressText.textContent = 'You used 0 of 4 workflows';
+                if (progressText) progressText.textContent = '';
                 var progressBar = q('.progress-bar[role="progressbar"]');
-                if (progressBar) progressBar.setAttribute('aria-label', 'Progress: 0 of 4 workflows');
+                if (progressBar) progressBar.setAttribute('aria-label', 'Progress: 0 of 4 prompts');
 
                 var prompts = qa('article.prompt');
                 // EN <pre> bodies: single source data/en-prompt-bodies.json → js/en-prompt-bodies-inline.js (npm run build)
                 // Key by internal pre.id (1/2/3/5), never display .number (1–4).
                 var enPromptPre = (typeof window.__EN_PROMPT_PRE !== 'undefined' && window.__EN_PROMPT_PRE) ? window.__EN_PROMPT_PRE : [];
                 var promptDataById = {
-                    1: { category: 'Plan', title: '30-day content system', desc: 'Create a 30-day content plan using 4 content principles', infoStrong: 'Core:', infoP: '4 principles = balance: authority, problem, proof, offer.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 1', infoAria: 'Information: prompt 1', btnAria: 'Copy prompt 1 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
+                    1: { category: 'Plan', title: '30-day content system', desc: 'Create a 30-day content plan using 4 content principles', infoStrong: 'Core:', infoP: '4 principles = balance: authority, problem, proof, offer.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy Prompt 1', codeAria: 'Select and copy prompt 1', infoAria: 'Information: prompt 1', btnAria: 'Copy prompt 1 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
                     2: { category: 'Create', title: 'One idea → 7 formats', desc: 'From one idea — 7 channel units in ~5–10 min', infoStrong: 'One idea, many formats:', infoP: '1 idea = 7 units. Time saved, consistency kept.', cta: 'Paste into ChatGPT or Claude and replace placeholders with your data.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 2', infoAria: 'Information: prompt 2', btnAria: 'Copy prompt 2 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
                     3: { category: 'Check', title: 'LinkedIn authority building', desc: 'Authority LinkedIn post with proof in ~3–5 min', infoStrong: 'Authority:', infoP: 'Proof + concrete points = trust and engagement.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 3', infoAria: 'Information: prompt 3', btnAria: 'Copy prompt 3 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' },
                     5: { category: 'Improve', title: 'Daily analysis (Action→Decision)', desc: 'From metrics — 4 actions for tomorrow in ~3–5 min', infoStrong: 'Closed loop:', infoP: 'Metrics without action = standing still. Data → decisions.', cta: 'Copy this prompt into ChatGPT or Claude, fill in the brackets, and run it.', copyBtn: 'Copy prompt', codeAria: 'Select and copy prompt 5', infoAria: 'Information: prompt 5', btnAria: 'Copy prompt 5 to clipboard', doneAria: 'Mark as done', doneLabel: 'Mark as done' }
                 };
                 setText('#pro-contents-title', 'Also in the Pro kit');
                 setText('#pro-contents-lead', 'Full prompt bodies offline in Pro.');
-                setText('#pro-contents-cta', 'See the Complete kit');
                 var proCatalogEn = {
                     4: { job: 'Video', outcome: '30s video with hook and CTA' },
                     6: { job: 'Objections', outcome: '10 assets for objections' },
@@ -1987,56 +1951,24 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 });
 
                 setText('#faq-title', 'Frequently asked questions');
-                var faqMoreSummary = q('.faq-more-details summary');
-                if (faqMoreSummary) faqMoreSummary.textContent = 'More questions';
                 var faqSummaries = qa('#faq .faq-items--primary .faq-item summary');
                 var faqAnswers = qa('#faq .faq-items--primary .faq-item p');
                 var faqSummaryTexts = [
-                    'How do we keep AI content on brand across a team?',
-                    'Do I need all 10 prompts?',
-                    'Why is this better than random prompts?'
+                    'Is this a course or a tool?',
+                    'Can I get a refund?',
+                    'What does the team license cover?',
+                    'Will my data be sold or shared?'
                 ];
                 var faqAnswerTexts = [
-                    'Fill one context block — audience, offer, channels, goal, and constraint — plus the non-negotiable rules. Those ride with every Copy. Share that filled block with your team. The browser copy is session-only; the kits hold the reuse method.',
-                    'No. Free: 4 workflows (prompts 1, 2, 3, 5) plus the creative brief builder. The Pro kit lists the rest — full META/INPUT/OUTPUT bodies offline (full 10).',
-                    'You get a Plan → Create → Check → Improve sequence with clear fields and a review, so the next run is not a fresh generic chat.'
+                    'This page is the Content AI System. You fill a brief, copy a prompt, and paste it into your own AI tool. It is not the course on promptanatomy.app. The paid kits are PDFs you download, not another login.',
+                    'Yes. 14-day no-questions refund. Reply to your Stripe receipt or email info@promptanatomy.app. We approve through Stripe and revoke the download link.',
+                    'One in-house marketing team at one company. CMO + 1–4 directs, or one CMO equivalent. Print and share within that team. No agency, multi-brand, or training-resale rights without a separate license.',
+                    'No. Stripe processes payment and Resend delivers the email — we store no marketing list and do not add you to one. Post-purchase tips are transactional only. See our privacy page.'
                 ];
                 faqSummaries.forEach(function(item, i) { if (faqSummaryTexts[i]) item.textContent = faqSummaryTexts[i]; });
                 faqAnswers.forEach(function(item, i) { if (faqAnswerTexts[i]) item.textContent = faqAnswerTexts[i]; });
-                var faqMoreSummaries = qa('.faq-more-details .faq-item summary');
-                var faqMoreAnswers = qa('.faq-more-details .faq-item p');
-                var faqMoreSummaryTexts = [
-                    'What should go in the context block?',
-                    'What is the creative brief builder?',
-                    'Is this a course or a tool?',
-                    'Why use this instead of more AI tools?',
-                    'How do we review AI content before we publish?',
-                    'Who is this for?',
-                    'How is this different from a prompt library?',
-                    'Does this work for B2B SaaS, services, and ecommerce?'
-                ];
-                var faqMoreAnswerTexts = [
-                    'Audience, offer, channels, this month\'s goal, and one constraint, plus three rules: no generic advice, no invented numbers or testimonials, and a usable next action. Set them in the marketing context block.',
-                    'A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT or Ideogram. No account. It locks subject, style, light, and space for type. It does not keep a person, logo, or package identical across a campaign. Use ChatGPT for a fast draft and Ideogram when the ad needs readable text. It demonstrates the same tool-building idea Pro teaches for teams.',
-                    'A copy-paste Content AI System you can use immediately — not a long course. Free spine + brief in the browser; depth offline in the kits.',
-                    'It is a portable prompt system you run on ChatGPT or Claude — not another SaaS seat. Structured workflows replace random chats and reduce tool sprawl.',
-                    'Run the pre-publish safety reviewer to check facts, tone, legal/trust risk, and who owns the CTA.',
-                    'CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence.',
-                    'A library stores prompts. This adds shared context, four workflows, and a review before you ship.',
-                    'Yes. Swap the audience, offer, channels, and metrics — the structure stays the same. That is how you adapt a market. This is not a translation product.'
-                ];
-                var faqContextHtml = 'Audience, offer, channels, this month\'s goal, and one constraint, plus three rules: no generic advice, no invented numbers or testimonials, and a usable next action. Set them in the <a href="#cmo-context">marketing context block</a>.';
-                var faqReviewHtml = 'Run the <a href="#cmo-safety">pre-publish safety reviewer</a> to check facts, tone, legal/trust risk, and who owns the CTA.';
-                faqMoreSummaries.forEach(function(item, i) { if (faqMoreSummaryTexts[i]) item.textContent = faqMoreSummaryTexts[i]; });
-                faqMoreAnswers.forEach(function(item, i) {
-                    if (!faqMoreAnswerTexts[i]) return;
-                    if (faqMoreSummaryTexts[i] === 'What should go in the context block?') {
-                        item.innerHTML = faqContextHtml;
-                    } else if (faqMoreSummaryTexts[i] === 'How do we review AI content before we publish?') {
-                        item.innerHTML = faqReviewHtml;
-                    } else {
-                        item.textContent = faqMoreAnswerTexts[i];
-                    }
+                qa('.faq-more-details .faq-item').forEach(function(node) {
+                    if (node.parentNode) node.parentNode.removeChild(node);
                 });
                 var faqEco = q('.faq-eco-hint');
                 if (faqEco) {
@@ -2044,18 +1976,18 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 }
 
                 var commTitle = el('community-title');
-                if (commTitle) commTitle.textContent = 'Join the community.';
+                if (commTitle) commTitle.textContent = 'Join the Telegram group.';
                 var commP = q('.community p');
-                if (commP) commP.textContent = 'Examples and prompt updates. US-market notes welcome.';
+                if (commP) commP.textContent = 'Prompt examples and updates.';
                 var commPrimary = q('.community-cta-primary');
                 if (commPrimary) { commPrimary.textContent = 'Join Telegram group'; setLabel(commPrimary, 'Open Prompt Anatomy Telegram group in new tab'); }
 
-                setText('#ecosystem-strip-title', 'Prompt Anatomy ecosystem');
+                setText('#ecosystem-strip-title', 'The method');
                 var ecoIntro = q('.ecosystem-strip-intro');
-                if (ecoIntro) ecoIntro.textContent = 'Methodology and community. Checkout stays on this page.';
+                if (ecoIntro) ecoIntro.textContent = 'Read the method on promptanatomy.app.';
                 var ecoLis = qa('.ecosystem-strip-list li');
                 var ecoTexts = [
-                    '<a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Official methodology (promptanatomy.app)</a>'
+                    '<a href="https://promptanatomy.app/" target="_blank" rel="noopener noreferrer">Read the method on promptanatomy.app</a>'
                 ];
                 ecoLis.forEach(function(li, i) {
                     if (ecoTexts[i]) li.innerHTML = ecoTexts[i];
@@ -2063,7 +1995,7 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 });
                 var ecoRelated = q('.ecosystem-strip-related');
                 if (ecoRelated) {
-                    ecoRelated.innerHTML = 'Related: <a href="https://ditreneris.github.io/leader/en/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a> (CEO/COO kit)';
+                    ecoRelated.innerHTML = 'Related: <a href="https://promptanatomy.ceo/" target="_blank" rel="noopener noreferrer">Prompt Anatomy Leader</a>';
                 }
 
                 var removeEl = function(n) {
@@ -2079,7 +2011,7 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 qa('.cmo-footer-crosslink').forEach(removeEl);
                 var footLink = el('footer-product-link') || q('.footer-product-link');
                 if (footLink) {
-                    footLink.innerHTML = 'Part of Prompt Anatomy. This page is the Content AI System: META, INPUT, OUTPUT, then Plan → Create → Check → Improve. The course on <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a> is a separate product.';
+                    footLink.innerHTML = 'Part of Prompt Anatomy. This page is the Content AI System. The course on <a href="https://www.promptanatomy.app/?utm_source=space&amp;utm_medium=entity_footer&amp;utm_campaign=ecosystem" target="_blank" rel="noopener noreferrer">promptanatomy.app</a> is a separate product.';
                 }
                 var emailLabel = el('footer-email-label');
                 if (emailLabel) emailLabel.textContent = 'Email:';
@@ -2422,12 +2354,16 @@ OUTPUT: 4 punktai – (1) Kas neveikia, (2) Priežastis (hipotezė), (3) Ką tes
                 var textEl = document.getElementById('progressText');
                 var fillEl = document.getElementById('progressBarFill');
                 var barEl = document.querySelector('.progress-bar[role="progressbar"]');
-                if (textEl) textEl.textContent = count === SPINE_PROMPT_TOTAL ? uiText('Puiku – panaudojai visus 4 workflow.', 'Great – you used all 4 workflows.') : uiText('Panaudojai ' + count + ' iš 4 workflow.', 'You used ' + count + ' of 4 workflows.');
+                if (textEl) {
+                    textEl.textContent = locale === 'lt'
+                        ? (count === SPINE_PROMPT_TOTAL ? 'Puiku – panaudojai visus 4 workflow.' : 'Panaudojai ' + count + ' iš 4 workflow.')
+                        : '';
+                }
                 if (fillEl) fillEl.style.width = (count / SPINE_PROMPT_TOTAL * 100) + '%';
                 if (barEl) {
                     barEl.setAttribute('aria-valuenow', count);
                     barEl.setAttribute('aria-valuemax', String(SPINE_PROMPT_TOTAL));
-                    barEl.setAttribute('aria-label', uiText('Progresas: ' + count + ' iš 4 workflow', 'Progress: ' + count + ' of 4 workflows'));
+                    barEl.setAttribute('aria-label', uiText('Progresas: ' + count + ' iš 4 workflow', 'Progress: ' + count + ' of 4 prompts'));
                 }
             }
 

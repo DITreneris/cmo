@@ -277,7 +277,7 @@ function buildJsonLdGraph(sot, siteOrigin, brandSeo) {
     social.x
   ].filter(Boolean);
 
-  const faqEntities = (sot.frontFaq || []).concat(sot.buyerFaq || []).map(function (item) {
+  const faqEntities = (sot.frontFaq || []).map(function (item) {
     return {
       '@type': 'Question',
       name: item.q,

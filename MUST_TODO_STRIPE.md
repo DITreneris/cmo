@@ -89,7 +89,7 @@ Privalomi (žr. [.env.example](.env.example)):
 - [x] `FULFILLMENT_FROM_EMAIL` (verified Resend sender, pvz. `info@promptanatomy.app`)
 - [x] `UPSTASH_REDIS_REST_URL`
 - [x] `UPSTASH_REDIS_REST_TOKEN`
-- [ ] `SITE_URL=https://www.promptanatomy.space` — kode fallback lieka apex, kol Production env neperrašytas. Webhook ir success URL jau www. Po pakeitimo perdeployinti, kad laiško nuorodos nešoktų per apex 307.
+- [x] `SITE_URL=https://www.promptanatomy.space` — 2026-10-15 Production, tik `production` target. Vercel API slapto kintamojo reikšmės negrąžina; `updatedAt` ankstesnis už production deploy `dpl_FonHjicfRcAcCsGeYSzpGPkdJzxr`, tad naujas deploy dėl šio rakto nebereikalingas. Kode fallback, kai `SITE_URL` nėra, lieka apex.
 - [x] `PDF_CMO_STARTER_SOURCE_URL`
 - [x] `PDF_CMO_PRO_SOURCE_URL`
 - [x] `BLOB_READ_WRITE_TOKEN`

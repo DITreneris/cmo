@@ -105,7 +105,7 @@ function run() {
   const ctaBg = tokensCss.match(/--cta-bg:\s*([^;]+);/);
   assert(
     ctaBg && !/linear-gradient/i.test(ctaBg[1]) && /#cfa73a/i.test(ctaBg[1]),
-    'DS 1.6.2: --cta-bg must be solid #CFA73A'
+    'DS 1.8.0: --cta-bg must be solid #CFA73A'
   );
   assertCustomProp(
     tokensCss,
@@ -131,10 +131,15 @@ function run() {
     tokenJson.shadow && tokenJson.shadow.ctaHover,
     'tokens.css --shadow-cta-hover must match design-tokens.json shadow.ctaHover'
   );
-  assert(!componentsCss.includes('#navPricing'), 'DS 1.6.2: components.css must not style #navPricing');
+  assert(!componentsCss.includes('#navPricing'), 'DS 1.8.0: components.css must not style #navPricing');
   assert(
     /@media \(min-width: 481px\) \{\s*\.header-cta \{\s*flex-direction: row;/.test(componentsCss),
-    'DS 1.6.2: desktop .header-cta is a row'
+    'DS 1.8.0: desktop .header-cta is a row'
+  );
+  assert(
+    /html\[lang="en"\] \.header-cta \{\s*order:\s*1;/.test(componentsCss) &&
+      /html\[lang="en"\] \.header > \.header-grid \.header-copy > \.header-proof \{\s*order:\s*2;/.test(componentsCss),
+    'EN hero proof sits after the CTA pair'
   );
 
   assert(!/\.prompt\s*\{[^}]*border:\s*3px/s.test(componentsCss), 'components.css .prompt must not use border: 3px');
@@ -249,6 +254,55 @@ function run() {
   assert(
     /\.lang-switcher\s*\{/.test(componentsCss),
     'components.css must keep .lang-switcher (LT freeze widget)'
+  );
+  assert(
+    !componentsCss.includes('.cb-pro-teaser') && !componentsCss.includes('.cb-tips'),
+    'components.css must not keep the brief kit link or Expert tips'
+  );
+  assert(
+    !enHtml.includes('id="cbTips"') && !enHtml.includes('class="cb-pro-teaser"'),
+    'en/index.html must not render Expert tips or the kit link under the brief'
+  );
+  assert(
+    /@media \(min-width:\s*900px\)[\s\S]*\.cb-stage:has\(#cb-builder\[open\]\)\s*\{[^}]*100dvh/.test(
+      componentsCss
+    ),
+    '.cb-stage open from 900px is a 100dvh scene'
+  );
+  assert(
+    /\.cb-field\.is-filled input[\s\S]*border-color:\s*var\(--color-text-primary\)/.test(componentsCss) &&
+      !/\.cb-field\.is-filled input[\s\S]{0,180}--color-brand-primary/.test(componentsCss),
+    '.cb-field.is-filled uses ink, not gold'
+  );
+  assert(
+    /\.cb-choice\[aria-pressed="true"\]\s*\{[^}]*border-color:\s*var\(--color-text-primary\)/.test(componentsCss) &&
+      !/\.cb-choice\[aria-pressed="true"\]\s*\{[^}]*--color-brand-primary/.test(componentsCss),
+    '.cb-choice selected state is ink, not gold'
+  );
+  assert(
+    /\.cb-steps \.cb-step\.is-complete:not\(\.is-active\)\s*\{[^}]*background:\s*var\(--color-surface-card\)/.test(
+      componentsCss
+    ) &&
+      /\.cb-steps \.cb-step\.is-complete:not\(\.is-active\)\s*\{[^}]*border:\s*1px solid var\(--color-border-default\)/.test(
+        componentsCss
+      ) &&
+      /\.cb-steps \.cb-step\.is-complete:not\(\.is-active\)\s*\{[^}]*color:\s*var\(--color-text-primary\)/.test(
+        componentsCss
+      ) &&
+      !/\.cb-steps \.cb-step\.is-complete:not\(\.is-active\)\s*\{[^}]*--color-brand-primary/.test(componentsCss),
+    '.cb-step.is-complete is a white button with a sand border, not gold'
+  );
+  assert(
+    /\.cb-output-sheet\s*\{[^}]*background:\s*var\(--color-hero-diagram-surface\)/.test(componentsCss),
+    '.cb-output-sheet carries the navy artifact surface'
+  );
+  assert(
+    !/\.pdf-card-tier\s*\{[^}]*background:\s*var\(--color-brand-dark\)/s.test(componentsCss),
+    '.pdf-card-tier must not use the dark chip background'
+  );
+  assert(
+    /html\[lang="en"\] \.footer\s*\{[^}]*text-align:\s*start/s.test(componentsCss),
+    'EN footer must be left-aligned in components.css'
   );
   const ltPrivacy = read(path.join(ROOT, 'lt', 'privatumas.html'));
   assert(

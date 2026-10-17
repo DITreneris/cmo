@@ -1,8 +1,9 @@
 'use strict';
 
 /**
- * DS 1.6.2 computed style on /en/.
+ * DS 1.8.0 computed style on /en/.
  * Desktop project is 1280×720. The stack check sets 480px itself.
+ * The sample fills the hero column; the old 460px cap is the mobile ceiling.
  */
 
 const { test, expect } = require('@playwright/test');
@@ -18,7 +19,7 @@ function css(locator, prop) {
   }, prop);
 }
 
-test.describe('DS 1.6.2 computed style', () => {
+test.describe('DS 1.8.0 computed style', () => {
   test('en/ desktop hero is a flat gold row', async ({ page }) => {
     await page.goto('/en/');
     const spine = page.locator('#heroCtaSpine');
@@ -31,7 +32,10 @@ test.describe('DS 1.6.2 computed style', () => {
     expect(await css(page.locator('#heroCtaBrief'), 'background-color')).toBe('rgba(0, 0, 0, 0)');
     expect(await css(page.locator('.header-cta'), 'flex-direction')).toBe('row');
     expect(await css(page.locator('#navPricing'), 'background-color')).toBe('rgba(0, 0, 0, 0)');
-    expect(await css(page.locator('.hero-diagram'), 'max-width')).toBe('460px');
+    const diagramWidth = await page.locator('.hero-diagram').evaluate(function (el) {
+      return el.getBoundingClientRect().width;
+    });
+    expect(diagramWidth).toBeGreaterThan(460);
     expect(await css(page.locator('#hero-diagram-label'), 'color')).toBe('rgb(168, 181, 199)');
   });
 

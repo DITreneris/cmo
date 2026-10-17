@@ -31,7 +31,7 @@
     "creativeBrief": {
       "title": "Creative brief builder",
       "lead": "Fill the brief → get an image-ready prompt. Browser-only. Copy, paste, run. No account.",
-      "presetsLabel": "Quick starts",
+      "presetsLabel": "Try an example",
       "sampleLabel": "Try an example",
       "stepsContext": "Context",
       "stepsVisual": "Visual",
@@ -42,23 +42,7 @@
       "copiedLabel": "Copied",
       "toolsTitle": "Open an image tool",
       "toolsDesc": "Opens in a new tab and copies your prompt.",
-      "emptyPlaceholder": "Try an example, or add a subject — your prompt builds here.",
-      "tipsTitle": "Expert tips",
-      "tips": [
-        {
-          "title": "Be specific about the subject",
-          "body": "Name the product, surface, and setting. Vague briefs produce generic stock looks."
-        },
-        {
-          "title": "Lock style and light",
-          "body": "Pick one style and one lighting cue so the model does not invent a new look each run."
-        },
-        {
-          "title": "Leave space for type",
-          "body": "If you add a headline or CTA, ask for clean negative space so text stays readable."
-        }
-      ],
-      "proTeaser": "Want the method to build more tools like this for your team? See Pro below."
+      "emptyPlaceholder": "Try an example, or add a subject — your prompt builds here."
     }
   },
   "creativeBrief": {
@@ -77,48 +61,20 @@
   },
   "frontFaq": [
     {
-      "q": "How do we keep AI content on brand across a team?",
-      "a": "Fill one context block — audience, offer, channels, goal, and constraint — plus the non-negotiable rules. Those ride with every Copy. Share that filled block with your team. The browser copy is session-only; the kits hold the reuse method."
-    },
-    {
-      "q": "Do I need all 10 prompts?",
-      "a": "No. Free: 4 workflows (prompts 1, 2, 3, 5) plus the creative brief builder. The Pro kit lists the rest — full META/INPUT/OUTPUT bodies offline (full 10)."
-    },
-    {
-      "q": "Why is this better than random prompts?",
-      "a": "You get a Plan → Create → Check → Improve sequence with clear fields and a review, so the next run is not a fresh generic chat."
-    },
-    {
-      "q": "What should go in the context block?",
-      "a": "Audience, offer, channels, this month's goal, and one constraint, plus three rules: no generic advice, no invented numbers or testimonials, and a usable next action. Set them in the marketing context block."
-    },
-    {
-      "q": "What is the creative brief builder?",
-      "a": "A free browser tool on this page: fill a short marketing brief and get an image-ready prompt to copy into ChatGPT or Ideogram. No account. It locks subject, style, light, and space for type. It does not keep a person, logo, or package identical across a campaign. Use ChatGPT for a fast draft and Ideogram when the ad needs readable text. It demonstrates the same tool-building idea Pro teaches for teams."
-    },
-    {
       "q": "Is this a course or a tool?",
-      "a": "A copy-paste Content AI System you can use immediately — not a long course. Free spine + brief in the browser; depth offline in the kits."
+      "a": "This page is the Content AI System. You fill a brief, copy a prompt, and paste it into your own AI tool. It is not the course on promptanatomy.app. The paid kits are PDFs you download, not another login."
     },
     {
-      "q": "Why use this instead of more AI tools?",
-      "a": "It is a portable prompt system you run on ChatGPT or Claude — not another SaaS seat. Structured workflows replace random chats and reduce tool sprawl."
+      "q": "Can I get a refund?",
+      "a": "Yes. 14-day no-questions refund. Reply to your Stripe receipt or email info@promptanatomy.app. We approve through Stripe and revoke the download link."
     },
     {
-      "q": "How do we review AI content before we publish?",
-      "a": "Run the pre-publish safety reviewer to check facts, tone, legal/trust risk, and who owns the CTA."
+      "q": "What does the team license cover?",
+      "a": "One in-house marketing team at one company. CMO + 1–4 directs, or one CMO equivalent. Print and share within that team. No agency, multi-brand, or training-resale rights without a separate license."
     },
     {
-      "q": "Who is this for?",
-      "a": "CMOs, marketing leads, product/growth teams, and leaders who need a fast, repeatable content cadence."
-    },
-    {
-      "q": "How is this different from a prompt library?",
-      "a": "A library stores prompts. This adds shared context, four workflows, and a review before you ship."
-    },
-    {
-      "q": "Does this work for B2B SaaS, services, and ecommerce?",
-      "a": "Yes. Swap the audience, offer, channels, and metrics — the structure stays the same. That is how you adapt a market. This is not a translation product."
+      "q": "Will my data be sold or shared?",
+      "a": "No. Stripe processes payment and Resend delivers the email — we store no marketing list and do not add you to one. Post-purchase tips are transactional only. See our privacy page."
     }
   ],
   "site": {
@@ -135,12 +91,9 @@
     "scope": "en-only",
     "allowPlaceholderCheckout": false,
     "placeholderHref": "/coming-soon.html",
-    "deliveryPromise": "Email delivery within 5 minutes. If your link does not arrive in 5 minutes, email info@promptanatomy.app and we will resend immediately.",
+    "deliveryPromise": "The PDF arrives by email within 5 minutes.",
     "storefrontHead": {
-      "eyebrow": "Start solo. Scale when you need it.",
-      "title": "Choose your Content AI System",
-      "lead": "One-time purchase. Same context and review for your team. Use it in ChatGPT or Claude.",
-      "outcomeLine": "Starter is the 30-day plan. Complete is Starter + Pro for $10.99 instead of $12.98 separately."
+      "title": "Content AI System"
     },
     "comparisonTable": {
       "columns": ["free", "starter", "pro"],
@@ -169,7 +122,7 @@
         "name": "CMO AI Content System · Starter",
         "tierTag": "Use",
         "tierPromise": "Use the system this week",
-        "subtitle": "For solo creators — get your next 30 days planned and start publishing",
+        "subtitle": "For a marketing lead — plan the next 30 days and publish.",
         "ctaLabel": "Get Starter · $3.99",
         "priceUsd": 3.99,
         "priceCents": 399,
@@ -196,7 +149,7 @@
         "name": "CMO AI Content System · Pro",
         "tierTag": "Build",
         "tierPromise": "Build reusable team workflows",
-        "subtitle": "For operators who already have a plan and need the full Build kit",
+        "subtitle": "For a marketing lead who already has a plan and needs Pro on its own",
         "ctaLabel": "Get Pro · $8.99",
         "priceUsd": 8.99,
         "priceCents": 899,
@@ -253,24 +206,12 @@
       "a": "Pay through Stripe. Within 5 minutes you receive an email from info@promptanatomy.app with signed download link(s). Bundle buyers receive separate links for Starter and Pro. If email does not arrive, contact us and we will resend."
     },
     {
-      "q": "What does the team license cover?",
-      "a": "One in-house marketing team at one company. CMO + 1–4 directs, or one CMO equivalent. Print and share within that team. No agency, multi-brand, or training-resale rights without a separate license."
-    },
-    {
-      "q": "Can I get a refund?",
-      "a": "Yes. 14-day no-questions refund. Reply to your Stripe receipt or email info@promptanatomy.app. We approve through Stripe and revoke the download link."
-    },
-    {
       "q": "How is this different from the free library?",
       "a": "The free library lets you use the system in your browser, including the Creative brief builder for image-ready prompts. The kits add depth and team assets: offline and printable, with worked examples, full prompt bodies (Pro), scenario plays, a safety reviewer, a 90-minute workshop, and — in Pro — a method for building your own reusable workflows and tools. You buy the system depth and the team license, not just a PDF."
     },
     {
       "q": "Is the PDF a live app?",
       "a": "No. PDF is the delivery format for the content operating system — offline, printable, workshop-ready. There is no login or hosted dashboard."
-    },
-    {
-      "q": "Will my data be sold or shared?",
-      "a": "No. Stripe processes payment and Resend delivers the email — we store no marketing list and do not add you to one. Post-purchase tips are transactional only. See our privacy page."
     }
   ]
 }
