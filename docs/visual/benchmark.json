@@ -1,133 +1,133 @@
 {
-  "date": "2026-10-15",
+  "date": "2026-10-18",
   "browser": "chromium",
   "note": "One local sample per page and viewport. Load and LCP are recorded only. CLS above 0.25 fails.",
   "pages": [
     {
       "path": "/en/",
       "width": 320,
-      "loadMs": 3107,
-      "lcpMs": 3004,
-      "cls": 0.019,
+      "loadMs": 375,
+      "lcpMs": 292,
+      "cls": 0.018,
       "overflowPx": 0
     },
     {
       "path": "/en/",
       "width": 768,
-      "loadMs": 871,
-      "lcpMs": 736,
-      "cls": 0,
+      "loadMs": 603,
+      "lcpMs": 516,
+      "cls": 0.006,
       "overflowPx": 0
     },
     {
       "path": "/en/",
       "width": 1024,
-      "loadMs": 390,
-      "lcpMs": 300,
-      "cls": 0.013,
+      "loadMs": 388,
+      "lcpMs": 296,
+      "cls": 0.007,
       "overflowPx": 0
     },
     {
       "path": "/en/",
       "width": 1920,
-      "loadMs": 366,
-      "lcpMs": 340,
-      "cls": 0.002,
+      "loadMs": 377,
+      "lcpMs": 324,
+      "cls": 0.004,
       "overflowPx": 0
     },
     {
       "path": "/en/privacy/",
       "width": 320,
+      "loadMs": 66,
+      "lcpMs": 72,
+      "cls": 0,
+      "overflowPx": 0
+    },
+    {
+      "path": "/en/privacy/",
+      "width": 768,
       "loadMs": 21,
+      "lcpMs": 80,
+      "cls": 0,
+      "overflowPx": 0
+    },
+    {
+      "path": "/en/privacy/",
+      "width": 1024,
+      "loadMs": 18,
       "lcpMs": 64,
       "cls": 0,
       "overflowPx": 0
     },
     {
       "path": "/en/privacy/",
-      "width": 768,
-      "loadMs": 52,
-      "lcpMs": 68,
-      "cls": 0,
-      "overflowPx": 0
-    },
-    {
-      "path": "/en/privacy/",
-      "width": 1024,
-      "loadMs": 56,
-      "lcpMs": 68,
-      "cls": 0,
-      "overflowPx": 0
-    },
-    {
-      "path": "/en/privacy/",
       "width": 1920,
-      "loadMs": 27,
-      "lcpMs": 88,
+      "loadMs": 23,
+      "lcpMs": 92,
       "cls": 0,
       "overflowPx": 0
     },
     {
       "path": "/success.html",
       "width": 320,
-      "loadMs": 56,
-      "lcpMs": 60,
+      "loadMs": 48,
+      "lcpMs": 84,
       "cls": 0.037,
       "overflowPx": 0
     },
     {
       "path": "/success.html",
       "width": 768,
-      "loadMs": 47,
-      "lcpMs": 56,
-      "cls": 0.01,
-      "overflowPx": 0
-    },
-    {
-      "path": "/success.html",
-      "width": 1024,
-      "loadMs": 51,
+      "loadMs": 53,
       "lcpMs": 60,
       "cls": 0.01,
       "overflowPx": 0
     },
     {
       "path": "/success.html",
+      "width": 1024,
+      "loadMs": 34,
+      "lcpMs": 72,
+      "cls": 0.01,
+      "overflowPx": 0
+    },
+    {
+      "path": "/success.html",
       "width": 1920,
-      "loadMs": 35,
-      "lcpMs": 84,
+      "loadMs": 34,
+      "lcpMs": 80,
       "cls": 0.002,
       "overflowPx": 0
     },
     {
       "path": "/terms/",
       "width": 320,
-      "loadMs": 67,
-      "lcpMs": 72,
+      "loadMs": 73,
+      "lcpMs": 80,
       "cls": 0,
       "overflowPx": 0
     },
     {
       "path": "/terms/",
       "width": 768,
-      "loadMs": 52,
-      "lcpMs": 64,
+      "loadMs": 67,
+      "lcpMs": 84,
       "cls": 0,
       "overflowPx": 0
     },
     {
       "path": "/terms/",
       "width": 1024,
-      "loadMs": 23,
-      "lcpMs": 76,
+      "loadMs": 21,
+      "lcpMs": 72,
       "cls": 0,
       "overflowPx": 0
     },
     {
       "path": "/terms/",
       "width": 1920,
-      "loadMs": 59,
-      "lcpMs": 88,
+      "loadMs": 76,
+      "lcpMs": 100,
       "cls": 0,
       "overflowPx": 0
     }

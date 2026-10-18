@@ -8,13 +8,13 @@
  *   2. GET /{INDEXNOW_KEY}.txt — fail if body !== key
  *
  *   npm run check:prod
- *   CHECK_PROD_URL=https://promptanatomy.space npm run check:prod
+ *   CHECK_PROD_URL=https://www.promptanatomy.space npm run check:prod
  */
 
 const https = require('https');
 const { INDEXNOW_KEY } = require('./geo-surfaces');
 
-const DEFAULT_ORIGIN = 'https://promptanatomy.space';
+const DEFAULT_ORIGIN = 'https://www.promptanatomy.space';
 
 function resolveOrigin() {
   const raw = String(process.env.CHECK_PROD_URL || DEFAULT_ORIGIN).trim().replace(/\/$/, '');

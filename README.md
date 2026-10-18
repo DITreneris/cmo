@@ -49,7 +49,7 @@ Contract: [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5.
 ## Stack
 
 - Semantic HTML5, WCAG 2 AA (skip link, ARIA, keyboard)
-- Design system **1.6.2** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md)): `design-tokens.json` → `tokens.css` → `components.css` → `utilities.css`
+- Design system **1.8.0** Product Operator ([STYLEGUIDE.md](STYLEGUIDE.md) §0.4): `design-tokens.json` → `tokens.css` → `components.css` → `utilities.css`
 - Vanilla JS (no framework): copy, progress, CMO context (`sessionStorage`), brief builder
 - Fonts: Fraunces (hero H1 only), Source Sans 3 (UI), JetBrains Mono (prompts)
 - Build: Node scripts (locale pages, OG, favicons, `public/` export). Paid PDF HTML is **operator-local** (gitignored) — see [docs/pdf-source/README.md](docs/pdf-source/README.md)
@@ -76,7 +76,7 @@ Contract: [docs/AGENT_SOT.md](docs/AGENT_SOT.md) §5.
 ├── tests/                     # structure, registry, design-system, a11y, fulfillment-config, e2e/
 ├── success.html, terms.html, coming-soon.html
 ├── vercel.json                # / → /en/; REQUIRE_STRIPE_LINKS=1 build
-├── package.json               # 1.10.0 — npm test, build, pdf:*, check:prod
+├── package.json               # 1.11.0 — npm test, build, pdf:*, check:prod
 └── docs/                      # INDEX, LEGACY, AGENT_SOT, GO_LIVE_RUNBOOK, …
 ```
 

@@ -53,6 +53,10 @@ assets/hero_png/
 # Local analysis dumps (not product source)
 pdf_analysis.txt
 report.txt
+/deep.md
+/research.txt
+/v001.png
+/v002.png
 
 # Playwright artefacts
 test-results/

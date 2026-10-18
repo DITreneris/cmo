@@ -142,7 +142,7 @@ test.beforeAll(function () {
   fs.mkdirSync(path.dirname(BENCH_PATH), { recursive: true });
   if (!fs.existsSync(BENCH_PATH)) {
     fs.writeFileSync(BENCH_PATH, JSON.stringify({
-      date: '2026-10-15',
+      date: '2026-10-18',
       browser: 'chromium',
       note: 'One local sample per page and viewport. Load and LCP are recorded only. CLS above 0.25 fails.',
       pages: []
@@ -184,11 +184,12 @@ for (const vp of VIEWPORTS) {
     expect(h1Font.toLowerCase()).toContain('fraunces');
 
     if (vp.width >= 640) {
+      // Choice and span fields are full-width on purpose. Only plain fields must pair.
       const briefRows = await page.evaluate(function () {
         return Array.prototype.map.call(document.querySelectorAll('fieldset.cb-panel'), function (panel) {
           var wasHidden = panel.hidden;
           panel.hidden = false;
-          var fields = panel.querySelectorAll(':scope > .cb-field');
+          var fields = panel.querySelectorAll(':scope > .cb-field:not(.cb-field--choices):not(.cb-field--span)');
           var last = fields[fields.length - 1];
           var gridColumn = last ? getComputedStyle(last).gridColumn : '';
           panel.hidden = wasHidden;

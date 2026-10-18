@@ -6,7 +6,16 @@ Formatas pagal [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), versija
 
 ## [Unreleased]
 
+### Pakeista
+- **[QA]** EN visual baselines (Ambition A / R1-support): `tests/visual/snapshots/` refreshed on Windows (2026-10-18) for the DS **1.8.0** composition. 16 passed. Orphan `#executive-summary` PNGs are removed. The even-row check skips `.cb-field--choices` and `.cb-field--span`, same as the brief e2e — those fields are full width on purpose. `docs/visual/benchmark.json` is dated 2026-10-18. A green pixel run is not the composition gate. `npm run test:visual` stays outside `npm test`. Does not exit R1. No SemVer bump.
+- **[Docs]** Closed epic orders (Ambition A / R1-support): [`design_system_epic.md`](design_system_epic.md) iteration fields are a log. Sentences that kept DS **1.6.2**, bumped only to **1.7.0**, or filled the hero to the viewport are past tense. The 2026-09-03 journal sample in [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md) names the live stamp **1.8.0** / **1.11.0**. Local research files stay untracked. Does not exit R1. No SemVer bump.
+- **[Docs]** Instruction fence (Ambition A / R1-support): [`design_system_epic.md`](design_system_epic.md) is an archive. The live picture stays [STYLEGUIDE.md](STYLEGUIDE.md) **1.8.0** §0.4. `## [1.11.0]` now says its later bullets are history. [README.md](README.md) stamps match **1.8.0** / **1.11.0**. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) lesson index runs through §10.23. The creative-brief table matches the sand preset and the sand answer. Lesson 19 names the gold wordmark. [docs/TESTAVIMAS.md](docs/TESTAVIMAS.md) journal samples stay historical. Does not exit R1. No SemVer bump.
+- **[QA]** `scripts/geo-surfaces.js` requires `frontFaq` length 4, the same gate as `tests/structure.test.js`. Does not exit R1. No SemVer bump.
+- **[Commerce]** Unset `SITE_URL` falls back to `https://www.promptanatomy.space`. Fulfillment license links use www. `npm run check:prod` probes www. Apex still 307s there. Does not exit R1. No SemVer bump.
+
 ## [1.11.0] - 2026-10-17
+
+Gyvas paveikslas yra pirmas **[Docs] Canon reconcile** įrašas šiame skyriuje ir [STYLEGUIDE.md](STYLEGUIDE.md) **1.8.0** §0.4. Žemiau esantys sakiniai yra šios versijos istorija. Jei sakinys liepia užpildyti hero iki viewport, piešti `#pro-contents` tinklelį, palikti Copy tips, rašyti META poraštėje arba laikyti dizaino sistemą **1.6.2** / **1.7.0**, jo neįgyvendink.
 
 ### Pakeista
 - **[Release]** SemVer **1.11.0**. Design system **1.8.0** is the corrected EN composition in [STYLEGUIDE.md](STYLEGUIDE.md) §0.4. Lines below that say "No SemVer bump" describe each change before this release. Does not exit R1.

@@ -22,7 +22,7 @@
 | **Ops SOT** | [docs/AGENT_SOT.md](AGENT_SOT.md) | Build, deploy, GEO (hash hubs + frontFaq), commerce, free-surface model |
 | **Roadmap** | [roadmap.md](../roadmap.md) | Ambition A→E→light B→C (R1–R4); Audit P0–P3 mapping; parked F/D/G |
 | **Active tracker** | [todo.md](../todo.md) | R1 Stripe ops + R1-support leftovers; Audit ≠ R1 exit |
-| **Agent lessons** | [AGENTS.md](../AGENTS.md) §10 | Operacinės pamokos (tool-first, JTBD/GEO §10.11–13, §10.14 cash before platform, §10.16–21 R1-support closeout + root never negotiates LT, FAQ triple sync) |
+| **Agent lessons** | [AGENTS.md](../AGENTS.md) §10 | Operacinės pamokos (tool-first, JTBD/GEO §10.11–13, §10.14 cash before platform, §10.16–23 R1-support, `click_checkout`, gyvas paveikslas 1.8.0, FAQ triple sync) |
 | **Stripe go-live (R1 detail)** | [MUST_TODO_STRIPE.md](../MUST_TODO_STRIPE.md) | Ambition A ops SSOT (Blob, env, webhook, live drills) |
 | **Go-live runbook** | [docs/GO_LIVE_RUNBOOK.md](GO_LIVE_RUNBOOK.md) | Linear operator commands (`check:prod`, Blob dry-run, TEST_SEND) |
 | **Versijos** | [CHANGELOG.md](../CHANGELOG.md) | Pakeitimų istorija (Keep a Changelog, SemVer) |
@@ -44,7 +44,7 @@
 | [CHANGELOG.md](../CHANGELOG.md) | Versijų pakeitimų istorija (Keep a Changelog, SemVer) | Kiekvienas (pagal pakeitimą) | Kiekvienas release ir reikšmingi pakeitimai |
 | [DEPLOYMENT.md](../DEPLOYMENT.md) | Primary (Vercel) + mirror (GitHub Pages), BASE_PATH, troubleshooting | QA / Orchestrator | Platforma, URL, post-deploy |
 | [STYLEGUIDE.md](../STYLEGUIDE.md) | Dizaino sistema **1.8.0** (Product Operator): spalvos, tipografija, šiltas popierius, EN composition | UI/UX | Dizaino pakeitimai, tokenų atnaujinimai |
-| [design_system_epic.md](../design_system_epic.md) | EN kompozicijos epikas: 7 iteracijos (likučių → hero → brief → storefront → katalogas → pabaiga → DS 1.8.0 vartai). Planas, ne gyvas DS | UI/UX / Orchestrator | Kai keičiasi iteracijos eilė, vartai arba draudimai |
+| [design_system_epic.md](../design_system_epic.md) | Archyvas. Iteracijų istorija iki DS **1.8.0**. Gyvas paveikslas yra [STYLEGUIDE.md](../STYLEGUIDE.md) §0.4 | UI/UX / Orchestrator | Nekopijuoti iteracijų atgal į kodą |
 | [docs/LEGACY_GOLDEN_STANDARD.md](LEGACY_GOLDEN_STANDARD.md) | Atskaitos kontraktas (HTML/JS struktūra, CMO v2, BASE_PATH) | QA / Orchestrator | Struktūros pakeitimai, CMO v2 plėtra |
 | [docs/PRODUCT-POSITIONING.md](PRODUCT-POSITIONING.md) | Mokamo sluoksnio pozicionavimas (CMO AI Content System, Use · Build · Install, ką teigiame / ko ne) + §4 JTBD search-intent language | Commerce / Content | Pavadinimų, pakopų, pozicionavimo, EN JTBD copy pakeitimai |
 | [docs/articles/content-ai-system.md](articles/content-ai-system.md) | Publishable EN marketing article (draft). Not live `/en/` copy. | Content | After positioning, price, or free-surface claim changes |

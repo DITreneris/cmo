@@ -14,7 +14,7 @@ Source: [design_system_epic.md](../../design_system_epic.md). This note records 
 
 ## Still open
 
-`npm run test:visual` baselines stay manual and Windows-only. Refresh the section PNGs that this composition moved. Do not treat a green pixel run as the composition gate.
+Windows baselines were refreshed 2026-10-18 for DS **1.8.0** (`npm run test:visual`, 16 passed). The suite stays manual and outside CI. A green pixel run is still not the composition gate. The gates above are.
 
 ## Iteration log
 
