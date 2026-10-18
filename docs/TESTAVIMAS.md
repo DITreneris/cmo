@@ -100,6 +100,14 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - **Pastabos:** (neprivaloma)
 ```
 
+## 2026-10-18 – EN visual baselines (DS 1.8.0)
+
+- **Testeris:** QA (repo)
+- **URL:** local `public/` after `npm run build` — `/en/`, `/en/privacy/`, `/terms/`, `/success.html`
+- **Naršyklė:** Playwright Chromium, 320 / 768 / 1024 / 1920, Windows
+- **Rezultatas:** ✅ 16 passed. Section PNGs match the DS **1.8.0** composition. Orphan `#executive-summary` shots are gone.
+- **Pastabos:** `npm run test:visual` stays outside `npm test`. A green pixel run is not the composition gate ([visual/2026-10-17-en-composition.md](visual/2026-10-17-en-composition.md)). R1 stays open.
+
 ## 2026-10-15 – R1 health, dar ne pirkimas
 
 - **Testeris:** QA (repo)
@@ -126,6 +134,8 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 
 ### Pavyzdys
 
+Žemiau yra seno žurnalo forma. Gyvas antspaudas yra STYLEGUIDE **1.8.0** ir SemVer **1.11.0**. Tų pastabų nekopijuok į naują įrašą.
+
 ```markdown
 ## 2026-09-03 – DS 1.6 Product Operator (docs + code)
 
@@ -133,7 +143,7 @@ Po deploy testuoti **abu** taikinius – **pilnas checklist `/en/`** (kanonas); 
 - **URL:** local `/en/` after `npm run build`
 - **Naršyklė:** `npm test` (structure + design-system smoke + lint)
 - **Rezultatas:** ✅ Repo gates green. ⏳ Rankinis visual QA 320/768/1024 (full-bleed hero, Fraunces H1, Source Sans 3, slim hero diagram, surfaces) — checklist §2 UX.
-- **Pastabos:** STYLEGUIDE 1.6.1; no cycle-stepper. Product SemVer still 1.9.0 until Orchestrator release bump.
+- **Pastabos:** Istorinis įrašas iš 2026-09-03 (tada gidas buvo 1.6.1, SemVer 1.9.0). Gyvas antspaudas yra STYLEGUIDE 1.8.0 ir SemVer 1.11.0.
 ```
 
 ```markdown

@@ -7,7 +7,7 @@
  *   - FULFILLMENT_REQUIRED_ENV lists the CMO-specific keys (no leftovers from the
  *     ported teacher repo).
  *   - listMissingFulfillmentEnv reports correctly when keys are missing/present.
- *   - getSiteUrl falls back to https://promptanatomy.space.
+ *   - getSiteUrl falls back to https://www.promptanatomy.space.
  *   - All four /api/* route files export a function and use raw-body where required.
  *   - SOT mirror.renderPaidStorefront is false.
  *
@@ -112,12 +112,12 @@ if (typeof fulfillment.getSiteUrl === 'function') {
   delete process.env.SITE_URL;
   const fallback = fulfillment.getSiteUrl();
   check(
-    typeof fallback === 'string' && /^https:\/\/promptanatomy\.space\/?$/.test(fallback),
-    'getSiteUrl falls back to https://promptanatomy.space when SITE_URL is unset'
+    typeof fallback === 'string' && fallback === 'https://www.promptanatomy.space',
+    'getSiteUrl falls back to https://www.promptanatomy.space when SITE_URL is unset'
   );
   const evil = fulfillment.getSiteUrl('https://evil.example/phish');
   check(
-    typeof evil === 'string' && !/evil\.example/.test(evil) && /^https:\/\/promptanatomy\.space\/?$/.test(evil),
+    typeof evil === 'string' && !/evil\.example/.test(evil) && evil === 'https://www.promptanatomy.space',
     'getSiteUrl ignores a non-allowlisted origin when SITE_URL is unset'
   );
   const wwwOrigin = fulfillment.getSiteUrl('https://www.promptanatomy.space/');

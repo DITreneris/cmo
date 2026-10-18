@@ -1,17 +1,19 @@
 # Design system epic — EN kompozicija
 
-**Statusas:** Iteracijos 2–13 yra `/en/` kode. Vartai 7 uždaryti 2026-10-17. Visual PNG baseline dar neatnaujintas (`npm run test:visual`). Failas lieka kaip iteracijų istorija.  
+**Statusas:** Archyvas. Iteracijos 2–13 jau yra `/en/` kode. Vartai 7 uždaryti 2026-10-17. Windows PNG baseline atnaujintas 2026-10-18 (`npm run test:visual`, 16 passed). Žalias pikselių praėjimas nėra kompozicijos vartai.  
 **Data:** 2026-10-17  
 **Ambition:** A / R1-support. R1 neišeina. SemVer nekeliamas.  
-**Dizaino sistema dabar:** [STYLEGUIDE.md](STYLEGUIDE.md) **1.8.0** §0.4. Skyriai žemiau, kurie liepia palikti **1.6.2**, yra tos iteracijos įrašas. Gyvas paveikslas yra §0.4 ir [docs/visual/2026-10-17-en-composition.md](docs/visual/2026-10-17-en-composition.md).  
+**Dizaino sistema dabar:** [STYLEGUIDE.md](STYLEGUIDE.md) **1.8.0** §0.4. Skyriai žemiau, kurie liepia palikti **1.6.2** arba kelti tik į **1.7.0**, yra tos iteracijos įrašas. Gyvas paveikslas yra §0.4 ir [docs/visual/2026-10-17-en-composition.md](docs/visual/2026-10-17-en-composition.md).  
 **Kalba:** LT. Produktas lieka EN kanonas `/en/`.  
 **Locale:** `/lt/` ir `data/lt-*.json` neliečiami.
 
-Šis failas yra vienintelis šaltinis, kas daroma su gyvu `/en/` vaizdu po 2026-10-15 pikselių praėjimo. Agentas, kuris keičia hero, brief, storefront, `#pro-contents` arba poraštę, skaito šią iteraciją iki galo ir daro tik ją.
+Šis failas nebėra gyvas šaltinis. Hero, brief, storefront, `#pro-contents` ir poraštę keisk pagal [STYLEGUIDE.md](STYLEGUIDE.md) §0.4. Žemiau esančių iteracijų nebevykdyk.
 
 ---
 
 ## 0. Kodėl šitas epikas yra
+
+Šis skyrius ir visi skyriai po jo yra istorija. Jie nebekeičia kodo.
 
 2026-10-15 vizualinis praėjimas ([docs/visual/2026-10-15-en-visual.md](docs/visual/2026-10-15-en-visual.md)) nufotografavo `/en/` ir pavadino rezultatą praėjimu, nes Playwright pikseliai sutapo su `tests/visual/snapshots/`. Tie kadrai yra sulūžusi kompozicija:
 
@@ -23,7 +25,7 @@
 | `#pro-contents` | Plaukų linijų lentelė, po ja priklijuotas „Copy tips“ | 5 |
 | `#ecosystem-strip` + `#community` + `footer` | Trys tekstiniai blokai, pabrauktos nuorodos, versija, adresas per vidurį | 6 |
 
-DS **1.6.2** tą poraštę pasirašė: [STYLEGUIDE.md](STYLEGUIDE.md) §0.3 `surface-page / open` = how-it-works, instructions, FAQ, ecosystem, footer, community. Atviras paviršius buvo suprasta kaip „jokio piešinio“. Epikas tą sakinį pakeičia iteracijoje 6. Iki tol gidas lieka 1.6.2, kad dokumentas nemeluotų apie kodą, kurio dar nėra.
+DS **1.6.2** tą poraštę tada pasirašė: [STYLEGUIDE.md](STYLEGUIDE.md) §0.3 `surface-page / open` = how-it-works, instructions, FAQ, ecosystem, footer, community. Atviras paviršius tada buvo suprasta kaip „jokio piešinio“. Iteracija 6 tą sakinį pakeitė. Gidas nebėra 1.6.2.
 
 Pilnas root `<style>` trynimas lieka parked: [docs/TEMPLATE_MIGRATION_BACKLOG.md](docs/TEMPLATE_MIGRATION_BACKLOG.md). Šitas epikas jo neatidaro.
 
@@ -50,14 +52,14 @@ Pilnas root `<style>` trynimas lieka parked: [docs/TEMPLATE_MIGRATION_BACKLOG.md
 
 ## 2. Kaip skaityti iteraciją
 
-Kiekviena iteracija turi tuos pačius laukus, ta pačia tvarka:
+Iteracijos uždarytos. Laukai žemiau yra įrašas, ne darbo eilė. Lauko **Ką keisti** nevykdyk. Gyvas paveikslas yra [STYLEGUIDE.md](STYLEGUIDE.md) **1.8.0** §0.4.
 
-1. **Ekranas** — ką žmogus mato dabar.
+1. **Ekranas** — ką žmogus matė tą dieną.
 2. **Kas piešia** — failas, selektorius, eilutė, build, jei HTML gimsta ne ranka.
-3. **Ką keisti** — vienas pakeitimas vienoje eilutėje. Eilės tvarka yra darbo tvarka.
+3. **Ką keisti** — kas tą iteraciją buvo padaryta. Tai ne atvira užduotis.
 4. **Ko neliesti** — šitos iteracijos draudimai, be viso §1 sąrašo.
-5. **Vartai** — kada iteracija baigta. Kita neprasideda, kol šitie nepraeina.
-6. **Dokumentai** — ką atnaujinti tame pačiame PR.
+5. **Vartai** — kuo iteracija tada buvo baigta.
+6. **Dokumentai** — ką ta iteracija liepė atnaujinti. Jei ten lieka **1.6.2** arba **1.7.0**, tas skaičius yra tos dienos antspaudas.
 
 Kaskados faktas, kurio nepainioti su „negyvu CSS“: root [index.html](index.html) `<style>` baigiasi ~1319 eilutėje. `styles/components.css` įkeliamas **po** jo (~1321). Vienodo specifiškumo taisyklė `components.css` laimi. Inline taisyklė vis dar piešia, kai `components.css` tos savybės **neišreiškia iš naujo**.
 
@@ -184,7 +186,7 @@ Antraštė, lead, „Free below“, trys taškai, mažas auksinis mygtukas ir ty
 
 ### Dokumentai
 
-- [STYLEGUIDE.md](STYLEGUIDE.md) §0.4 hero pastraipa: scena užpildo pirmą viewport. Versijos numeris lieka 1.6.2 iki iteracijos 7.
+- Tada §0.4 liepė hero užpildyti pirmą viewport ir palikti versiją 1.6.2 iki iteracijos 7. Tai uždaryta. Gyvas §0.4: nuo 900px hero baigiasi 72px vėliau, DS yra **1.8.0**.
 - [CHANGELOG.md](CHANGELOG.md) `## [Unreleased]` `[UI]`.
 - Visual baseline `header.header` ir fold atnaujinami **tik** šitam PR, ne visam puslapiui.
 
@@ -363,7 +365,7 @@ Eyebrow PRO, H2 „Also in the Pro kit“, sakinys „Full prompt bodies offline
 3. Leader lieka `.ecosystem-strip-related`, viena tyli eilutė, ne antras CTA.
 4. `#community` yra ta pati ašis. H2, vienas sakinys, vienas mygtukas. Kontūrinis mygtukas lieka (ne auksinis). Jis lygiuojamas į kairę, ne į centrą.
 5. `footer` teisinės eilutės eina po 1px skyriaus: versija, entity, email, adresas, copyright. Šriftas `--font-size-small`, spalva `--color-text-secondary`, kairė. Entity sakinio žodžiai nekeičiami. `promptanatomy.app` nuoroda lieka ink.
-6. [STYLEGUIDE.md](STYLEGUIDE.md) §0.3 lentelės eilutė `surface-page / open` perrašoma taip: ecosystem, footer ir community yra atviras paviršius su viena kaire ašimi, ink nuorodomis ir vienu kontūriniu community mygtuku. Atviras paviršius nereiškia centruoto teksto ir naršyklės numatytosios nuorodos. Versijos numeris vis dar 1.6.2, kol neiteracija 7. Šita pastraipa yra išimtis: ji keičiasi kartu su kodu, nes kitaip gidas vėl pasirašys seną kadrą.
+6. Tada §0.3 `surface-page / open` buvo perrašyta: ecosystem, footer ir community yra atviras paviršius su viena kaire ašimi. Tas sakinys liepė palikti versiją 1.6.2 iki iteracijos 7. Iteracija uždaryta. Gyvas uždarymas yra `.tail-panel`, DS **1.8.0**.
 
 ### Ko neliesti
 
@@ -400,7 +402,7 @@ Iteracijos 2–6 jau gyvos `/en/`. Šita iteracija nekeičia piešinio, nebent t
 
 ### Ką keisti
 
-1. [STYLEGUIDE.md](STYLEGUIDE.md) antraštė ir §0: **1.7.0**. §0.4 hero, storefront, katalogas ir pabaiga atitinka iteracijas 2–6. Data = merge diena.
+1. Tada antraštė buvo kelta į **1.7.0**. Vėlesnis sutaikymas pakėlė gyvą gidą į **1.8.0**. Nekelk atgal į 1.7.0.
 2. [tests/design-system-smoke.test.js](tests/design-system-smoke.test.js) ir [tests/structure.test.js](tests/structure.test.js):
    - EN built HTML Complete kaina naudoja `pdf-card-compare`, ne `pdf-card-was`.
    - Atšaukta 2026-10-17. `.cb-pro-teaser a` bloko `components.css` nebėra. Smoke draudžia `.cb-pro-teaser` ir `.cb-tips`.
@@ -408,7 +410,7 @@ Iteracijos 2–6 jau gyvos `/en/`. Šita iteracija nekeičia piešinio, nebent t
    - `.footer` `components.css` turi `text-align: start`.
 3. `.lang-switcher` assert lieka. Jo nešalinti „kaip likučio“.
 4. `npm run test:visual` baseline atnaujinami vieną kartą, po 2–6, su `--update-snapshots`, ir tik tie PNG, kurių sekcija pasikeitė. [docs/visual/2026-10-15-en-visual.md](docs/visual/2026-10-15-en-visual.md) viršuje įrašoma: tai pikselių praėjimas, ne kompozicijos. Kompozicijos šaltinis yra šis epikas. Naujas findings failas `docs/visual/YYYY-MM-DD-en-composition.md` parašo, kad fold, storefront, katalogas ir pabaiga atitinka iteracijų vartus. Nenurodyti „16 passed“ kaip įrodymo, kad vaizdas tinkamas siųsti.
-5. [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) DS nuoroda iš 1.6.2 į 1.7.0. `.cursorrules` antspaudas ir [AGENTS.md](AGENTS.md) antraštė, jei jie rašo 1.6.2 kaip gyvą DS.
+5. Tada dokumentų antspaudas ėjo iš 1.6.2 į 1.7.0. Gyvas antspaudas jau yra **1.8.0**. Jei failas rašo 1.6.2 kaip gyvą DS, tai pasenęs antspaudas, ne užduotis jį ten palikti.
 6. `npm test`. LT diff tuščias. R1 checkbox [todo.md](todo.md) nepažymimas done.
 
 ### Ko neliesti
@@ -421,12 +423,12 @@ Iteracijos 2–6 jau gyvos `/en/`. Šita iteracija nekeičia piešinio, nebent t
 
 - `npm test` žalias.
 - Naujas composition findings failas egzistuoja ir nesako „pikseliai sutapo, vadinasi gerai“.
-- STYLEGUIDE versija 1.7.0 sutampa su [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) ir `.cursorrules` antspaudu.
+- Tada vartai reikalavo STYLEGUIDE 1.7.0. Gyvas vartas yra **1.8.0** ir sutampa su [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md) bei `.cursorrules`.
 - Gyvas `/en/` patikrinimas naršyklėje: 1440 ir 390. Hero CTA, brief be baltos skylės, dvi kortelės vienoje linijoje, katalogas atskirtas nuo Copy tips, pabaiga kairėje. Tai daroma prieš merge, ne screenshot testu vietoje akių.
 
 ### Dokumentai
 
-- [CHANGELOG.md](CHANGELOG.md) `[UI]` + `[Docs]`: DS 1.7.0, kompozicijos vartai. Vis dar `## [Unreleased]`, kol Orchestrator nekelia SemVer.
+- Tada changelog dar buvo `## [Unreleased]` ir DS 1.7.0. Tai išleista kaip **1.11.0**, gyvas DS yra **1.8.0**. Nauji įrašai eina tik į dabartinį `## [Unreleased]`.
 - Šio epiko statusas viršuje keičiamas į „2–6 kode, vartai 7 uždaryti“ su data. Failas netrinamas.
 
 ---
@@ -490,15 +492,10 @@ Iteracijos 2–6 jau gyvos `/en/`. Šita iteracija nekeičia piešinio, nebent t
 ## 11. Darbo tvarka
 
 ```text
-1 likučiai (compare klasė, teaser a, vienas .header)
-    → 2 hero scena
-        → 3 brief viena kortelė
-            → 4 storefront eilutės
-                → 5 pro katalogas
-                    → 6 pabaiga kairėje
-                        → 7 DS 1.7.0 ir testai
+Uždaryta 2026-10-17. Kelias 1→7 nebėra atvira eilė.
+Gyvas DS yra 1.8.0 §0.4, ne 1.7.0.
 ```
 
-Viena iteracija = vienas PR. PR antraštėje yra iteracijos numeris. Kitas PR neprasideda, kol šio vartai nepraeina `npm test` ir, jei pikseliai pajuda, atnaujintu tos sekcijos baseline.
+Naujo PR iš šito sąrašo nebeatidaryk. Jei pikseliai pajuda, atnaujink baseline pagal gyvą §0.4, ne pagal iteracijos 2–6 kadrą.
 
 Jei iteracijos viduje paaiškėja, kad inline taisyklė iš §4 vis dar laimi, ji perrašoma `components.css`, ne trinama iš `<style>`. Trynimas yra kitas epikas.

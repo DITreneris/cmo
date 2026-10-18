@@ -35,8 +35,8 @@ function validateGeoFields(sot, siteOrigin) {
   if (!sot.brand.logoUrl || !String(sot.brand.logoUrl).startsWith('https://')) {
     throw new Error('config/sot.json: brand.logoUrl must be HTTPS');
   }
-  if (!Array.isArray(sot.frontFaq) || sot.frontFaq.length < 3) {
-    throw new Error('config/sot.json: frontFaq must have at least 3 entries');
+  if (!Array.isArray(sot.frontFaq) || sot.frontFaq.length !== 4) {
+    throw new Error('config/sot.json: frontFaq length must be 4');
   }
   if (!siteOrigin.startsWith('https://')) {
     throw new Error('SITE_ORIGIN must be HTTPS for GEO emit');

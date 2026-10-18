@@ -23,11 +23,11 @@ Immediately after the hero, **before** `#pdf-storefront` (tool-first CEO IA). Li
 | `#creative-brief` | Section |
 | `.cb-stage` | From 900px, the open tool’s viewport. Holds `.cb-stage-main` and `.cb-output-wrap` |
 | `.cb-output-sheet` | Navy artifact inside the transparent scrollport. Holds quality, prompt, Copy, and the two tools |
-| `#cb-title` | H2 (always visible teaser) |
+| `#cb-title` | H2 landmark, always visible |
 | `#cb-builder` | Open builder `<details>` (default **open**) |
 | `#cb-builder-summary` | Open control |
-| `.cb-presets` + `[data-cb-preset]` | The only start: three equal cells. Label **Try an example** sits above. Pressed cell is an ink fill |
-| `.cb-choice` | Equal cells. Three options share one row. Five options use two columns, and the fifth spans the row. Pressed cell is an ink fill |
+| `.cb-presets` + `[data-cb-preset]` | The only start: three equal cells. Label **Try an example** sits above. Pressed cell is sand with an ink border and no disc |
+| `.cb-choice` | Equal cells. Three options share one row. Five options use two columns, and the fifth spans the row. Pressed cell is sand, an ink border, and a 6px ink disc |
 | `.cb-steps` | Three buttons like the presets. The current step is a 2px gold edge with no shadow |
 | `#cbForm` | Field grid (no submit action) |
 | `#cbCampaignGoal` … `#cbCta` | Inputs (see LEGACY) |
